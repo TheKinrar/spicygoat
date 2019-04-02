@@ -13,6 +13,8 @@ class Packet;
 #include "entities/EntityPlayer.h"
 
 #include <netinet/in.h>
+#include <thread>
+#include <mutex>
 
 class TCPConnection {
 public:
@@ -25,12 +27,22 @@ public:
 
     void sendPacket(Packet* packet);
 
+    EntityPlayer* getPlayer();
     void setPlayer(EntityPlayer* newPlayer);
 
     void task();
+
+    void keepAlive(int64_t millis);
+    void confirmKeepAlive(int64_t id);
 private:
     int sock;
     sockaddr_in addr;
+
+    std::thread *thread;
+
+    std::mutex m_keepAlive;
+    int64_t latestKeepAlive = 0;
+    bool keepAliveOk = true;
 
     ConnectionState state = ConnectionState::HANDSHAKE;
 

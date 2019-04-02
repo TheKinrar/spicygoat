@@ -9,7 +9,18 @@
 
 class Location {
 public:
+    Location();
     Location(double x, double y, double z, float yaw, float pitch);
+
+    void setX(double x);
+
+    void setY(double y);
+
+    void setZ(double z);
+
+    void setYaw(float yaw);
+
+    void setPitch(float pitch);
 
     double getX() const;
 
@@ -22,6 +33,10 @@ public:
     float getPitch() const;
 
     std::string toString() const;
+
+    bool operator==(const Location &rhs) const;
+
+    bool operator!=(const Location &rhs) const;
 
 private:
     double x, y, z;

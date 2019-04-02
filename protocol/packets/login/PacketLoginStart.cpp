@@ -11,6 +11,7 @@
 #include "../play/clientbound/PacketSpawnPosition.h"
 #include "../play/clientbound/PacketPlayerAbilities.h"
 #include "../play/clientbound/PacketPlayerLocationCB.h"
+#include "../play/clientbound/PacketChunkData.h"
 
 #include <uuid/uuid.h>
 
@@ -36,7 +37,14 @@ void PacketLoginStart::handle() {
     conn->sendPacket(new PacketPlayerAbilities(false, false, false, false, 0.05, 0.1)); // TODO player abilities
     conn->sendPacket(new PacketPlayerLocationCB(Location(0, 100, 0, 0, 0)));
 
-
+    ChunkColumn chunks(0, 0);
+    ChunkColumn chunks2(1, 0);
+    ChunkColumn chunks3(0, 1);
+    ChunkColumn chunks4(1, 1);
+    conn->sendPacket(new PacketChunkData(chunks));
+    conn->sendPacket(new PacketChunkData(chunks2));
+    conn->sendPacket(new PacketChunkData(chunks3));
+    conn->sendPacket(new PacketChunkData(chunks4));
 }
 
 std::string PacketLoginStart::toString() const {

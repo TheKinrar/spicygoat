@@ -8,6 +8,7 @@
 #include <uuid/uuid.h>
 #include <string>
 #include "Entity.h"
+#include "../world/Location.h"
 
 class EntityPlayer : public Entity {
 public:

@@ -2,6 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
+#include <iostream>
 #include "PacketChunkData.h"
 
 PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
@@ -21,6 +22,8 @@ std::vector<std::byte> PacketChunkData::bytes() {
 
         if(chunk == nullptr)
             continue;
+
+        std::cout << y << std::endl;
 
         mask |= (1 << y);
 
@@ -42,17 +45,30 @@ std::vector<std::byte> PacketChunkData::bytes() {
         while(chunkData.size() % 8 != 0)
             chunkData.push_back(std::byte());
 
-        PacketD
+        PacketData::writeVarInt(chunkData.size() / 8, data);
+        PacketData::writeByteArray(chunkData, data);
+
+        for(int i = 0; i < 2048; ++i) {
+            data.push_back(std::byte());
+        }
+
+        for(int i = 0; i < 2048; ++i) {
+            data.push_back(std::byte(0xFF));
+        }
+    }
+
+    for(int i = 0; i < 256; ++i) {
+        PacketData::writeInt(127, data); // TODO: biomes
     }
 
     PacketData::writeVarInt(mask, array);
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 
-    for(int i = 0; i < 256; ++i) {
-        PacketData::writeInt(127, array); // TODO: biomes
-    }
-
     PacketData::writeVarInt(0, array); // TODO: block entities
     return array;
+}
+
+std::string PacketChunkData::toString() const {
+    return std::string("PacketChunkData{") + std::to_string(chunkColumn.getX()) + "," + std::to_string(chunkColumn.getZ()) + "}";
 }

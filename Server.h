@@ -18,10 +18,10 @@ public:
 
     int32_t nextEID();
 
+    void tick();
+
 private:
     std::vector<EntityPlayer*> players;
-
-
 
     int32_t next_eid = 0;
     std::vector<Entity*> entities;

@@ -12,8 +12,11 @@
 #include "play/serverbound/PacketClientSettings.h"
 #include "play/serverbound/PacketPluginMessageSB.h"
 #include "play/serverbound/PacketTeleportConfirm.h"
-#include "play/serverbound/PacketPlayerLocationSB.h"
+#include "play/serverbound/PacketPlayerPositionLook.h"
 #include "play/serverbound/PacketClientStatus.h"
+#include "play/serverbound/PacketPlayerPosition.h"
+#include "play/serverbound/PacketPlayerLook.h"
+#include "play/serverbound/PacketKeepAliveSB.h"
 
 Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
     int id = data->readVarInt();
@@ -44,8 +47,14 @@ Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
                 return new PacketClientSettings(data, conn);
             case 0x0A:
                 return new PacketPluginMessageSB(data, conn);
+            case 0x0E:
+                return new PacketKeepAliveSB(data, conn);
+            case 0x10:
+                return new PacketPlayerPosition(data, conn);
             case 0x11:
-                return new PacketPlayerLocationSB(data, conn);
+                return new PacketPlayerPositionLook(data, conn);
+            case 0x12:
+                return new PacketPlayerLook(data, conn);
         }
     }
 

@@ -4,6 +4,8 @@
 
 #include "Location.h"
 
+Location::Location() : Location(0, 0, 0, 0, 0) {}
+
 Location::Location(double x, double y, double z, float yaw, float pitch) : x(x), y(y), z(z), yaw(yaw), pitch(pitch) {}
 
 double Location::getX() const {
@@ -33,4 +35,36 @@ std::string Location::toString() const {
             + "," + std::to_string(yaw)
             + "," + std::to_string(pitch)
             + "}";
+}
+
+void Location::setX(double x) {
+    Location::x = x;
+}
+
+void Location::setY(double y) {
+    Location::y = y;
+}
+
+void Location::setZ(double z) {
+    Location::z = z;
+}
+
+void Location::setYaw(float yaw) {
+    Location::yaw = yaw;
+}
+
+void Location::setPitch(float pitch) {
+    Location::pitch = pitch;
+}
+
+bool Location::operator==(const Location &rhs) const {
+    return x == rhs.x &&
+           y == rhs.y &&
+           z == rhs.z &&
+           yaw == rhs.yaw &&
+           pitch == rhs.pitch;
+}
+
+bool Location::operator!=(const Location &rhs) const {
+    return !(rhs == *this);
 }

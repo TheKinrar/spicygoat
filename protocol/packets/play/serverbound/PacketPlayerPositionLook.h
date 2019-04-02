@@ -9,9 +9,9 @@
 #include "../../ServerBoundPacket.h"
 #include "../../../../world/Location.h"
 
-class PacketPlayerLocationSB : public ServerBoundPacket {
+class PacketPlayerPositionLook : public ServerBoundPacket {
 public:
-    explicit PacketPlayerLocationSB(PacketData* data, TCPConnection* conn);
+    explicit PacketPlayerPositionLook(PacketData* data, TCPConnection* conn);
 
     void handle() override;
 
@@ -20,7 +20,8 @@ public:
 private:
     TCPConnection* conn;
 
-    Location location = Location(0, 0, 0, 0, 0);
+    double x, y, z;
+    float yaw, pitch;
     bool onGround;
 };
 

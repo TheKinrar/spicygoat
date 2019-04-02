@@ -127,6 +127,7 @@ void PacketData::writeFloat(float val, std::vector<std::byte> &bytes) {
 double PacketData::readDouble() {
     int64_t val = readLong();
     return *((double*)(&val));
+    //return static_cast<double>(readLong());
 }
 
 void PacketData::writeDouble(double val, std::vector<std::byte> &bytes) {

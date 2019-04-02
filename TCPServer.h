@@ -18,8 +18,16 @@ public:
 
     void accept();
 
+    void keepAliveTask();
+
+    bool isRunning() const;
+
 private:
+    bool running = true;
+
     int sock;
+
+    std::vector<TCPConnection*> connections;
 };
 
 

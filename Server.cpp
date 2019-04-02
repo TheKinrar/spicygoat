@@ -19,3 +19,9 @@ int32_t Server::nextEID() {
     return next_eid++;
 }
 
+void Server::tick() {
+    for(auto p : players) {
+        p->tick();
+    }
+}
+
