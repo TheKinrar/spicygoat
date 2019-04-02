@@ -7,13 +7,18 @@
 
 
 #include "../../ClientBoundPacket.h"
+#include "../../../../world/chunks/ChunkColumn.h"
 
 class PacketChunkData : public ClientBoundPacket {
-    PacketLoginSuccess(uuid_t uuid, std::string &username);
+public:
+    explicit PacketChunkData(ChunkColumn &chunkColumn);
 
     std::vector<std::byte> bytes() override;
 
     std::string toString() const override;
+
+private:
+    ChunkColumn &chunkColumn;
 };
 
 
