@@ -9,7 +9,7 @@
 #include <exception>
 #include <string>
 #include <vector>
-#include "../world/Position.h"
+#include "../world/geo/Position.h"
 
 class PacketData {
 public:

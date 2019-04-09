@@ -14,6 +14,11 @@ int32_t Entity::getEID() {
     return eid;
 }
 
+void Entity::setNextLocation(Location loc) {
+    setNextPosition(loc.getX(), loc.getY(), loc.getZ());
+    setNextLook(loc.getYaw(), loc.getPitch());
+}
+
 void Entity::setNextPosition(double x, double y, double z) {
     nextLocation.setX(x);
     nextLocation.setY(y);
@@ -31,6 +36,8 @@ void Entity::setNextOnGround(bool onGround) {
 
 void Entity::tick() {
     if(location != nextLocation) {
+        bool newChunk = location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
+
         m_nextLocation.lock();
 
         bool moved = (location.getX() != nextLocation.getX())
@@ -53,12 +60,25 @@ void Entity::tick() {
         }
 
         location = nextLocation;
-        std::cout << "nextloc" << std::endl;
 
         m_nextLocation.unlock();
+
+        if(newChunk) {
+            chunkChanged();
+        }
     }
 }
 
+void Entity::chunkChanged() {}
+
 std::string Entity::toString() {
     return std::string("Entity{eid=") + std::to_string(eid) + "}";
+}
+
+const Location Entity::getLocation() const {
+    return location;
+}
+
+bool Entity::isOnGround() const {
+    return onGround;
 }

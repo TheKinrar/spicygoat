@@ -6,7 +6,7 @@
 #define SPICYGOAT_PACKETPLAYERLOCATIONCB_H
 
 
-#include "../../../../world/Location.h"
+#include "../../../../world/geo/Location.h"
 #include "../../ClientBoundPacket.h"
 
 class PacketPlayerLocationCB : public ClientBoundPacket {

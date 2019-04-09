@@ -16,8 +16,6 @@ int main() {
         Server::get()->tick();
         long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();
 
-        std::cout << "tick: " << ((double) tickTime / 1000) << "ms" << std::endl;
-
         if(tickTime < 50000) {
             std::this_thread::sleep_for(std::chrono::microseconds(50000 - tickTime));
         }

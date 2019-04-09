@@ -6,6 +6,7 @@
 #define SPICYGOAT_TCPCONNECTION_H
 
 class Packet;
+class EntityPlayer;
 
 #include "protocol/PacketData.h"
 #include "protocol/ConnectionState.h"

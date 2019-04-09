@@ -7,7 +7,7 @@
 
 
 #include "../../ServerBoundPacket.h"
-#include "../../../../world/Location.h"
+#include "../../../../world/geo/Location.h"
 
 class PacketPlayerPositionLook : public ServerBoundPacket {
 public:

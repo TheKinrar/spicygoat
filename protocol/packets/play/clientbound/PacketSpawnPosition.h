@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_PACKETSPAWNPOSITION_H
 #define SPICYGOAT_PACKETSPAWNPOSITION_H
 
-#include "../../../../world/Position.h"
+#include "../../../../world/geo/Position.h"
 #include "../../ClientBoundPacket.h"
 
 

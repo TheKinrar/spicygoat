@@ -6,6 +6,8 @@
 #define SPICYGOAT_LOCATION_H
 
 #include <string>
+#include "../chunks/Chunk.h"
+#include "../chunks/ChunkColumn.h"
 
 class Location {
 public:
@@ -31,6 +33,12 @@ public:
     float getYaw() const;
 
     float getPitch() const;
+
+    int32_t getChunkX() const;
+
+    int32_t getChunkZ() const;
+
+    ChunkColumn * getChunkColumn() const;
 
     std::string toString() const;
 

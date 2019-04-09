@@ -3,6 +3,7 @@
 //
 
 #include "Location.h"
+#include "../World.h"
 
 Location::Location() : Location(0, 0, 0, 0, 0) {}
 
@@ -67,4 +68,17 @@ bool Location::operator==(const Location &rhs) const {
 
 bool Location::operator!=(const Location &rhs) const {
     return !(rhs == *this);
+}
+
+int32_t Location::getChunkX() const {
+    return (int32_t) (getX() / 16);
+}
+
+int32_t Location::getChunkZ() const {
+    return (int32_t) (getZ() / 16);
+}
+
+ChunkColumn * Location::getChunkColumn() const {
+    static auto world = new World();
+    return world->getChunk(getChunkX(), getChunkZ());
 }

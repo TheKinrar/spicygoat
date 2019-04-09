@@ -8,7 +8,7 @@
 #include <mutex>
 #include <cstdint>
 #include <string>
-#include "../world/Location.h"
+#include "../world/geo/Location.h"
 
 class Entity {
 public:
@@ -16,6 +16,11 @@ public:
 
     int32_t getEID();
 
+    const Location getLocation() const;
+
+    bool isOnGround() const;
+
+    void setNextLocation(Location loc);
     void setNextPosition(double x, double y, double z);
     void setNextLook(float yaw, float pitch);
     void setNextOnGround(bool onGround);
@@ -23,6 +28,9 @@ public:
     virtual void tick();
 
     virtual std::string toString();
+
+protected:
+    virtual void chunkChanged();
 
 private:
     int32_t eid;

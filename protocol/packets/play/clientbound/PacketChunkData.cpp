@@ -23,8 +23,6 @@ std::vector<std::byte> PacketChunkData::bytes() {
         if(chunk == nullptr)
             continue;
 
-        std::cout << y << std::endl;
-
         mask |= (1 << y);
 
         PacketData::writeUnsignedByte(8, data); // TODO: bits per block (compression)

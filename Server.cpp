@@ -9,8 +9,8 @@ Server* Server::get() {
     return instance;
 }
 
-EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name) {
-    auto *player = new EntityPlayer(uuid, name);
+EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
+    auto *player = new EntityPlayer(uuid, name, conn);
     players.push_back(player);
     return player;
 }
@@ -23,5 +23,9 @@ void Server::tick() {
     for(auto p : players) {
         p->tick();
     }
+}
+
+World& Server::getWorld() {
+    return world;
 }
 

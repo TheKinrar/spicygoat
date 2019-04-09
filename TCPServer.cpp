@@ -11,7 +11,7 @@ TCPServer::TCPServer() {
     sock = socket(AF_INET, SOCK_STREAM, 0);
 
     sockaddr_in sin;
-    sin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    sin.sin_addr.s_addr = inet_addr("0.0.0.0");
     sin.sin_family = AF_INET;
     sin.sin_port = htons(25566);
 
@@ -31,14 +31,16 @@ TCPServer::~TCPServer() {
 }
 
 void TCPServer::accept() {
-    std::cout << "accept" << std::endl;
+    while(running) {
+        std::cout << "accept" << std::endl;
 
-    sockaddr_in csin;
-    socklen_t csinlen = sizeof(csin);
-    int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+        sockaddr_in csin;
+        socklen_t csinlen = sizeof(csin);
+        int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
 
-    auto conn = new TCPConnection(csock, csin);
-    connections.push_back(conn);
+        auto conn = new TCPConnection(csock, csin);
+        connections.push_back(conn);
+    }
 }
 
 void TCPServer::keepAliveTask() {
