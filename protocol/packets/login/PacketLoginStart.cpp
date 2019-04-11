@@ -28,16 +28,18 @@ void PacketLoginStart::handle() {
     EntityPlayer *player = Server::get()->createPlayer(uuid, name, *conn);
     conn->setPlayer(player);
 
+    auto pos = Server::get()->getWorld().getSpawnPosition();
+
     conn->sendPacket(new PacketLoginSuccess(uuid, name));
     conn->setState(ConnectionState::PLAY);
     conn->sendPacket(new PacketJoinGame(player));
     CMBrand(std::string("SpicyGoat")).send(*conn);
     conn->sendPacket(new PacketServerDifficulty(0)); // TODO difficulty
-    conn->sendPacket(new PacketSpawnPosition(Position(0, 0, 0))); // TODO world spawn position
+    conn->sendPacket(new PacketSpawnPosition(pos));
     conn->sendPacket(new PacketPlayerAbilities(false, false, true, false, 0.05, 0.1)); // TODO player abilities
-    conn->sendPacket(new PacketPlayerLocationCB(Location(0, 100, 0, 0, 0)));
+    conn->sendPacket(new PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0))); // TODO player location
 
-    conn->getPlayer()->setNextLocation(Location(0, 100, 0, 0, 0));
+    conn->getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
 }
 
 std::string PacketLoginStart::toString() const {

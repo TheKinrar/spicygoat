@@ -2,6 +2,7 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include <iostream>
 #include "EntityPlayer.h"
 #include "../Server.h"
 #include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
@@ -40,7 +41,13 @@ void EntityPlayer::chunkChanged() {
 
             if(loadedChunks.find(pos) == loadedChunks.end()) {
                 ChunkColumn *column = Server::get()->getWorld().getChunk(x, z);
-                conn.sendPacket(new PacketChunkData(*column));
+
+                if(column->hasData()) {
+                    conn.sendPacket(new PacketChunkData(*column));
+                } else {
+                    std::cerr << "no data for column " << column->toString() << std::endl;
+                }
+
                 loadedChunks[pos] = column;
             }
         }

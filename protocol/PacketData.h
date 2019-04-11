@@ -13,7 +13,7 @@
 
 class PacketData {
 public:
-    PacketData(char* data, int length);
+    explicit PacketData(char* data, int length = -1);
 
     bool readBoolean();
     static void writeBoolean(bool val, std::vector<std::byte> &bytes);
@@ -29,11 +29,13 @@ public:
     int32_t readInt();
     static void writeInt(int32_t, std::vector<std::byte> &);
 
+    uint32_t readUnsignedInt();
     static void writeUnsignedInt(uint32_t, std::vector<std::byte> &);
 
     int64_t readLong();
     static void writeLong(int64_t, std::vector<std::byte> &);
 
+    uint64_t readUnsignedLong();
     static void writeUnsignedLong(uint64_t, std::vector<std::byte> &);
 
     float readFloat();

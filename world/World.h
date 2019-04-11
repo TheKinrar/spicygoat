@@ -17,6 +17,8 @@ public:
     Region * getRegion(int32_t x, int32_t z);
     ChunkColumn * getChunk(int32_t x, int32_t z);
 
+    const Position &getSpawnPosition() const;
+
 private:
     std::map<Position2D, Region*> regions;
 

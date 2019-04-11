@@ -7,6 +7,7 @@
 
 
 #include <stdint-gcc.h>
+#include <tag_compound.h>
 #include "Chunk.h"
 #include "../geo/Position2D.h"
 
@@ -22,11 +23,20 @@ public:
 
     Chunk* getChunk(int8_t y);
 
+    bool hasData();
+
+    void setNbt(std::unique_ptr<nbt::tag_compound> &nbt);
+
+    uint16_t writeToByteArray(std::vector<std::byte>&);
+
     std::string toString();
 
 private:
     int32_t x, z;
     Chunk* chunks[16];
+
+    std::unique_ptr<nbt::tag_compound> nbt;
+    nbt::tag_compound *level = nullptr;
 };
 
 

@@ -2,10 +2,20 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include <fstream>
+#include <iostream>
 #include "Server.h"
 
+Server::Server() {
+    std::ifstream ifs("/home/thekinrar/temparia/generated/reports/blocks.json");
+    nlohmann::json j;
+    ifs >> j;
+    palette = ChunkPalette::fromJson(j);
+    ifs.close();
+}
+
 Server* Server::get() {
-    static auto *instance = new Server();
+    static auto instance = new Server();
     return instance;
 }
 
@@ -27,5 +37,9 @@ void Server::tick() {
 
 World& Server::getWorld() {
     return world;
+}
+
+ChunkPalette *Server::getPalette() const {
+    return palette;
 }
 

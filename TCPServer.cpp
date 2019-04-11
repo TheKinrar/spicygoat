@@ -15,12 +15,12 @@ TCPServer::TCPServer() {
     sin.sin_family = AF_INET;
     sin.sin_port = htons(25566);
 
+    errno = 0;
     bind(sock, (sockaddr*) &sin, sizeof(sin));
-
     std::cerr << strerror(errno) << std::endl;
 
+    errno = 0;
     listen(sock, 5);
-
     std::cerr << strerror(errno) << std::endl;
 
     new std::thread(&TCPServer::keepAliveTask, this);

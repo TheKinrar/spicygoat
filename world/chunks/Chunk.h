@@ -5,8 +5,9 @@
 #ifndef SPICYGOAT_CHUNK_H
 #define SPICYGOAT_CHUNK_H
 
-
+#include <tag_compound.h>
 #include <stdint-gcc.h>
+#include "ChunkPalette.h"
 
 class Chunk {
 public:
@@ -18,8 +19,22 @@ public:
 
     int32_t getZ() const;
 
+    ChunkPalette *getPalette() const;
+
+    bool hasData();
+
+    void loadNBT(nbt::tag_compound&);
+
+    void writeToByteArray(std::vector<std::byte> &array);
+
 private:
     int32_t x, y, z;
+
+    ChunkPalette *palette = nullptr;
+    std::vector<int64_t> blockStates;
+
+    std::vector<int8_t> blockLight;
+    std::vector<int8_t> skyLight;
 };
 
 

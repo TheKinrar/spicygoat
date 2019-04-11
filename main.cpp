@@ -1,12 +1,15 @@
 #include <iostream>
 #include "TCPServer.h"
 #include "Server.h"
+#include "protocol/packets/play/clientbound/PacketChunkData.h"
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
     static_assert(sizeof(float) == 4);
     static_assert(sizeof(double) == 8);
+
+    //std::cout << Server::get()->getWorld().getChunk(-1, 0)->getChunk(0)->getPalette()->toString(true) << std::endl;
 
     TCPServer server = TCPServer();
     std::thread tcpThread(&TCPServer::accept, &server);

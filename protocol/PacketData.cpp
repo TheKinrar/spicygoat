@@ -91,6 +91,12 @@ void PacketData::writeInt(int32_t val, std::vector<std::byte> &bytes) {
     }
 }
 
+uint32_t PacketData::readUnsignedInt() {
+    uint32_t val = be32toh(*((uint32_t*) (data + pos)));
+    pos += 4;
+    return val;
+}
+
 void PacketData::writeUnsignedInt(uint32_t val, std::vector<std::byte> &bytes) {
     for(int i = 0; i < 4; i++) {
         bytes.push_back(std::byte(val >> ((3 - i) * 8)));
@@ -107,6 +113,12 @@ void PacketData::writeLong(int64_t val, std::vector<std::byte> &bytes) {
     for(int i = 0; i < 8; i++) {
         bytes.push_back(std::byte(val >> ((7 - i) * 8)));
     }
+}
+
+uint64_t PacketData::readUnsignedLong() {
+    uint64_t val = be64toh(*((uint64_t*) (data + pos)));
+    pos += 8;
+    return val;
 }
 
 void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) {
@@ -127,7 +139,6 @@ void PacketData::writeFloat(float val, std::vector<std::byte> &bytes) {
 double PacketData::readDouble() {
     int64_t val = readLong();
     return *((double*)(&val));
-    //return static_cast<double>(readLong());
 }
 
 void PacketData::writeDouble(double val, std::vector<std::byte> &bytes) {

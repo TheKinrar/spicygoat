@@ -25,3 +25,8 @@ bool Position2D::operator<=(const Position2D &rhs) const {
 bool Position2D::operator>=(const Position2D &rhs) const {
     return !(*this < rhs);
 }
+
+std::ostream &operator<<(std::ostream &os, const Position2D &d) {
+    os << "Pos2D{x=" << d.x << ",z=" << d.z << "}";
+    return os;
+}

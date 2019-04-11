@@ -32,5 +32,9 @@ Region * World::getRegion(int32_t x, int32_t z) {
 }
 
 ChunkColumn * World::getChunk(int32_t x, int32_t z) {
-    return getRegion(floor((double) x / 32), floor((double) z / 32))->getColumn(x % 32, z % 32);
+    return getRegion(floor((double) x / 32), floor((double) z / 32))->getColumn(x % 32 + (x < 0 ? 32 : 0), z % 32 + (z < 0 ? 32 : 0));
+}
+
+const Position &World::getSpawnPosition() const {
+    return spawnPosition;
 }
