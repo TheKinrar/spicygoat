@@ -45,13 +45,7 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
             chunk->loadNBT(section);
             chunks[y] = chunk;
         }
-
-        std::cout << "Column " << x << ";" << z << " loaded with " << level->at("Sections").as<nbt::tag_list>().size() << " sections." << std::endl;
-    } else {
-        std::cout << "Column " << x << ";" << z << " loaded with no sections." << std::endl;
     }
-
-    //std::cout << "=> " << level->at("xPos").as<nbt::tag_int>() << ";" << level->at("zPos").as<nbt::tag_int>() << std::endl;
 }
 
 uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {

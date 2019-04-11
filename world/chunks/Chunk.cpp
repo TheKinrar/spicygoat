@@ -29,11 +29,6 @@ void Chunk::loadNBT(nbt::tag_compound& nbt) {
 
     if(nbt.has_key("SkyLight"))
         skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
-
-    if(getX() == -1 && getZ() == 0) {
-        std::cout << "CHUNK y=" << getY() << std::endl;
-        std::cout << palette->toString(true) << std::endl;
-    }
 }
 
 ChunkPalette *Chunk::getPalette() const {
@@ -41,7 +36,7 @@ ChunkPalette *Chunk::getPalette() const {
 }
 
 bool Chunk::hasData() {
-    return palette != nullptr;// && palette->getBitsPerBlock() == 4;
+    return palette != nullptr;
 }
 
 void Chunk::writeToByteArray(std::vector<std::byte> &array) {
@@ -53,8 +48,6 @@ void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     }
     PacketData::writeVarInt(data.size() / 8, array);
     PacketData::writeByteArray(data, array);
-
-    std::cout << "expected " << palette->getBitsPerBlock() * 512 << ", got " << data.size() << std::endl;
 
     for(int i = 0; i < 2048; ++i) {
         array.push_back(std::byte(blockLight[i]));
