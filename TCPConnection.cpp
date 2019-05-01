@@ -18,6 +18,7 @@ TCPConnection::TCPConnection(int sock, sockaddr_in addr) {
 }
 
 void TCPConnection::sendPacket(Packet *packet) {
+    m_send.lock();
     std::cout << getName() << " <= " << packet->toString() << std::endl;
 
     std::vector<std::byte> data = packet->bytes();
@@ -27,6 +28,7 @@ void TCPConnection::sendPacket(Packet *packet) {
     bytes.insert(bytes.end(), data.begin(), data.end());
 
     send(sock, (char*) bytes.data(), bytes.size(), 0);
+    m_send.unlock();
 }
 
 void TCPConnection::task() {
@@ -42,9 +44,11 @@ void TCPConnection::task() {
         PacketData packetData(data, length);
         Packet *packet = Packet::parse(&packetData, this);
 
-        std::cout << getName() << " => " << packet->toString() << std::endl;
+        if(packet != nullptr) {
+            std::cout << getName() << " => " << packet->toString() << std::endl;
 
-        packet->handle();
+            packet->handle();
+        }
         goto read;
     } catch(std::exception &e) {
         close(sock);

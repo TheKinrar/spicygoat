@@ -51,6 +51,8 @@ Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
                 return new PacketPluginMessageSB(data, conn);
             case 0x0E:
                 return new PacketKeepAliveSB(data, conn);
+            case 0x0F:
+                return nullptr;
             case 0x10:
                 return new PacketPlayerPosition(data, conn);
             case 0x11:

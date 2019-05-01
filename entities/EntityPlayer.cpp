@@ -18,13 +18,31 @@ void EntityPlayer::tick() {
 
     if(loadedChunks.empty())
         chunkChanged();
+
+    int n = 0;
+
+    for(auto it : loadingChunks) {
+        auto chunk = it.second;
+
+        if(chunk->hasData()) {
+            conn.sendPacket(new PacketChunkData(*chunk));
+        } else {
+            std::cerr << "no data for column " << chunk->toString() << std::endl;
+        }
+
+        loadingChunks.erase(it.first);
+
+        /*++n;
+        if(n == 20)
+            break;*/
+    }
 }
 
 void EntityPlayer::chunkChanged() {
-    int32_t min_x = getLocation().getChunkX() - 10;
-    int32_t max_x = getLocation().getChunkX() + 10;
-    int32_t min_z = getLocation().getChunkZ() - 10;
-    int32_t max_z = getLocation().getChunkZ() + 10;
+    int32_t min_x = getLocation().getChunkX() - 19;
+    int32_t max_x = getLocation().getChunkX() + 19;
+    int32_t min_z = getLocation().getChunkZ() - 19;
+    int32_t max_z = getLocation().getChunkZ() + 19;
 
     for(auto it : loadedChunks) {
         auto chunk = it.second;
@@ -42,12 +60,7 @@ void EntityPlayer::chunkChanged() {
             if(loadedChunks.find(pos) == loadedChunks.end()) {
                 ChunkColumn *column = Server::get()->getWorld().getChunk(x, z);
 
-                if(column->hasData()) {
-                    conn.sendPacket(new PacketChunkData(*column));
-                } else {
-                    std::cerr << "no data for column " << column->toString() << std::endl;
-                }
-
+                loadingChunks[pos] = column;
                 loadedChunks[pos] = column;
             }
         }

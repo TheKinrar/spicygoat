@@ -35,6 +35,7 @@ private:
     TCPConnection &conn;
 
     std::map<Position2D, ChunkColumn*> loadedChunks;
+    std::map<Position2D, ChunkColumn*> loadingChunks;
 };
 
 

@@ -41,6 +41,8 @@ private:
 
     std::thread *thread;
 
+    std::mutex m_send;
+
     std::mutex m_keepAlive;
     int64_t latestKeepAlive = 0;
     bool keepAliveOk = true;
