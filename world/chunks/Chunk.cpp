@@ -22,12 +22,15 @@ int32_t Chunk::getZ() const {
 }
 
 void Chunk::loadNBT(nbt::tag_compound& nbt) {
-    palette = ChunkPalette::fromNBT(nbt.at("Palette").as<nbt::tag_list>());
-    blockStates = nbt.at("BlockStates").as<nbt::tag_long_array>().get();
+    if(nbt.has_key("BlockStates")) {
+        palette = ChunkPalette::fromNBT(nbt.at("Palette").as<nbt::tag_list>());
+        blockStates = nbt.at("BlockStates").as<nbt::tag_long_array>().get();
+    }
 
-    blockLight = nbt.at("BlockLight").as<nbt::tag_byte_array>().get();
+    if (nbt.has_key("BlockLight"))
+        blockLight = nbt.at("BlockLight").as<nbt::tag_byte_array>().get();
 
-    if(nbt.has_key("SkyLight"))
+    if (nbt.has_key("SkyLight"))
         skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
 }
 
@@ -40,6 +43,8 @@ bool Chunk::hasData() {
 }
 
 void Chunk::writeToByteArray(std::vector<std::byte> &array) {
+    PacketData::writeShort(4096, array);
+
     palette->writeToByteArray(array);
 
     std::vector<std::byte> data;
@@ -48,12 +53,4 @@ void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     }
     PacketData::writeVarInt(data.size() / 8, array);
     PacketData::writeByteArray(data, array);
-
-    for(int i = 0; i < 2048; ++i) {
-        array.push_back(std::byte(blockLight[i]));
-    }
-
-    for(int i = 0; i < 2048; ++i) {
-        array.push_back(std::byte(skyLight[i]));
-    }
 }

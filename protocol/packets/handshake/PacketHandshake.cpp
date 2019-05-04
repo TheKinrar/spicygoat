@@ -41,7 +41,7 @@ void PacketHandshake::handle() {
     if(nextState == ConnectionState::STATUS) {
         conn->setState(nextState);
     } else if(nextState == ConnectionState::LOGIN) {
-        if(protocolVersion == 404) {
+        if(protocolVersion == 477) {
             conn->setState(nextState);
         } else {
             throw std::runtime_error("Protocol error: version mismatch");

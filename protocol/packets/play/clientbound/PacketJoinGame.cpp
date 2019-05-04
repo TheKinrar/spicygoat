@@ -14,9 +14,9 @@ std::vector<std::byte> PacketJoinGame::bytes() {
     PacketData::writeInt(player->getEID(), array);
     PacketData::writeUnsignedByte(0, array); // TODO gamemode
     PacketData::writeInt(0, array); // TODO dimension
-    PacketData::writeUnsignedByte(0, array); // TODO difficulty
     PacketData::writeUnsignedByte(1, array); // TODO max players (uint8_t!)
     PacketData::writeString("default", array); // TODO level type
+    PacketData::writeVarInt(10, array); // TODO view distance
     PacketData::writeBoolean(false, array); // TODO reduced debug info (?)
     return array;
 }

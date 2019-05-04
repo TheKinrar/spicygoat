@@ -8,7 +8,7 @@ PacketPlayerLocationCB::PacketPlayerLocationCB(Location location) : location(loc
 
 std::vector<std::byte> PacketPlayerLocationCB::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x32, array);
+    PacketData::writeVarInt(0x35, array);
     PacketData::writeDouble(location.getX(), array);
     PacketData::writeDouble(location.getY(), array);
     PacketData::writeDouble(location.getZ(), array);

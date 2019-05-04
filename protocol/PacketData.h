@@ -24,6 +24,8 @@ public:
     uint8_t readUnsignedByte();
     static void writeUnsignedByte(uint8_t val, std::vector<std::byte> &bytes);
 
+    static void writeShort(int16_t val, std::vector<std::byte> &bytes);
+
     uint16_t readUnsignedShort();
 
     int32_t readInt();

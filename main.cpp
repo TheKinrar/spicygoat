@@ -9,6 +9,11 @@ int main() {
     static_assert(sizeof(float) == 4);
     static_assert(sizeof(double) == 8);
 
+    Server::get()->getWorld().getChunk(0, 0);
+    Server::get()->getWorld().getChunk(-1, 0);
+    Server::get()->getWorld().getChunk(0, -1);
+    Server::get()->getWorld().getChunk(-1, -1);
+
     TCPServer server = TCPServer();
     std::thread tcpThread(&TCPServer::accept, &server);
 

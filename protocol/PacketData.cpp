@@ -39,6 +39,12 @@ void PacketData::writeUnsignedByte(uint8_t val, std::vector<std::byte> &bytes) {
     bytes.push_back(std::byte(val));
 }
 
+void PacketData::writeShort(int16_t val, std::vector<std::byte> &bytes) {
+    for(int i = 0; i < 2; i++) {
+        bytes.push_back(std::byte(val >> ((1 - i) * 8)));
+    }
+}
+
 int PacketData::readVarInt() {
     int bytes = 0;
     int result = 0;
@@ -165,8 +171,8 @@ void PacketData::writeByteArray(std::vector<std::byte> &val, std::vector<std::by
 
 void PacketData::writePosition(Position position, std::vector<std::byte> &bytes) {
     uint64_t val = ((((uint64_t) position.getX()) & 0x3FFFFFF) << 38) |
-            ((((uint64_t) position.getY()) & 0xFFF) << 26) |
-            (((uint64_t) position.getZ()) & 0x3FFFFFF);
+            ((((uint64_t) position.getZ()) & 0x3FFFFFF) << 12) |
+            (((uint64_t) position.getY()) & 0xFFF);
 
     writeUnsignedLong(val, bytes);
 }

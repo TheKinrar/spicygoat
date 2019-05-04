@@ -28,6 +28,7 @@ public:
     void setNbt(std::unique_ptr<nbt::tag_compound> &nbt);
 
     uint16_t writeToByteArray(std::vector<std::byte>&);
+    void writeHeightMapsToByteArray(std::vector<std::byte>&);
 
     std::string toString();
 
@@ -35,7 +36,7 @@ private:
     int32_t x, z;
     Chunk* chunks[16];
 
-    std::unique_ptr<nbt::tag_compound> nbt;
+    std::unique_ptr<nbt::tag_compound> nbt = nullptr;
     nbt::tag_compound *level = nullptr;
 };
 

@@ -9,7 +9,7 @@ PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkCo
 
 std::vector<std::byte> PacketChunkData::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x22, array);
+    PacketData::writeVarInt(0x21, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
     PacketData::writeBoolean(true, array); // full chunk
@@ -18,6 +18,7 @@ std::vector<std::byte> PacketChunkData::bytes() {
     uint16_t mask = chunkColumn.writeToByteArray(data);
 
     PacketData::writeVarInt(mask, array);
+    chunkColumn.writeHeightMapsToByteArray(array);
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 

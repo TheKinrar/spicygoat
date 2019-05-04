@@ -41,9 +41,11 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
             auto section = value.as<nbt::tag_compound>();
             int8_t y = section.at("Y").as<nbt::tag_byte>();
 
-            Chunk *chunk = new Chunk(x, section.at("Y").as<nbt::tag_byte>(), z);
-            chunk->loadNBT(section);
-            chunks[y] = chunk;
+            if(y > -1 && y < 16) {
+                auto chunk = new Chunk(x, y, z);
+                chunk->loadNBT(section);
+                chunks[y] = chunk;
+            }
         }
     }
 }
@@ -68,6 +70,35 @@ uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
     }
 
     return mask;
+}
+
+void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {
+    std::ostringstream stream;
+    nbt::io::stream_writer writer(stream);
+    //writer.write_payload(this->level->at("Heightmaps"));
+    //writer.write_type(nbt::tag_type::End);
+    //nbt::io::write_tag("Heightmaps", this->level->at("Heightmaps"), stream);
+
+    nbt::tag_compound c;
+    c["MOTION_BLOCKING"] = this->level->at("Heightmaps").as<nbt::tag_compound>().at("MOTION_BLOCKING");
+    /*writer.write_type(nbt::tag_type::Compound);
+    writer.write_payload(c);*/
+    writer.write_type(nbt::tag_type::End);
+
+    stream.seekp(0, std::ios::end);
+    int size = stream.tellp();
+    stream.seekp(0, std::ios::beg);
+
+    std::cout << stream.str() << std::endl;
+
+    const char *str = stream.str().c_str();
+    std::vector<std::byte> bytes;
+    bytes.reserve(size);
+    for(int i = 0; i < size; ++i) {
+        bytes.push_back(static_cast<std::byte>(str[i]));
+    }
+
+    PacketData::writeByteArray(bytes, array);
 }
 
 std::string ChunkColumn::toString() {
