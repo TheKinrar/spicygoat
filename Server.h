@@ -13,6 +13,9 @@
 
 class Server {
 public:
+    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.14";
+    inline static const int PROTOCOL_VERSION_NUMBER = 477;
+
     Server();
 
     static Server* get();
@@ -23,9 +26,13 @@ public:
 
     void tick();
 
+    unsigned long getPlayerCount();
+
     World& getWorld();
 
     ChunkPalette *getPalette() const;
+
+    void broadcastPacket(Packet*);
 
 private:
     ChunkPalette *palette;

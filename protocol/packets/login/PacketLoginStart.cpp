@@ -25,13 +25,14 @@ void PacketLoginStart::handle() {
     uuid_t uuid;
     uuid_generate(uuid);
 
+    conn->sendPacket(new PacketLoginSuccess(uuid, name));
+    conn->setState(ConnectionState::PLAY);
+
     EntityPlayer *player = Server::get()->createPlayer(uuid, name, *conn);
     conn->setPlayer(player);
 
     auto pos = Server::get()->getWorld().getSpawnPosition();
 
-    conn->sendPacket(new PacketLoginSuccess(uuid, name));
-    conn->setState(ConnectionState::PLAY);
     conn->sendPacket(new PacketJoinGame(player));
     CMBrand(std::string("SpicyGoat")).send(*conn);
     conn->sendPacket(new PacketServerDifficulty(0)); // TODO difficulty

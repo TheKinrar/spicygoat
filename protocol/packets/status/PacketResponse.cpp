@@ -3,6 +3,7 @@
 //
 
 #include "PacketResponse.h"
+#include "../../../Server.h"
 
 #include <nlohmann/json.hpp>
 
@@ -10,10 +11,10 @@ using json = nlohmann::json;
 
 std::vector<std::byte> PacketResponse::bytes() {
     json j;
-    j["version"]["name"] = "1.14";
-    j["version"]["protocol"] = 477;
-    j["players"]["max"] = 1;
-    j["players"]["online"] = 0;
+    j["version"]["name"] = Server::PROTOCOL_VERSION_NAME;
+    j["version"]["protocol"] = Server::PROTOCOL_VERSION_NUMBER;
+    j["players"]["max"] = 20;
+    j["players"]["online"] = Server::get()->getPlayerCount();
     j["players"]["sample"] = json::array();
     j["description"]["text"] = "§e§lSpicyGoat - 1.14\n§r§cExperimental server";
 

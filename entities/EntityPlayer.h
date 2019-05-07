@@ -23,13 +23,19 @@ public:
 
     void tick() override;
 
+    uuid_t& getUuid() const;
+
+    const std::string &getName() const;
+
+    TCPConnection &getConnection() const;
+
     std::string toString() override;
 
 protected:
     void chunkChanged() override;
 
 private:
-    uuid_t *uuid;
+    uuid_t& uuid;
     std::string name;
 
     TCPConnection &conn;

@@ -9,6 +9,7 @@
 #include <exception>
 #include <string>
 #include <vector>
+#include <uuid/uuid.h>
 #include "../world/geo/Position.h"
 
 class PacketData {
@@ -39,6 +40,8 @@ public:
 
     uint64_t readUnsignedLong();
     static void writeUnsignedLong(uint64_t, std::vector<std::byte> &);
+
+    static void writeUuid(uuid_t&, std::vector<std::byte> &);
 
     float readFloat();
     static void writeFloat(float, std::vector<std::byte> &);

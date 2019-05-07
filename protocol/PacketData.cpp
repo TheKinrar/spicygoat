@@ -133,6 +133,12 @@ void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) 
     }
 }
 
+void PacketData::writeUuid(uuid_t &uuid, std::vector<std::byte> &bytes) {
+    for(unsigned char i : uuid) {
+        bytes.push_back(std::byte(i));
+    }
+}
+
 float PacketData::readFloat() {
     int32_t val = readInt();
     return *((float*)(&val));

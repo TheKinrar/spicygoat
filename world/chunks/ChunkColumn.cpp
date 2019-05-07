@@ -74,24 +74,26 @@ uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
 
 void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {
     std::ostringstream stream;
-    nbt::io::stream_writer writer(stream);
+    //nbt::io::stream_writer writer(stream);
     //writer.write_payload(this->level->at("Heightmaps"));
     //writer.write_type(nbt::tag_type::End);
-    //nbt::io::write_tag("Heightmaps", this->level->at("Heightmaps"), stream);
 
-    nbt::tag_compound c;
-    c["MOTION_BLOCKING"] = this->level->at("Heightmaps").as<nbt::tag_compound>().at("MOTION_BLOCKING");
+    // TODO: figure out if we need so send all heightmaps or MOTION_BLOCKING only
+    nbt::io::write_tag("", this->level->at("Heightmaps"), stream);
+
+    //nbt::tag_compound c;
+    //c["MOTION_BLOCKING"] = this->level->at("Heightmaps").as<nbt::tag_compound>().at("MOTION_BLOCKING");
     /*writer.write_type(nbt::tag_type::Compound);
     writer.write_payload(c);*/
-    writer.write_type(nbt::tag_type::End);
+//    writer.write_type(nbt::tag_type::End);
+    //nbt::io::write_tag("", c, stream);
 
     stream.seekp(0, std::ios::end);
     int size = stream.tellp();
     stream.seekp(0, std::ios::beg);
 
-    std::cout << stream.str() << std::endl;
-
-    const char *str = stream.str().c_str();
+    std::string std_str = stream.str();
+    const char *str = std_str.c_str();
     std::vector<std::byte> bytes;
     bytes.reserve(size);
     for(int i = 0; i < size; ++i) {

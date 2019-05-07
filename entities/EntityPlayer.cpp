@@ -8,8 +8,7 @@
 #include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 #include "../protocol/packets/play/clientbound/PacketChunkData.h"
 
-EntityPlayer::EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn) : conn(conn) {
-    this->uuid = &uuid;
+EntityPlayer::EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn) : uuid(uuid), conn(conn) {
     this->name = name;
 }
 
@@ -32,9 +31,9 @@ void EntityPlayer::tick() {
 
         loadingChunks.erase(it.first);
 
-        /*++n;
-        if(n == 20)
-            break;*/
+        ++n;
+        if(n == 5)
+            break;
     }
 }
 
@@ -69,4 +68,16 @@ void EntityPlayer::chunkChanged() {
 
 std::string EntityPlayer::toString() {
     return std::string("EntityPlayer{name=") + name + "}";
+}
+
+uuid_t& EntityPlayer::getUuid() const {
+    return uuid;
+}
+
+const std::string &EntityPlayer::getName() const {
+    return name;
+}
+
+TCPConnection &EntityPlayer::getConnection() const {
+    return conn;
 }

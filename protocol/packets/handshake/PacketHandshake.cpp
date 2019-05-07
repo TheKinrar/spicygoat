@@ -4,6 +4,7 @@
 
 #include <stdexcept>
 #include "PacketHandshake.h"
+#include "../../../Server.h"
 
 PacketHandshake::PacketHandshake(PacketData *data, TCPConnection* conn) {
     this->conn = conn;
@@ -41,7 +42,7 @@ void PacketHandshake::handle() {
     if(nextState == ConnectionState::STATUS) {
         conn->setState(nextState);
     } else if(nextState == ConnectionState::LOGIN) {
-        if(protocolVersion == 477) {
+        if(protocolVersion == Server::PROTOCOL_VERSION_NUMBER) {
             conn->setState(nextState);
         } else {
             throw std::runtime_error("Protocol error: version mismatch");
