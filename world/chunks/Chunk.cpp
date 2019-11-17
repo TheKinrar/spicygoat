@@ -45,6 +45,7 @@ bool Chunk::hasData() {
 void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     PacketData::writeShort(4096, array);
 
+    //std::cout << palette->toString(true) << std::endl; TODO
     palette->writeToByteArray(array);
 
     std::vector<std::byte> data;

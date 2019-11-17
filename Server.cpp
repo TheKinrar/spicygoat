@@ -13,6 +13,9 @@ Server::Server() {
     ifs >> j;
     palette = ChunkPalette::fromJson(j);
     ifs.close();
+
+
+    //std::cout << palette->toString(true) << std::endl; TODO
 }
 
 Server* Server::get() {

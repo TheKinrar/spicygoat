@@ -8,10 +8,13 @@
 
 #include <string>
 #include <cstdint>
+#include <map>
 
 class BlockState {
 public:
     BlockState(const std::string &name);
+
+    void addProperty(const std::string& key, std::string value);
 
     const std::string &getName() const;
 
@@ -23,8 +26,12 @@ public:
 
     bool operator>=(const BlockState &rhs) const;
 
+    std::string toString();
+
 private:
     std::string name;
+
+    std::map<std::string, std::string> properties;
 };
 
 

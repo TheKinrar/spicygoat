@@ -20,6 +20,15 @@ ChunkPalette* ChunkPalette::fromNBT(nbt::tag_list &list) {
         auto & item = list.at(i).as<nbt::tag_compound>();
 
         auto state = new BlockState(item.at("Name").as<nbt::tag_string>().get());
+
+        if(item.has_key("Properties")) {
+            auto props = item.at("Properties").as<nbt::tag_compound>();
+
+            for(auto &prop : props) {
+                state->addProperty(prop.first, prop.second.as<nbt::tag_string>().get());
+            }
+        }
+
         palette->addBlockState(*state, i);
     }
 
@@ -34,6 +43,13 @@ ChunkPalette *ChunkPalette::fromJson(nlohmann::json &json) {
     for(nlohmann::json::iterator it = json.begin(); it != json.end(); ++it) {
         for(auto &e : it.value()["states"]) {
             auto state = new BlockState(it.key());
+
+            if(e.find("properties") != e.end()) {
+                for(auto prop_it = e["properties"].begin(); prop_it != e["properties"].end(); ++prop_it) {
+                    state->addProperty(prop_it.key(), prop_it.value());
+                }
+            }
+
             palette->addBlockState(*state, e["id"]);
         }
     }
@@ -86,7 +102,7 @@ std::string ChunkPalette::mappingToString() {
     std::string str;
 
     for(auto & pair : idToState) {
-        str += std::to_string(pair.first) + " -> " + pair.second->getName();
+        str += std::to_string(pair.first) + " -> " + pair.second->toString();
 
         if(!global)
             str += std::string(" -> ") + std::to_string(Server::get()->getPalette()->getBlockStateId(*pair.second));

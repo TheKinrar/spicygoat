@@ -17,11 +17,19 @@ TCPServer::TCPServer() {
 
     errno = 0;
     bind(sock, (sockaddr*) &sin, sizeof(sin));
-    std::cerr << strerror(errno) << std::endl;
+
+    if(errno) {
+        std::cerr << "bind failed: " << strerror(errno) << std::endl;
+        exit(1);
+    }
 
     errno = 0;
     listen(sock, 5);
-    std::cerr << strerror(errno) << std::endl;
+
+    if(errno) {
+        std::cerr << "listen failed: " << strerror(errno) << std::endl;
+        exit(1);
+    }
 
     new std::thread(&TCPServer::keepAliveTask, this);
 }

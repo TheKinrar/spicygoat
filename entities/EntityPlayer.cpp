@@ -59,8 +59,10 @@ void EntityPlayer::chunkChanged() {
             if(loadedChunks.find(pos) == loadedChunks.end()) {
                 ChunkColumn *column = Server::get()->getWorld().getChunk(x, z);
 
-                loadingChunks[pos] = column;
-                loadedChunks[pos] = column;
+                if(column) {
+                    loadingChunks[pos] = column;
+                    loadedChunks[pos] = column;
+                }
             }
         }
     }
