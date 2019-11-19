@@ -19,6 +19,7 @@
 #include "play/serverbound/PacketKeepAliveSB.h"
 #include "play/serverbound/PacketEntityAction.h"
 #include "play/serverbound/PacketPlayerAbilitiesSB.h"
+#include "play/serverbound/PacketPlayerDigging.h"
 
 Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
     int id = data->readVarInt();
@@ -61,8 +62,12 @@ Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
                 return new PacketPlayerLook(data, conn);
             case 0x19:
                 return new PacketPlayerAbilitiesSB(data, conn);
+            case 0x1A:
+                return new PacketPlayerDigging(data, conn);
             case 0x1B:
                 return new PacketEntityAction(data, conn);
+            case 0x2A:
+                return nullptr; // TODO Animation
         }
     }
 

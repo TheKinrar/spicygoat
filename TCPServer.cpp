@@ -68,3 +68,8 @@ void TCPServer::keepAliveTask() {
 bool TCPServer::isRunning() const {
     return running;
 }
+
+void TCPServer::stop() {
+    running = false;
+    close(sock);
+}

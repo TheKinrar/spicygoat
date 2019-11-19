@@ -38,10 +38,10 @@ void EntityPlayer::tick() {
 }
 
 void EntityPlayer::chunkChanged() {
-    int32_t min_x = getLocation().getChunkX() - 10;
-    int32_t max_x = getLocation().getChunkX() + 10;
-    int32_t min_z = getLocation().getChunkZ() - 10;
-    int32_t max_z = getLocation().getChunkZ() + 10;
+    int32_t min_x = getLocation().getChunkX() - 5;
+    int32_t max_x = getLocation().getChunkX() + 5;
+    int32_t min_z = getLocation().getChunkZ() - 5;
+    int32_t max_z = getLocation().getChunkZ() + 5;
 
     for(auto it : loadedChunks) {
         auto chunk = it.second;

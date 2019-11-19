@@ -21,6 +21,7 @@ public:
     void keepAliveTask();
 
     bool isRunning() const;
+    void stop();
 
 private:
     bool running = true;

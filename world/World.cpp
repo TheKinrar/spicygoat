@@ -11,7 +11,7 @@
 #include "World.h"
 
 World::World() {
-    std::ifstream ifs("/home/thekinrar/temparia/testworld14/level.dat", std::ios::binary);
+    std::ifstream ifs("/home/thekinrar/.local/share/multimc/instances/Temparia/.minecraft/saves/world/level.dat", std::ios::binary);
     zlib::izlibstream buf(ifs);
 
     auto level = nbt::io::read_compound(buf).second->at("Data").as<nbt::tag_compound>();

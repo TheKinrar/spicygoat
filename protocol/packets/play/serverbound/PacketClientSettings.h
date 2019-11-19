@@ -5,7 +5,6 @@
 #ifndef SPICYGOAT_PACKETCLIENTSETTINGS_H
 #define SPICYGOAT_PACKETCLIENTSETTINGS_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketClientSettings : public ServerBoundPacket {

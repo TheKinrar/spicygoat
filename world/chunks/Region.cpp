@@ -12,7 +12,7 @@
 #include "../../protocol/PacketData.h"
 
 Region::Region(int32_t x, int32_t z) : x(x), z(z) {
-    std::ifstream ifs(std::string("/home/thekinrar/temparia/testworld14/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"), std::ios::binary | std::ios::ate);
+    std::ifstream ifs(std::string("/home/thekinrar/.local/share/multimc/instances/Temparia/.minecraft/saves/world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"), std::ios::binary | std::ios::ate);
     std::fpos len = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
 

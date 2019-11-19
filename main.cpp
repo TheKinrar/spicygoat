@@ -1,7 +1,14 @@
 #include <iostream>
 #include "TCPServer.h"
 #include "Server.h"
-#include "protocol/packets/play/clientbound/PacketChunkData.h"
+
+static TCPServer server;
+
+void sigterm_handler(int sig) {
+    std::cout << "Stopping server" << std::endl;
+
+    server.stop();
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -9,7 +16,8 @@ int main() {
     static_assert(sizeof(float) == 4);
     static_assert(sizeof(double) == 8);
 
-    TCPServer server = TCPServer();
+    signal(SIGTERM, sigterm_handler);
+
     std::thread tcpThread(&TCPServer::accept, &server);
 
     while(server.isRunning()) {

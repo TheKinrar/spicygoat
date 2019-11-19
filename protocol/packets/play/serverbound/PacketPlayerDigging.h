@@ -15,7 +15,7 @@ public:
 
     std::string toString() const override;
 
-    enum Status {
+    enum class Status {
         STARTED_DIGGING = 0,
         CANCELLED_DIGGING = 1,
         FINISHED_DIGGING = 2,

@@ -57,6 +57,7 @@ public:
 
     static void writeByteArray(std::vector<std::byte> &, std::vector<std::byte> &);
 
+    Position readPosition();
     static void writePosition(Position position, std::vector<std::byte> &);
 
 private:
