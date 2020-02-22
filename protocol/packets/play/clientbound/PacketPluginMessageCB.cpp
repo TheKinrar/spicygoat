@@ -11,7 +11,7 @@ PacketPluginMessageCB::PacketPluginMessageCB(std::string channel, std::vector<st
 
 std::vector<std::byte> PacketPluginMessageCB::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x18, array);
+    PacketData::writeVarInt(0x19, array);
     PacketData::writeString(channel, array);
     PacketData::writeByteArray(data, array);
     return array;

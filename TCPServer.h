@@ -10,11 +10,14 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <libnet.h>
+#include <poll.h>
 
 class TCPServer {
 public:
     TCPServer();
     ~TCPServer();
+    TCPServer(const TCPServer&) = delete;
+    void operator=(const TCPServer&) = delete;
 
     void accept();
 
@@ -27,6 +30,7 @@ private:
     bool running = true;
 
     int sock;
+    pollfd fds[10];
 
     std::vector<TCPConnection*> connections;
 };

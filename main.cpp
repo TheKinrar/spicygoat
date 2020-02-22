@@ -30,5 +30,7 @@ int main() {
         }
     }
 
+    tcpThread.join();
+
     return 0;
 }

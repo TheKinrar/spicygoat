@@ -9,10 +9,11 @@
 
 TCPServer::TCPServer() {
     sock = socket(AF_INET, SOCK_STREAM, 0);
+    ioctl(sock, FIONBIO);
 
-    sockaddr_in sin;
-    sin.sin_addr.s_addr = inet_addr("0.0.0.0");
+    sockaddr_in sin{};
     sin.sin_family = AF_INET;
+    sin.sin_addr.s_addr = inet_addr("0.0.0.0");
     sin.sin_port = htons(25566);
 
     errno = 0;
@@ -31,24 +32,36 @@ TCPServer::TCPServer() {
         exit(1);
     }
 
+    memset(fds, 0, sizeof(fds));
+
+    fds[0].fd = sock;
+    fds[0].events = POLLIN;
+
     new std::thread(&TCPServer::keepAliveTask, this);
 }
 
 TCPServer::~TCPServer() {
-    close(sock);
+    std::cout << "TCP server stopped" << std::endl;
 }
 
 void TCPServer::accept() {
     while(running) {
-        std::cout << "accept" << std::endl;
+        int ret = poll(fds, 1, 100);
 
-        sockaddr_in csin;
-        socklen_t csinlen = sizeof(csin);
-        int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+        if(ret > 0) {
+            std::cout << "accept" << std::endl;
 
-        auto conn = new TCPConnection(csock, csin);
-        connections.push_back(conn);
+            sockaddr_in csin;
+            socklen_t csinlen = sizeof(csin);
+            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+
+            auto conn = new TCPConnection(csock, csin);
+            connections.push_back(conn);
+        }
     }
+
+    std::cout << "TCP server stopping" << std::endl;
+    close(sock);
 }
 
 void TCPServer::keepAliveTask() {
@@ -71,5 +84,4 @@ bool TCPServer::isRunning() const {
 
 void TCPServer::stop() {
     running = false;
-    close(sock);
 }

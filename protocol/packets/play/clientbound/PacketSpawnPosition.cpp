@@ -8,7 +8,7 @@ PacketSpawnPosition::PacketSpawnPosition(Position position) : position(position)
 
 std::vector<std::byte> PacketSpawnPosition::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x4D, array);
+    PacketData::writeVarInt(0x4E, array);
     PacketData::writePosition(position, array);
     return array;
 }

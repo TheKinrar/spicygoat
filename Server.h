@@ -13,8 +13,8 @@
 
 class Server {
 public:
-    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.14.4";
-    inline static const int PROTOCOL_VERSION_NUMBER = 498;
+    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.15.2";
+    inline static const int PROTOCOL_VERSION_NUMBER = 578;
 
     Server();
 

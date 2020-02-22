@@ -37,6 +37,8 @@ private:
     Chunk* chunks[16];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
+
+public: // TODO should be private
     nbt::tag_compound *level = nullptr;
 };
 

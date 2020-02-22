@@ -20,6 +20,8 @@ class EntityPlayer;
 class TCPConnection {
 public:
     TCPConnection(int sock, sockaddr_in addr);
+    TCPConnection(const TCPConnection&) = delete;
+    void operator=(const TCPConnection&) = delete;
 
     ConnectionState getState() const;
     void setState(ConnectionState newState);

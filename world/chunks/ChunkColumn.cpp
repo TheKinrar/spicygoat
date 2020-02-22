@@ -64,11 +64,6 @@ uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
         chunk->writeToByteArray(array);
     }
 
-    auto biomes = level->at("Biomes").as<nbt::tag_int_array>();
-    for(int i = 0; i < 256; ++i) {
-        PacketData::writeInt(biomes.at(i), array);
-    }
-
     return mask;
 }
 

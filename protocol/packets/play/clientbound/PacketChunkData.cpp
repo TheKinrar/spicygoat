@@ -3,13 +3,14 @@
 //
 
 #include <iostream>
+#include <tag_array.h>
 #include "PacketChunkData.h"
 
 PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
 
 std::vector<std::byte> PacketChunkData::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x21, array);
+    PacketData::writeVarInt(0x22, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
     PacketData::writeBoolean(true, array); // full chunk
@@ -19,6 +20,12 @@ std::vector<std::byte> PacketChunkData::bytes() {
 
     PacketData::writeVarInt(mask, array);
     chunkColumn.writeHeightMapsToByteArray(array);
+
+    nbt::tag_int_array biomes = chunkColumn.level->at("Biomes").as<nbt::tag_int_array>();
+    for(int i = 0; i < 1024; ++i) {
+        PacketData::writeInt(biomes.at(i), array);
+    }
+
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 
