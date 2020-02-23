@@ -9,6 +9,7 @@
 #include "entities/EntityPlayer.h"
 #include "Server.h"
 #include "protocol/packets/play/clientbound/PacketKeepAliveCB.h"
+#include "TCPServer.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) {
     this->sock = sock;
@@ -53,6 +54,11 @@ void TCPConnection::task() {
     } catch(std::exception &e) {
         close(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
+        TCPServer::get().removeConnection(this);
+
+        if(player) {
+            Server::get()->removePlayer(*player);
+        }
     }
 }
 

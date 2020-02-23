@@ -2,12 +2,10 @@
 #include "TCPServer.h"
 #include "Server.h"
 
-static TCPServer server;
-
 void sigterm_handler(int sig) {
     std::cout << "Stopping server" << std::endl;
 
-    server.stop();
+    TCPServer::get().stop();
 }
 
 int main() {
@@ -18,9 +16,9 @@ int main() {
 
     signal(SIGTERM, sigterm_handler);
 
-    std::thread tcpThread(&TCPServer::accept, &server);
+    std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
 
-    while(server.isRunning()) {
+    while(TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();
         Server::get()->tick();
         long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();

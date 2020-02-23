@@ -56,7 +56,7 @@ void TCPServer::accept() {
             int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
 
             auto conn = new TCPConnection(csock, csin);
-            connections.push_back(conn);
+            connections.push_front(conn);
         }
     }
 
@@ -84,4 +84,13 @@ bool TCPServer::isRunning() const {
 
 void TCPServer::stop() {
     running = false;
+}
+
+void TCPServer::removeConnection(TCPConnection *conn) {
+    connections.remove(conn);
+}
+
+TCPServer &TCPServer::get() {
+    static TCPServer server;
+    return server;
 }

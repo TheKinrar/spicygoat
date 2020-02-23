@@ -19,6 +19,8 @@ public:
     TCPServer(const TCPServer&) = delete;
     void operator=(const TCPServer&) = delete;
 
+    static TCPServer& get();
+
     void accept();
 
     void keepAliveTask();
@@ -26,13 +28,15 @@ public:
     bool isRunning() const;
     void stop();
 
+    void removeConnection(TCPConnection*);
+
 private:
     bool running = true;
 
     int sock;
     pollfd fds[10];
 
-    std::vector<TCPConnection*> connections;
+    std::forward_list<TCPConnection*> connections;
 };
 
 

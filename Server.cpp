@@ -26,19 +26,25 @@ Server* Server::get() {
 EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
     auto player = new EntityPlayer(uuid, name, conn);
 
-    std::vector<EntityPlayer*> array;
-    array.push_back(player);
+    std::forward_list<EntityPlayer*> array;
+    array.push_front(player);
     auto packetForAll = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array);
     broadcastPacket(packetForAll);
     delete(packetForAll);
 
-    players.push_back(player);
+    players.push_front(player);
+    playerCount++;
 
     auto packetForOne = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players);
     conn.sendPacket(packetForOne);
     delete(packetForOne);
 
     return player;
+}
+
+void Server::removePlayer(EntityPlayer &p) {
+    players.remove(&p);
+    playerCount--;
 }
 
 int32_t Server::nextEID() {
@@ -66,6 +72,6 @@ void Server::broadcastPacket(Packet *packet) {
 }
 
 unsigned long Server::getPlayerCount() {
-    return players.size();
+    return playerCount;
 }
 

@@ -21,6 +21,7 @@ public:
     static Server* get();
 
     EntityPlayer* createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn);
+    void removePlayer(EntityPlayer&);
 
     int32_t nextEID();
 
@@ -37,7 +38,8 @@ public:
 private:
     ChunkPalette *palette;
 
-    std::vector<EntityPlayer*> players;
+    std::forward_list<EntityPlayer*> players;
+    int playerCount = 0;
 
     int32_t next_eid = 0;
     std::vector<Entity*> entities;
