@@ -36,21 +36,21 @@ void TCPConnection::task() {
     std::cout << getName() << " connected" << std::endl;
 
     try {
-        read:
-        int length = readVarInt();
+        while(TCPServer::get().isRunning()) {
+            int length = readVarInt();
 
-        char *data = new char[length];
-        recv(sock, data, length, 0);
+            char *data = new char[length];
+            recv(sock, data, length, 0);
 
-        PacketData packetData(data, length);
-        Packet *packet = Packet::parse(&packetData, this);
+            PacketData packetData(data, length);
+            Packet *packet = Packet::parse(&packetData, this);
 
-        if(packet != nullptr) {
-            std::cout << getName() << " => " << packet->toString() << std::endl;
+            if (packet != nullptr) {
+                std::cout << getName() << " => " << packet->toString() << std::endl;
 
-            packet->handle();
+                packet->handle();
+            }
         }
-        goto read;
     } catch(std::exception &e) {
         close(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
