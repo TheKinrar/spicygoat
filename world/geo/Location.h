@@ -40,6 +40,8 @@ public:
 
     ChunkColumn * getChunkColumn() const;
 
+    [[nodiscard]] double distanceSquared(const Location& other) const;
+
     std::string toString() const;
 
     bool operator==(const Location &rhs) const;

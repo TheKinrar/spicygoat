@@ -38,10 +38,12 @@ void EntityPlayer::tick() {
 }
 
 void EntityPlayer::chunkChanged() {
-    int32_t min_x = getLocation().getChunkX() - 5;
-    int32_t max_x = getLocation().getChunkX() + 5;
-    int32_t min_z = getLocation().getChunkZ() - 5;
-    int32_t max_z = getLocation().getChunkZ() + 5;
+    Entity::chunkChanged();
+
+    int32_t min_x = getLocation().getChunkX() - Server::VIEW_DISTANCE;
+    int32_t max_x = getLocation().getChunkX() + Server::VIEW_DISTANCE;
+    int32_t min_z = getLocation().getChunkZ() - Server::VIEW_DISTANCE;
+    int32_t max_z = getLocation().getChunkZ() + Server::VIEW_DISTANCE;
 
     for(auto it : loadedChunks) {
         auto chunk = it.second;
@@ -63,6 +65,17 @@ void EntityPlayer::chunkChanged() {
                     loadingChunks[pos] = column;
                     loadedChunks[pos] = column;
                 }
+            }
+        }
+    }
+
+    nearbyEntities.clear();
+    for(auto* e : Server::get()->getEntities()) {
+        if(e != this) {
+            double d = e->getLocation().distanceSquared(getLocation());
+
+            if(d <= Server::ENTITY_VIEW_DISTANCE_SQ) {
+                nearbyEntities.insert(e);
             }
         }
     }

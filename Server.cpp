@@ -8,7 +8,7 @@
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 
 Server::Server() {
-    std::ifstream ifs("/home/thekinrar/temparia/generated/1.14.4/reports/blocks.json");
+    std::ifstream ifs("/home/thekinrar/temparia/generated/1.15.2/reports/blocks.json");
     nlohmann::json j;
     ifs >> j;
     palette = ChunkPalette::fromJson(j);
@@ -32,6 +32,7 @@ EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection
     broadcastPacket(packetForAll);
     delete(packetForAll);
 
+    entities.push_front(player);
     players.push_front(player);
     playerCount++;
 
@@ -43,8 +44,17 @@ EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection
 }
 
 void Server::removePlayer(EntityPlayer &p) {
+    entities.remove(&p);
     players.remove(&p);
     playerCount--;
+}
+
+const std::forward_list<Entity *> &Server::getEntities() const {
+    return entities;
+}
+
+const std::forward_list<EntityPlayer *> &Server::getPlayers() const {
+    return players;
 }
 
 int32_t Server::nextEID() {

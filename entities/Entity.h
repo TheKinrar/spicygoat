@@ -8,7 +8,9 @@
 #include <mutex>
 #include <cstdint>
 #include <string>
+#include <set>
 #include "../world/geo/Location.h"
+#include "EntityPlayer.h"
 
 class Entity {
 public:

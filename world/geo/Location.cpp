@@ -82,3 +82,11 @@ ChunkColumn * Location::getChunkColumn() const {
     static auto world = new World();
     return world->getChunk(getChunkX(), getChunkZ());
 }
+
+double Location::distanceSquared(const Location &other) const {
+    double dx = x - other.x;
+    double dy = y - other.y;
+    double dz = z - other.z;
+
+    return dx*dx + dy*dy + dz*dz;
+}

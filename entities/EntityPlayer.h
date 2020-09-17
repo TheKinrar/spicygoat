@@ -42,6 +42,8 @@ private:
 
     std::map<Position2D, ChunkColumn*> loadedChunks;
     std::map<Position2D, ChunkColumn*> loadingChunks;
+
+    std::set<Entity*> nearbyEntities;
 };
 
 

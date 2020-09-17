@@ -69,7 +69,8 @@ void Entity::tick() {
     }
 }
 
-void Entity::chunkChanged() {}
+void Entity::chunkChanged() {
+}
 
 std::string Entity::toString() {
     return std::string("Entity{eid=") + std::to_string(eid) + "}";
