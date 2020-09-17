@@ -18,5 +18,7 @@ std::vector<std::byte> PacketLoginSuccess::bytes() {
 }
 
 std::string PacketLoginSuccess::toString() const {
-    return std::string("PacketLoginSuccess{uuid=") + uuid + ",username=" + username + "}";
+    char uuid_str[37];
+    uuid_unparse(uuid, uuid_str);
+    return std::string("PacketLoginSuccess{uuid=") + uuid_str + ",username=" + username + "}";
 }
