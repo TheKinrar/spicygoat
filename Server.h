@@ -28,18 +28,20 @@ public:
     [[nodiscard]] const std::forward_list<Entity*>& getEntities() const;
     [[nodiscard]] const std::forward_list<EntityPlayer*>& getPlayers() const;
     int32_t nextEID();
-    unsigned long getPlayerCount();
+    unsigned long getPlayerCount() const;
 
     void tick();
 
     World& getWorld();
 
-    ChunkPalette *getPalette() const;
+    [[nodiscard]] ChunkPalette *getPalette() const;
+    [[nodiscard]] const std::vector<std::byte> &getCodec() const;
 
     void broadcastPacket(Packet*);
 
 private:
     ChunkPalette *palette;
+    std::vector<std::byte> codec;
 
     std::forward_list<EntityPlayer*> players;
     int playerCount = 0;

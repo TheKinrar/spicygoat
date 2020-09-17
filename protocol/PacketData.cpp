@@ -171,7 +171,7 @@ void PacketData::writeString(const std::string& string, std::vector<std::byte> &
             [](unsigned char c) { return std::byte(c);});
 }
 
-void PacketData::writeByteArray(std::vector<std::byte> &val, std::vector<std::byte> &bytes) {
+void PacketData::writeByteArray(const std::vector<std::byte> &val, std::vector<std::byte> &bytes) {
     bytes.insert(bytes.end(), val.begin(), val.end());
 }
 

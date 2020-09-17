@@ -55,7 +55,7 @@ public:
     std::string readString();
     static void writeString(const std::string&, std::vector<std::byte> &);
 
-    static void writeByteArray(std::vector<std::byte> &, std::vector<std::byte> &);
+    static void writeByteArray(const std::vector<std::byte> &, std::vector<std::byte> &);
 
     Position readPosition();
     static void writePosition(Position position, std::vector<std::byte> &);

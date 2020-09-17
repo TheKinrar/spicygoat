@@ -14,6 +14,17 @@ Server::Server() {
     palette = ChunkPalette::fromJson(j);
     ifs.close();
 
+    std::ifstream ifsc("codec.dat", std::ios::binary);
+    ifsc.unsetf(std::ios::skipws);
+    ifsc.seekg(0, std::ios::end);
+    size_t len = ifsc.tellg();
+    ifsc.seekg(0, std::ios::beg);
+    std::vector<unsigned char> vec;
+    vec.reserve(len);
+    vec.insert(vec.begin(),
+                 std::istream_iterator<unsigned char>(ifsc), std::istream_iterator<unsigned char>());
+    codec.reserve(len);
+    for(unsigned char& c : vec) codec.push_back(static_cast<std::byte>(c));
 
     //std::cout << palette->toString(true) << std::endl; TODO
 }
@@ -81,7 +92,11 @@ void Server::broadcastPacket(Packet *packet) {
     }
 }
 
-unsigned long Server::getPlayerCount() {
+unsigned long Server::getPlayerCount() const {
     return playerCount;
+}
+
+const std::vector<std::byte> &Server::getCodec() const {
+    return codec;
 }
 

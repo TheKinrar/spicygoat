@@ -21,10 +21,10 @@ std::vector<std::byte> PacketChunkData::bytes() {
     PacketData::writeVarInt(mask, array);
     chunkColumn.writeHeightMapsToByteArray(array);
 
-    PacketData::writeVarInt(1024, array);
     nbt::tag_int_array biomes = chunkColumn.level->at("Biomes").as<nbt::tag_int_array>();
-    for(int i = 0; i < 1024; ++i) {
-        PacketData::writeVarInt(biomes.at(i), array);
+    PacketData::writeVarInt(biomes.size(), array);
+    for(int biome : biomes) {
+        PacketData::writeVarInt(biome, array);
     }
 
     PacketData::writeVarInt(data.size(), array);
