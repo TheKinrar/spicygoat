@@ -8,7 +8,7 @@ PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward
 
 std::vector<std::byte> PacketPlayerInfo::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x34, array);
+    PacketData::writeVarInt(0x32, array);
     PacketData::writeVarInt(action, array);
     PacketData::writeVarInt(std::distance(players.begin(), players.end()), array);
 

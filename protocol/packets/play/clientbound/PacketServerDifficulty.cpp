@@ -10,7 +10,7 @@ PacketServerDifficulty::PacketServerDifficulty(uint8_t difficulty) {
 
 std::vector<std::byte> PacketServerDifficulty::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x0E, array);
+    PacketData::writeVarInt(0x0D, array);
     PacketData::writeUnsignedByte(0, array);
     PacketData::writeBoolean(false, array); // TODO: difficulty locked?
     return array;

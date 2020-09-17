@@ -13,7 +13,7 @@ std::vector<std::byte> PacketPlayerAbilities::bytes() {
     int8_t field = invulnerable | (flying << 1) | (allowFlying << 2) | (creative << 3);
 
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x32, array);
+    PacketData::writeVarInt(0x30, array);
     PacketData::writeByte(field, array);
     PacketData::writeFloat(flyingSpeed, array);
     PacketData::writeFloat(fovModifier, array);

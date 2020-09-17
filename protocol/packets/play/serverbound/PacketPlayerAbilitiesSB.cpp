@@ -5,9 +5,7 @@
 #include "PacketPlayerAbilitiesSB.h"
 
 PacketPlayerAbilitiesSB::PacketPlayerAbilitiesSB(PacketData *data, TCPConnection *conn) : conn(conn) {
-    data->readByte();
-    flyingSpeed = data->readFloat();
-    walkingSpeed = data->readFloat();
+    flying = data->readUnsignedByte() & 0x02u;
 }
 
 void PacketPlayerAbilitiesSB::handle() {

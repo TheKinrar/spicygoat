@@ -8,7 +8,7 @@
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 
 Server::Server() {
-    std::ifstream ifs("/home/thekinrar/temparia/generated/1.15.2/reports/blocks.json");
+    std::ifstream ifs("blocks.json");
     nlohmann::json j;
     ifs >> j;
     palette = ChunkPalette::fromJson(j);

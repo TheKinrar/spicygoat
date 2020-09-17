@@ -10,7 +10,7 @@ PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkCo
 
 std::vector<std::byte> PacketChunkData::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x22, array);
+    PacketData::writeVarInt(0x20, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
     PacketData::writeBoolean(true, array); // full chunk
@@ -21,9 +21,10 @@ std::vector<std::byte> PacketChunkData::bytes() {
     PacketData::writeVarInt(mask, array);
     chunkColumn.writeHeightMapsToByteArray(array);
 
+    PacketData::writeVarInt(1024, array);
     nbt::tag_int_array biomes = chunkColumn.level->at("Biomes").as<nbt::tag_int_array>();
     for(int i = 0; i < 1024; ++i) {
-        PacketData::writeInt(biomes.at(i), array);
+        PacketData::writeVarInt(biomes.at(i), array);
     }
 
     PacketData::writeVarInt(data.size(), array);

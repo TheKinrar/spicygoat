@@ -50,23 +50,23 @@ Packet* Packet::parse(PacketData* data, TCPConnection* conn) {
                 return new PacketClientSettings(data, conn);
             case 0x0B:
                 return new PacketPluginMessageSB(data, conn);
-            case 0x0F:
+            case 0x10:
                 return new PacketKeepAliveSB(data, conn);
-            case 0x14:
-                return nullptr; // TODO Player
-            case 0x11:
-                return new PacketPlayerPosition(data, conn);
             case 0x12:
-                return new PacketPlayerPositionLook(data, conn);
+                return new PacketPlayerPosition(data, conn);
             case 0x13:
+                return new PacketPlayerPositionLook(data, conn);
+            case 0x14:
                 return new PacketPlayerLook(data, conn);
-            case 0x19:
-                return new PacketPlayerAbilitiesSB(data, conn);
+            case 0x15:
+                return nullptr; // TODO Player
             case 0x1A:
-                return new PacketPlayerDigging(data, conn);
+                return new PacketPlayerAbilitiesSB(data, conn);
             case 0x1B:
+                return new PacketPlayerDigging(data, conn);
+            case 0x1C:
                 return new PacketEntityAction(data, conn);
-            case 0x2A:
+            case 0x2C:
                 return nullptr; // TODO Animation
         }
     }

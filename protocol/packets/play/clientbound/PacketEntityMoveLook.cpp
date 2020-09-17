@@ -8,7 +8,7 @@ PacketEntityMoveLook::PacketEntityMoveLook(int32_t eid, Location &from, Location
 
 std::vector<std::byte> PacketEntityMoveLook::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x2A, array);
+    PacketData::writeVarInt(0x28, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeShort((int16_t) ((to.getX() - from.getX()) * 4096), array);
     PacketData::writeShort((int16_t) ((to.getY() - from.getY()) * 4096), array);

@@ -13,8 +13,8 @@
 
 class Server {
 public:
-    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.15.2";
-    inline static const int PROTOCOL_VERSION_NUMBER = 578;
+    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.16.3";
+    inline static const int PROTOCOL_VERSION_NUMBER = 753;
 
     inline static const int VIEW_DISTANCE = 10;
     inline static const int ENTITY_VIEW_DISTANCE = 100;

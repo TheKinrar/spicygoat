@@ -19,13 +19,7 @@ public:
 private:
     TCPConnection* conn;
 
-    bool invulnerable;
     bool flying;
-    bool allowFlying;
-    bool creative;
-
-    float flyingSpeed;
-    float walkingSpeed;
 };
 
 

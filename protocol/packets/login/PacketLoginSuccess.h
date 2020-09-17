@@ -15,10 +15,10 @@ public:
 
     std::vector<std::byte> bytes() override;
 
-    std::string toString() const override;
+    [[nodiscard]] std::string toString() const override;
 
 private:
-    char uuid[37];
+    uuid_t uuid{};
     std::string username;
 };
 

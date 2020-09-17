@@ -10,7 +10,7 @@ PacketUnloadChunk::PacketUnloadChunk(ChunkColumn &chunkColumn) : column(chunkCol
 
 std::vector<std::byte> PacketUnloadChunk::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x1E, array);
+    PacketData::writeVarInt(0x1C, array);
     PacketData::writeInt(column.getX(), array);
     PacketData::writeInt(column.getZ(), array);
     return array;
