@@ -20,6 +20,8 @@ public:
     Server();
     static Server* get();
 
+    void run();
+
     EntityPlayer* createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn);
     void removePlayer(EntityPlayer&);
     [[nodiscard]] const std::forward_list<Entity*>& getEntities() const;

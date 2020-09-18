@@ -6,6 +6,7 @@
 #include <iostream>
 #include "Server.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
+#include "TCPServer.h"
 
 Server::Server() {
     std::ifstream ifs("blocks.json");
@@ -32,6 +33,22 @@ Server::Server() {
 Server* Server::get() {
     static auto instance = new Server();
     return instance;
+}
+
+void Server::run() {
+    std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
+
+    while(TCPServer::get().isRunning()) {
+        auto tickStart = std::chrono::system_clock::now();
+        tick();
+        long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();
+
+        if(tickTime < 50000) {
+            std::this_thread::sleep_for(std::chrono::microseconds(50000 - tickTime));
+        }
+    }
+
+    tcpThread.join();
 }
 
 EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
