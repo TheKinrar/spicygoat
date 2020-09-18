@@ -3,8 +3,10 @@
 //
 
 #include "TCPServer.h"
+#include "network/listeners/HandshakeListener.h"
 
 #include <iostream>
+#include <memory>
 #include <thread>
 
 TCPServer::TCPServer() {
@@ -14,7 +16,7 @@ TCPServer::TCPServer() {
     sockaddr_in sin{};
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = inet_addr("0.0.0.0");
-    sin.sin_port = htons(25566);
+    sin.sin_port = htons(25565);
 
     errno = 0;
     bind(sock, (sockaddr*) &sin, sizeof(sin));
@@ -56,6 +58,7 @@ void TCPServer::accept() {
             int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
 
             auto conn = new TCPConnection(csock, csin);
+            conn->setListener(std::make_unique<HandshakeListener>(*conn));
             connections.push_front(conn);
         }
     }
@@ -69,7 +72,7 @@ void TCPServer::keepAliveTask() {
         int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
         for(auto connection : connections) {
-            if(connection->getState() == ConnectionState::PLAY) {
+            if(connection->getState() == ProtocolState::PLAY) {
                 connection->keepAlive(millis);
             }
         }

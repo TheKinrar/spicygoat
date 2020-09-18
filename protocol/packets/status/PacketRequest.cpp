@@ -5,13 +5,7 @@
 #include "PacketRequest.h"
 #include "PacketResponse.h"
 
-PacketRequest::PacketRequest(PacketData *data, TCPConnection *conn) {
-    this->conn = conn;
-}
-
-void PacketRequest::handle() {
-    conn->sendPacket(new PacketResponse());
-}
+PacketRequest::PacketRequest(PacketData*) : ServerBoundPacket(Packets::S_REQUEST) {}
 
 std::string PacketRequest::toString() const {
     return std::string("PacketRequest{}");

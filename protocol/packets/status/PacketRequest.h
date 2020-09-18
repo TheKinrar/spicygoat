@@ -10,14 +10,9 @@
 
 class PacketRequest : public ServerBoundPacket {
 public:
-    explicit PacketRequest(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketRequest(PacketData*);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 };
 
 

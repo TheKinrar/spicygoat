@@ -3,11 +3,8 @@
 //
 
 #include "PacketPing.h"
-#include "PacketPong.h"
 
-PacketPing::PacketPing(PacketData *data, TCPConnection *conn) {
-    this->conn = conn;
-
+PacketPing::PacketPing(PacketData *data) : ServerBoundPacket(Packets::S_PING) {
     payload = data->readLong();
 }
 
@@ -17,8 +14,4 @@ int64_t PacketPing::getPayload() const {
 
 std::string PacketPing::toString() const {
     return std::string("PacketPing{payload=") + std::to_string(payload) + "}";
-}
-
-void PacketPing::handle() {
-    conn->sendPacket(new PacketPong(payload));
 }

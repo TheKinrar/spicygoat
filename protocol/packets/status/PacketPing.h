@@ -10,17 +10,13 @@
 
 class PacketPing : public ServerBoundPacket {
 public:
-    explicit PacketPing(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPing(PacketData* data);
 
     int64_t getPayload() const;
 
     std::string toString() const override;
 
 private:
-    TCPConnection* conn;
-
     int64_t payload;
 };
 

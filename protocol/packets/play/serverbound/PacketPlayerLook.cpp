@@ -4,15 +4,10 @@
 
 #include "PacketPlayerLook.h"
 
-PacketPlayerLook::PacketPlayerLook(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketPlayerLook::PacketPlayerLook(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
     yaw = data->readFloat();
     pitch = data->readFloat();
     onGround = data->readBoolean();
-}
-
-void PacketPlayerLook::handle() {
-    conn->getPlayer()->setNextLook(yaw, pitch);
-    conn->getPlayer()->setNextOnGround(onGround);
 }
 
 std::string PacketPlayerLook::toString() const {

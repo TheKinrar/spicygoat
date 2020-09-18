@@ -4,12 +4,8 @@
 
 #include "PacketKeepAliveSB.h"
 
-PacketKeepAliveSB::PacketKeepAliveSB(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketKeepAliveSB::PacketKeepAliveSB(PacketData *data) : ServerBoundPacket(Packets::S_KEEP_ALIVE) {
     this->id = data->readLong();
-}
-
-void PacketKeepAliveSB::handle() {
-    conn->confirmKeepAlive(id);
 }
 
 std::string PacketKeepAliveSB::toString() const {

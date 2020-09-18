@@ -4,12 +4,8 @@
 
 #include "PacketClientStatus.h"
 
-PacketClientStatus::PacketClientStatus(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketClientStatus::PacketClientStatus(PacketData *data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
     this->action = data->readVarInt();
-}
-
-void PacketClientStatus::handle() {
-    // TODO perform respawn (?) and handle stats request
 }
 
 std::string PacketClientStatus::toString() const {

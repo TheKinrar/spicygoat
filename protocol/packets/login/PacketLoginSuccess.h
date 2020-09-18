@@ -11,7 +11,7 @@
 
 class PacketLoginSuccess : public ClientBoundPacket {
 public:
-    PacketLoginSuccess(uuid_t uuid, std::string &username);
+    PacketLoginSuccess(uuid_t uuid, const std::string &username);
 
     std::vector<std::byte> bytes() override;
 

@@ -4,12 +4,8 @@
 
 #include "PacketTeleportConfirm.h"
 
-PacketTeleportConfirm::PacketTeleportConfirm(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketTeleportConfirm::PacketTeleportConfirm(PacketData *data) : ServerBoundPacket(Packets::S_TELEPORT_CONFIRM) {
     this->tpId = data->readVarInt();
-}
-
-void PacketTeleportConfirm::handle() {
-    // TODO confirm TP
 }
 
 std::string PacketTeleportConfirm::toString() const {

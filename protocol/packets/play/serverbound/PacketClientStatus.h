@@ -10,14 +10,9 @@
 
 class PacketClientStatus : public ServerBoundPacket {
 public:
-    explicit PacketClientStatus(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketClientStatus(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     int action;
 };

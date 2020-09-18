@@ -6,13 +6,11 @@
 #include "PacketHandshake.h"
 #include "../../../Server.h"
 
-PacketHandshake::PacketHandshake(PacketData *data, TCPConnection* conn) {
-    this->conn = conn;
-
+PacketHandshake::PacketHandshake(PacketData *data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
     protocolVersion = data->readVarInt();
     serverAddress = data->readString();
     serverPort = data->readUnsignedShort();
-    nextState = static_cast<ConnectionState>(data->readVarInt());
+    nextState = static_cast<ProtocolState>(data->readVarInt());
 }
 
 int PacketHandshake::getProtocolVersion() const {
@@ -36,18 +34,4 @@ std::string PacketHandshake::toString() const {
             + ",address=" + serverAddress
             + ",port=" + std::to_string(serverPort)
             + ",state=" + std::to_string(nextState) + "}";
-}
-
-void PacketHandshake::handle() {
-    if(nextState == ConnectionState::STATUS) {
-        conn->setState(nextState);
-    } else if(nextState == ConnectionState::LOGIN) {
-        if(protocolVersion == Server::PROTOCOL_VERSION_NUMBER) {
-            conn->setState(nextState);
-        } else {
-            throw std::runtime_error("Protocol error: version mismatch");
-        }
-    } else {
-        throw std::runtime_error("Protocol error: invalid state requested during handshake");
-    }
 }

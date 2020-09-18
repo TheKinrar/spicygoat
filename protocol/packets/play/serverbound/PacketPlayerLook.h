@@ -10,14 +10,9 @@
 
 class PacketPlayerLook : public ServerBoundPacket {
 public:
-    explicit PacketPlayerLook(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPlayerLook(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     float yaw, pitch;
     bool onGround;

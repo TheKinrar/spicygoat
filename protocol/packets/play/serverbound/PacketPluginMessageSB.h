@@ -10,14 +10,9 @@
 
 class PacketPluginMessageSB : public ServerBoundPacket {
 public:
-    explicit PacketPluginMessageSB(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPluginMessageSB(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     std::string channel;
 };

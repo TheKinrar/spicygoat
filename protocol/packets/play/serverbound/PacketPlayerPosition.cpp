@@ -4,16 +4,11 @@
 
 #include "PacketPlayerPosition.h"
 
-PacketPlayerPosition::PacketPlayerPosition(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketPlayerPosition::PacketPlayerPosition(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_POSITION) {
     x = data->readDouble();
     y = data->readDouble();
     z = data->readDouble();
     onGround = data->readBoolean();
-}
-
-void PacketPlayerPosition::handle() {
-    conn->getPlayer()->setNextPosition(x, y, z);
-    conn->getPlayer()->setNextOnGround(onGround);
 }
 
 std::string PacketPlayerPosition::toString() const {

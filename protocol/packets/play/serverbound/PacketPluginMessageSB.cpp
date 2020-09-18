@@ -4,12 +4,8 @@
 
 #include "PacketPluginMessageSB.h"
 
-PacketPluginMessageSB::PacketPluginMessageSB(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketPluginMessageSB::PacketPluginMessageSB(PacketData *data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
     channel = data->readString();
-}
-
-void PacketPluginMessageSB::handle() {
-    // TODO
 }
 
 std::string PacketPluginMessageSB::toString() const {

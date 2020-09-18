@@ -7,6 +7,7 @@
 
 
 #include "../../ClientBoundPacket.h"
+#include "../../../../world/geo/Location.h"
 
 class PacketEntityMoveLook : public ClientBoundPacket {
 public:

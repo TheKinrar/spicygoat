@@ -10,7 +10,8 @@
 
 class ClientBoundPacket : public Packet {
 public:
-    void handle() override;
+    explicit ClientBoundPacket();
+    explicit ClientBoundPacket(int id);
 };
 
 

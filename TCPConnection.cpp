@@ -4,17 +4,14 @@
 
 #include <iostream>
 #include <libnet.h>
+
 #include "TCPConnection.h"
-#include "protocol/packets/Packet.h"
+#include "protocol.h"
 #include "entities/EntityPlayer.h"
 #include "Server.h"
-#include "protocol/packets/play/clientbound/PacketKeepAliveCB.h"
 #include "TCPServer.h"
 
-TCPConnection::TCPConnection(int sock, sockaddr_in addr) {
-    this->sock = sock;
-    this->addr = addr;
-
+TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr){
     thread = new std::thread(&TCPConnection::task, this);
 }
 
@@ -43,12 +40,12 @@ void TCPConnection::task() {
             recv(sock, data, length, 0);
 
             PacketData packetData(data, length);
-            Packet *packet = Packet::parse(&packetData, this);
+            Packet *packet = Packets::parse(&packetData, state);
 
-            if (packet != nullptr) {
+            if (packet) {
                 std::cout << getName() << " => " << packet->toString() << std::endl;
 
-                packet->handle();
+                if(listener) listener->handle(*static_cast<ServerBoundPacket*>(packet));
             }
         }
     } catch(std::exception &e) {
@@ -87,11 +84,11 @@ int TCPConnection::readVarInt() {
     return result;
 }
 
-void TCPConnection::setState(ConnectionState newState) {
+void TCPConnection::setState(ProtocolState newState) {
     state = newState;
 }
 
-ConnectionState TCPConnection::getState() const {
+ProtocolState TCPConnection::getState() const {
     return state;
 }
 
@@ -136,3 +133,12 @@ void TCPConnection::confirmKeepAlive(int64_t id) {
     keepAliveOk = true;
     m_keepAlive.unlock();
 }
+
+void TCPConnection::setListener(std::unique_ptr<PacketListener> newListener) {
+    listener = std::move(newListener);
+}
+
+const PacketListener &TCPConnection::getListener() const {
+    return *listener;
+}
+

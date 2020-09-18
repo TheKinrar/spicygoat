@@ -10,14 +10,9 @@
 
 class PacketLoginStart : public ServerBoundPacket {
 public:
-    explicit PacketLoginStart(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketLoginStart(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     std::string name;
 };

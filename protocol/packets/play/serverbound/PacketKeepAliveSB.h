@@ -10,14 +10,9 @@
 
 class PacketKeepAliveSB : public ServerBoundPacket {
 public:
-    explicit PacketKeepAliveSB(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketKeepAliveSB(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     int64_t id;
 };

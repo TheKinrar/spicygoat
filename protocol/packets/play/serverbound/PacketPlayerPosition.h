@@ -10,14 +10,9 @@
 
 class PacketPlayerPosition : public ServerBoundPacket {
 public:
-    explicit PacketPlayerPosition(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPlayerPosition(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     double x, y, z;
     bool onGround;

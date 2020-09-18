@@ -5,18 +5,14 @@
 #ifndef SPICYGOAT_PACKETCLIENTSETTINGS_H
 #define SPICYGOAT_PACKETCLIENTSETTINGS_H
 
+
 #include "../../ServerBoundPacket.h"
 
 class PacketClientSettings : public ServerBoundPacket {
 public:
-    explicit PacketClientSettings(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketClientSettings(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     std::string locale;
     int8_t renderDistance;

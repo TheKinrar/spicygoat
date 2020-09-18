@@ -5,13 +5,12 @@
 #ifndef SPICYGOAT_PACKETPLAYERDIGGING_H
 #define SPICYGOAT_PACKETPLAYERDIGGING_H
 
+
 #include "../../ServerBoundPacket.h"
 
 class PacketPlayerDigging : public ServerBoundPacket {
 public:
-    explicit PacketPlayerDigging(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPlayerDigging(PacketData* data);
 
     std::string toString() const override;
 
@@ -25,11 +24,8 @@ public:
         SWAP_ITEMS = 6
     };
 
-private:
-    TCPConnection* conn;
-
-    Status status;
-    Position position;
+    const Status status;
+    const Position position;
 };
 
 

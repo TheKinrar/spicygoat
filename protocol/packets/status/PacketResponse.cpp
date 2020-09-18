@@ -11,8 +11,8 @@ using json = nlohmann::json;
 
 std::vector<std::byte> PacketResponse::bytes() {
     json j;
-    j["version"]["name"] = Server::PROTOCOL_VERSION_NAME;
-    j["version"]["protocol"] = Server::PROTOCOL_VERSION_NUMBER;
+    j["version"]["name"] = Protocol::PROTOCOL_VERSION_NAME;
+    j["version"]["protocol"] = Protocol::PROTOCOL_VERSION_NUMBER;
     j["players"]["max"] = 20;
     j["players"]["online"] = Server::get()->getPlayerCount();
     j["players"]["sample"] = json::array();

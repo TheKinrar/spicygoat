@@ -10,14 +10,9 @@
 
 class PacketPlayerAbilitiesSB : public ServerBoundPacket {
 public:
-    explicit PacketPlayerAbilitiesSB(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPlayerAbilitiesSB(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     bool flying;
 };

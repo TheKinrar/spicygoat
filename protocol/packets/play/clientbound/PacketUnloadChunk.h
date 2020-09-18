@@ -7,6 +7,7 @@
 
 
 #include "../../ClientBoundPacket.h"
+#include "../../../../world/chunks/ChunkColumn.h"
 
 class PacketUnloadChunk : public ClientBoundPacket {
 public:

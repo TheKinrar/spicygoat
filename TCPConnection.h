@@ -5,17 +5,16 @@
 #ifndef SPICYGOAT_TCPCONNECTION_H
 #define SPICYGOAT_TCPCONNECTION_H
 
-class Packet;
-class EntityPlayer;
-
-#include "protocol/PacketData.h"
-#include "protocol/ConnectionState.h"
-#include "protocol/packets/Packet.h"
-#include "entities/EntityPlayer.h"
-
 #include <netinet/in.h>
 #include <thread>
 #include <mutex>
+
+class EntityPlayer;
+class PacketListener;
+
+#include "protocol.h"
+#include "network/PacketListener.h"
+#include "entities/EntityPlayer.h"
 
 class TCPConnection {
 public:
@@ -23,8 +22,8 @@ public:
     TCPConnection(const TCPConnection&) = delete;
     void operator=(const TCPConnection&) = delete;
 
-    ConnectionState getState() const;
-    void setState(ConnectionState newState);
+    ProtocolState getState() const;
+    void setState(ProtocolState newState);
 
     std::string getName();
 
@@ -32,6 +31,9 @@ public:
 
     EntityPlayer* getPlayer();
     void setPlayer(EntityPlayer* newPlayer);
+
+    const PacketListener& getListener() const;
+    void setListener(std::unique_ptr<PacketListener> newListener);
 
     void task();
 
@@ -49,7 +51,8 @@ private:
     int64_t latestKeepAlive = 0;
     bool keepAliveOk = true;
 
-    ConnectionState state = ConnectionState::HANDSHAKE;
+    ProtocolState state = ProtocolState::HANDSHAKE;
+    std::unique_ptr<PacketListener> listener;
 
     EntityPlayer *player;
 

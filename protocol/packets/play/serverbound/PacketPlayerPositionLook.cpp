@@ -4,19 +4,13 @@
 
 #include "PacketPlayerPositionLook.h"
 
-PacketPlayerPositionLook::PacketPlayerPositionLook(PacketData *data, TCPConnection *conn) : conn(conn) {
+PacketPlayerPositionLook::PacketPlayerPositionLook(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_POSITION_LOOK) {
     x = data->readDouble();
     y = data->readDouble();
     z = data->readDouble();
     yaw = data->readFloat();
     pitch = data->readFloat();
     onGround = data->readBoolean();
-}
-
-void PacketPlayerPositionLook::handle() {
-    conn->getPlayer()->setNextPosition(x, y, z);
-    conn->getPlayer()->setNextLook(yaw, pitch);
-    conn->getPlayer()->setNextOnGround(onGround);
 }
 
 std::string PacketPlayerPositionLook::toString() const {

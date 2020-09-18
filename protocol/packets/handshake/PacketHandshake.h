@@ -5,16 +5,15 @@
 #ifndef SPICYGOAT_PACKETHANDSHAKE_H
 #define SPICYGOAT_PACKETHANDSHAKE_H
 
-#include "../../ConnectionState.h"
-#include "../ServerBoundPacket.h"
-
 #include <string>
+
+#include "../ServerBoundPacket.h"
+#include "../../ProtocolState.h"
+
 
 class PacketHandshake : public ServerBoundPacket {
 public:
-    explicit PacketHandshake(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketHandshake(PacketData* data);
 
     int getProtocolVersion() const;
     const std::string &getServerAddress() const;
@@ -24,12 +23,10 @@ public:
     std::string toString() const override;
 
 private:
-    TCPConnection* conn;
-
     int protocolVersion;
     std::string serverAddress;
     uint16_t serverPort;
-    ConnectionState nextState;
+    ProtocolState nextState;
 };
 
 

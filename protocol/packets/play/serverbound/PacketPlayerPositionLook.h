@@ -7,18 +7,12 @@
 
 
 #include "../../ServerBoundPacket.h"
-#include "../../../../world/geo/Location.h"
 
 class PacketPlayerPositionLook : public ServerBoundPacket {
 public:
-    explicit PacketPlayerPositionLook(PacketData* data, TCPConnection* conn);
-
-    void handle() override;
+    explicit PacketPlayerPositionLook(PacketData* data);
 
     std::string toString() const override;
-
-private:
-    TCPConnection* conn;
 
     double x, y, z;
     float yaw, pitch;

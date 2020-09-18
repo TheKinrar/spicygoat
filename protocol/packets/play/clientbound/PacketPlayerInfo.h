@@ -6,7 +6,9 @@
 #define SPICYGOAT_PACKETPLAYERINFO_H
 
 
+#include <forward_list>
 #include "../../ClientBoundPacket.h"
+#include "../../../../entities/EntityPlayer.h"
 
 class PacketPlayerInfo : public ClientBoundPacket {
 public:

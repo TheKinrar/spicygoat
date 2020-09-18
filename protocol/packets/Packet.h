@@ -5,19 +5,21 @@
 #ifndef SPICYGOAT_PACKET_H
 #define SPICYGOAT_PACKET_H
 
-class TCPConnection;
-
+#include "enum.h"
 #include "../PacketData.h"
-#include "../../TCPConnection.h"
 
 class Packet {
 public:
-    static Packet* parse(PacketData* data, TCPConnection* conn);
+    explicit Packet(int id);
 
-    virtual void handle() = 0;
+    int getId() const;
+
     virtual std::vector<std::byte> bytes() = 0;
 
     virtual std::string toString() const = 0;
+
+private:
+    int id;
 };
 
 
