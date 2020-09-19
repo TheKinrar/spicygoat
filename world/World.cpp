@@ -17,7 +17,6 @@ World::World() {
     auto level = nbt::io::read_compound(buf).second->at("Data").as<nbt::tag_compound>();
 
     spawnPosition = Position(level.at("SpawnX").as<nbt::tag_int>(), level.at("SpawnY").as<nbt::tag_int>(), level.at("SpawnZ").as<nbt::tag_int>());
-    spawnPosition = Position(0, 64, 0);
 }
 
 Region * World::getRegion(int32_t x, int32_t z) {
