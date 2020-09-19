@@ -11,7 +11,7 @@
 
 class PacketEntityMoveLook : public ClientBoundPacket {
 public:
-    explicit PacketEntityMoveLook(int32_t, Location&, Location&, bool);
+    PacketEntityMoveLook(int32_t eid, double dx, double dy, double dz, float yaw, float pitch, bool onGround);
 
     std::vector<std::byte> bytes() override;
 
@@ -19,7 +19,8 @@ public:
 
 private:
     int32_t eid;
-    Location &from, &to;
+    double dx, dy, dz;
+    float yaw, pitch;
     bool onGround;
 };
 

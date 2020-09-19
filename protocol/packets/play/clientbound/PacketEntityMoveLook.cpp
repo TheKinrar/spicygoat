@@ -4,17 +4,19 @@
 
 #include "PacketEntityMoveLook.h"
 
-PacketEntityMoveLook::PacketEntityMoveLook(int32_t eid, Location &from, Location &to, bool onGround) : eid(eid), from(from), to(to), onGround(onGround) {}
+PacketEntityMoveLook::PacketEntityMoveLook(int32_t eid, double dx, double dy, double dz, float yaw, float pitch,
+                                           bool onGround) : ClientBoundPacket(0x28), eid(eid), dx(dx), dy(dy), dz(dz), yaw(yaw), pitch(pitch),
+                                                            onGround(onGround) {}
 
 std::vector<std::byte> PacketEntityMoveLook::bytes() {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x28, array);
     PacketData::writeVarInt(eid, array);
-    PacketData::writeShort((int16_t) ((to.getX() - from.getX()) * 4096), array);
-    PacketData::writeShort((int16_t) ((to.getY() - from.getY()) * 4096), array);
-    PacketData::writeShort((int16_t) ((to.getZ() - from.getZ()) * 4096), array);
-    PacketData::writeByte(0, array); // TODO wtf yaw
-    PacketData::writeByte(0, array); // TODO wtf pitch
+    PacketData::writeShort((int16_t) (dx * 4096), array);
+    PacketData::writeShort((int16_t) (dy * 4096), array);
+    PacketData::writeShort((int16_t) (dz * 4096), array);
+    PacketData::writeByte(yaw, array);
+    PacketData::writeByte(pitch, array);
     PacketData::writeBoolean(onGround, array);
     return array;
 }

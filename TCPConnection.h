@@ -28,6 +28,7 @@ public:
     std::string getName();
 
     void sendPacket(Packet* packet);
+    void disconnect();
 
     EntityPlayer* getPlayer();
     void setPlayer(EntityPlayer* newPlayer);

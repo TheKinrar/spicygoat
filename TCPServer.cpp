@@ -64,6 +64,9 @@ void TCPServer::accept() {
     }
 
     std::cout << "TCP server stopping" << std::endl;
+    for(auto conn : connections) {
+        conn->disconnect();
+    }
     close(sock);
 }
 

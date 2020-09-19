@@ -7,6 +7,7 @@
 #include "Server.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "TCPServer.h"
+#include "tracking/PlayerTracker.h"
 
 Server::Server() {
     std::ifstream ifs("blocks.json");
@@ -115,5 +116,9 @@ unsigned long Server::getPlayerCount() const {
 
 const std::vector<std::byte> &Server::getCodec() const {
     return codec;
+}
+
+std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {
+    return std::make_unique<PlayerTracker>(e);
 }
 

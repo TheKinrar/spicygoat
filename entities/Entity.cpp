@@ -5,9 +5,13 @@
 #include <iostream>
 #include "Entity.h"
 #include "../Server.h"
+#include "../protocol/packets/play/clientbound/PacketEntityMove.h"
+#include "../protocol/packets/play/clientbound/PacketEntityLook.h"
+#include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
 
 Entity::Entity() {
     eid = Server::get()->nextEID();
+    tracker = Server::createTracker(*this);
 }
 
 int32_t Entity::getEID() {
@@ -35,6 +39,8 @@ void Entity::setNextOnGround(bool onGround) {
 }
 
 void Entity::tick() {
+    tracker->tick();
+
     if(location != nextLocation) {
         bool newChunk = location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
 
@@ -48,15 +54,23 @@ void Entity::tick() {
                 || (location.getPitch() != nextLocation.getPitch());
 
         if(moved) {
-            // TODO check dist > 8 => tp
+            double dx = nextLocation.getX() - location.getX();
+            double dy = nextLocation.getY() - location.getY();
+            double dz = nextLocation.getZ() - location.getZ();
 
-            if(looked) {
-                // TODO Entity Look And Relative Move
+            if(dx < -8 || dx > 8 || dy < -8 || dy > 8 || dz < -8 || dz > 8) {
+                PacketEntityTeleport p(eid, nextLocation, nextOnGround);
+                tracker->broadcast(p);
+            } else if(looked) {
+                PacketEntityMoveLook p(eid, dx, dy, dz, nextLocation.getYaw(), nextLocation.getPitch(), nextOnGround);
+                tracker->broadcast(p);
             } else {
-                // TODO Entity Relative Move
+                PacketEntityMove p(eid, dx, dy, dz, nextOnGround);
+                tracker->broadcast(p);
             }
         } else {
-            // TODO Entity Look
+            PacketEntityLook p(eid, location, nextLocation, nextOnGround);
+            tracker->broadcast(p);
         }
 
         location = nextLocation;
@@ -67,6 +81,8 @@ void Entity::tick() {
             chunkChanged();
         }
     }
+
+    onGround = nextOnGround;
 }
 
 void Entity::chunkChanged() {

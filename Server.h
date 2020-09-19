@@ -14,7 +14,7 @@
 class Server {
 public:
     inline static const int VIEW_DISTANCE = 10;
-    inline static const int ENTITY_VIEW_DISTANCE = 100;
+    inline static const int ENTITY_VIEW_DISTANCE = 50;
     inline static const int ENTITY_VIEW_DISTANCE_SQ = ENTITY_VIEW_DISTANCE * ENTITY_VIEW_DISTANCE;
 
     Server();
@@ -27,6 +27,7 @@ public:
     [[nodiscard]] const std::forward_list<Entity*>& getEntities() const;
     [[nodiscard]] const std::forward_list<EntityPlayer*>& getPlayers() const;
     int32_t nextEID();
+    static std::unique_ptr<EntityTracker> createTracker(Entity&);
     unsigned long getPlayerCount() const;
 
     void tick();

@@ -9,11 +9,15 @@
 #include <cstdint>
 #include <string>
 #include <set>
+
+class EntityTracker;
 #include "../world/geo/Location.h"
+#include "../tracking/EntityTracker.h"
+#include "../protocol/packets/ClientBoundPacket.h"
 
 class Entity {
 public:
-    Entity();
+    explicit Entity();
 
     int32_t getEID();
 
@@ -25,6 +29,9 @@ public:
     void setNextPosition(double x, double y, double z);
     void setNextLook(float yaw, float pitch);
     void setNextOnGround(bool onGround);
+
+    virtual std::unique_ptr<ClientBoundPacket> createPacket() = 0;
+    virtual std::unique_ptr<ClientBoundPacket> removePacket() = 0;
 
     virtual void tick();
 
@@ -43,6 +50,8 @@ private:
     bool nextOnGround = false;
 
     std::mutex m_nextLocation;
+
+    std::unique_ptr<EntityTracker> tracker;
 };
 
 

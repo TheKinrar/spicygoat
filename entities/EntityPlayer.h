@@ -29,6 +29,10 @@ public:
 
     TCPConnection &getConnection() const;
 
+    std::unique_ptr<ClientBoundPacket> createPacket() override;
+
+    std::unique_ptr<ClientBoundPacket> removePacket() override;
+
     std::string toString() override;
 
 protected:
