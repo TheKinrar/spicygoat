@@ -4,7 +4,7 @@
 
 #include "PacketClientStatus.h"
 
-PacketClientStatus::PacketClientStatus(PacketData *data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
+PacketClientStatus::PacketClientStatus(PacketData* data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
     this->action = data->readVarInt();
 }
 

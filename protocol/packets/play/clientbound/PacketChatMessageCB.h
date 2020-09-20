@@ -10,7 +10,7 @@
 
 class PacketChatMessageCB : public ClientBoundPacket {
 public:
-    explicit PacketChatMessageCB(const std::string &message);
+    explicit PacketChatMessageCB(const std::string& message);
 
     std::vector<std::byte> bytes() override;
 

@@ -21,26 +21,26 @@ public:
 
     int32_t getZ() const;
 
-    Chunk *getChunk(int8_t y);
+    Chunk* getChunk(int8_t y);
 
     bool hasData();
 
-    void setNbt(std::unique_ptr<nbt::tag_compound> &nbt);
+    void setNbt(std::unique_ptr<nbt::tag_compound>& nbt);
 
-    uint16_t writeToByteArray(std::vector<std::byte> &);
+    uint16_t writeToByteArray(std::vector<std::byte>&);
 
-    void writeHeightMapsToByteArray(std::vector<std::byte> &);
+    void writeHeightMapsToByteArray(std::vector<std::byte>&);
 
     std::string toString();
 
 private:
     int32_t x, z;
-    Chunk *chunks[16];
+    Chunk* chunks[16];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
 
 public:// TODO should be private
-    nbt::tag_compound *level = nullptr;
+    nbt::tag_compound* level = nullptr;
 };
 
 

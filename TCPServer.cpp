@@ -19,7 +19,7 @@ TCPServer::TCPServer() {
     sin.sin_port = htons(25565);
 
     errno = 0;
-    bind(sock, (sockaddr *) &sin, sizeof(sin));
+    bind(sock, (sockaddr*) &sin, sizeof(sin));
 
     if (errno) {
         std::cerr << "bind failed: " << strerror(errno) << std::endl;
@@ -55,7 +55,7 @@ void TCPServer::accept() {
 
             sockaddr_in csin;
             socklen_t csinlen = sizeof(csin);
-            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+            int csock = ::accept(sock, (sockaddr*) &csin, &csinlen);
 
             auto conn = new TCPConnection(csock, csin);
             conn->setListener(std::make_unique<HandshakeListener>(*conn));
@@ -94,11 +94,11 @@ void TCPServer::stop() {
     running = false;
 }
 
-void TCPServer::removeConnection(TCPConnection *conn) {
+void TCPServer::removeConnection(TCPConnection* conn) {
     connections.remove(conn);
 }
 
-TCPServer &TCPServer::get() {
+TCPServer& TCPServer::get() {
     static TCPServer server;
     return server;
 }

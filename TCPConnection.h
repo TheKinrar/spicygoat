@@ -21,9 +21,9 @@ class TCPConnection {
 public:
     TCPConnection(int sock, sockaddr_in addr);
 
-    TCPConnection(const TCPConnection &) = delete;
+    TCPConnection(const TCPConnection&) = delete;
 
-    void operator=(const TCPConnection &) = delete;
+    void operator=(const TCPConnection&) = delete;
 
     ProtocolState getState() const;
 
@@ -31,15 +31,15 @@ public:
 
     std::string getName();
 
-    void sendPacket(Packet *packet);
+    void sendPacket(Packet* packet);
 
     void disconnect();
 
-    EntityPlayer *getPlayer();
+    EntityPlayer* getPlayer();
 
-    void setPlayer(EntityPlayer *newPlayer);
+    void setPlayer(EntityPlayer* newPlayer);
 
-    const PacketListener &getListener() const;
+    const PacketListener& getListener() const;
 
     void setListener(std::unique_ptr<PacketListener> newListener);
 
@@ -53,7 +53,7 @@ private:
     int sock;
     sockaddr_in addr;
 
-    std::thread *thread;
+    std::thread* thread;
 
     std::mutex m_send;
 
@@ -64,7 +64,7 @@ private:
     ProtocolState state = ProtocolState::HANDSHAKE;
     std::unique_ptr<PacketListener> listener;
 
-    EntityPlayer *player;
+    EntityPlayer* player;
 
     int readVarInt();
 };

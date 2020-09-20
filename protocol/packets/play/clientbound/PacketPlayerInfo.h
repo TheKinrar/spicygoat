@@ -20,7 +20,7 @@ public:
         RemovePlayer = 4
     };
 
-    PacketPlayerInfo(Action action, std::forward_list<EntityPlayer *> &);
+    PacketPlayerInfo(Action action, std::forward_list<EntityPlayer*>&);
 
     std::vector<std::byte> bytes() override;
 
@@ -28,7 +28,7 @@ public:
 
 private:
     Action action;
-    std::forward_list<EntityPlayer *> &players;
+    std::forward_list<EntityPlayer*>& players;
 };
 
 

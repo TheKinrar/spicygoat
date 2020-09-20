@@ -5,7 +5,7 @@
 #include "PacketPlayerDigging.h"
 #include <iostream>
 
-PacketPlayerDigging::PacketPlayerDigging(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_DIGGING),
+PacketPlayerDigging::PacketPlayerDigging(PacketData* data) : ServerBoundPacket(Packets::S_PLAYER_DIGGING),
                                                              status(static_cast<Status>(data->readVarInt())),
                                                              position(data->readPosition()) {}
 

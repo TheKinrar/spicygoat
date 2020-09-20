@@ -10,9 +10,9 @@
 
 class PacketListenerLogin : public PacketListener {
 public:
-    void handle(const ServerBoundPacket &packet) override;
+    void handle(const ServerBoundPacket& packet) override;
 
-    virtual void onLoginStart(const PacketLoginStart &) = 0;
+    virtual void onLoginStart(const PacketLoginStart&) = 0;
 };
 
 

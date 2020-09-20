@@ -4,7 +4,7 @@
 
 #include "PacketClientSettings.h"
 
-PacketClientSettings::PacketClientSettings(PacketData *data) : ServerBoundPacket(Packets::S_CLIENT_SETTINGS) {
+PacketClientSettings::PacketClientSettings(PacketData* data) : ServerBoundPacket(Packets::S_CLIENT_SETTINGS) {
     locale = data->readString();
     renderDistance = data->readByte();
     chatMode = data->readVarInt();

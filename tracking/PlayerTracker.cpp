@@ -6,7 +6,7 @@
 #include "../Server.h"
 #include <iostream>
 
-PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
+PlayerTracker::PlayerTracker(Entity& self) : EntityTracker(self) {}
 
 void PlayerTracker::tick() {
     for (auto player : Server::get()->getPlayers()) {
@@ -34,7 +34,7 @@ void PlayerTracker::tick() {
     }
 }
 
-void PlayerTracker::broadcast(ClientBoundPacket &packet) {
+void PlayerTracker::broadcast(ClientBoundPacket& packet) {
     for (auto player : players) {
         player->getConnection().sendPacket(&packet);
     }

@@ -11,14 +11,14 @@
 
 class PacketUnloadChunk : public ClientBoundPacket {
 public:
-    explicit PacketUnloadChunk(ChunkColumn &chunkColumn);
+    explicit PacketUnloadChunk(ChunkColumn& chunkColumn);
 
     std::vector<std::byte> bytes() override;
 
     std::string toString() const override;
 
 private:
-    ChunkColumn &column;
+    ChunkColumn& column;
 };
 
 

@@ -4,7 +4,7 @@
 
 #include "PacketChatMessageSB.h"
 
-PacketChatMessageSB::PacketChatMessageSB(PacketData *data) : ServerBoundPacket(Packets::S_CHAT_MESSAGE),
+PacketChatMessageSB::PacketChatMessageSB(PacketData* data) : ServerBoundPacket(Packets::S_CHAT_MESSAGE),
                                                              message(data->readString()) {}
 
 std::string PacketChatMessageSB::toString() const {

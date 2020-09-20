@@ -26,12 +26,12 @@ Server::Server() {
     vec.insert(vec.begin(),
                std::istream_iterator<unsigned char>(ifsc), std::istream_iterator<unsigned char>());
     codec.reserve(len);
-    for (unsigned char &c : vec) codec.push_back(static_cast<std::byte>(c));
+    for (unsigned char& c : vec) codec.push_back(static_cast<std::byte>(c));
 
     //std::cout << palette->toString(true) << std::endl; TODO
 }
 
-Server *Server::get() {
+Server* Server::get() {
     static auto instance = new Server();
     return instance;
 }
@@ -54,10 +54,10 @@ void Server::run() {
     tcpThread.join();
 }
 
-EntityPlayer *Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
+EntityPlayer* Server::createPlayer(uuid_t& uuid, std::string name, TCPConnection& conn) {
     auto player = new EntityPlayer(uuid, name, conn);
 
-    std::forward_list<EntityPlayer *> array;
+    std::forward_list<EntityPlayer*> array;
     array.push_front(player);
     auto packetForAll = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array);
     broadcastPacket(packetForAll);
@@ -74,17 +74,17 @@ EntityPlayer *Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection
     return player;
 }
 
-void Server::removePlayer(EntityPlayer &p) {
+void Server::removePlayer(EntityPlayer& p) {
     entities.remove(&p);
     players.remove(&p);
     playerCount--;
 }
 
-const std::forward_list<Entity *> &Server::getEntities() const {
+const std::forward_list<Entity*>& Server::getEntities() const {
     return entities;
 }
 
-const std::forward_list<EntityPlayer *> &Server::getPlayers() const {
+const std::forward_list<EntityPlayer*>& Server::getPlayers() const {
     return players;
 }
 
@@ -98,16 +98,16 @@ void Server::tick() {
     }
 }
 
-World &Server::getWorld() {
+World& Server::getWorld() {
     return world;
 }
 
-ChunkPalette *Server::getPalette() const {
+ChunkPalette* Server::getPalette() const {
     return palette;
 }
 
-void Server::broadcastPacket(Packet *packet) {
-    for (auto &player : players) {
+void Server::broadcastPacket(Packet* packet) {
+    for (auto& player : players) {
         player->getConnection().sendPacket(packet);
     }
 }
@@ -116,10 +116,10 @@ unsigned long Server::getPlayerCount() const {
     return playerCount;
 }
 
-const std::vector<std::byte> &Server::getCodec() const {
+const std::vector<std::byte>& Server::getCodec() const {
     return codec;
 }
 
-std::unique_ptr<EntityTracker> Server::createTracker(Entity &e) {
+std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {
     return std::make_unique<PlayerTracker>(e);
 }

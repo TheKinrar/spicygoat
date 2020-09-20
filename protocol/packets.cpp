@@ -7,7 +7,7 @@
 
 #include "packets.h"
 
-Packet *Packets::parse(PacketData *data, ProtocolState state) {
+Packet* Packets::parse(PacketData* data, ProtocolState state) {
     int id = data->readVarInt();
 
     if (state == ProtocolState::HANDSHAKE) {

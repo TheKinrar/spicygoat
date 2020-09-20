@@ -4,7 +4,7 @@
 
 #include "PacketEntityLook.h"
 
-PacketEntityLook::PacketEntityLook(int32_t eid, Location &from, Location &to, bool onGround) : ClientBoundPacket(0x29),
+PacketEntityLook::PacketEntityLook(int32_t eid, Location& from, Location& to, bool onGround) : ClientBoundPacket(0x29),
                                                                                                eid(eid), from(from),
                                                                                                to(to),
                                                                                                onGround(onGround) {}

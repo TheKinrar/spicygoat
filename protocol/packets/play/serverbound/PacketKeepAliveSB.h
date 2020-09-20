@@ -10,7 +10,7 @@
 
 class PacketKeepAliveSB : public ServerBoundPacket {
 public:
-    explicit PacketKeepAliveSB(PacketData *data);
+    explicit PacketKeepAliveSB(PacketData* data);
 
     std::string toString() const override;
 

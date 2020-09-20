@@ -19,18 +19,18 @@ public:
 
     int32_t getZ() const;
 
-    ChunkPalette *getPalette() const;
+    ChunkPalette* getPalette() const;
 
     bool hasData();
 
-    void loadNBT(nbt::tag_compound &);
+    void loadNBT(nbt::tag_compound&);
 
-    void writeToByteArray(std::vector<std::byte> &array);
+    void writeToByteArray(std::vector<std::byte>& array);
 
 private:
     int32_t x, y, z;
 
-    ChunkPalette *palette = nullptr;
+    ChunkPalette* palette = nullptr;
     std::vector<int64_t> blockStates;
 
     std::vector<int8_t> blockLight;

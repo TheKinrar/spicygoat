@@ -10,7 +10,7 @@
 
 class PacketLoginStart : public ServerBoundPacket {
 public:
-    explicit PacketLoginStart(PacketData *data);
+    explicit PacketLoginStart(PacketData* data);
 
     std::string toString() const override;
 

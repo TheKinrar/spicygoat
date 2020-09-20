@@ -10,14 +10,14 @@
 
 class StatusListener : public PacketListenerStatus {
 public:
-    explicit StatusListener(TCPConnection &connection);
+    explicit StatusListener(TCPConnection& connection);
 
-    void onRequest(const PacketRequest &request) override;
+    void onRequest(const PacketRequest& request) override;
 
-    void onPing(const PacketPing &ping) override;
+    void onPing(const PacketPing& ping) override;
 
 private:
-    TCPConnection &connection;
+    TCPConnection& connection;
 };
 
 

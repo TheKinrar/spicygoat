@@ -12,7 +12,7 @@ class CMBrand : public ChannelMessage {
 public:
     explicit CMBrand(std::string brand);
 
-    void send(TCPConnection &conn);
+    void send(TCPConnection& conn);
 
     std::string toString() override;
 

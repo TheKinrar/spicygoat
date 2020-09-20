@@ -4,7 +4,7 @@
 
 #include "PacketPing.h"
 
-PacketPing::PacketPing(PacketData *data) : ServerBoundPacket(Packets::S_PING) {
+PacketPing::PacketPing(PacketData* data) : ServerBoundPacket(Packets::S_PING) {
     payload = data->readLong();
 }
 

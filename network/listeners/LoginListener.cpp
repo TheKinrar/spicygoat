@@ -10,16 +10,16 @@
 #include "LoginListener.h"
 #include "PlayerConnection.h"
 
-LoginListener::LoginListener(TCPConnection &connection) : connection(connection) {}
+LoginListener::LoginListener(TCPConnection& connection) : connection(connection) {}
 
-void LoginListener::onLoginStart(const PacketLoginStart &packet) {
+void LoginListener::onLoginStart(const PacketLoginStart& packet) {
     uuid_t uuid;
     uuid_generate(uuid);
 
     connection.sendPacket(new PacketLoginSuccess(uuid, packet.name));
     connection.setState(ProtocolState::PLAY);
 
-    EntityPlayer *player = Server::get()->createPlayer(uuid, packet.name, connection);
+    EntityPlayer* player = Server::get()->createPlayer(uuid, packet.name, connection);
     connection.setPlayer(player);
 
     auto pos = Server::get()->getWorld().getSpawnPosition();

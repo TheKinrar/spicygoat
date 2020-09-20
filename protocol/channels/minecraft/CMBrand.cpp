@@ -8,7 +8,7 @@ CMBrand::CMBrand(std::string brand) : ChannelMessage("minecraft:brand") {
     this->brand = brand;
 }
 
-void CMBrand::send(TCPConnection &conn) {
+void CMBrand::send(TCPConnection& conn) {
     std::vector<std::byte> data;
     PacketData::writeString(brand, data);
 

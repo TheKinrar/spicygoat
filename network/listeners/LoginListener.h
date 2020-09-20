@@ -10,12 +10,12 @@
 
 class LoginListener : public PacketListenerLogin {
 public:
-    explicit LoginListener(TCPConnection &connection);
+    explicit LoginListener(TCPConnection& connection);
 
-    void onLoginStart(const PacketLoginStart &packet) override;
+    void onLoginStart(const PacketLoginStart& packet) override;
 
 private:
-    TCPConnection &connection;
+    TCPConnection& connection;
 };
 
 

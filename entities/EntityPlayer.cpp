@@ -10,7 +10,7 @@
 #include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 #include <iostream>
 
-EntityPlayer::EntityPlayer(uuid_t &uuid, std::string &name, TCPConnection &conn) : uuid(uuid), conn(conn) {
+EntityPlayer::EntityPlayer(uuid_t& uuid, std::string& name, TCPConnection& conn) : uuid(uuid), conn(conn) {
     this->name = name;
 }
 
@@ -61,7 +61,7 @@ void EntityPlayer::chunkChanged() {
             Position2D pos(x, z);
 
             if (loadedChunks.find(pos) == loadedChunks.end()) {
-                ChunkColumn *column = Server::get()->getWorld().getChunk(x, z);
+                ChunkColumn* column = Server::get()->getWorld().getChunk(x, z);
 
                 if (column) {
                     loadingChunks[pos] = column;
@@ -72,7 +72,7 @@ void EntityPlayer::chunkChanged() {
     }
 
     nearbyEntities.clear();
-    for (auto *e : Server::get()->getEntities()) {
+    for (auto* e : Server::get()->getEntities()) {
         if (e != this) {
             double d = e->getLocation().distanceSquared(getLocation());
 
@@ -87,15 +87,15 @@ std::string EntityPlayer::toString() {
     return std::string("EntityPlayer{name=") + name + "}";
 }
 
-uuid_t &EntityPlayer::getUuid() const {
+uuid_t& EntityPlayer::getUuid() const {
     return uuid;
 }
 
-const std::string &EntityPlayer::getName() const {
+const std::string& EntityPlayer::getName() const {
     return name;
 }
 
-TCPConnection &EntityPlayer::getConnection() const {
+TCPConnection& EntityPlayer::getConnection() const {
     return conn;
 }
 

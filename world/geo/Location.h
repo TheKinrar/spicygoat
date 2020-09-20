@@ -39,15 +39,15 @@ public:
 
     int32_t getChunkZ() const;
 
-    ChunkColumn *getChunkColumn() const;
+    ChunkColumn* getChunkColumn() const;
 
-    [[nodiscard]] double distanceSquared(const Location &other) const;
+    [[nodiscard]] double distanceSquared(const Location& other) const;
 
     std::string toString() const;
 
-    bool operator==(const Location &rhs) const;
+    bool operator==(const Location& rhs) const;
 
-    bool operator!=(const Location &rhs) const;
+    bool operator!=(const Location& rhs) const;
 
 private:
     double x, y, z;

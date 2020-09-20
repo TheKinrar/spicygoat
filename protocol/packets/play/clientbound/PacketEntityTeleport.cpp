@@ -4,7 +4,7 @@
 
 #include "PacketEntityTeleport.h"
 
-PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround) : ClientBoundPacket(0x56),
+PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location& loc, bool onGround) : ClientBoundPacket(0x56),
                                                                                               eid(eid), loc(loc),
                                                                                               onGround(onGround) {}
 

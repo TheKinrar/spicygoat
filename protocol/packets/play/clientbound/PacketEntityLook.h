@@ -11,7 +11,7 @@
 
 class PacketEntityLook : public ClientBoundPacket {
 public:
-    PacketEntityLook(int32_t eid, Location &from, Location &to, bool onGround);
+    PacketEntityLook(int32_t eid, Location& from, Location& to, bool onGround);
 
     std::vector<std::byte> bytes() override;
 

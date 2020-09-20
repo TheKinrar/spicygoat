@@ -4,4 +4,4 @@
 
 #include "EntityTracker.h"
 
-EntityTracker::EntityTracker(Entity &self) : self(self) {}
+EntityTracker::EntityTracker(Entity& self) : self(self) {}

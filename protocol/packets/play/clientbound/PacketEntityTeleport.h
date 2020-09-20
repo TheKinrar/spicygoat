@@ -11,7 +11,7 @@
 
 class PacketEntityTeleport : public ClientBoundPacket {
 public:
-    PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround);
+    PacketEntityTeleport(int32_t eid, const Location& loc, bool onGround);
 
     std::vector<std::byte> bytes() override;
 

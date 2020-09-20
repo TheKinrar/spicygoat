@@ -15,7 +15,7 @@ TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr
     thread = new std::thread(&TCPConnection::task, this);
 }
 
-void TCPConnection::sendPacket(Packet *packet) {
+void TCPConnection::sendPacket(Packet* packet) {
     m_send.lock();
 
     int i = packet->getId();
@@ -29,7 +29,7 @@ void TCPConnection::sendPacket(Packet *packet) {
     PacketData::writeVarInt(data.size(), bytes);
     bytes.insert(bytes.end(), data.begin(), data.end());
 
-    send(sock, (char *) bytes.data(), bytes.size(), 0);
+    send(sock, (char*) bytes.data(), bytes.size(), 0);
     m_send.unlock();
 }
 
@@ -40,19 +40,19 @@ void TCPConnection::task() {
         while (TCPServer::get().isRunning()) {
             int length = readVarInt();
 
-            char *data = new char[length];
+            char* data = new char[length];
             recv(sock, data, length, 0);
 
             PacketData packetData(data, length);
-            Packet *packet = Packets::parse(&packetData, state);
+            Packet* packet = Packets::parse(&packetData, state);
 
             if (packet) {
                 //                std::cout << getName() << " => " << packet->toString() << std::endl;
 
-                if (listener) listener->handle(*static_cast<ServerBoundPacket *>(packet));
+                if (listener) listener->handle(*static_cast<ServerBoundPacket*>(packet));
             }
         }
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
         close(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
         TCPServer::get().removeConnection(this);
@@ -101,11 +101,11 @@ std::string TCPConnection::getName() {
            std::to_string(state);
 }
 
-EntityPlayer *TCPConnection::getPlayer() {
+EntityPlayer* TCPConnection::getPlayer() {
     return player;
 }
 
-void TCPConnection::setPlayer(EntityPlayer *newPlayer) {
+void TCPConnection::setPlayer(EntityPlayer* newPlayer) {
     this->player = newPlayer;
 }
 
@@ -143,7 +143,7 @@ void TCPConnection::setListener(std::unique_ptr<PacketListener> newListener) {
     listener = std::move(newListener);
 }
 
-const PacketListener &TCPConnection::getListener() const {
+const PacketListener& TCPConnection::getListener() const {
     return *listener;
 }
 

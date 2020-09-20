@@ -4,7 +4,7 @@
 
 #include "PacketPluginMessageSB.h"
 
-PacketPluginMessageSB::PacketPluginMessageSB(PacketData *data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
+PacketPluginMessageSB::PacketPluginMessageSB(PacketData* data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
     channel = data->readString();
 }
 

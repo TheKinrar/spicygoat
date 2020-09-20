@@ -4,7 +4,7 @@
 
 #include "PacketPlayerPosition.h"
 
-PacketPlayerPosition::PacketPlayerPosition(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_POSITION) {
+PacketPlayerPosition::PacketPlayerPosition(PacketData* data) : ServerBoundPacket(Packets::S_PLAYER_POSITION) {
     x = data->readDouble();
     y = data->readDouble();
     z = data->readDouble();

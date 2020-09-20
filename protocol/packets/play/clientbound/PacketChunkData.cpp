@@ -6,7 +6,7 @@
 #include <iostream>
 #include <tag_array.h>
 
-PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
+PacketChunkData::PacketChunkData(ChunkColumn& chunkColumn) : chunkColumn(chunkColumn) {}
 
 std::vector<std::byte> PacketChunkData::bytes() {
     std::vector<std::byte> array;

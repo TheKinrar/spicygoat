@@ -13,11 +13,11 @@
 
 class PacketHandshake : public ServerBoundPacket {
 public:
-    explicit PacketHandshake(PacketData *data);
+    explicit PacketHandshake(PacketData* data);
 
     int getProtocolVersion() const;
 
-    const std::string &getServerAddress() const;
+    const std::string& getServerAddress() const;
 
     uint16_t getServerPort() const;
 

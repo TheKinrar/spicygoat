@@ -21,7 +21,7 @@ int32_t Chunk::getZ() const {
     return z;
 }
 
-void Chunk::loadNBT(nbt::tag_compound &nbt) {
+void Chunk::loadNBT(nbt::tag_compound& nbt) {
     if (nbt.has_key("BlockStates")) {
         palette = ChunkPalette::fromNBT(nbt.at("Palette").as<nbt::tag_list>());
         blockStates = nbt.at("BlockStates").as<nbt::tag_long_array>().get();
@@ -34,7 +34,7 @@ void Chunk::loadNBT(nbt::tag_compound &nbt) {
         skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
 }
 
-ChunkPalette *Chunk::getPalette() const {
+ChunkPalette* Chunk::getPalette() const {
     return palette;
 }
 
@@ -42,7 +42,7 @@ bool Chunk::hasData() {
     return palette != nullptr;
 }
 
-void Chunk::writeToByteArray(std::vector<std::byte> &array) {
+void Chunk::writeToByteArray(std::vector<std::byte>& array) {
     PacketData::writeShort(4096, array);
 
     //std::cout << palette->toString(true) << std::endl; TODO

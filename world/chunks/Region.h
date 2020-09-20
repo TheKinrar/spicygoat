@@ -14,12 +14,12 @@ class Region {
 public:
     Region(int32_t x, int32_t z);
 
-    ChunkColumn *getColumn(int32_t x, int32_t z);
+    ChunkColumn* getColumn(int32_t x, int32_t z);
 
 private:
     int32_t x, z;
 
-    std::map<Position2D, ChunkColumn *> columns;
+    std::map<Position2D, ChunkColumn*> columns;
 };
 
 

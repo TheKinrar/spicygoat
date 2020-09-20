@@ -10,12 +10,12 @@
 
 class HandshakeListener : public PacketListenerHandshake {
 public:
-    explicit HandshakeListener(TCPConnection &connection);
+    explicit HandshakeListener(TCPConnection& connection);
 
-    void onHandshake(const PacketHandshake &packet) override;
+    void onHandshake(const PacketHandshake& packet) override;
 
 private:
-    TCPConnection &connection;
+    TCPConnection& connection;
 };
 
 

@@ -13,14 +13,14 @@
 
 class PlayerTracker : public EntityTracker {
 public:
-    explicit PlayerTracker(Entity &self);
+    explicit PlayerTracker(Entity& self);
 
     void tick() override;
 
-    void broadcast(ClientBoundPacket &packet) override;
+    void broadcast(ClientBoundPacket& packet) override;
 
 private:
-    std::set<EntityPlayer *> players;
+    std::set<EntityPlayer*> players;
 };
 
 

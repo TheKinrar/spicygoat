@@ -6,7 +6,7 @@
 #include "../../../Server.h"
 #include <stdexcept>
 
-PacketHandshake::PacketHandshake(PacketData *data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
+PacketHandshake::PacketHandshake(PacketData* data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
     protocolVersion = data->readVarInt();
     serverAddress = data->readString();
     serverPort = data->readUnsignedShort();
@@ -17,7 +17,7 @@ int PacketHandshake::getProtocolVersion() const {
     return protocolVersion;
 }
 
-const std::string &PacketHandshake::getServerAddress() const {
+const std::string& PacketHandshake::getServerAddress() const {
     return serverAddress;
 }
 

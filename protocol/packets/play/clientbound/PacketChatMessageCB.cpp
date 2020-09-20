@@ -6,7 +6,7 @@
 
 #include "PacketChatMessageCB.h"
 
-PacketChatMessageCB::PacketChatMessageCB(const std::string &message) : message(message) {}
+PacketChatMessageCB::PacketChatMessageCB(const std::string& message) : message(message) {}
 
 std::vector<std::byte> PacketChatMessageCB::bytes() {
     nlohmann::json j;

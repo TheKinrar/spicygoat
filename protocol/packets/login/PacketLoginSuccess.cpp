@@ -4,7 +4,7 @@
 
 #include "PacketLoginSuccess.h"
 
-PacketLoginSuccess::PacketLoginSuccess(uuid_t uuid, const std::string &username) {
+PacketLoginSuccess::PacketLoginSuccess(uuid_t uuid, const std::string& username) {
     uuid_copy(this->uuid, uuid);
     this->username = username;
 }

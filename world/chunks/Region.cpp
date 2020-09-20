@@ -17,7 +17,7 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
     std::fpos len = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
 
-    char *bytes = new char[len];
+    char* bytes = new char[len];
     ifs.read(bytes, len);
     ifs.close();
 
@@ -45,7 +45,7 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
             try {
                 auto nbt = nbt::io::read_compound(zs).second;
                 getColumn(i % 32, (int) (i / 32.0))->setNbt(nbt);
-            } catch (std::exception &e) {
+            } catch (std::exception& e) {
                 std::cerr << e.what() << std::endl;
                 std::cerr << i % 32 << "." << (int) (i / 32.0) << std::endl;
             }
@@ -55,7 +55,7 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
     std::cout << "Region " << x << ";" << z << " loaded." << std::endl;
 }
 
-ChunkColumn *Region::getColumn(int32_t x, int32_t z) {
+ChunkColumn* Region::getColumn(int32_t x, int32_t z) {
     auto it = columns.find(Position2D(x, z));
 
     if (it == columns.end()) {

@@ -11,14 +11,14 @@
 
 class PacketJoinGame : public ClientBoundPacket {
 public:
-    explicit PacketJoinGame(EntityPlayer *player);
+    explicit PacketJoinGame(EntityPlayer* player);
 
     std::vector<std::byte> bytes() override;
 
     std::string toString() const override;
 
 private:
-    EntityPlayer *player;
+    EntityPlayer* player;
 };
 
 

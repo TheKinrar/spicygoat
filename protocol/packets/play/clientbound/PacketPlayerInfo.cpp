@@ -4,7 +4,7 @@
 
 #include "PacketPlayerInfo.h"
 
-PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer *> &players)
+PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer*>& players)
     : ClientBoundPacket(0x32), action(action), players(players) {}
 
 std::vector<std::byte> PacketPlayerInfo::bytes() {

@@ -4,7 +4,7 @@
 
 #include "PacketPlayerLook.h"
 
-PacketPlayerLook::PacketPlayerLook(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
+PacketPlayerLook::PacketPlayerLook(PacketData* data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
     yaw = data->readFloat();
     pitch = data->readFloat();
     onGround = data->readBoolean();

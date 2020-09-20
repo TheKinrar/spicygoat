@@ -53,7 +53,7 @@ void Location::setPitch(float pitch) {
     Location::pitch = pitch;
 }
 
-bool Location::operator==(const Location &rhs) const {
+bool Location::operator==(const Location& rhs) const {
     return x == rhs.x &&
            y == rhs.y &&
            z == rhs.z &&
@@ -61,7 +61,7 @@ bool Location::operator==(const Location &rhs) const {
            pitch == rhs.pitch;
 }
 
-bool Location::operator!=(const Location &rhs) const {
+bool Location::operator!=(const Location& rhs) const {
     return !(rhs == *this);
 }
 
@@ -73,12 +73,12 @@ int32_t Location::getChunkZ() const {
     return (int32_t)(getZ() / 16);
 }
 
-ChunkColumn *Location::getChunkColumn() const {
+ChunkColumn* Location::getChunkColumn() const {
     static auto world = new World();
     return world->getChunk(getChunkX(), getChunkZ());
 }
 
-double Location::distanceSquared(const Location &other) const {
+double Location::distanceSquared(const Location& other) const {
     double dx = x - other.x;
     double dy = y - other.y;
     double dz = z - other.z;

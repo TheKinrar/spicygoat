@@ -4,7 +4,7 @@
 
 #include "PacketEntityAction.h"
 
-PacketEntityAction::PacketEntityAction(PacketData *data) : ServerBoundPacket(Packets::S_ENTITY_ACTION) {
+PacketEntityAction::PacketEntityAction(PacketData* data) : ServerBoundPacket(Packets::S_ENTITY_ACTION) {
     eid = data->readVarInt();
     action = data->readVarInt();
     jumpBoost = data->readVarInt();

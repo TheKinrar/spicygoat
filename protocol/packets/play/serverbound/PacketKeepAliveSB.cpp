@@ -4,7 +4,7 @@
 
 #include "PacketKeepAliveSB.h"
 
-PacketKeepAliveSB::PacketKeepAliveSB(PacketData *data) : ServerBoundPacket(Packets::S_KEEP_ALIVE) {
+PacketKeepAliveSB::PacketKeepAliveSB(PacketData* data) : ServerBoundPacket(Packets::S_KEEP_ALIVE) {
     this->id = data->readLong();
 }
 

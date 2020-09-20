@@ -6,7 +6,7 @@
 #include "LoginListener.h"
 #include "StatusListener.h"
 
-void HandshakeListener::onHandshake(const PacketHandshake &packet) {
+void HandshakeListener::onHandshake(const PacketHandshake& packet) {
     if (packet.getNextState() == ProtocolState::STATUS) {
         connection.setState(ProtocolState::STATUS);
         connection.setListener(std::make_unique<StatusListener>(connection));
@@ -22,4 +22,4 @@ void HandshakeListener::onHandshake(const PacketHandshake &packet) {
     }
 }
 
-HandshakeListener::HandshakeListener(TCPConnection &connection) : connection(connection) {}
+HandshakeListener::HandshakeListener(TCPConnection& connection) : connection(connection) {}

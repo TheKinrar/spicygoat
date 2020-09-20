@@ -9,7 +9,7 @@
 #include "protocol/packets.h"
 
 namespace Protocol {
-    inline static constexpr const char *const PROTOCOL_VERSION_NAME = "1.16.3";
+    inline static constexpr const char* const PROTOCOL_VERSION_NAME = "1.16.3";
     inline static const int PROTOCOL_VERSION_NUMBER = 753;
 }// namespace Protocol
 

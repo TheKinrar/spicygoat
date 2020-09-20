@@ -6,7 +6,7 @@
 
 Position2D::Position2D(int32_t x, int32_t z) : x(x), z(z) {}
 
-bool Position2D::operator<(const Position2D &rhs) const {
+bool Position2D::operator<(const Position2D& rhs) const {
     if (x < rhs.x)
         return true;
     if (rhs.x < x)
@@ -14,19 +14,19 @@ bool Position2D::operator<(const Position2D &rhs) const {
     return z < rhs.z;
 }
 
-bool Position2D::operator>(const Position2D &rhs) const {
+bool Position2D::operator>(const Position2D& rhs) const {
     return rhs < *this;
 }
 
-bool Position2D::operator<=(const Position2D &rhs) const {
+bool Position2D::operator<=(const Position2D& rhs) const {
     return !(rhs < *this);
 }
 
-bool Position2D::operator>=(const Position2D &rhs) const {
+bool Position2D::operator>=(const Position2D& rhs) const {
     return !(*this < rhs);
 }
 
-std::ostream &operator<<(std::ostream &os, const Position2D &d) {
+std::ostream& operator<<(std::ostream& os, const Position2D& d) {
     os << "Pos2D{x=" << d.x << ",z=" << d.z << "}";
     return os;
 }

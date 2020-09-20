@@ -5,7 +5,7 @@
 #include "PacketLoginStart.h"
 #include "../../packets.h"
 
-PacketLoginStart::PacketLoginStart(PacketData *data) : ServerBoundPacket(Packets::S_LOGIN_START) {
+PacketLoginStart::PacketLoginStart(PacketData* data) : ServerBoundPacket(Packets::S_LOGIN_START) {
     this->name = data->readString();
 }
 
