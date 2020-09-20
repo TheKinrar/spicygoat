@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 project(SpicyGoat)
 
+find_package(Boost 1.73.0 REQUIRED COMPONENTS system)
+find_package(Threads REQUIRED)
 
 include(FetchContent)
 
