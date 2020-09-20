@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //SPICYGOAT_PACKETREQUEST_H
+#endif//SPICYGOAT_PACKETREQUEST_H

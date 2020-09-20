@@ -3,12 +3,12 @@
 //
 
 #include "ChunkPalette.h"
-#include "../../protocol/PacketData.h"
 #include "../../Server.h"
-#include <tag_compound.h>
-#include <tag_string.h>
+#include "../../protocol/PacketData.h"
 #include <cmath>
 #include <iostream>
+#include <tag_compound.h>
+#include <tag_string.h>
 
 ChunkPalette *ChunkPalette::fromNBT(nbt::tag_list &list) {
     if (list.size() > 256)

@@ -7,15 +7,15 @@
 
 class TCPConnection;
 
-#include <uuid/uuid.h>
-#include <string>
-#include <vector>
-#include <map>
-#include "Entity.h"
-#include "../world/geo/Location.h"
-#include "../world/chunks/ChunkColumn.h"
 #include "../TCPConnection.h"
+#include "../world/chunks/ChunkColumn.h"
+#include "../world/geo/Location.h"
 #include "../world/geo/Position2D.h"
+#include "Entity.h"
+#include <map>
+#include <string>
+#include <uuid/uuid.h>
+#include <vector>
 
 class EntityPlayer : public Entity {
 public:
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_ENTITYPLAYER_H
+#endif//SPICYGOAT_ENTITYPLAYER_H

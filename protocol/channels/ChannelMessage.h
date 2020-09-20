@@ -5,9 +5,9 @@
 #ifndef SPICYGOAT_CHANNELMESSAGE_H
 #define SPICYGOAT_CHANNELMESSAGE_H
 
-#include <vector>
-#include <string>
 #include "../../TCPConnection.h"
+#include <string>
+#include <vector>
 
 class ChannelMessage {
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_CHANNELMESSAGE_H
+#endif//SPICYGOAT_CHANNELMESSAGE_H

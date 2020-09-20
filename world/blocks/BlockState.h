@@ -6,9 +6,9 @@
 #define SPICYGOAT_BLOCKSTATE_H
 
 
-#include <string>
 #include <cstdint>
 #include <map>
+#include <string>
 
 class BlockState {
 public:
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_BLOCKSTATE_H
+#endif//SPICYGOAT_BLOCKSTATE_H

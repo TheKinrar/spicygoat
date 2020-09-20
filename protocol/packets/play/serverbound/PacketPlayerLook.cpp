@@ -11,7 +11,5 @@ PacketPlayerLook::PacketPlayerLook(PacketData *data) : ServerBoundPacket(Packets
 }
 
 std::string PacketPlayerLook::toString() const {
-    return std::string("PacketPlayerLook{yaw=") + std::to_string(yaw)
-           + ",pitch=" + std::to_string(pitch)
-           + ",onGround=" + std::to_string(onGround) + "}";
+    return std::string("PacketPlayerLook{yaw=") + std::to_string(yaw) + ",pitch=" + std::to_string(pitch) + ",onGround=" + std::to_string(onGround) + "}";
 }

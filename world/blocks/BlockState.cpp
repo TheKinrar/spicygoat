@@ -2,9 +2,9 @@
 // Created by thekinrar on 09/04/19.
 //
 
+#include "BlockState.h"
 #include <cstdint>
 #include <utility>
-#include "BlockState.h"
 
 BlockState::BlockState(const std::string &name) : name(name) {}
 

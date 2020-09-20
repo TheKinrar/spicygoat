@@ -5,8 +5,8 @@
 #ifndef SPICYGOAT_PACKET_H
 #define SPICYGOAT_PACKET_H
 
-#include "enum.h"
 #include "../PacketData.h"
+#include "enum.h"
 
 class Packet {
 public:
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKET_H
+#endif//SPICYGOAT_PACKET_H

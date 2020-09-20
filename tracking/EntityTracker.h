@@ -24,4 +24,4 @@ protected:
 };
 
 
-#endif //SPICYGOAT_ENTITYTRACKER_H
+#endif//SPICYGOAT_ENTITYTRACKER_H

@@ -2,9 +2,9 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include <iostream>
 #include "PlayerTracker.h"
 #include "../Server.h"
+#include <iostream>
 
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 

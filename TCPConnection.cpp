@@ -5,11 +5,11 @@
 #include <iostream>
 #include <libnet.h>
 
-#include "TCPConnection.h"
-#include "protocol.h"
-#include "entities/EntityPlayer.h"
 #include "Server.h"
+#include "TCPConnection.h"
 #include "TCPServer.h"
+#include "entities/EntityPlayer.h"
+#include "protocol.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
     thread = new std::thread(&TCPConnection::task, this);
@@ -47,7 +47,7 @@ void TCPConnection::task() {
             Packet *packet = Packets::parse(&packetData, state);
 
             if (packet) {
-//                std::cout << getName() << " => " << packet->toString() << std::endl;
+                //                std::cout << getName() << " => " << packet->toString() << std::endl;
 
                 if (listener) listener->handle(*static_cast<ServerBoundPacket *>(packet));
             }
@@ -122,7 +122,7 @@ void TCPConnection::keepAlive(int64_t millis) {
         }
     } else {
         if (millis - latestKeepAlive > 30000) {
-            close(sock); // TODO proper timeout
+            close(sock);// TODO proper timeout
         }
     }
 }
@@ -150,4 +150,3 @@ const PacketListener &TCPConnection::getListener() const {
 void TCPConnection::disconnect() {
     close(sock);
 }
-

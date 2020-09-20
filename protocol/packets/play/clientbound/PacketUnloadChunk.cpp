@@ -5,7 +5,6 @@
 #include "PacketUnloadChunk.h"
 
 PacketUnloadChunk::PacketUnloadChunk(ChunkColumn &chunkColumn) : column(chunkColumn) {
-
 }
 
 std::vector<std::byte> PacketUnloadChunk::bytes() {

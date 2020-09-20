@@ -48,4 +48,4 @@ namespace Packets {
     Packet *parse(PacketData *data, ProtocolState state);
 }
 
-#endif //SPICYGOAT_PACKETS_H
+#endif//SPICYGOAT_PACKETS_H

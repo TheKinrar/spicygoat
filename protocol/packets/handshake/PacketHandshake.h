@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "../ServerBoundPacket.h"
 #include "../../ProtocolState.h"
+#include "../ServerBoundPacket.h"
 
 
 class PacketHandshake : public ServerBoundPacket {
@@ -33,4 +33,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETHANDSHAKE_H
+#endif//SPICYGOAT_PACKETHANDSHAKE_H

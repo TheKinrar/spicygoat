@@ -14,13 +14,12 @@ std::vector<std::byte> PacketPlayerLocationCB::bytes() {
     PacketData::writeDouble(location.getZ(), array);
     PacketData::writeFloat(location.getYaw(), array);
     PacketData::writeFloat(location.getPitch(), array);
-    PacketData::writeByte(0, array); // TODO bitfield relative/absolute values (?)
-    PacketData::writeVarInt(-42, array); // TODO teleport ID
+    PacketData::writeByte(0, array);    // TODO bitfield relative/absolute values (?)
+    PacketData::writeVarInt(-42, array);// TODO teleport ID
     return array;
 }
 
 std::string PacketPlayerLocationCB::toString() const {
-    return std::string("PacketPlayerLocationCB{loc=") + location.toString()
-           + ",id=" + std::to_string(-42) // TODO teleport ID
+    return std::string("PacketPlayerLocationCB{loc=") + location.toString() + ",id=" + std::to_string(-42)// TODO teleport ID
            + "}";
 }

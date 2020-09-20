@@ -8,8 +8,8 @@
 
 #include <set>
 
-#include "EntityTracker.h"
 #include "../entities/EntityPlayer.h"
+#include "EntityTracker.h"
 
 class PlayerTracker : public EntityTracker {
 public:
@@ -24,4 +24,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PLAYERTRACKER_H
+#endif//SPICYGOAT_PLAYERTRACKER_H

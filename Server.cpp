@@ -2,12 +2,12 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include "Server.h"
+#include "TCPServer.h"
+#include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
+#include "tracking/PlayerTracker.h"
 #include <fstream>
 #include <iostream>
-#include "Server.h"
-#include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
-#include "TCPServer.h"
-#include "tracking/PlayerTracker.h"
 
 Server::Server() {
     std::ifstream ifs("blocks.json");
@@ -43,7 +43,8 @@ void Server::run() {
         auto tickStart = std::chrono::system_clock::now();
         tick();
         long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(
-                std::chrono::system_clock::now() - tickStart).count();
+                                std::chrono::system_clock::now() - tickStart)
+                                .count();
 
         if (tickTime < 50000) {
             std::this_thread::sleep_for(std::chrono::microseconds(50000 - tickTime));
@@ -122,4 +123,3 @@ const std::vector<std::byte> &Server::getCodec() const {
 std::unique_ptr<EntityTracker> Server::createTracker(Entity &e) {
     return std::make_unique<PlayerTracker>(e);
 }
-

@@ -7,9 +7,9 @@
 
 #include "entities/EntityPlayer.h"
 #include "world/World.h"
-#include <vector>
-#include <uuid/uuid.h>
 #include <string>
+#include <uuid/uuid.h>
+#include <vector>
 
 class Server {
 public:
@@ -61,4 +61,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_SERVER_H
+#endif//SPICYGOAT_SERVER_H

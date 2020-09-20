@@ -6,10 +6,10 @@
 #define SPICYGOAT_CHUNKPALETTE_H
 
 
-#include <tag_list.h>
-#include <map>
 #include "../blocks/BlockState.h"
+#include <map>
 #include <nlohmann/json.hpp>
+#include <tag_list.h>
 
 class ChunkPalette {
 public:
@@ -43,4 +43,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_CHUNKPALETTE_H
+#endif//SPICYGOAT_CHUNKPALETTE_H

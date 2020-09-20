@@ -2,8 +2,8 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 
 #include "packets.h"
 
@@ -47,7 +47,7 @@ Packet *Packets::parse(PacketData *data, ProtocolState state) {
             case 0x14:
                 return new PacketPlayerLook(data);
             case 0x15:
-                return nullptr; // TODO Player
+                return nullptr;// TODO Player
             case 0x1A:
                 return new PacketPlayerAbilitiesSB(data);
             case 0x1B:
@@ -55,7 +55,7 @@ Packet *Packets::parse(PacketData *data, ProtocolState state) {
             case 0x1C:
                 return new PacketEntityAction(data);
             case 0x2C:
-                return nullptr; // TODO Animation
+                return nullptr;// TODO Animation
         }
     }
 

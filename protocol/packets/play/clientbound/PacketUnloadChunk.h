@@ -6,8 +6,8 @@
 #define SPICYGOAT_PACKETUNLOADCHUNK_H
 
 
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/chunks/ChunkColumn.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketUnloadChunk : public ClientBoundPacket {
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETUNLOADCHUNK_H
+#endif//SPICYGOAT_PACKETUNLOADCHUNK_H

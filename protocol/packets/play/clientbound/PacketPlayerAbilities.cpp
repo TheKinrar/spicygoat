@@ -24,11 +24,5 @@ std::vector<std::byte> PacketPlayerAbilities::bytes() {
 }
 
 std::string PacketPlayerAbilities::toString() const {
-    return std::string("PacketPlayerAbilities{inv=") + std::to_string(invulnerable)
-           + ",fly=" + std::to_string(flying)
-           + ",allowFly=" + std::to_string(allowFlying)
-           + ",creative=" + std::to_string(creative)
-           + ",flySpeed=" + std::to_string(flyingSpeed)
-           + ",fovMod=" + std::to_string(fovModifier)
-           + "}";
+    return std::string("PacketPlayerAbilities{inv=") + std::to_string(invulnerable) + ",fly=" + std::to_string(flying) + ",allowFly=" + std::to_string(allowFlying) + ",creative=" + std::to_string(creative) + ",flySpeed=" + std::to_string(flyingSpeed) + ",fovMod=" + std::to_string(fovModifier) + "}";
 }

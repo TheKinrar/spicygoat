@@ -5,10 +5,10 @@
 #ifndef SPICYGOAT_WORLD_H
 #define SPICYGOAT_WORLD_H
 
-#include <map>
-#include "geo/Position2D.h"
 #include "chunks/Region.h"
 #include "geo/Position.h"
+#include "geo/Position2D.h"
+#include <map>
 
 class World {
 public:
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_WORLD_H
+#endif//SPICYGOAT_WORLD_H

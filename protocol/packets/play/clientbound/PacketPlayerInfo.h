@@ -6,9 +6,9 @@
 #define SPICYGOAT_PACKETPLAYERINFO_H
 
 
-#include <forward_list>
-#include "../../ClientBoundPacket.h"
 #include "../../../../entities/EntityPlayer.h"
+#include "../../ClientBoundPacket.h"
+#include <forward_list>
 
 class PacketPlayerInfo : public ClientBoundPacket {
 public:
@@ -32,4 +32,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETPLAYERINFO_H
+#endif//SPICYGOAT_PACKETPLAYERINFO_H

@@ -15,8 +15,7 @@ public:
     std::string toString() const override;
 
     std::string message;
-
 };
 
 
-#endif //SPICYGOAT_PACKETCHATMESSAGESB_H
+#endif//SPICYGOAT_PACKETCHATMESSAGESB_H

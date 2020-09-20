@@ -6,10 +6,10 @@
 #define SPICYGOAT_CHUNKCOLUMN_H
 
 
+#include "../geo/Position2D.h"
+#include "Chunk.h"
 #include <stdint-gcc.h>
 #include <tag_compound.h>
-#include "Chunk.h"
-#include "../geo/Position2D.h"
 
 class ChunkColumn {
 public:
@@ -39,9 +39,9 @@ private:
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
 
-public: // TODO should be private
+public:// TODO should be private
     nbt::tag_compound *level = nullptr;
 };
 
 
-#endif //SPICYGOAT_CHUNKCOLUMN_H
+#endif//SPICYGOAT_CHUNKCOLUMN_H

@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_POSITION_H
+#endif//SPICYGOAT_POSITION_H

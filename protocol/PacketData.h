@@ -5,12 +5,12 @@
 #ifndef SPICYGOAT_PACKETDATA_H
 #define SPICYGOAT_PACKETDATA_H
 
-#include <netinet/in.h>
-#include <exception>
-#include <string>
-#include <vector>
-#include <uuid/uuid.h>
 #include "../world/geo/Position.h"
+#include <exception>
+#include <netinet/in.h>
+#include <string>
+#include <uuid/uuid.h>
+#include <vector>
 
 class PacketData {
 public:
@@ -79,4 +79,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETDATA_H
+#endif//SPICYGOAT_PACKETDATA_H

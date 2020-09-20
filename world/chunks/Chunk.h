@@ -5,9 +5,9 @@
 #ifndef SPICYGOAT_CHUNK_H
 #define SPICYGOAT_CHUNK_H
 
-#include <tag_compound.h>
-#include <stdint-gcc.h>
 #include "ChunkPalette.h"
+#include <stdint-gcc.h>
+#include <tag_compound.h>
 
 class Chunk {
 public:
@@ -38,4 +38,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_CHUNK_H
+#endif//SPICYGOAT_CHUNK_H

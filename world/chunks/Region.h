@@ -6,9 +6,9 @@
 #define SPICYGOAT_REGION_H
 
 
-#include <map>
 #include "../geo/Position2D.h"
 #include "ChunkColumn.h"
+#include <map>
 
 class Region {
 public:
@@ -23,4 +23,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_REGION_H
+#endif//SPICYGOAT_REGION_H

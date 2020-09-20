@@ -19,4 +19,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_LOGINLISTENER_H
+#endif//SPICYGOAT_LOGINLISTENER_H

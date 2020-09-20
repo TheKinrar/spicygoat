@@ -5,16 +5,16 @@
 #ifndef SPICYGOAT_ENTITY_H
 #define SPICYGOAT_ENTITY_H
 
-#include <mutex>
 #include <cstdint>
-#include <string>
+#include <mutex>
 #include <set>
+#include <string>
 
 class EntityTracker;
 
-#include "../world/geo/Location.h"
-#include "../tracking/EntityTracker.h"
 #include "../protocol/packets/ClientBoundPacket.h"
+#include "../tracking/EntityTracker.h"
+#include "../world/geo/Location.h"
 
 class Entity {
 public:
@@ -60,4 +60,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_ENTITY_H
+#endif//SPICYGOAT_ENTITY_H

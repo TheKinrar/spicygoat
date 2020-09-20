@@ -6,8 +6,8 @@
 #define SPICYGOAT_PACKETENTITYTELEPORT_H
 
 
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/geo/Location.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketEntityTeleport : public ClientBoundPacket {
 public:
@@ -24,4 +24,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETENTITYTELEPORT_H
+#endif//SPICYGOAT_PACKETENTITYTELEPORT_H

@@ -21,4 +21,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_STATUSLISTENER_H
+#endif//SPICYGOAT_STATUSLISTENER_H

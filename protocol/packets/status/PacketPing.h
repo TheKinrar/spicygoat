@@ -21,4 +21,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETPING_H
+#endif//SPICYGOAT_PACKETPING_H

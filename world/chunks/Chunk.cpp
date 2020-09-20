@@ -4,8 +4,8 @@
 
 #include "Chunk.h"
 #include "../../protocol/PacketData.h"
-#include <tag_array.h>
 #include <iostream>
+#include <tag_array.h>
 
 Chunk::Chunk(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 

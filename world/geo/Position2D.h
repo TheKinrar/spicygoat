@@ -6,8 +6,8 @@
 #define SPICYGOAT_POSITION2D_H
 
 
-#include <stdint-gcc.h>
 #include <ostream>
+#include <stdint-gcc.h>
 
 class Position2D {
 public:
@@ -28,4 +28,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_POSITION2D_H
+#endif//SPICYGOAT_POSITION2D_H

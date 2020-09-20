@@ -6,8 +6,8 @@
 #define SPICYGOAT_PACKETCHUNKDATA_H
 
 
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/chunks/ChunkColumn.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketChunkData : public ClientBoundPacket {
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETCHUNKDATA_H
+#endif//SPICYGOAT_PACKETCHUNKDATA_H

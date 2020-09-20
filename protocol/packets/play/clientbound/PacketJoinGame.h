@@ -6,8 +6,8 @@
 #define SPICYGOAT_PACKETJOINGAME_H
 
 
-#include "../../ClientBoundPacket.h"
 #include "../../../../entities/EntityPlayer.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketJoinGame : public ClientBoundPacket {
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETJOINGAME_H
+#endif//SPICYGOAT_PACKETJOINGAME_H

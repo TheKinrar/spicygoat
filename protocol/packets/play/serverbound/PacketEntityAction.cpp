@@ -11,7 +11,5 @@ PacketEntityAction::PacketEntityAction(PacketData *data) : ServerBoundPacket(Pac
 }
 
 std::string PacketEntityAction::toString() const {
-    return std::string("PacketEntityAction{eid=") + std::to_string(eid)
-           + ",action=" + std::to_string(action)
-           + ",jumpBoost=" + std::to_string(jumpBoost) + "}";
+    return std::string("PacketEntityAction{eid=") + std::to_string(eid) + ",action=" + std::to_string(action) + ",jumpBoost=" + std::to_string(jumpBoost) + "}";
 }

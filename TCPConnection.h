@@ -5,17 +5,17 @@
 #ifndef SPICYGOAT_TCPCONNECTION_H
 #define SPICYGOAT_TCPCONNECTION_H
 
+#include <mutex>
 #include <netinet/in.h>
 #include <thread>
-#include <mutex>
 
 class EntityPlayer;
 
 class PacketListener;
 
-#include "protocol.h"
-#include "network/PacketListener.h"
 #include "entities/EntityPlayer.h"
+#include "network/PacketListener.h"
+#include "protocol.h"
 
 class TCPConnection {
 public:
@@ -70,4 +70,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_TCPCONNECTION_H
+#endif//SPICYGOAT_TCPCONNECTION_H

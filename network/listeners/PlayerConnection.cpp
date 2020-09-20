@@ -2,10 +2,10 @@
 // Created by thekinrar on 17/09/2020.
 //
 
-#include <iostream>
 #include "PlayerConnection.h"
-#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../../Server.h"
+#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+#include <iostream>
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player) : connection(connection),
                                                                                       player(player) {}

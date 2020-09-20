@@ -2,11 +2,11 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include "PacketJoinGame.h"
+#include "../../../../Server.h"
+#include "nbt_tags.h"
 #include <io/stream_writer.h>
 #include <sstream>
-#include "PacketJoinGame.h"
-#include "nbt_tags.h"
-#include "../../../../Server.h"
 
 PacketJoinGame::PacketJoinGame(EntityPlayer *player) {
     this->player = player;
@@ -106,9 +106,9 @@ std::vector<std::byte> PacketJoinGame::bytes() {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x24, array);
     PacketData::writeInt(player->getEID(), array);
-    PacketData::writeBoolean(false, array); // TODO hardcore
-    PacketData::writeUnsignedByte(0, array); // TODO gamemode
-    PacketData::writeUnsignedByte(255, array); // TODO prev gamemode
+    PacketData::writeBoolean(false, array);   // TODO hardcore
+    PacketData::writeUnsignedByte(0, array);  // TODO gamemode
+    PacketData::writeUnsignedByte(255, array);// TODO prev gamemode
 
     // TODO world names []
     PacketData::writeVarInt(1, array);
@@ -118,21 +118,21 @@ std::vector<std::byte> PacketJoinGame::bytes() {
     codec.put("minecraft:dimension_type", std::move(dimRegistry()));
     codec.put("minecraft:worldgen/biome", std::move(biomeRegistry()));
     std::vector<std::byte> codecBytes = nbtBytes(codec);*/
-    PacketData::writeByteArray(Server::get()->getCodec(), array); // TODO dimensions/biomes codec
+    PacketData::writeByteArray(Server::get()->getCodec(), array);// TODO dimensions/biomes codec
 
     std::vector<std::byte> dimBytes = nbtBytes(overworldElement());
-    PacketData::writeByteArray(dimBytes, array); // TODO current dimension
+    PacketData::writeByteArray(dimBytes, array);// TODO current dimension
 
-    PacketData::writeString("minecraft:overworld", array); // TODO current world name
+    PacketData::writeString("minecraft:overworld", array);// TODO current world name
 
-    PacketData::writeLong(0, array); // TODO first 8B of sha-256 hash of seed
-    PacketData::writeVarInt(1, array); // TODO max players
-//    PacketData::writeString("default", array); // TODO level type ???
-    PacketData::writeVarInt(10, array); // TODO view distance
-    PacketData::writeBoolean(false, array); // TODO reduced debug info
+    PacketData::writeLong(0, array);       // TODO first 8B of sha-256 hash of seed
+    PacketData::writeVarInt(1, array);     // TODO max players
+                                           //    PacketData::writeString("default", array); // TODO level type ???
+    PacketData::writeVarInt(10, array);    // TODO view distance
+    PacketData::writeBoolean(false, array);// TODO reduced debug info
     PacketData::writeBoolean(true, array); // TODO enable respawn screen (false if doImmediateRespawn gamerule)
-    PacketData::writeBoolean(false, array); // TODO debug mode
-    PacketData::writeBoolean(false, array); // TODO superflat
+    PacketData::writeBoolean(false, array);// TODO debug mode
+    PacketData::writeBoolean(false, array);// TODO superflat
     return array;
 }
 

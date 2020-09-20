@@ -29,6 +29,6 @@ namespace Packets {
     static const int S_PLAYER_ABILITIES = 0x1A;
     static const int S_PLAYER_DIGGING = 0x1B;
     static const int S_ENTITY_ACTION = 0x1C;
-}
+}// namespace Packets
 
-#endif //SPICYGOAT_ENUM_H
+#endif//SPICYGOAT_ENUM_H

@@ -2,9 +2,9 @@
 // Created by thekinrar on 02/04/19.
 //
 
+#include "PacketChunkData.h"
 #include <iostream>
 #include <tag_array.h>
-#include "PacketChunkData.h"
 
 PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
 
@@ -13,7 +13,7 @@ std::vector<std::byte> PacketChunkData::bytes() {
     PacketData::writeVarInt(0x20, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
-    PacketData::writeBoolean(true, array); // full chunk
+    PacketData::writeBoolean(true, array);// full chunk
 
     std::vector<std::byte> data;
     uint16_t mask = chunkColumn.writeToByteArray(data);
@@ -30,7 +30,7 @@ std::vector<std::byte> PacketChunkData::bytes() {
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 
-    PacketData::writeVarInt(0, array); // TODO: block entities
+    PacketData::writeVarInt(0, array);// TODO: block entities
     return array;
 }
 

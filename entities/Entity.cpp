@@ -2,12 +2,12 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include <iostream>
 #include "Entity.h"
 #include "../Server.h"
-#include "../protocol/packets/play/clientbound/PacketEntityMove.h"
 #include "../protocol/packets/play/clientbound/PacketEntityLook.h"
+#include "../protocol/packets/play/clientbound/PacketEntityMove.h"
 #include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
+#include <iostream>
 
 Entity::Entity() {
     eid = Server::get()->nextEID();
@@ -47,12 +47,9 @@ void Entity::tick() {
 
         m_nextLocation.lock();
 
-        bool moved = (location.getX() != nextLocation.getX())
-                     || (location.getY() != nextLocation.getY())
-                     || (location.getZ() != nextLocation.getZ());
+        bool moved = (location.getX() != nextLocation.getX()) || (location.getY() != nextLocation.getY()) || (location.getZ() != nextLocation.getZ());
 
-        bool looked = (location.getYaw() != nextLocation.getYaw())
-                      || (location.getPitch() != nextLocation.getPitch());
+        bool looked = (location.getYaw() != nextLocation.getYaw()) || (location.getPitch() != nextLocation.getPitch());
 
         if (moved) {
             double dx = nextLocation.getX() - location.getX();

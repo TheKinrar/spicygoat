@@ -5,9 +5,9 @@
 #ifndef SPICYGOAT_LOCATION_H
 #define SPICYGOAT_LOCATION_H
 
-#include <string>
 #include "../chunks/Chunk.h"
 #include "../chunks/ChunkColumn.h"
+#include <string>
 
 class Location {
 public:
@@ -55,4 +55,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_LOCATION_H
+#endif//SPICYGOAT_LOCATION_H

@@ -7,10 +7,10 @@
 
 #include "TCPConnection.h"
 
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <libnet.h>
+#include <netinet/in.h>
 #include <poll.h>
+#include <sys/socket.h>
 
 class TCPServer {
 public:
@@ -44,4 +44,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_TCPSERVER_H
+#endif//SPICYGOAT_TCPSERVER_H

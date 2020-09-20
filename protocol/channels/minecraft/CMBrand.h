@@ -21,4 +21,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_CMBRAND_H
+#endif//SPICYGOAT_CMBRAND_H

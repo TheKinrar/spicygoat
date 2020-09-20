@@ -2,14 +2,14 @@
 // Created by thekinrar on 03/04/19.
 //
 
+#include "Region.h"
+#include "../../protocol/PacketData.h"
 #include <fstream>
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
-#include <tag_compound.h>
 #include <iostream>
 #include <sstream>
-#include "Region.h"
-#include "../../protocol/PacketData.h"
+#include <tag_compound.h>
 
 Region::Region(int32_t x, int32_t z) : x(x), z(z) {
     std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"),

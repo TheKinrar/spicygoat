@@ -1,6 +1,6 @@
-#include <iostream>
-#include "TCPServer.h"
 #include "Server.h"
+#include "TCPServer.h"
+#include <iostream>
 
 void sigterm_handler(int) {
     std::cout << "Stopping server" << std::endl;

@@ -12,4 +12,4 @@ enum ProtocolState {
     PLAY = 3
 };
 
-#endif //SPICYGOAT_PROTOCOLSTATE_H
+#endif//SPICYGOAT_PROTOCOLSTATE_H

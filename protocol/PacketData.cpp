@@ -2,10 +2,10 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include <stdexcept>
 #include <algorithm>
-#include <iostream>
 #include <endian.h>
+#include <iostream>
+#include <stdexcept>
 
 #include "PacketData.h"
 

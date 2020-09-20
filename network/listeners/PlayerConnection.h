@@ -6,8 +6,8 @@
 #define SPICYGOAT_PLAYERCONNECTION_H
 
 
-#include "../PacketListenerPlay.h"
 #include "../../entities/EntityPlayer.h"
+#include "../PacketListenerPlay.h"
 
 class PlayerConnection : public PacketListenerPlay {
 public:
@@ -43,4 +43,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PLAYERCONNECTION_H
+#endif//SPICYGOAT_PLAYERCONNECTION_H

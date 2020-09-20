@@ -2,14 +2,14 @@
 // Created by thekinrar on 02/04/19.
 //
 
+#include "ChunkColumn.h"
+#include "../../protocol/PacketData.h"
+#include <iostream>
 #include <string>
-#include <vector>
 #include <tag_array.h>
 #include <tag_list.h>
 #include <tag_primitive.h>
-#include <iostream>
-#include "ChunkColumn.h"
-#include "../../protocol/PacketData.h"
+#include <vector>
 
 ChunkColumn::ChunkColumn(int32_t x, int32_t z) : x(x), z(z) {
     for (auto &chunk : chunks)
@@ -80,7 +80,7 @@ void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {
     //c["MOTION_BLOCKING"] = this->level->at("Heightmaps").as<nbt::tag_compound>().at("MOTION_BLOCKING");
     /*writer.write_type(nbt::tag_type::Compound);
     writer.write_payload(c);*/
-//    writer.write_type(nbt::tag_type::End);
+    //    writer.write_type(nbt::tag_type::End);
     //nbt::io::write_tag("", c, stream);
 
     stream.seekp(0, std::ios::end);

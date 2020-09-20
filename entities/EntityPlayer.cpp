@@ -2,13 +2,13 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include <iostream>
 #include "EntityPlayer.h"
 #include "../Server.h"
-#include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 #include "../protocol/packets/play/clientbound/PacketChunkData.h"
 #include "../protocol/packets/play/clientbound/PacketDestroyEntities.h"
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
+#include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
+#include <iostream>
 
 EntityPlayer::EntityPlayer(uuid_t &uuid, std::string &name, TCPConnection &conn) : uuid(uuid), conn(conn) {
     this->name = name;
@@ -103,8 +103,7 @@ std::unique_ptr<ClientBoundPacket> EntityPlayer::createPacket() {
     return std::make_unique<PacketSpawnPlayer>(
             getEID(), uuid,
             getLocation().getX(), getLocation().getY(), getLocation().getZ(),
-            getLocation().getYaw(), getLocation().getPitch()
-    );
+            getLocation().getYaw(), getLocation().getPitch());
 }
 
 std::unique_ptr<ClientBoundPacket> EntityPlayer::removePacket() {

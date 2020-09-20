@@ -30,12 +30,7 @@ float Location::getPitch() const {
 }
 
 std::string Location::toString() const {
-    return std::string("Location{") + std::to_string(x)
-           + "," + std::to_string(y)
-           + "," + std::to_string(z)
-           + "," + std::to_string(yaw)
-           + "," + std::to_string(pitch)
-           + "}";
+    return std::string("Location{") + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + "," + std::to_string(yaw) + "," + std::to_string(pitch) + "}";
 }
 
 void Location::setX(double x) {
@@ -71,11 +66,11 @@ bool Location::operator!=(const Location &rhs) const {
 }
 
 int32_t Location::getChunkX() const {
-    return (int32_t) (getX() / 16);
+    return (int32_t)(getX() / 16);
 }
 
 int32_t Location::getChunkZ() const {
-    return (int32_t) (getZ() / 16);
+    return (int32_t)(getZ() / 16);
 }
 
 ChunkColumn *Location::getChunkColumn() const {

@@ -12,8 +12,5 @@ PacketPlayerPosition::PacketPlayerPosition(PacketData *data) : ServerBoundPacket
 }
 
 std::string PacketPlayerPosition::toString() const {
-    return std::string("PacketPlayerPosition{x=") + std::to_string(x)
-           + ",y=" + std::to_string(y)
-           + ",z=" + std::to_string(z)
-           + ",onGround=" + std::to_string(onGround) + "}";
+    return std::string("PacketPlayerPosition{x=") + std::to_string(x) + ",y=" + std::to_string(y) + ",z=" + std::to_string(z) + ",onGround=" + std::to_string(onGround) + "}";
 }

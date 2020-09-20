@@ -6,8 +6,8 @@
 #define SPICYGOAT_PACKETENTITYMOVELOOK_H
 
 
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/geo/Location.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketEntityMoveLook : public ClientBoundPacket {
 public:
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_PACKETENTITYMOVELOOK_H
+#endif//SPICYGOAT_PACKETENTITYMOVELOOK_H

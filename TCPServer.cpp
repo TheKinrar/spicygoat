@@ -19,7 +19,7 @@ TCPServer::TCPServer() {
     sin.sin_port = htons(25565);
 
     errno = 0;
-    bind(sock, (sockaddr * ) & sin, sizeof(sin));
+    bind(sock, (sockaddr *) &sin, sizeof(sin));
 
     if (errno) {
         std::cerr << "bind failed: " << strerror(errno) << std::endl;
@@ -55,7 +55,7 @@ void TCPServer::accept() {
 
             sockaddr_in csin;
             socklen_t csinlen = sizeof(csin);
-            int csock = ::accept(sock, (sockaddr * ) & csin, &csinlen);
+            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
 
             auto conn = new TCPConnection(csock, csin);
             conn->setListener(std::make_unique<HandshakeListener>(*conn));
@@ -73,7 +73,8 @@ void TCPServer::accept() {
 void TCPServer::keepAliveTask() {
     while (running) {
         int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(
-                std::chrono::system_clock::now().time_since_epoch()).count();
+                                 std::chrono::system_clock::now().time_since_epoch())
+                                 .count();
 
         for (auto connection : connections) {
             if (connection->getState() == ProtocolState::PLAY) {

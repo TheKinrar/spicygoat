@@ -2,13 +2,13 @@
 // Created by thekinrar on 03/04/19.
 //
 
+#include "World.h"
 #include <cmath>
-#include <io/stream_reader.h>
-#include <io/izlibstream.h>
 #include <fstream>
+#include <io/izlibstream.h>
+#include <io/stream_reader.h>
 #include <iostream>
 #include <tag_primitive.h>
-#include "World.h"
 
 World::World() {
     std::ifstream ifs("world/level.dat", std::ios::binary);
@@ -33,8 +33,7 @@ Region *World::getRegion(int32_t x, int32_t z) {
 }
 
 ChunkColumn *World::getChunk(int32_t x, int32_t z) {
-    return getRegion(floor((double) x / 32), floor((double) z / 32))->getColumn(x % 32 + (x < 0 ? 32 : 0),
-                                                                                z % 32 + (z < 0 ? 32 : 0));
+    return getRegion(floor((double) x / 32), floor((double) z / 32))->getColumn(x % 32 + (x < 0 ? 32 : 0), z % 32 + (z < 0 ? 32 : 0));
 }
 
 const Position &World::getSpawnPosition() const {

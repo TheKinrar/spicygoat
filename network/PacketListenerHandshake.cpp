@@ -2,8 +2,8 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <iostream>
 #include "PacketListenerHandshake.h"
+#include <iostream>
 
 void PacketListenerHandshake::handle(const ServerBoundPacket &packet) {
     switch (packet.getId()) {

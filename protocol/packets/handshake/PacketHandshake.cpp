@@ -2,9 +2,9 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include <stdexcept>
 #include "PacketHandshake.h"
 #include "../../../Server.h"
+#include <stdexcept>
 
 PacketHandshake::PacketHandshake(PacketData *data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
     protocolVersion = data->readVarInt();
@@ -30,8 +30,5 @@ int PacketHandshake::getNextState() const {
 }
 
 std::string PacketHandshake::toString() const {
-    return std::string("PacketHandshake{version=") + std::to_string(protocolVersion)
-           + ",address=" + serverAddress
-           + ",port=" + std::to_string(serverPort)
-           + ",state=" + std::to_string(nextState) + "}";
+    return std::string("PacketHandshake{version=") + std::to_string(protocolVersion) + ",address=" + serverAddress + ",port=" + std::to_string(serverPort) + ",state=" + std::to_string(nextState) + "}";
 }

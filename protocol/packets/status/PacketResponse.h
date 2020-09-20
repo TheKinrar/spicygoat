@@ -5,8 +5,8 @@
 #ifndef SPICYGOAT_PACKETRESPONSE_H
 #define SPICYGOAT_PACKETRESPONSE_H
 
-#include "../Packet.h"
 #include "../ClientBoundPacket.h"
+#include "../Packet.h"
 
 #include <vector>
 
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif //SPICYGOAT_PACKETRESPONSE_H
+#endif//SPICYGOAT_PACKETRESPONSE_H
