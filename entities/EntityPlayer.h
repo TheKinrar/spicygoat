@@ -7,27 +7,27 @@
 
 class TCPConnection;
 
-#include <uuid/uuid.h>
+#include "../TCPConnection.h"
+#include "../world/chunks/ChunkColumn.h"
+#include "../world/geo/Location.h"
+#include "../world/geo/Position2D.h"
+#include "Entity.h"
+#include <boost/uuid/uuid.hpp>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include "Entity.h"
-#include "../world/geo/Location.h"
-#include "../world/chunks/ChunkColumn.h"
-#include "../TCPConnection.h"
-#include "../world/geo/Position2D.h"
 
 class EntityPlayer : public Entity {
 public:
-    EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn);
+    EntityPlayer(boost::uuids::uuid& uuid, std::string& name, TCPConnection& conn);
 
     void tick() override;
 
-    uuid_t& getUuid() const;
+    boost::uuids::uuid& getUuid() const;
 
-    const std::string &getName() const;
+    const std::string& getName() const;
 
-    TCPConnection &getConnection() const;
+    TCPConnection& getConnection() const;
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;
 
@@ -39,10 +39,10 @@ protected:
     void chunkChanged() override;
 
 private:
-    uuid_t& uuid;
+    boost::uuids::uuid& uuid;
     std::string name;
 
-    TCPConnection &conn;
+    TCPConnection& conn;
 
     std::map<Position2D, ChunkColumn*> loadedChunks;
     std::map<Position2D, ChunkColumn*> loadingChunks;
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif //SPICYGOAT_ENTITYPLAYER_H
+#endif//SPICYGOAT_ENTITYPLAYER_H

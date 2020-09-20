@@ -7,20 +7,20 @@
 
 #include "../ClientBoundPacket.h"
 
-#include <uuid/uuid.h>
+#include <boost/uuid/uuid.hpp>
 
 class PacketLoginSuccess : public ClientBoundPacket {
 public:
-    PacketLoginSuccess(uuid_t uuid, const std::string &username);
+    PacketLoginSuccess(boost::uuids::uuid uuid, const std::string& username);
 
     std::vector<std::byte> bytes() override;
 
     [[nodiscard]] std::string toString() const override;
 
 private:
-    uuid_t uuid{};
+    boost::uuids::uuid uuid{};
     std::string username;
 };
 
 
-#endif //SPICYGOAT_PACKETLOGINSUCCESS_H
+#endif//SPICYGOAT_PACKETLOGINSUCCESS_H

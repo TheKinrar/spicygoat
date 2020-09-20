@@ -9,35 +9,8 @@
 #include <memory>
 #include <thread>
 
-TCPServer::TCPServer() {
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    ioctl(sock, FIONBIO);
-
-    sockaddr_in sin{};
-    sin.sin_family = AF_INET;
-    sin.sin_addr.s_addr = inet_addr("0.0.0.0");
-    sin.sin_port = htons(25565);
-
-    errno = 0;
-    bind(sock, (sockaddr*) &sin, sizeof(sin));
-
-    if(errno) {
-        std::cerr << "bind failed: " << strerror(errno) << std::endl;
-        exit(1);
-    }
-
-    errno = 0;
-    listen(sock, 5);
-
-    if(errno) {
-        std::cerr << "listen failed: " << strerror(errno) << std::endl;
-        exit(1);
-    }
-
-    memset(fds, 0, sizeof(fds));
-
-    fds[0].fd = sock;
-    fds[0].events = POLLIN;
+TCPServer::TCPServer() : service{}, acceptor{service, {boost::asio::ip::tcp::v4(), 25565}} {
+    acceptor.listen();
 
     new std::thread(&TCPServer::keepAliveTask, this);
 }
@@ -47,35 +20,32 @@ TCPServer::~TCPServer() {
 }
 
 void TCPServer::accept() {
-    while(running) {
-        int ret = poll(fds, 1, 100);
-
-        if(ret > 0) {
-            std::cout << "accept" << std::endl;
-
-            sockaddr_in csin;
-            socklen_t csinlen = sizeof(csin);
-            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
-
-            auto conn = new TCPConnection(csock, csin);
-            conn->setListener(std::make_unique<HandshakeListener>(*conn));
-            connections.push_front(conn);
+    try {
+        acceptor.async_accept([this](auto ec, auto&& sock) {
+            handleAccept(ec, std::forward<decltype(sock)>(sock));
+        });
+        while (running) {
+            service.poll_one();
         }
+    } catch (const std::exception& exception) {
+        std::cerr << exception.what();
     }
 
     std::cout << "TCP server stopping" << std::endl;
-    for(auto conn : connections) {
+    for (auto conn : connections) {
         conn->disconnect();
     }
-    close(sock);
+    acceptor.close();
 }
 
 void TCPServer::keepAliveTask() {
-    while(running) {
-        int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    while (running) {
+        int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(
+                                 std::chrono::system_clock::now().time_since_epoch())
+                                 .count();
 
-        for(auto connection : connections) {
-            if(connection->getState() == ProtocolState::PLAY) {
+        for (auto connection : connections) {
+            if (connection->getState() == ProtocolState::PLAY) {
                 connection->keepAlive(millis);
             }
         }
@@ -92,11 +62,20 @@ void TCPServer::stop() {
     running = false;
 }
 
-void TCPServer::removeConnection(TCPConnection *conn) {
+void TCPServer::removeConnection(TCPConnection* conn) {
     connections.remove(conn);
 }
 
-TCPServer &TCPServer::get() {
+TCPServer& TCPServer::get() {
     static TCPServer server;
     return server;
+}
+void TCPServer::handleAccept(const boost::system::error_code& ec, boost::asio::ip::tcp::socket&& sock) {
+    auto conn = new TCPConnection(std::forward<boost::asio::ip::tcp::socket>(sock));
+    conn->setListener(std::make_unique<HandshakeListener>(*conn));
+    connections.push_front(conn);
+
+    acceptor.async_accept([this](auto ec, auto&& sock) {
+        handleAccept(ec, std::forward<decltype(sock)>(sock));
+    });
 }

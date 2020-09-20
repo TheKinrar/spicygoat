@@ -3,9 +3,10 @@
 //
 
 #include "PacketLoginSuccess.h"
+#include <boost/uuid/uuid_io.hpp>
 
-PacketLoginSuccess::PacketLoginSuccess(uuid_t uuid, const std::string &username) {
-    uuid_copy(this->uuid, uuid);
+PacketLoginSuccess::PacketLoginSuccess(boost::uuids::uuid uuid, const std::string& username) {
+    this->uuid = uuid;
     this->username = username;
 }
 
@@ -18,7 +19,5 @@ std::vector<std::byte> PacketLoginSuccess::bytes() {
 }
 
 std::string PacketLoginSuccess::toString() const {
-    char uuid_str[37];
-    uuid_unparse(uuid, uuid_str);
-    return std::string("PacketLoginSuccess{uuid=") + uuid_str + ",username=" + username + "}";
+    return std::string("PacketLoginSuccess{uuid=") + boost::uuids::to_string(uuid) + ",username=" + username + "}";
 }

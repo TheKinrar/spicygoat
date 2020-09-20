@@ -3,23 +3,22 @@
 //
 
 #include <iostream>
-#include <libnet.h>
 
-#include "TCPConnection.h"
-#include "protocol.h"
-#include "entities/EntityPlayer.h"
 #include "Server.h"
+#include "TCPConnection.h"
 #include "TCPServer.h"
+#include "entities/EntityPlayer.h"
+#include "protocol.h"
 
-TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr){
-    thread = new std::thread(&TCPConnection::task, this);
+TCPConnection::TCPConnection(boost::asio::ip::tcp::socket sock) : sock(std::move(sock)) {
+    thread = std::thread(&TCPConnection::task, this);
 }
 
-void TCPConnection::sendPacket(Packet *packet) {
+void TCPConnection::sendPacket(Packet* packet) {
     m_send.lock();
 
     int i = packet->getId();
-    if(i == 0x04 || i == 0x27 || i == 0x28 || i == 0x29 || i == 0x32 || i == 0x36 || i == 0x56) {
+    if (i == 0x04 || i == 0x27 || i == 0x28 || i == 0x29 || i == 0x32 || i == 0x36 || i == 0x56) {
         std::cout << getName() << " <= " << packet->toString() << std::endl;
     }
 
@@ -29,7 +28,7 @@ void TCPConnection::sendPacket(Packet *packet) {
     PacketData::writeVarInt(data.size(), bytes);
     bytes.insert(bytes.end(), data.begin(), data.end());
 
-    send(sock, (char*) bytes.data(), bytes.size(), 0);
+    boost::asio::write(sock, boost::asio::buffer(bytes));
     m_send.unlock();
 }
 
@@ -37,27 +36,25 @@ void TCPConnection::task() {
     std::cout << getName() << " connected" << std::endl;
 
     try {
-        while(TCPServer::get().isRunning()) {
-            int length = readVarInt();
+        while (TCPServer::get().isRunning()) {
+            std::vector<char> buffer(readVarInt());
+            boost::asio::read(sock, boost::asio::buffer(buffer));
 
-            char *data = new char[length];
-            recv(sock, data, length, 0);
-
-            PacketData packetData(data, length);
-            Packet *packet = Packets::parse(&packetData, state);
+            PacketData packetData(buffer.data(), buffer.size());
+            Packet* packet = Packets::parse(&packetData, state);
 
             if (packet) {
-//                std::cout << getName() << " => " << packet->toString() << std::endl;
+                //                std::cout << getName() << " => " << packet->toString() << std::endl;
 
-                if(listener) listener->handle(*static_cast<ServerBoundPacket*>(packet));
+                if (listener) listener->handle(*static_cast<ServerBoundPacket*>(packet));
             }
         }
-    } catch(std::exception &e) {
-        close(sock);
+    } catch (std::exception& e) {
+        sock.close();
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
         TCPServer::get().removeConnection(this);
 
-        if(player) {
+        if (player) {
             Server::get()->removePlayer(*player);
         }
     }
@@ -69,21 +66,18 @@ int TCPConnection::readVarInt() {
     char current;
 
     do {
-        int size;
-        if((size = recv(sock, &current, sizeof(current), 0)) < 1) {
-            throw std::runtime_error(std::string("Network error: ") + strerror(errno));
-        }
+        boost::asio::read(sock, boost::asio::buffer(&current, sizeof(current)));
 
         int value = (current & 0b01111111);
         result |= (value << (7 * bytes));
 
         bytes++;
 
-        if(bytes > 5) {
+        if (bytes > 5) {
             throw std::runtime_error("Protocol error: invalid VarInt");
         }
 
-    } while((current & 0b10000000) != 0);
+    } while ((current & 0b10000000) != 0);
 
     return result;
 }
@@ -97,20 +91,22 @@ ProtocolState TCPConnection::getState() const {
 }
 
 std::string TCPConnection::getName() {
-    return std::string(inet_ntoa(addr.sin_addr)) + ":" + std::to_string(htons(addr.sin_port)) + "/" + std::to_string(state);
+    auto remoteEndpoint = sock.remote_endpoint();
+    return remoteEndpoint.address().to_string() + ":" + std::to_string(remoteEndpoint.port()) + "/" +
+           std::to_string(state);
 }
 
-EntityPlayer *TCPConnection::getPlayer() {
+EntityPlayer* TCPConnection::getPlayer() {
     return player;
 }
 
-void TCPConnection::setPlayer(EntityPlayer *newPlayer) {
+void TCPConnection::setPlayer(EntityPlayer* newPlayer) {
     this->player = newPlayer;
 }
 
 void TCPConnection::keepAlive(int64_t millis) {
-    if(keepAliveOk) {
-        if(millis - latestKeepAlive > 10000) {
+    if (keepAliveOk) {
+        if (millis - latestKeepAlive > 10000) {
             m_keepAlive.lock();
 
             latestKeepAlive = millis;
@@ -120,17 +116,17 @@ void TCPConnection::keepAlive(int64_t millis) {
             m_keepAlive.unlock();
         }
     } else {
-        if(millis - latestKeepAlive > 30000) {
-            close(sock); // TODO proper timeout
+        if (millis - latestKeepAlive > 30000) {
+            sock.close();// TODO proper timeout
         }
     }
 }
 
 void TCPConnection::confirmKeepAlive(int64_t id) {
-    if(id != latestKeepAlive)
+    if (id != latestKeepAlive)
         throw std::runtime_error("Protocol error: invalid keep alive ID");
 
-    if(keepAliveOk)
+    if (keepAliveOk)
         throw std::runtime_error("Protocol error: keep alive already confirmed");
 
     m_keepAlive.lock();
@@ -142,11 +138,10 @@ void TCPConnection::setListener(std::unique_ptr<PacketListener> newListener) {
     listener = std::move(newListener);
 }
 
-const PacketListener &TCPConnection::getListener() const {
+const PacketListener& TCPConnection::getListener() const {
     return *listener;
 }
 
 void TCPConnection::disconnect() {
-    close(sock);
+    sock.close();
 }
-

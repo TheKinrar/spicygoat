@@ -7,25 +7,27 @@
 
 #include "TCPConnection.h"
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <libnet.h>
-#include <poll.h>
+#include <boost/asio.hpp>
 
 class TCPServer {
 public:
     TCPServer();
+
     ~TCPServer();
+
     TCPServer(const TCPServer&) = delete;
+
     void operator=(const TCPServer&) = delete;
 
     static TCPServer& get();
 
     void accept();
+    void handleAccept(const boost::system::error_code& ec, boost::asio::ip::tcp::socket&& sock);
 
     void keepAliveTask();
 
     bool isRunning() const;
+
     void stop();
 
     void removeConnection(TCPConnection*);
@@ -33,11 +35,11 @@ public:
 private:
     bool running = true;
 
-    int sock;
-    pollfd fds[10];
+    boost::asio::io_service service;
+    boost::asio::ip::tcp::acceptor acceptor;
 
     std::forward_list<TCPConnection*> connections;
 };
 
 
-#endif //SPICYGOAT_TCPSERVER_H
+#endif//SPICYGOAT_TCPSERVER_H
