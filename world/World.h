@@ -14,13 +14,14 @@ class World {
 public:
     World();
 
-    Region * getRegion(int32_t x, int32_t z);
-    ChunkColumn * getChunk(int32_t x, int32_t z);
+    Region *getRegion(int32_t x, int32_t z);
+
+    ChunkColumn *getChunk(int32_t x, int32_t z);
 
     const Position &getSpawnPosition() const;
 
 private:
-    std::map<Position2D, Region*> regions;
+    std::map<Position2D, Region *> regions;
 
     Position spawnPosition = Position(0, 0, 0);
 };

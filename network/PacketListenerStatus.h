@@ -12,8 +12,9 @@ class PacketListenerStatus : public PacketListener {
 public:
     void handle(const ServerBoundPacket &packet) override;
 
-    virtual void onRequest(const PacketRequest&) = 0;
-    virtual void onPing(const PacketPing&) = 0;
+    virtual void onRequest(const PacketRequest &) = 0;
+
+    virtual void onPing(const PacketPing &) = 0;
 };
 
 

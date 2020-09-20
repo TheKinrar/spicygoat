@@ -15,20 +15,24 @@
 class TCPServer {
 public:
     TCPServer();
-    ~TCPServer();
-    TCPServer(const TCPServer&) = delete;
-    void operator=(const TCPServer&) = delete;
 
-    static TCPServer& get();
+    ~TCPServer();
+
+    TCPServer(const TCPServer &) = delete;
+
+    void operator=(const TCPServer &) = delete;
+
+    static TCPServer &get();
 
     void accept();
 
     void keepAliveTask();
 
     bool isRunning() const;
+
     void stop();
 
-    void removeConnection(TCPConnection*);
+    void removeConnection(TCPConnection *);
 
 private:
     bool running = true;
@@ -36,7 +40,7 @@ private:
     int sock;
     pollfd fds[10];
 
-    std::forward_list<TCPConnection*> connections;
+    std::forward_list<TCPConnection *> connections;
 };
 
 

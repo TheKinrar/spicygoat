@@ -24,14 +24,14 @@ Server::Server() {
     std::vector<unsigned char> vec;
     vec.reserve(len);
     vec.insert(vec.begin(),
-                 std::istream_iterator<unsigned char>(ifsc), std::istream_iterator<unsigned char>());
+               std::istream_iterator<unsigned char>(ifsc), std::istream_iterator<unsigned char>());
     codec.reserve(len);
-    for(unsigned char& c : vec) codec.push_back(static_cast<std::byte>(c));
+    for (unsigned char &c : vec) codec.push_back(static_cast<std::byte>(c));
 
     //std::cout << palette->toString(true) << std::endl; TODO
 }
 
-Server* Server::get() {
+Server *Server::get() {
     static auto instance = new Server();
     return instance;
 }
@@ -39,12 +39,13 @@ Server* Server::get() {
 void Server::run() {
     std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
 
-    while(TCPServer::get().isRunning()) {
+    while (TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();
         tick();
-        long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();
+        long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::system_clock::now() - tickStart).count();
 
-        if(tickTime < 50000) {
+        if (tickTime < 50000) {
             std::this_thread::sleep_for(std::chrono::microseconds(50000 - tickTime));
         }
     }
@@ -52,14 +53,14 @@ void Server::run() {
     tcpThread.join();
 }
 
-EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
+EntityPlayer *Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
     auto player = new EntityPlayer(uuid, name, conn);
 
-    std::forward_list<EntityPlayer*> array;
+    std::forward_list<EntityPlayer *> array;
     array.push_front(player);
     auto packetForAll = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array);
     broadcastPacket(packetForAll);
-    delete(packetForAll);
+    delete (packetForAll);
 
     entities.push_front(player);
     players.push_front(player);
@@ -67,7 +68,7 @@ EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection
 
     auto packetForOne = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players);
     conn.sendPacket(packetForOne);
-    delete(packetForOne);
+    delete (packetForOne);
 
     return player;
 }
@@ -91,12 +92,12 @@ int32_t Server::nextEID() {
 }
 
 void Server::tick() {
-    for(auto p : players) {
+    for (auto p : players) {
         p->tick();
     }
 }
 
-World& Server::getWorld() {
+World &Server::getWorld() {
     return world;
 }
 
@@ -105,7 +106,7 @@ ChunkPalette *Server::getPalette() const {
 }
 
 void Server::broadcastPacket(Packet *packet) {
-    for(auto &player : players) {
+    for (auto &player : players) {
         player->getConnection().sendPacket(packet);
     }
 }
@@ -118,7 +119,7 @@ const std::vector<std::byte> &Server::getCodec() const {
     return codec;
 }
 
-std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {
+std::unique_ptr<EntityTracker> Server::createTracker(Entity &e) {
     return std::make_unique<PlayerTracker>(e);
 }
 

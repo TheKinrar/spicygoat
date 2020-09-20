@@ -5,7 +5,7 @@
 #include "ChannelMessage.h"
 #include "../packets/play/clientbound/PacketPluginMessageCB.h"
 
-ChannelMessage::ChannelMessage(const char* channel) {
+ChannelMessage::ChannelMessage(const char *channel) {
     this->channel = std::string(channel);
 }
 

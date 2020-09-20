@@ -31,7 +31,7 @@ int PacketHandshake::getNextState() const {
 
 std::string PacketHandshake::toString() const {
     return std::string("PacketHandshake{version=") + std::to_string(protocolVersion)
-            + ",address=" + serverAddress
-            + ",port=" + std::to_string(serverPort)
-            + ",state=" + std::to_string(nextState) + "}";
+           + ",address=" + serverAddress
+           + ",port=" + std::to_string(serverPort)
+           + ",state=" + std::to_string(nextState) + "}";
 }

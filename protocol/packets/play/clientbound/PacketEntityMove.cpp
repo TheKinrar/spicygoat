@@ -4,7 +4,8 @@
 
 #include "PacketEntityMove.h"
 
-PacketEntityMove::PacketEntityMove(int32_t eid, double dx, double dy, double dz, bool onGround) : ClientBoundPacket(0x27), eid(eid), dx(dx),
+PacketEntityMove::PacketEntityMove(int32_t eid, double dx, double dy, double dz, bool onGround) : ClientBoundPacket(
+        0x27), eid(eid), dx(dx),
                                                                                                   dy(dy), dz(dz),
                                                                                                   onGround(onGround) {}
 

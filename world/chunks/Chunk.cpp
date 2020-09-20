@@ -21,8 +21,8 @@ int32_t Chunk::getZ() const {
     return z;
 }
 
-void Chunk::loadNBT(nbt::tag_compound& nbt) {
-    if(nbt.has_key("BlockStates")) {
+void Chunk::loadNBT(nbt::tag_compound &nbt) {
+    if (nbt.has_key("BlockStates")) {
         palette = ChunkPalette::fromNBT(nbt.at("Palette").as<nbt::tag_list>());
         blockStates = nbt.at("BlockStates").as<nbt::tag_long_array>().get();
     }
@@ -49,7 +49,7 @@ void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     palette->writeToByteArray(array);
 
     std::vector<std::byte> data;
-    for(auto l : blockStates) {
+    for (auto l : blockStates) {
         PacketData::writeUnsignedLong(l, data);
     }
     PacketData::writeVarInt(data.size() / 8, array);

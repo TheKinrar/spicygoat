@@ -19,9 +19,9 @@ TCPServer::TCPServer() {
     sin.sin_port = htons(25565);
 
     errno = 0;
-    bind(sock, (sockaddr*) &sin, sizeof(sin));
+    bind(sock, (sockaddr * ) & sin, sizeof(sin));
 
-    if(errno) {
+    if (errno) {
         std::cerr << "bind failed: " << strerror(errno) << std::endl;
         exit(1);
     }
@@ -29,7 +29,7 @@ TCPServer::TCPServer() {
     errno = 0;
     listen(sock, 5);
 
-    if(errno) {
+    if (errno) {
         std::cerr << "listen failed: " << strerror(errno) << std::endl;
         exit(1);
     }
@@ -47,15 +47,15 @@ TCPServer::~TCPServer() {
 }
 
 void TCPServer::accept() {
-    while(running) {
+    while (running) {
         int ret = poll(fds, 1, 100);
 
-        if(ret > 0) {
+        if (ret > 0) {
             std::cout << "accept" << std::endl;
 
             sockaddr_in csin;
             socklen_t csinlen = sizeof(csin);
-            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+            int csock = ::accept(sock, (sockaddr * ) & csin, &csinlen);
 
             auto conn = new TCPConnection(csock, csin);
             conn->setListener(std::make_unique<HandshakeListener>(*conn));
@@ -64,18 +64,19 @@ void TCPServer::accept() {
     }
 
     std::cout << "TCP server stopping" << std::endl;
-    for(auto conn : connections) {
+    for (auto conn : connections) {
         conn->disconnect();
     }
     close(sock);
 }
 
 void TCPServer::keepAliveTask() {
-    while(running) {
-        int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    while (running) {
+        int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(
+                std::chrono::system_clock::now().time_since_epoch()).count();
 
-        for(auto connection : connections) {
-            if(connection->getState() == ProtocolState::PLAY) {
+        for (auto connection : connections) {
+            if (connection->getState() == ProtocolState::PLAY) {
                 connection->keepAlive(millis);
             }
         }

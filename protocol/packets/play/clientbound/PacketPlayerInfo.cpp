@@ -4,7 +4,8 @@
 
 #include "PacketPlayerInfo.h"
 
-PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer*> &players) : ClientBoundPacket(0x32), action(action), players(players) {}
+PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer *> &players)
+        : ClientBoundPacket(0x32), action(action), players(players) {}
 
 std::vector<std::byte> PacketPlayerInfo::bytes() {
     std::vector<std::byte> array;
@@ -12,10 +13,10 @@ std::vector<std::byte> PacketPlayerInfo::bytes() {
     PacketData::writeVarInt(action, array);
     PacketData::writeVarInt(std::distance(players.begin(), players.end()), array);
 
-    for(auto player : players) {
+    for (auto player : players) {
         PacketData::writeUuid(player->getUuid(), array);
 
-        switch(action) {
+        switch (action) {
             case Action::AddPlayer:
                 PacketData::writeString(player->getName(), array);
                 PacketData::writeVarInt(0, array); // TODO properties

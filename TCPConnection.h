@@ -10,6 +10,7 @@
 #include <mutex>
 
 class EntityPlayer;
+
 class PacketListener;
 
 #include "protocol.h"
@@ -19,27 +20,35 @@ class PacketListener;
 class TCPConnection {
 public:
     TCPConnection(int sock, sockaddr_in addr);
-    TCPConnection(const TCPConnection&) = delete;
-    void operator=(const TCPConnection&) = delete;
+
+    TCPConnection(const TCPConnection &) = delete;
+
+    void operator=(const TCPConnection &) = delete;
 
     ProtocolState getState() const;
+
     void setState(ProtocolState newState);
 
     std::string getName();
 
-    void sendPacket(Packet* packet);
+    void sendPacket(Packet *packet);
+
     void disconnect();
 
-    EntityPlayer* getPlayer();
-    void setPlayer(EntityPlayer* newPlayer);
+    EntityPlayer *getPlayer();
 
-    const PacketListener& getListener() const;
+    void setPlayer(EntityPlayer *newPlayer);
+
+    const PacketListener &getListener() const;
+
     void setListener(std::unique_ptr<PacketListener> newListener);
 
     void task();
 
     void keepAlive(int64_t millis);
+
     void confirmKeepAlive(int64_t id);
+
 private:
     int sock;
     sockaddr_in addr;

@@ -19,11 +19,11 @@ class TCPConnection;
 
 class EntityPlayer : public Entity {
 public:
-    EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn);
+    EntityPlayer(uuid_t &uuid, std::string &name, TCPConnection &conn);
 
     void tick() override;
 
-    uuid_t& getUuid() const;
+    uuid_t &getUuid() const;
 
     const std::string &getName() const;
 
@@ -39,15 +39,15 @@ protected:
     void chunkChanged() override;
 
 private:
-    uuid_t& uuid;
+    uuid_t &uuid;
     std::string name;
 
     TCPConnection &conn;
 
-    std::map<Position2D, ChunkColumn*> loadedChunks;
-    std::map<Position2D, ChunkColumn*> loadingChunks;
+    std::map<Position2D, ChunkColumn *> loadedChunks;
+    std::map<Position2D, ChunkColumn *> loadingChunks;
 
-    std::set<Entity*> nearbyEntities;
+    std::set<Entity *> nearbyEntities;
 };
 
 

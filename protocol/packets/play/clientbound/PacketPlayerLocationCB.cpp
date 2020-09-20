@@ -21,6 +21,6 @@ std::vector<std::byte> PacketPlayerLocationCB::bytes() {
 
 std::string PacketPlayerLocationCB::toString() const {
     return std::string("PacketPlayerLocationCB{loc=") + location.toString()
-            + ",id=" + std::to_string(-42) // TODO teleport ID
-            + "}";
+           + ",id=" + std::to_string(-42) // TODO teleport ID
+           + "}";
 }

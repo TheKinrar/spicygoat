@@ -8,7 +8,7 @@
 
 BlockState::BlockState(const std::string &name) : name(name) {}
 
-void BlockState::addProperty(const std::string& key, std::string value) {
+void BlockState::addProperty(const std::string &key, std::string value) {
     properties[key] = std::move(value);
 }
 
@@ -41,8 +41,8 @@ std::string BlockState::toString() {
     str += getName() + "{";
 
     bool first = true;
-    for(auto &property : properties) {
-        if(first) {
+    for (auto &property : properties) {
+        if (first) {
             first = false;
         } else {
             str += ",";

@@ -15,10 +15,10 @@ PacketClientSettings::PacketClientSettings(PacketData *data) : ServerBoundPacket
 
 std::string PacketClientSettings::toString() const {
     return std::string("PacketClientSettings{locale=") + locale
-            + ",render=" + std::to_string(renderDistance)
-            + ",chatMode=" + std::to_string(chatMode)
-            + ",chatColors=" + std::to_string(chatColors)
-            + ",skin=" + std::to_string(displayedSkinParts)
-            + ",hand=" + std::to_string(mainHand)
-            + "}";
+           + ",render=" + std::to_string(renderDistance)
+           + ",chatMode=" + std::to_string(chatMode)
+           + ",chatColors=" + std::to_string(chatColors)
+           + ",skin=" + std::to_string(displayedSkinParts)
+           + ",hand=" + std::to_string(mainHand)
+           + "}";
 }

@@ -12,12 +12,12 @@ PacketJoinGame::PacketJoinGame(EntityPlayer *player) {
     this->player = player;
 }
 
-std::vector<std::byte> nbtBytes(const nbt::tag_compound& tag) {
+std::vector<std::byte> nbtBytes(const nbt::tag_compound &tag) {
     std::ostringstream out;
     nbt::io::stream_writer(out).write_tag("", tag);
     std::string out_str = out.str();
     std::vector<std::byte> out_arr;
-    for(char &c : out_str) {
+    for (char &c : out_str) {
         out_arr.push_back(static_cast<std::byte>(c));
     }
     return out_arr;

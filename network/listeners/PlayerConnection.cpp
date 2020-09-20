@@ -51,7 +51,7 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 }
 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
-    if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
+    if (packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
         // TODO
     }
 }

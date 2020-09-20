@@ -10,7 +10,7 @@
 
 class PacketClientSettings : public ServerBoundPacket {
 public:
-    explicit PacketClientSettings(PacketData* data);
+    explicit PacketClientSettings(PacketData *data);
 
     std::string toString() const override;
 

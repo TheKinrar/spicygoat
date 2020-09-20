@@ -12,7 +12,7 @@
 #include "../../protocol/PacketData.h"
 
 ChunkColumn::ChunkColumn(int32_t x, int32_t z) : x(x), z(z) {
-    for(auto & chunk : chunks)
+    for (auto &chunk : chunks)
         chunk = nullptr;
 }
 
@@ -36,12 +36,12 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
     this->nbt = std::move(nbt);
     level = &this->nbt->at("Level").as<nbt::tag_compound>();
 
-    if(level->has_key("Sections")) {
+    if (level->has_key("Sections")) {
         for (auto &value : level->at("Sections").as<nbt::tag_list>()) {
             auto section = value.as<nbt::tag_compound>();
             int8_t y = section.at("Y").as<nbt::tag_byte>();
 
-            if(y > -1 && y < 16) {
+            if (y > -1 && y < 16) {
                 auto chunk = new Chunk(x, y, z);
                 chunk->loadNBT(section);
                 chunks[y] = chunk;
@@ -53,10 +53,10 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
 uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
     uint16_t mask = 0;
 
-    for(uint y = 0; y < 16; ++y) {
+    for (uint y = 0; y < 16; ++y) {
         Chunk *chunk = getChunk(y);
 
-        if(chunk == nullptr || !chunk->hasData())
+        if (chunk == nullptr || !chunk->hasData())
             continue;
 
         mask |= (1u << y);
@@ -91,7 +91,7 @@ void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {
     const char *str = std_str.c_str();
     std::vector<std::byte> bytes;
     bytes.reserve(size);
-    for(int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) {
         bytes.push_back(static_cast<std::byte>(str[i]));
     }
 

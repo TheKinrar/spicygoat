@@ -10,7 +10,7 @@
 
 class PacketTeleportConfirm : public ServerBoundPacket {
 public:
-    PacketTeleportConfirm(PacketData* data);
+    PacketTeleportConfirm(PacketData *data);
 
     std::string toString() const override;
 

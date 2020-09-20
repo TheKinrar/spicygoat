@@ -5,9 +5,9 @@
 #include "PacketListenerLogin.h"
 
 void PacketListenerLogin::handle(const ServerBoundPacket &packet) {
-    switch(packet.getId()) {
+    switch (packet.getId()) {
         case Packets::S_LOGIN_START:
-            onLoginStart(static_cast<const PacketLoginStart&>(packet));
+            onLoginStart(static_cast<const PacketLoginStart &>(packet));
             break;
     }
 }

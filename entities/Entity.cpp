@@ -41,27 +41,28 @@ void Entity::setNextOnGround(bool onGround) {
 void Entity::tick() {
     tracker->tick();
 
-    if(location != nextLocation) {
-        bool newChunk = location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
+    if (location != nextLocation) {
+        bool newChunk =
+                location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
 
         m_nextLocation.lock();
 
         bool moved = (location.getX() != nextLocation.getX())
-                || (location.getY() != nextLocation.getY())
-                || (location.getZ() != nextLocation.getZ());
+                     || (location.getY() != nextLocation.getY())
+                     || (location.getZ() != nextLocation.getZ());
 
         bool looked = (location.getYaw() != nextLocation.getYaw())
-                || (location.getPitch() != nextLocation.getPitch());
+                      || (location.getPitch() != nextLocation.getPitch());
 
-        if(moved) {
+        if (moved) {
             double dx = nextLocation.getX() - location.getX();
             double dy = nextLocation.getY() - location.getY();
             double dz = nextLocation.getZ() - location.getZ();
 
-            if(dx < -8 || dx > 8 || dy < -8 || dy > 8 || dz < -8 || dz > 8) {
+            if (dx < -8 || dx > 8 || dy < -8 || dy > 8 || dz < -8 || dz > 8) {
                 PacketEntityTeleport p(eid, nextLocation, nextOnGround);
                 tracker->broadcast(p);
-            } else if(looked) {
+            } else if (looked) {
                 PacketEntityMoveLook p(eid, dx, dy, dz, nextLocation.getYaw(), nextLocation.getPitch(), nextOnGround);
                 tracker->broadcast(p);
             } else {
@@ -77,7 +78,7 @@ void Entity::tick() {
 
         m_nextLocation.unlock();
 
-        if(newChunk) {
+        if (newChunk) {
             chunkChanged();
         }
     }

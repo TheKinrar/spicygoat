@@ -7,27 +7,27 @@
 
 #include "packets.h"
 
-Packet* Packets::parse(PacketData* data, ProtocolState state) {
+Packet *Packets::parse(PacketData *data, ProtocolState state) {
     int id = data->readVarInt();
 
-    if(state == ProtocolState::HANDSHAKE) {
-        if(id == 0x00) {
+    if (state == ProtocolState::HANDSHAKE) {
+        if (id == 0x00) {
             return new PacketHandshake(data);
         }
-    } else if(state == ProtocolState::STATUS) {
-        switch(id) {
+    } else if (state == ProtocolState::STATUS) {
+        switch (id) {
             case 0x00:
                 return new PacketRequest(data);
             case 0x01:
                 return new PacketPing(data);
         }
-    } else if(state == ProtocolState::LOGIN) {
-        switch(id) {
+    } else if (state == ProtocolState::LOGIN) {
+        switch (id) {
             case 0x00:
                 return new PacketLoginStart(data);
         }
-    } else if(state == ProtocolState::PLAY) {
-        switch(id) {
+    } else if (state == ProtocolState::PLAY) {
+        switch (id) {
             case 0x00:
                 return new PacketTeleportConfirm(data);
             case 0x03:

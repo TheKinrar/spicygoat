@@ -23,7 +23,7 @@ std::vector<std::byte> PacketChunkData::bytes() {
 
     nbt::tag_int_array biomes = chunkColumn.level->at("Biomes").as<nbt::tag_int_array>();
     PacketData::writeVarInt(biomes.size(), array);
-    for(int biome : biomes) {
+    for (int biome : biomes) {
         PacketData::writeVarInt(biome, array);
     }
 
@@ -35,5 +35,6 @@ std::vector<std::byte> PacketChunkData::bytes() {
 }
 
 std::string PacketChunkData::toString() const {
-    return std::string("PacketChunkData{") + std::to_string(chunkColumn.getX()) + "," + std::to_string(chunkColumn.getZ()) + "}";
+    return std::string("PacketChunkData{") + std::to_string(chunkColumn.getX()) + "," +
+           std::to_string(chunkColumn.getZ()) + "}";
 }

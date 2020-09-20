@@ -15,7 +15,7 @@ public:
     void onLoginStart(const PacketLoginStart &packet) override;
 
 private:
-    TCPConnection& connection;
+    TCPConnection &connection;
 };
 
 

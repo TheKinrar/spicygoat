@@ -7,11 +7,11 @@
 #include "LoginListener.h"
 
 void HandshakeListener::onHandshake(const PacketHandshake &packet) {
-    if(packet.getNextState() == ProtocolState::STATUS) {
+    if (packet.getNextState() == ProtocolState::STATUS) {
         connection.setState(ProtocolState::STATUS);
         connection.setListener(std::make_unique<StatusListener>(connection));
-    } else if(packet.getNextState() == ProtocolState::LOGIN) {
-        if(packet.getProtocolVersion() == Protocol::PROTOCOL_VERSION_NUMBER) {
+    } else if (packet.getNextState() == ProtocolState::LOGIN) {
+        if (packet.getProtocolVersion() == Protocol::PROTOCOL_VERSION_NUMBER) {
             connection.setState(ProtocolState::LOGIN);
             connection.setListener(std::make_unique<LoginListener>(connection));
         } else {

@@ -12,7 +12,7 @@ class PacketListenerHandshake : public PacketListener {
 public:
     void handle(const ServerBoundPacket &packet) override;
 
-    virtual void onHandshake(const PacketHandshake&) = 0;
+    virtual void onHandshake(const PacketHandshake &) = 0;
 };
 
 

@@ -11,7 +11,7 @@
 #include "Server.h"
 #include "TCPServer.h"
 
-TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr){
+TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
     thread = new std::thread(&TCPConnection::task, this);
 }
 
@@ -19,7 +19,7 @@ void TCPConnection::sendPacket(Packet *packet) {
     m_send.lock();
 
     int i = packet->getId();
-    if(i == 0x04 || i == 0x27 || i == 0x28 || i == 0x29 || i == 0x32 || i == 0x36 || i == 0x56) {
+    if (i == 0x04 || i == 0x27 || i == 0x28 || i == 0x29 || i == 0x32 || i == 0x36 || i == 0x56) {
         std::cout << getName() << " <= " << packet->toString() << std::endl;
     }
 
@@ -29,7 +29,7 @@ void TCPConnection::sendPacket(Packet *packet) {
     PacketData::writeVarInt(data.size(), bytes);
     bytes.insert(bytes.end(), data.begin(), data.end());
 
-    send(sock, (char*) bytes.data(), bytes.size(), 0);
+    send(sock, (char *) bytes.data(), bytes.size(), 0);
     m_send.unlock();
 }
 
@@ -37,7 +37,7 @@ void TCPConnection::task() {
     std::cout << getName() << " connected" << std::endl;
 
     try {
-        while(TCPServer::get().isRunning()) {
+        while (TCPServer::get().isRunning()) {
             int length = readVarInt();
 
             char *data = new char[length];
@@ -49,15 +49,15 @@ void TCPConnection::task() {
             if (packet) {
 //                std::cout << getName() << " => " << packet->toString() << std::endl;
 
-                if(listener) listener->handle(*static_cast<ServerBoundPacket*>(packet));
+                if (listener) listener->handle(*static_cast<ServerBoundPacket *>(packet));
             }
         }
-    } catch(std::exception &e) {
+    } catch (std::exception &e) {
         close(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
         TCPServer::get().removeConnection(this);
 
-        if(player) {
+        if (player) {
             Server::get()->removePlayer(*player);
         }
     }
@@ -70,7 +70,7 @@ int TCPConnection::readVarInt() {
 
     do {
         int size;
-        if((size = recv(sock, &current, sizeof(current), 0)) < 1) {
+        if ((size = recv(sock, &current, sizeof(current), 0)) < 1) {
             throw std::runtime_error(std::string("Network error: ") + strerror(errno));
         }
 
@@ -79,11 +79,11 @@ int TCPConnection::readVarInt() {
 
         bytes++;
 
-        if(bytes > 5) {
+        if (bytes > 5) {
             throw std::runtime_error("Protocol error: invalid VarInt");
         }
 
-    } while((current & 0b10000000) != 0);
+    } while ((current & 0b10000000) != 0);
 
     return result;
 }
@@ -97,7 +97,8 @@ ProtocolState TCPConnection::getState() const {
 }
 
 std::string TCPConnection::getName() {
-    return std::string(inet_ntoa(addr.sin_addr)) + ":" + std::to_string(htons(addr.sin_port)) + "/" + std::to_string(state);
+    return std::string(inet_ntoa(addr.sin_addr)) + ":" + std::to_string(htons(addr.sin_port)) + "/" +
+           std::to_string(state);
 }
 
 EntityPlayer *TCPConnection::getPlayer() {
@@ -109,8 +110,8 @@ void TCPConnection::setPlayer(EntityPlayer *newPlayer) {
 }
 
 void TCPConnection::keepAlive(int64_t millis) {
-    if(keepAliveOk) {
-        if(millis - latestKeepAlive > 10000) {
+    if (keepAliveOk) {
+        if (millis - latestKeepAlive > 10000) {
             m_keepAlive.lock();
 
             latestKeepAlive = millis;
@@ -120,17 +121,17 @@ void TCPConnection::keepAlive(int64_t millis) {
             m_keepAlive.unlock();
         }
     } else {
-        if(millis - latestKeepAlive > 30000) {
+        if (millis - latestKeepAlive > 30000) {
             close(sock); // TODO proper timeout
         }
     }
 }
 
 void TCPConnection::confirmKeepAlive(int64_t id) {
-    if(id != latestKeepAlive)
+    if (id != latestKeepAlive)
         throw std::runtime_error("Protocol error: invalid keep alive ID");
 
-    if(keepAliveOk)
+    if (keepAliveOk)
         throw std::runtime_error("Protocol error: keep alive already confirmed");
 
     m_keepAlive.lock();

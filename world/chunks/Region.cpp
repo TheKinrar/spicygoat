@@ -12,7 +12,8 @@
 #include "../../protocol/PacketData.h"
 
 Region::Region(int32_t x, int32_t z) : x(x), z(z) {
-    std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"), std::ios::binary | std::ios::ate);
+    std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"),
+                      std::ios::binary | std::ios::ate);
     std::fpos len = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
 
@@ -22,18 +23,19 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
 
     PacketData header(bytes, 4096);
 
-    for(int i = 0; i < 1024; ++i) {
-        uint32_t offset = ((header.readUnsignedByte() & 0x0F) << 16) | ((header.readUnsignedByte() & 0xFF) << 8) | (header.readUnsignedByte() & 0xFF);
+    for (int i = 0; i < 1024; ++i) {
+        uint32_t offset = ((header.readUnsignedByte() & 0x0F) << 16) | ((header.readUnsignedByte() & 0xFF) << 8) |
+                          (header.readUnsignedByte() & 0xFF);
         uint8_t size = header.readUnsignedByte();
 
-        if(offset != 0) {
+        if (offset != 0) {
             offset *= 4096;
 
             PacketData chunkData(bytes + offset);
             uint32_t chunkSize = chunkData.readUnsignedInt();
             uint8_t chunkCompression = chunkData.readUnsignedByte();
 
-            if(chunkCompression != 2)
+            if (chunkCompression != 2)
                 throw std::runtime_error("Unsupported chunk compression type");
 
             std::istringstream stream;
@@ -43,7 +45,7 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
             try {
                 auto nbt = nbt::io::read_compound(zs).second;
                 getColumn(i % 32, (int) (i / 32.0))->setNbt(nbt);
-            } catch(std::exception &e) {
+            } catch (std::exception &e) {
                 std::cerr << e.what() << std::endl;
                 std::cerr << i % 32 << "." << (int) (i / 32.0) << std::endl;
             }
@@ -56,7 +58,7 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
 ChunkColumn *Region::getColumn(int32_t x, int32_t z) {
     auto it = columns.find(Position2D(x, z));
 
-    if(it == columns.end()) {
+    if (it == columns.end()) {
         auto column = new ChunkColumn((this->x * 32) + x, (this->z * 32) + z);
         columns[Position2D(x, z)] = column;
         return column;

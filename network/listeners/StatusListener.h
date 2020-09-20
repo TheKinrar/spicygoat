@@ -13,10 +13,11 @@ public:
     explicit StatusListener(TCPConnection &connection);
 
     void onRequest(const PacketRequest &request) override;
+
     void onPing(const PacketPing &ping) override;
 
 private:
-    TCPConnection& connection;
+    TCPConnection &connection;
 };
 
 

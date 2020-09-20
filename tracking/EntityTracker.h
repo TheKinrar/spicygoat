@@ -7,6 +7,7 @@
 
 
 class Entity;
+
 #include "../entities/Entity.h"
 #include "../protocol/packets/ClientBoundPacket.h"
 
@@ -16,10 +17,10 @@ public:
 
     virtual void tick() = 0;
 
-    virtual void broadcast(ClientBoundPacket& packet) = 0;
+    virtual void broadcast(ClientBoundPacket &packet) = 0;
 
 protected:
-    Entity& self;
+    Entity &self;
 };
 
 

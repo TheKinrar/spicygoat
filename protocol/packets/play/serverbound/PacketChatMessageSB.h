@@ -10,7 +10,7 @@
 
 class PacketChatMessageSB : public ServerBoundPacket {
 public:
-    explicit PacketChatMessageSB(PacketData* data);
+    explicit PacketChatMessageSB(PacketData *data);
 
     std::string toString() const override;
 

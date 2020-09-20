@@ -12,6 +12,7 @@
 class Location {
 public:
     Location();
+
     Location(double x, double y, double z, float yaw, float pitch);
 
     void setX(double x);
@@ -38,9 +39,9 @@ public:
 
     int32_t getChunkZ() const;
 
-    ChunkColumn * getChunkColumn() const;
+    ChunkColumn *getChunkColumn() const;
 
-    [[nodiscard]] double distanceSquared(const Location& other) const;
+    [[nodiscard]] double distanceSquared(const Location &other) const;
 
     std::string toString() const;
 

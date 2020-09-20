@@ -11,6 +11,7 @@
 class ClientBoundPacket : public Packet {
 public:
     explicit ClientBoundPacket();
+
     explicit ClientBoundPacket(int id);
 };
 

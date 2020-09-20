@@ -15,7 +15,7 @@ public:
     void onHandshake(const PacketHandshake &packet) override;
 
 private:
-    TCPConnection& connection;
+    TCPConnection &connection;
 };
 
 

@@ -10,7 +10,7 @@
 
 class PacketPluginMessageSB : public ServerBoundPacket {
 public:
-    explicit PacketPluginMessageSB(PacketData* data);
+    explicit PacketPluginMessageSB(PacketData *data);
 
     std::string toString() const override;
 

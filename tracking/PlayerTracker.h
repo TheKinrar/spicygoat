@@ -20,7 +20,7 @@ public:
     void broadcast(ClientBoundPacket &packet) override;
 
 private:
-    std::set<EntityPlayer*> players;
+    std::set<EntityPlayer *> players;
 };
 
 

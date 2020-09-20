@@ -12,15 +12,15 @@
 
 class PacketSpawnPlayer : public ClientBoundPacket {
 public:
-    explicit PacketSpawnPlayer(const int32_t eid, const uuid_t& uuid, const double x, const double y, const double z,
-                      const float yaw, const float pitch);
+    explicit PacketSpawnPlayer(const int32_t eid, const uuid_t &uuid, const double x, const double y, const double z,
+                               const float yaw, const float pitch);
 
     std::vector<std::byte> bytes() override;
 
     std::string toString() const override;
 
     const int32_t eid;
-    const uuid_t& uuid;
+    const uuid_t &uuid;
     const double x, y, z;
     const float yaw, pitch;
 };

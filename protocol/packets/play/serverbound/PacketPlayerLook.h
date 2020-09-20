@@ -10,7 +10,7 @@
 
 class PacketPlayerLook : public ServerBoundPacket {
 public:
-    explicit PacketPlayerLook(PacketData* data);
+    explicit PacketPlayerLook(PacketData *data);
 
     std::string toString() const override;
 

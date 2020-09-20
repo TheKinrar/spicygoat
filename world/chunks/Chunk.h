@@ -23,7 +23,7 @@ public:
 
     bool hasData();
 
-    void loadNBT(nbt::tag_compound&);
+    void loadNBT(nbt::tag_compound &);
 
     void writeToByteArray(std::vector<std::byte> &array);
 

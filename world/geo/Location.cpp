@@ -31,11 +31,11 @@ float Location::getPitch() const {
 
 std::string Location::toString() const {
     return std::string("Location{") + std::to_string(x)
-            + "," + std::to_string(y)
-            + "," + std::to_string(z)
-            + "," + std::to_string(yaw)
-            + "," + std::to_string(pitch)
-            + "}";
+           + "," + std::to_string(y)
+           + "," + std::to_string(z)
+           + "," + std::to_string(yaw)
+           + "," + std::to_string(pitch)
+           + "}";
 }
 
 void Location::setX(double x) {
@@ -78,7 +78,7 @@ int32_t Location::getChunkZ() const {
     return (int32_t) (getZ() / 16);
 }
 
-ChunkColumn * Location::getChunkColumn() const {
+ChunkColumn *Location::getChunkColumn() const {
     static auto world = new World();
     return world->getChunk(getChunkX(), getChunkZ());
 }
@@ -88,5 +88,5 @@ double Location::distanceSquared(const Location &other) const {
     double dy = y - other.y;
     double dz = z - other.z;
 
-    return dx*dx + dy*dy + dz*dz;
+    return dx * dx + dy * dy + dz * dz;
 }

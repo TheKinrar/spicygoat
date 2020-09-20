@@ -45,7 +45,7 @@
 #include "packets/play/serverbound/PacketTeleportConfirm.h"
 
 namespace Packets {
-    Packet* parse(PacketData* data, ProtocolState state);
+    Packet *parse(PacketData *data, ProtocolState state);
 }
 
 #endif //SPICYGOAT_PACKETS_H
