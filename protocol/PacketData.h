@@ -97,9 +97,8 @@ public:
         writeByte(bitset.to_ulong() & 0xFF, bytes);
     }
 
-private:
-    char* data;
-    int length;
+    const char* data;
+    const int length;
     int pos;
 };
 

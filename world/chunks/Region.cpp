@@ -9,9 +9,8 @@
 #include <iostream>
 #include <sstream>
 #include "Region.h"
-#include "../../protocol/PacketData.h"
 
-Region::Region(int32_t x, int32_t z) : x(x), z(z) {
+std::unique_ptr<Region> Region::load(int32_t x, int32_t z) {
     std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"), std::ios::binary | std::ios::ate);
     std::fpos len = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
@@ -20,16 +19,23 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
     ifs.read(bytes, len);
     ifs.close();
 
-    PacketData header(bytes, 4096);
+    return std::make_unique<Region>(x, z, bytes);
+}
 
-    for(int i = 0; i < 1024; ++i) {
+ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
+    auto it = columns.find(Position2D(x, z));
+
+    if(it == columns.end()) {
+        columns[Position2D(x, z)] = std::make_unique<ChunkColumn>((this->x * 32) + x, (this->z * 32) + z);
+        auto& col = *columns[Position2D(x, z)];
+
+        PacketData header(data + ((z % 32) * 32 + (x % 32)) * 4);
         uint32_t offset = ((header.readUnsignedByte() & 0x0F) << 16) | ((header.readUnsignedByte() & 0xFF) << 8) | (header.readUnsignedByte() & 0xFF);
         uint8_t size = header.readUnsignedByte();
-
-        if(offset != 0) {
+        if(offset) {
             offset *= 4096;
 
-            PacketData chunkData(bytes + offset);
+            PacketData chunkData(data + offset, size);
             uint32_t chunkSize = chunkData.readUnsignedInt();
             uint8_t chunkCompression = chunkData.readUnsignedByte();
 
@@ -37,30 +43,22 @@ Region::Region(int32_t x, int32_t z) : x(x), z(z) {
                 throw std::runtime_error("Unsupported chunk compression type");
 
             std::istringstream stream;
-            stream.rdbuf()->pubsetbuf(bytes + offset + 5, chunkSize - 1);
+            stream.rdbuf()->pubsetbuf(data + offset + 5, chunkSize - 1);
             zlib::izlibstream zs(stream);
 
             try {
                 auto nbt = nbt::io::read_compound(zs).second;
-                getColumn(i % 32, (int) (i / 32.0))->setNbt(nbt);
+                col.setNbt(nbt);
             } catch(std::exception &e) {
                 std::cerr << e.what() << std::endl;
-                std::cerr << i % 32 << "." << (int) (i / 32.0) << std::endl;
+                std::cerr << x << "." << z << std::endl;
             }
+
+            std::cout << "Chunk " << col.getPosition2D() << ";" << z << " loaded." << std::endl;
         }
+
+        return col;
     }
 
-    std::cout << "Region " << x << ";" << z << " loaded." << std::endl;
-}
-
-ChunkColumn *Region::getColumn(int32_t x, int32_t z) {
-    auto it = columns.find(Position2D(x, z));
-
-    if(it == columns.end()) {
-        auto column = new ChunkColumn((this->x * 32) + x, (this->z * 32) + z);
-        columns[Position2D(x, z)] = column;
-        return column;
-    }
-
-    return it->second;
+    return *it->second;
 }

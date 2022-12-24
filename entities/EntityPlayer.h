@@ -10,7 +10,7 @@ class TCPConnection;
 #include <uuid/uuid.h>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "Entity.h"
 #include "../world/geo/Location.h"
 #include "../world/chunks/ChunkColumn.h"
@@ -44,8 +44,8 @@ private:
 
     TCPConnection &conn;
 
-    std::map<Position2D, ChunkColumn*> loadedChunks;
-    std::map<Position2D, ChunkColumn*> loadingChunks;
+    std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadedChunks;
+    std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadingChunks;
 
     std::set<Entity*> nearbyEntities;
 };

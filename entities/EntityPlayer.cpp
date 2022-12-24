@@ -22,13 +22,13 @@ void EntityPlayer::tick() {
 
     int n = 0;
 
-    for(auto it : std::map(loadingChunks)) {
-        auto chunk = it.second;
+    for(auto it : std::unordered_map(loadingChunks)) {
+        auto& chunk = it.second.operator ChunkColumn &();
 
-        if(chunk->hasData()) {
-            conn.sendPacket(new PacketChunkData(*chunk));
+        if(chunk.hasData()) {
+            conn.sendPacket(new PacketChunkData(chunk));
         } else {
-            std::cerr << "no data for column " << chunk->toString() << std::endl;
+            std::cerr << "no data for column " << chunk.toString() << std::endl;
         }
 
         loadingChunks.erase(it.first);
@@ -47,11 +47,11 @@ void EntityPlayer::chunkChanged() {
     int32_t min_z = getLocation().getChunkZ() - Server::VIEW_DISTANCE;
     int32_t max_z = getLocation().getChunkZ() + Server::VIEW_DISTANCE;
 
-    for(auto it : loadedChunks) {
-        auto chunk = it.second;
+    for(auto it : std::unordered_map(loadedChunks)) {
+        auto& chunk = it.second.get();
 
-        if(chunk->getX() < min_x || chunk->getX() > max_x || chunk->getZ() < min_z || chunk->getZ() > max_z) {
-            conn.sendPacket(new PacketUnloadChunk(*chunk));
+        if(chunk.getX() < min_x || chunk.getX() > max_x || chunk.getZ() < min_z || chunk.getZ() > max_z) {
+            conn.sendPacket(new PacketUnloadChunk(chunk));
             loadedChunks.erase(it.first);
         }
     }
@@ -61,12 +61,9 @@ void EntityPlayer::chunkChanged() {
             Position2D pos(x, z);
 
             if(loadedChunks.find(pos) == loadedChunks.end()) {
-                ChunkColumn *column = Server::get()->getWorld().getChunk(x, z);
-
-                if(column) {
-                    loadingChunks[pos] = column;
-                    loadedChunks[pos] = column;
-                }
+                ChunkColumn& column = Server::get()->getWorld().getChunk(x, z);
+                loadingChunks.emplace(pos, column);
+                loadedChunks.emplace(pos, column);
             }
         }
     }

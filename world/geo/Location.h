@@ -38,8 +38,6 @@ public:
 
     int32_t getChunkZ() const;
 
-    ChunkColumn * getChunkColumn() const;
-
     [[nodiscard]] double distanceSquared(const Location& other) const;
 
     std::string toString() const;

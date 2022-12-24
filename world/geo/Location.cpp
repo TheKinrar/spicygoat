@@ -78,11 +78,6 @@ int32_t Location::getChunkZ() const {
     return (int32_t) (getZ() / 16);
 }
 
-ChunkColumn * Location::getChunkColumn() const {
-    static auto world = new World();
-    return world->getChunk(getChunkX(), getChunkZ());
-}
-
 double Location::distanceSquared(const Location &other) const {
     double dx = x - other.x;
     double dy = y - other.y;

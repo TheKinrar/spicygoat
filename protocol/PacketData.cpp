@@ -9,11 +9,7 @@
 
 #include "PacketData.h"
 
-PacketData::PacketData(char *data, int length) {
-    this->data = data;
-    this->length = length;
-    this->pos = 0;
-}
+PacketData::PacketData(char *data, int length) : data(data), length(length), pos(0) {}
 
 int PacketData::remaining() {
     return length - pos;

@@ -6,20 +6,25 @@
 #define SPICYGOAT_REGION_H
 
 
-#include <map>
+#include <unordered_map>
 #include "../geo/Position2D.h"
 #include "ChunkColumn.h"
+#include "../../protocol/PacketData.h"
 
 class Region {
 public:
-    Region(int32_t x, int32_t z);
+    static std::unique_ptr<Region> load(int32_t x, int32_t z);
 
-    ChunkColumn* getColumn(int32_t x, int32_t z);
+    Region(int32_t x, int32_t z, char* data) : x(x), z(z), data(data) {}
+
+    ChunkColumn& getColumn(int32_t x, int32_t z);
 
 private:
-    int32_t x, z;
+    const int32_t x, z;
 
-    std::map<Position2D, ChunkColumn*> columns;
+    char *data;
+
+    std::unordered_map<Position2D, std::unique_ptr<ChunkColumn>> columns;
 };
 
 
