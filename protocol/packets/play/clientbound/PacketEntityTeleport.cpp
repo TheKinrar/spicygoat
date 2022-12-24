@@ -8,7 +8,7 @@ PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, boo
 
 std::vector<std::byte> PacketEntityTeleport::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x56, array);
+    PacketData::writeVarInt(0x64, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeDouble(loc.getX(), array);
     PacketData::writeDouble(loc.getY(), array);

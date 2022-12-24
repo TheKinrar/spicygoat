@@ -5,9 +5,10 @@
 #include "PacketPluginMessageSB.h"
 
 PacketPluginMessageSB::PacketPluginMessageSB(PacketData *data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
-    channel = data->readString();
+    this->channel = data->readString();
+    data->readByteArray(this->data, data->remaining());
 }
 
 std::string PacketPluginMessageSB::toString() const {
-    return std::string("PacketPluginMessageSB{channel=") + channel + ",unparsed}";
+    return std::string("PacketPluginMessageSB{channel=") + channel + ",data=" + std::to_string(data.size()) + "B}";
 }

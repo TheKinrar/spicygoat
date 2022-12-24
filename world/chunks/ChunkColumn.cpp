@@ -25,7 +25,7 @@ int32_t ChunkColumn::getZ() const {
 }
 
 Chunk *ChunkColumn::getChunk(int8_t y) {
-    return chunks[y];
+    return chunks[y + 4];
 }
 
 Position2D ChunkColumn::getPosition2D() {
@@ -34,17 +34,24 @@ Position2D ChunkColumn::getPosition2D() {
 
 void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
     this->nbt = std::move(nbt);
-    level = &this->nbt->at("Level").as<nbt::tag_compound>();
 
-    if(level->has_key("Sections")) {
-        for (auto &value : level->at("Sections").as<nbt::tag_list>()) {
-            auto section = value.as<nbt::tag_compound>();
-            int8_t y = section.at("Y").as<nbt::tag_byte>();
+    if(this->nbt->has_key("sections")) {
+        for (auto &value : this->nbt->at("sections").as<nbt::tag_list>()) {
+            if (value.get_type() == nbt::tag_type::Compound) {
+                auto section = value.as<nbt::tag_compound>();
+                int8_t y = section.at("Y").as<nbt::tag_byte>();
 
-            if(y > -1 && y < 16) {
-                auto chunk = new Chunk(x, y, z);
-                chunk->loadNBT(section);
-                chunks[y] = chunk;
+                if(y < -4 || y > 19) {
+                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" << (int) y << ";" << z << std::endl;
+                } else if(chunks[y + 4]) {
+                    std::cerr << "WARNING: chunk already loaded! skipping " << x << ";" << (int) y << ";" << z << std::endl;
+                } else {
+//                    std::cerr << "Loading " << x << ";" << (int) y << ";" << z << std::endl;
+
+                    auto chunk = new Chunk(x, y, z);
+                    chunk->loadNBT(section);
+                    chunks[y + 4] = chunk;
+                }
             }
         }
     }
@@ -53,11 +60,13 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
 uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
     uint16_t mask = 0;
 
-    for(uint y = 0; y < 16; ++y) {
+    for(int8_t y = -4; y < 20; ++y) {
         Chunk *chunk = getChunk(y);
 
-        if(chunk == nullptr || !chunk->hasData())
+        if (chunk == nullptr || !chunk->hasData()) {
+            std::cerr << "WARNING: missing chunk data. client will not like this" << std::endl;
             continue;
+        }
 
         mask |= (1u << y);
 
@@ -74,7 +83,7 @@ void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {
     //writer.write_type(nbt::tag_type::End);
 
     // TODO: figure out if we need so send all heightmaps or MOTION_BLOCKING only
-    nbt::io::write_tag("", this->level->at("Heightmaps"), stream);
+    nbt::io::write_tag("", this->nbt->at("Heightmaps"), stream);
 
     //nbt::tag_compound c;
     //c["MOTION_BLOCKING"] = this->level->at("Heightmaps").as<nbt::tag_compound>().at("MOTION_BLOCKING");

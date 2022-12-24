@@ -4,12 +4,13 @@
 
 #include <iostream>
 #include <libnet.h>
+#include <sstream>
 
-#include "TCPConnection.h"
-#include "protocol.h"
-#include "entities/EntityPlayer.h"
 #include "Server.h"
+#include "TCPConnection.h"
 #include "TCPServer.h"
+#include "entities/EntityPlayer.h"
+#include "protocol.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr){
     thread = new std::thread(&TCPConnection::task, this);
@@ -18,10 +19,10 @@ TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr
 void TCPConnection::sendPacket(Packet *packet) {
     m_send.lock();
 
-    int i = packet->getId();
-    if(i == 0x04 || i == 0x27 || i == 0x28 || i == 0x29 || i == 0x32 || i == 0x36 || i == 0x56) {
-        std::cout << getName() << " <= " << packet->toString() << std::endl;
-    }
+//    int i = packet->getId();
+//    if(i == Packets::...) {
+//        std::cout << getName() << " <= " << packet->toString() << std::endl;
+//    }
 
     std::vector<std::byte> data = packet->bytes();
 
@@ -45,6 +46,12 @@ void TCPConnection::task() {
 
             PacketData packetData(data, length);
             Packet *packet = Packets::parse(&packetData, state);
+
+            if(packet && packetData.remaining()) {
+              std::stringstream ss;
+              ss << "Protocol error: extra data (" << std::to_string(packetData.remaining()) << " B) left after parsing " << packet->toString();
+              throw std::runtime_error(ss.str());
+            }
 
             if (packet) {
 //                std::cout << getName() << " => " << packet->toString() << std::endl;

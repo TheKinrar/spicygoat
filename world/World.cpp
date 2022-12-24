@@ -20,14 +20,19 @@ World::World() {
 }
 
 Region * World::getRegion(int32_t x, int32_t z) {
+    m_chunkLoading.lock();
+
     auto it = regions.find(Position2D(x, z));
 
     if(it == regions.end()) {
         auto region = new Region(x, z);
         regions[Position2D(x, z)] = region;
+
+        m_chunkLoading.unlock();
         return region;
     }
 
+    m_chunkLoading.unlock();
     return it->second;
 }
 

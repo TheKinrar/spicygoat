@@ -15,6 +15,7 @@ public:
     std::string toString() const override;
 
     std::string channel;
+    std::vector<std::byte> data;
 };
 
 

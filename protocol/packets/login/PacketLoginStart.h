@@ -15,6 +15,8 @@ public:
     std::string toString() const override;
 
     std::string name;
+    bool hasUuid;
+    uuid_t uuid;
 };
 
 

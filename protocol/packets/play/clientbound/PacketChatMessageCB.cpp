@@ -13,11 +13,9 @@ std::vector<std::byte> PacketChatMessageCB::bytes() {
     j["text"] = message;
 
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x0E, array);
+    PacketData::writeVarInt(0x60, array);
     PacketData::writeString(j.dump(), array);
-    PacketData::writeByte(0, array);
-    PacketData::writeLong(0, array);
-    PacketData::writeLong(0, array);
+    PacketData::writeBoolean(false, array);
     return array;
 }
 

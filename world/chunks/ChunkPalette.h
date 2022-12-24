@@ -18,8 +18,6 @@ public:
 
     uint8_t getBitsPerBlock() const;
 
-    bool isGlobal() const;
-
     uint16_t getBlockStateId(BlockState &state);
 
     void writeToByteArray(std::vector<std::byte>&);
@@ -38,6 +36,7 @@ private:
     uint8_t bitsPerBlock;
 
     bool global;
+    bool single;
 };
 
 

@@ -20,6 +20,8 @@ public:
     bool chatColors;
     uint8_t displayedSkinParts;
     int mainHand;
+    bool textFiltering;
+    bool serverListings;
 };
 
 

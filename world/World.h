@@ -6,6 +6,7 @@
 #define SPICYGOAT_WORLD_H
 
 #include <map>
+#include <mutex>
 #include "geo/Position2D.h"
 #include "chunks/Region.h"
 #include "geo/Position.h"
@@ -20,6 +21,8 @@ public:
     const Position &getSpawnPosition() const;
 
 private:
+    std::mutex m_chunkLoading;
+
     std::map<Position2D, Region*> regions;
 
     Position spawnPosition = Position(0, 0, 0);

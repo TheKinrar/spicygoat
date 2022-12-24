@@ -120,19 +120,18 @@ std::vector<std::byte> PacketJoinGame::bytes() {
     std::vector<std::byte> codecBytes = nbtBytes(codec);*/
     PacketData::writeByteArray(Server::get()->getCodec(), array); // TODO dimensions/biomes codec
 
-    std::vector<std::byte> dimBytes = nbtBytes(overworldElement());
-    PacketData::writeByteArray(dimBytes, array); // TODO current dimension
-
-    PacketData::writeString("minecraft:overworld", array); // TODO current world name
+    PacketData::writeString("minecraft:overworld", array); // current world type
+    PacketData::writeString("minecraft:overworld", array); // current world name
 
     PacketData::writeLong(0, array); // TODO first 8B of sha-256 hash of seed
     PacketData::writeVarInt(1, array); // TODO max players
-//    PacketData::writeString("default", array); // TODO level type ???
-    PacketData::writeVarInt(10, array); // TODO view distance
+    PacketData::writeVarInt(10, array); // TODO render distance
+    PacketData::writeVarInt(10, array); // TODO simulation distance
     PacketData::writeBoolean(false, array); // TODO reduced debug info
     PacketData::writeBoolean(true, array); // TODO enable respawn screen (false if doImmediateRespawn gamerule)
     PacketData::writeBoolean(false, array); // TODO debug mode
     PacketData::writeBoolean(false, array); // TODO superflat
+    PacketData::writeBoolean(false, array); // has death location
     return array;
 }
 

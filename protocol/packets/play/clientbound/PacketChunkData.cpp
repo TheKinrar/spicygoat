@@ -13,24 +13,30 @@ std::vector<std::byte> PacketChunkData::bytes() {
     PacketData::writeVarInt(0x20, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
-    PacketData::writeBoolean(true, array); // full chunk
 
-    std::vector<std::byte> data;
-    uint16_t mask = chunkColumn.writeToByteArray(data);
-
-    PacketData::writeVarInt(mask, array);
     chunkColumn.writeHeightMapsToByteArray(array);
 
-    nbt::tag_int_array biomes = chunkColumn.level->at("Biomes").as<nbt::tag_int_array>();
-    PacketData::writeVarInt(biomes.size(), array);
-    for(int biome : biomes) {
-        PacketData::writeVarInt(biome, array);
-    }
+    std::vector<std::byte> data;
+    chunkColumn.writeToByteArray(data);
 
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 
     PacketData::writeVarInt(0, array); // TODO: block entities
+
+    PacketData::writeBoolean(true, array); // Trust edges
+
+    // Dummy bitset for light data, assuming 24 chunks per column
+    std::bitset<26> bitset;
+
+    PacketData::writeBitSet(bitset, array); // sky light mask
+    PacketData::writeBitSet(bitset, array); // block light mask
+    PacketData::writeBitSet(bitset, array); // empty sky light mask
+    PacketData::writeBitSet(bitset, array); // empty block light mask
+
+    PacketData::writeVarInt(0, array); // no sky light
+    PacketData::writeVarInt(0, array); // no block light
+
     return array;
 }
 

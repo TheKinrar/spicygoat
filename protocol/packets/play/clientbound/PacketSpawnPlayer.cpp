@@ -12,7 +12,7 @@ PacketSpawnPlayer::PacketSpawnPlayer(const int32_t eid, const uuid_t& uuid, cons
 
 std::vector<std::byte> PacketSpawnPlayer::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x04, array);
+    PacketData::writeVarInt(0x02, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeUuid(uuid, array);
     PacketData::writeDouble(x, array);

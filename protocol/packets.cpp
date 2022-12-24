@@ -11,50 +11,50 @@ Packet* Packets::parse(PacketData* data, ProtocolState state) {
     int id = data->readVarInt();
 
     if(state == ProtocolState::HANDSHAKE) {
-        if(id == 0x00) {
+        if(id == S_HANDSHAKE) {
             return new PacketHandshake(data);
         }
     } else if(state == ProtocolState::STATUS) {
         switch(id) {
-            case 0x00:
+            case S_REQUEST:
                 return new PacketRequest(data);
-            case 0x01:
+            case S_PING:
                 return new PacketPing(data);
         }
     } else if(state == ProtocolState::LOGIN) {
         switch(id) {
-            case 0x00:
+            case S_LOGIN_START:
                 return new PacketLoginStart(data);
         }
     } else if(state == ProtocolState::PLAY) {
         switch(id) {
-            case 0x00:
+            case S_TELEPORT_CONFIRM:
                 return new PacketTeleportConfirm(data);
-            case 0x03:
+            case S_CHAT_MESSAGE:
                 return new PacketChatMessageSB(data);
-            case 0x04:
+            case S_CLIENT_STATUS:
                 return new PacketClientStatus(data);
-            case 0x05:
+            case S_CLIENT_SETTINGS:
                 return new PacketClientSettings(data);
-            case 0x0B:
+            case S_PLUGIN_MESSAGE:
                 return new PacketPluginMessageSB(data);
-            case 0x10:
+            case S_KEEP_ALIVE:
                 return new PacketKeepAliveSB(data);
-            case 0x12:
+            case S_PLAYER_POSITION:
                 return new PacketPlayerPosition(data);
-            case 0x13:
+            case S_PLAYER_POSITION_LOOK:
                 return new PacketPlayerPositionLook(data);
-            case 0x14:
+            case S_PLAYER_LOOK:
                 return new PacketPlayerLook(data);
-            case 0x15:
+            case 0x16:
                 return nullptr; // TODO Player
-            case 0x1A:
+            case S_PLAYER_ABILITIES:
                 return new PacketPlayerAbilitiesSB(data);
-            case 0x1B:
+            case S_PLAYER_DIGGING:
                 return new PacketPlayerDigging(data);
-            case 0x1C:
+            case S_ENTITY_ACTION:
                 return new PacketEntityAction(data);
-            case 0x2C:
+            case 0x2F:
                 return nullptr; // TODO Animation
         }
     }

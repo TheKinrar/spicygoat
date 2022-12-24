@@ -15,7 +15,13 @@ public:
     std::string toString() const override;
 
     std::string message;
-
+    long timestamp;
+    long salt;
+    bool hasSignature;
+    std::vector<std::byte> signature;
+    int count;
+    int ackOffset;
+    std::bitset<20> ack;
 };
 
 

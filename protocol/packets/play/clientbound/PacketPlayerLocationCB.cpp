@@ -8,7 +8,7 @@ PacketPlayerLocationCB::PacketPlayerLocationCB(Location location) : location(loc
 
 std::vector<std::byte> PacketPlayerLocationCB::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x34, array);
+    PacketData::writeVarInt(0x38, array);
     PacketData::writeDouble(location.getX(), array);
     PacketData::writeDouble(location.getY(), array);
     PacketData::writeDouble(location.getZ(), array);
@@ -16,6 +16,7 @@ std::vector<std::byte> PacketPlayerLocationCB::bytes() {
     PacketData::writeFloat(location.getPitch(), array);
     PacketData::writeByte(0, array); // TODO bitfield relative/absolute values (?)
     PacketData::writeVarInt(-42, array); // TODO teleport ID
+    PacketData::writeBoolean(false, array); // dismount vehicle
     return array;
 }
 

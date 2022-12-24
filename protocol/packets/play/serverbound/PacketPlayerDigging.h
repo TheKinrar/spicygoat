@@ -26,6 +26,8 @@ public:
 
     const Status status;
     const Position position;
+    const uint8_t face;
+    const int sequence;
 };
 
 

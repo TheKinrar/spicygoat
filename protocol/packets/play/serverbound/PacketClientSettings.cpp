@@ -11,6 +11,8 @@ PacketClientSettings::PacketClientSettings(PacketData *data) : ServerBoundPacket
     chatColors = data->readBoolean();
     displayedSkinParts = data->readUnsignedByte();
     mainHand = data->readVarInt();
+    textFiltering = data->readBoolean();
+    serverListings = data->readBoolean();
 }
 
 std::string PacketClientSettings::toString() const {
@@ -20,5 +22,7 @@ std::string PacketClientSettings::toString() const {
             + ",chatColors=" + std::to_string(chatColors)
             + ",skin=" + std::to_string(displayedSkinParts)
             + ",hand=" + std::to_string(mainHand)
+            + ",textFiltering=" + std::to_string(textFiltering)
+            + ",serverListings=" + std::to_string(serverListings)
             + "}";
 }

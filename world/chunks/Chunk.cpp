@@ -22,9 +22,12 @@ int32_t Chunk::getZ() const {
 }
 
 void Chunk::loadNBT(nbt::tag_compound& nbt) {
-    if(nbt.has_key("BlockStates")) {
-        palette = ChunkPalette::fromNBT(nbt.at("Palette").as<nbt::tag_list>());
-        blockStates = nbt.at("BlockStates").as<nbt::tag_long_array>().get();
+    if(nbt.has_key("block_states")) {
+        auto blockSection = nbt.at("block_states").as<nbt::tag_compound>();
+        palette = ChunkPalette::fromNBT(blockSection.at("palette").as<nbt::tag_list>());
+        if(blockSection.has_key("data")) {
+            blockStates = blockSection.at("data").as<nbt::tag_long_array>().get();
+        }
     }
 
     if (nbt.has_key("BlockLight"))
@@ -43,7 +46,7 @@ bool Chunk::hasData() {
 }
 
 void Chunk::writeToByteArray(std::vector<std::byte> &array) {
-    PacketData::writeShort(4096, array);
+    PacketData::writeShort(4096, array); // non-air blocks
 
     //std::cout << palette->toString(true) << std::endl; TODO
     palette->writeToByteArray(array);
@@ -54,4 +57,9 @@ void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     }
     PacketData::writeVarInt(data.size() / 8, array);
     PacketData::writeByteArray(data, array);
+
+    // TODO fake biomes
+    PacketData::writeUnsignedByte(0, array); // single palette (0 b/entry)
+    PacketData::writeVarInt(0, array); // biome ID 0 in global palette
+    PacketData::writeVarInt(0, array); // no data (because single palette)
 }

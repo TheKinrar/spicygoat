@@ -14,6 +14,7 @@ std::vector<std::byte> PacketLoginSuccess::bytes() {
     PacketData::writeVarInt(0x02, array);
     PacketData::writeUuid(uuid, array);
     PacketData::writeString(username, array);
+    PacketData::writeVarInt(0, array);
     return array;
 }
 

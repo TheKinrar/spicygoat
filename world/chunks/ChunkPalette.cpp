@@ -67,7 +67,9 @@ void ChunkPalette::addBlockState(BlockState &state, uint16_t id) {
 void ChunkPalette::finalize() {
     bitsPerBlock = ceil(log2(idToState.size()));
 
-    if(bitsPerBlock < 4)
+    single = bitsPerBlock == 0;
+
+    if(!single && bitsPerBlock < 4)
         bitsPerBlock = 4;
 
     global = bitsPerBlock > 8;
@@ -80,7 +82,9 @@ uint8_t ChunkPalette::getBitsPerBlock() const {
 void ChunkPalette::writeToByteArray(std::vector<std::byte> &array) {
     PacketData::writeUnsignedByte(bitsPerBlock, array);
 
-    if(!global) {
+    if(single) {
+        PacketData::writeVarInt(Server::get()->getPalette()->getBlockStateId(*idToState.begin()->second), array);
+    } else if(!global) {
         PacketData::writeVarInt(idToState.size(), array);
 
         for(auto & pair : idToState) {
@@ -111,8 +115,4 @@ std::string ChunkPalette::mappingToString() {
     }
 
     return str;
-}
-
-bool ChunkPalette::isGlobal() const {
-    return global;
 }

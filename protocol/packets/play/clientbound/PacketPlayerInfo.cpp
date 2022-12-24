@@ -3,13 +3,21 @@
 //
 
 #include "PacketPlayerInfo.h"
+#include <iostream>
 
 PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer*> &players) : ClientBoundPacket(0x32), action(action), players(players) {}
 
 std::vector<std::byte> PacketPlayerInfo::bytes() {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x32, array);
-    PacketData::writeVarInt(action, array);
+    PacketData::writeVarInt(0x36, array);
+
+    if(action != Action::AddPlayer)
+      throw std::runtime_error("Only AddPlayer is supported");
+
+    std::bitset<6> actionsMask;
+    actionsMask.set(0); // AddPlayer
+
+    PacketData::writeFixedBitSet(actionsMask, array);
     PacketData::writeVarInt(std::distance(players.begin(), players.end()), array);
 
     for(auto player : players) {
@@ -19,9 +27,6 @@ std::vector<std::byte> PacketPlayerInfo::bytes() {
             case Action::AddPlayer:
                 PacketData::writeString(player->getName(), array);
                 PacketData::writeVarInt(0, array); // TODO properties
-                PacketData::writeVarInt(0, array); // TODO gamemode
-                PacketData::writeVarInt(0, array); // TODO ping
-                PacketData::writeBoolean(false, array); // TODO display name
                 break;
             case Action::UpdateGamemode:
                 PacketData::writeVarInt(0, array); // TODO gamemode

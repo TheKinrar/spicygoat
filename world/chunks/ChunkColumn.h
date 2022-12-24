@@ -34,12 +34,9 @@ public:
 
 private:
     int32_t x, z;
-    Chunk* chunks[16];
+    Chunk* chunks[24];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
-
-public: // TODO should be private
-    nbt::tag_compound *level = nullptr;
 };
 
 

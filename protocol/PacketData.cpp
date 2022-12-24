@@ -15,6 +15,10 @@ PacketData::PacketData(char *data, int length) {
     this->pos = 0;
 }
 
+int PacketData::remaining() {
+    return length - pos;
+}
+
 bool PacketData::readBoolean() {
     return readByte();
 }
@@ -133,6 +137,12 @@ void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) 
     }
 }
 
+void PacketData::readUuid(uuid_t& dst) {
+    for(unsigned char& i : dst) {
+        i = readByte();
+    }
+}
+
 void PacketData::writeUuid(const uuid_t &uuid, std::vector<std::byte> &bytes) {
     for(unsigned char i : uuid) {
         bytes.push_back(std::byte(i));
@@ -169,6 +179,12 @@ void PacketData::writeString(const std::string& string, std::vector<std::byte> &
 
     std::transform(string.begin(), string.end(), std::back_inserter(bytes),
             [](unsigned char c) { return std::byte(c);});
+}
+
+void PacketData::readByteArray(std::vector<std::byte>& dst, size_t len) {
+    for(size_t i = 0; i < len; i++) {
+        dst.push_back(std::byte(readByte()));
+    }
 }
 
 void PacketData::writeByteArray(const std::vector<std::byte> &val, std::vector<std::byte> &bytes) {
