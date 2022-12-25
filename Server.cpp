@@ -8,6 +8,8 @@
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "TCPServer.h"
 #include "tracking/PlayerTracker.h"
+#include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
+#include "protocol/packets/play/clientbound/PacketDestroyEntities.h"
 
 Server::Server() {
     std::ifstream ifs("blocks.json");
@@ -76,6 +78,15 @@ void Server::removePlayer(EntityPlayer &p) {
     entities.remove(&p);
     players.remove(&p);
     playerCount--;
+
+    std::forward_list<std::reference_wrapper<const uuid_t>> array;
+    array.emplace_front(p.getUuid());
+    auto packetForAll = new PacketPlayerInfoRemove(array);
+    broadcastPacket(packetForAll);
+    delete(packetForAll);
+
+    // TODO this should be handled by the EntityTracker
+    broadcastPacket(new PacketDestroyEntities(p.getEID()));
 }
 
 const std::forward_list<Entity *> &Server::getEntities() const {
