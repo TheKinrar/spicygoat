@@ -13,6 +13,10 @@ TCPServer::TCPServer() {
     sock = socket(AF_INET, SOCK_STREAM, 0);
     ioctl(sock, FIONBIO);
 
+    int enable = 1;
+    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+    setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(int));
+
     sockaddr_in sin{};
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = inet_addr("0.0.0.0");
