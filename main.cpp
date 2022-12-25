@@ -1,6 +1,7 @@
 #include <iostream>
 #include "TCPServer.h"
 #include "Server.h"
+#include "config/Config.h"
 
 void sigterm_handler(int) {
     std::cout << "Stopping server" << std::endl;
@@ -15,6 +16,8 @@ int main() {
     signal(SIGTERM, sigterm_handler);
 
     std::cout << "SpicyGoat is here!" << std::endl;
+
+    Config::get();
     Server::get()->run();
 
     return 0;
