@@ -21,9 +21,8 @@ void EntityPlayer::tick() {
         chunkChanged();
 
     int n = 0;
-
-    for(auto it : std::unordered_map(loadingChunks)) {
-        auto& chunk = it.second.operator ChunkColumn &();
+    while(!chunkSendQueue.empty()) {
+        auto& chunk = chunkSendQueue.front().get();
 
         if(chunk.hasData()) {
             conn.sendPacket(new PacketChunkData(chunk));
@@ -31,10 +30,10 @@ void EntityPlayer::tick() {
             std::cerr << "no data for column " << chunk.toString() << std::endl;
         }
 
-        loadingChunks.erase(it.first);
+        chunkSendQueue.pop();
 
         ++n;
-        if(n == 5)
+        if(++n == 5)
             break;
     }
 }
@@ -62,7 +61,7 @@ void EntityPlayer::chunkChanged() {
 
             if(loadedChunks.find(pos) == loadedChunks.end()) {
                 ChunkColumn& column = Server::get()->getWorld().getChunk(x, z);
-                loadingChunks.emplace(pos, column);
+                chunkSendQueue.emplace(column);
                 loadedChunks.emplace(pos, column);
             }
         }

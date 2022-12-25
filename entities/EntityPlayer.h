@@ -11,6 +11,7 @@ class TCPConnection;
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <queue>
 #include "Entity.h"
 #include "../world/geo/Location.h"
 #include "../world/chunks/ChunkColumn.h"
@@ -45,7 +46,7 @@ private:
     TCPConnection &conn;
 
     std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadedChunks;
-    std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadingChunks;
+    std::queue<std::reference_wrapper<ChunkColumn>> chunkSendQueue;
 
     std::set<Entity*> nearbyEntities;
 };
