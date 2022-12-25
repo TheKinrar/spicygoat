@@ -9,6 +9,7 @@
 #include "../protocol/packets/play/clientbound/PacketChunkData.h"
 #include "../protocol/packets/play/clientbound/PacketDestroyEntities.h"
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
+#include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
 
 EntityPlayer::EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn) : uuid(uuid), conn(conn) {
     this->name = name;
@@ -40,6 +41,8 @@ void EntityPlayer::tick() {
 
 void EntityPlayer::chunkChanged() {
     Entity::chunkChanged();
+
+    conn.sendPacket(new PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
     int32_t min_x = getLocation().getChunkX() - Server::VIEW_DISTANCE;
     int32_t max_x = getLocation().getChunkX() + Server::VIEW_DISTANCE;
