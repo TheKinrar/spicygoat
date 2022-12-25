@@ -46,7 +46,15 @@ bool Chunk::hasData() {
 }
 
 void Chunk::writeToByteArray(std::vector<std::byte> &array) {
-    PacketData::writeShort(4096, array); // non-air blocks
+    // non-air blocks
+    if(palette->isSingle() && palette->getSingleBlockState().getName() == "minecraft:air") {
+        // Palette only has air blocks, so that's an easy one.
+        PacketData::writeShort(0, array);
+    } else {
+        // Send a fake value saying the chunk is full of blocks. This will not have a really significant performance
+        // impact, but it should be fixed eventually.
+        PacketData::writeShort(4096, array);
+    }
 
     //std::cout << palette->toString(true) << std::endl; TODO
     palette->writeToByteArray(array);

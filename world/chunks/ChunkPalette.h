@@ -24,6 +24,16 @@ public:
 
     std::string toString(bool withMapping = false);
 
+    [[nodiscard]]
+    bool isSingle() const {
+        return single;
+    }
+
+    [[nodiscard]]
+    const BlockState& getSingleBlockState() const {
+        return *idToState.at(0);
+    }
+
 private:
     void addBlockState(BlockState &state, uint16_t id);
     void finalize();
