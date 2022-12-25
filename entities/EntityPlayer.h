@@ -24,7 +24,7 @@ public:
 
     void tick() override;
 
-    uuid_t& getUuid() const;
+    const uuid_t& getUuid() const;
 
     const std::string &getName() const;
 
@@ -40,7 +40,7 @@ protected:
     void chunkChanged() override;
 
 private:
-    uuid_t& uuid;
+    uuid_t uuid;
     std::string name;
 
     TCPConnection &conn;

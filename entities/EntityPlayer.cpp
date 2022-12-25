@@ -11,7 +11,8 @@
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
 
-EntityPlayer::EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn) : uuid(uuid), conn(conn) {
+EntityPlayer::EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn) : conn(conn) {
+    uuid_copy(this->uuid, uuid);
     this->name = name;
 }
 
@@ -86,7 +87,7 @@ std::string EntityPlayer::toString() {
     return std::string("EntityPlayer{name=") + name + "}";
 }
 
-uuid_t& EntityPlayer::getUuid() const {
+const uuid_t& EntityPlayer::getUuid() const {
     return uuid;
 }
 
