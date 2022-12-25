@@ -10,5 +10,3 @@ std::vector<std::byte> ServerBoundPacket::bytes() {
 }
 
 ServerBoundPacket::ServerBoundPacket(int id) : Packet(id) {}
-
-ServerBoundPacket::ServerBoundPacket() : Packet(-1) {}

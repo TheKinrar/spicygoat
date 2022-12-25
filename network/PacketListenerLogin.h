@@ -13,6 +13,7 @@ public:
     void handle(const ServerBoundPacket &packet) override;
 
     virtual void onLoginStart(const PacketLoginStart&) = 0;
+    virtual void onPluginResponse(const PacketPluginResponse&) = 0;
 };
 
 

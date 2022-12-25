@@ -15,6 +15,7 @@ namespace Packets {
 
     // Login SB
     static const int S_LOGIN_START = 0x00;
+    static const int S_PLUGIN_RESPONSE = 0x02;
 
     // Play SB
     static const int S_TELEPORT_CONFIRM = 0x00;

@@ -7,7 +7,10 @@
 void PacketListenerLogin::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {
         case Packets::S_LOGIN_START:
-            onLoginStart(static_cast<const PacketLoginStart&>(packet));
+            onLoginStart(dynamic_cast<const PacketLoginStart&>(packet));
+            break;
+        case Packets::S_PLUGIN_RESPONSE:
+            onPluginResponse(dynamic_cast<const PacketPluginResponse&>(packet));
             break;
     }
 }

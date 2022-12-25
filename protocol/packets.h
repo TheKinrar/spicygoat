@@ -18,6 +18,7 @@
 
 #include "packets/login/PacketLoginStart.h"
 #include "packets/login/PacketLoginSuccess.h"
+#include "packets/login/PacketPluginResponse.h"
 
 #include "packets/play/clientbound/PacketChunkData.h"
 #include "packets/play/clientbound/PacketEntityMoveLook.h"

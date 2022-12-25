@@ -25,6 +25,8 @@ Packet* Packets::parse(PacketData* data, ProtocolState state) {
         switch(id) {
             case S_LOGIN_START:
                 return new PacketLoginStart(data);
+            case S_PLUGIN_RESPONSE:
+                return new PacketPluginResponse(data);
         }
     } else if(state == ProtocolState::PLAY) {
         switch(id) {

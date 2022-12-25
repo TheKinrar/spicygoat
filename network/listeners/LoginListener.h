@@ -14,6 +14,8 @@ public:
 
     void onLoginStart(const PacketLoginStart &packet) override;
 
+    void onPluginResponse(const PacketPluginResponse &response) override;
+
 private:
     TCPConnection& connection;
 };

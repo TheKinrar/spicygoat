@@ -40,6 +40,10 @@ public:
 
     void keepAlive(int64_t millis);
     void confirmKeepAlive(int64_t id);
+
+    std::string username;
+    uuid_t uuid;
+
 private:
     int sock;
     sockaddr_in addr;
