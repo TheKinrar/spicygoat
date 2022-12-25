@@ -16,6 +16,7 @@ std::vector<std::byte> PacketPlayerInfo::bytes() {
 
     std::bitset<6> actionsMask;
     actionsMask.set(0); // AddPlayer
+    actionsMask.set(3); // UpdateListed
 
     PacketData::writeFixedBitSet(actionsMask, array);
     PacketData::writeVarInt(std::distance(players.begin(), players.end()), array);
@@ -27,6 +28,7 @@ std::vector<std::byte> PacketPlayerInfo::bytes() {
             case Action::AddPlayer:
                 PacketData::writeString(player->getName(), array);
                 PacketData::writeVarInt(0, array); // TODO properties
+                PacketData::writeBoolean(true, array);
                 break;
             case Action::UpdateGamemode:
                 PacketData::writeVarInt(0, array); // TODO gamemode
