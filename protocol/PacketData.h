@@ -15,6 +15,7 @@
 #include <string>
 #include <uuid/uuid.h>
 #include <vector>
+#include <cmath>
 
 class PacketData {
 public:
@@ -52,6 +53,12 @@ public:
 
     float readFloat();
     static void writeFloat(float, std::vector<std::byte> &);
+
+    static void writeAngle(float val, std::vector<std::byte> &bytes) {
+        val = std::remainder(val, 360.0f);
+        if(val < 0) val += 360;
+        writeUnsignedByte(static_cast<uint>((val * 256) / 360), bytes);
+    }
 
     double readDouble();
     static void writeDouble(double, std::vector<std::byte> &);

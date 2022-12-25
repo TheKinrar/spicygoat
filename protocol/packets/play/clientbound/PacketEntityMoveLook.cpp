@@ -15,8 +15,8 @@ std::vector<std::byte> PacketEntityMoveLook::bytes() {
     PacketData::writeShort((int16_t) (dx * 4096), array);
     PacketData::writeShort((int16_t) (dy * 4096), array);
     PacketData::writeShort((int16_t) (dz * 4096), array);
-    PacketData::writeByte(yaw, array);
-    PacketData::writeByte(pitch, array);
+    PacketData::writeAngle(yaw, array);
+    PacketData::writeAngle(pitch, array);
     PacketData::writeBoolean(onGround, array);
     return array;
 }

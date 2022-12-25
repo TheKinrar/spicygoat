@@ -10,8 +10,8 @@ std::vector<std::byte> PacketEntityLook::bytes() {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x29, array);
     PacketData::writeVarInt(eid, array);
-    PacketData::writeByte(to.getYaw(), array);
-    PacketData::writeByte(to.getPitch(), array);
+    PacketData::writeAngle(to.getYaw(), array);
+    PacketData::writeAngle(to.getPitch(), array);
     PacketData::writeBoolean(onGround, array);
     return array;
 }

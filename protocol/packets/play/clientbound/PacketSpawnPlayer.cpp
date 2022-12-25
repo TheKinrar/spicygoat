@@ -18,8 +18,8 @@ std::vector<std::byte> PacketSpawnPlayer::bytes() {
     PacketData::writeDouble(x, array);
     PacketData::writeDouble(y, array);
     PacketData::writeDouble(z, array);
-    PacketData::writeByte(yaw, array);
-    PacketData::writeByte(pitch, array);
+    PacketData::writeAngle(yaw, array);
+    PacketData::writeAngle(pitch, array);
     return array;
 }
 

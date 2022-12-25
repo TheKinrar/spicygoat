@@ -8,6 +8,7 @@
 #include "../protocol/packets/play/clientbound/PacketEntityMove.h"
 #include "../protocol/packets/play/clientbound/PacketEntityLook.h"
 #include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
+#include "../protocol/packets/play/clientbound/PacketEntityHeadRotation.h"
 
 Entity::Entity() {
     eid = Server::get()->nextEID();
@@ -70,6 +71,12 @@ void Entity::tick() {
             }
         } else {
             PacketEntityLook p(eid, location, nextLocation, nextOnGround);
+            tracker->broadcast(p);
+        }
+
+        if(looked) {
+            // We could support different head and body yaws, but why
+            PacketEntityHeadRotation p(eid, nextLocation.getYaw());
             tracker->broadcast(p);
         }
 

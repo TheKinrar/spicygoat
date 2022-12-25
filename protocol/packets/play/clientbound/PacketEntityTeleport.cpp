@@ -13,8 +13,8 @@ std::vector<std::byte> PacketEntityTeleport::bytes() {
     PacketData::writeDouble(loc.getX(), array);
     PacketData::writeDouble(loc.getY(), array);
     PacketData::writeDouble(loc.getZ(), array);
-    PacketData::writeByte(loc.getYaw(), array);
-    PacketData::writeByte(loc.getPitch(), array);
+    PacketData::writeAngle(loc.getYaw(), array);
+    PacketData::writeAngle(loc.getPitch(), array);
     PacketData::writeBoolean(onGround, array);
     return array;
 }
