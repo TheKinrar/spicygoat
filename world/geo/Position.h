@@ -12,17 +12,61 @@ class Position {
 public:
     Position(int32_t x, int16_t y, int32_t z);
 
+    [[nodiscard]]
     int32_t getX() const;
 
-    int16_t getY() const;
+    [[nodiscard]]
+    int32_t getY() const;
 
+    [[nodiscard]]
     int32_t getZ() const;
 
+    [[nodiscard]]
+    int32_t getChunkX() const {
+        return x >> 4;
+    }
+
+    [[nodiscard]]
+    int32_t getChunkY() const {
+        return y >> 4;
+    }
+
+    [[nodiscard]]
+    int32_t getChunkZ() const {
+        return z >> 4;
+    }
+
+    [[nodiscard]]
+    int32_t getRegionX() const {
+        return x >> 9;
+    }
+
+    [[nodiscard]]
+    int32_t getRegionZ() const {
+        return z >> 9;
+    }
+
+    [[nodiscard]]
+    int32_t getInChunkX() const {
+        return x < 0 ? (16 - (-x % 16)) % 16 : x % 16;
+    }
+
+    [[nodiscard]]
+    int32_t getInChunkY() const {
+        return y < 0 ? (16 - (-y % 16)) % 16 : y % 16;
+    }
+
+    [[nodiscard]]
+    int32_t getInChunkZ() const {
+        return z < 0 ? (16 - (-z % 16)) % 16 : z % 16;
+    }
+
+    [[nodiscard]]
     std::string toString() const;
 
 private:
     int32_t x;
-    int16_t y;
+    int32_t y;
     int32_t z;
 };
 

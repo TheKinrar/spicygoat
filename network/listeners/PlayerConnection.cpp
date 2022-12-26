@@ -6,6 +6,7 @@
 #include "PlayerConnection.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../../Server.h"
+#include "../../config/Config.h"
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player) : connection(connection),
                                                                                       player(player) {}
@@ -51,8 +52,10 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 }
 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
-    if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
-        // TODO
+    if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
+        if(Config::get().gamemode == 1) {
+            Server::get()->getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+        }
     }
 }
 

@@ -189,7 +189,13 @@ void PacketData::writeByteArray(const std::vector<std::byte> &val, std::vector<s
 
 Position PacketData::readPosition() {
     uint64_t val = readUnsignedLong();
-    return Position(val >> 38, val & 0xFFF, val << 26 >> 38);
+    uint64_t x = val >> 38;
+    if(x >= 1 << 25) x -= 1 << 26;
+    uint64_t y = val & 0xFFF;
+    if(y >= 1 << 11) y -= 1 << 12;
+    uint64_t z = val << 26 >> 38;
+    if(z >= 1 << 25) z -= 1 << 26;
+    return {(int32_t) x, (int16_t) y, (int32_t) z};
 }
 
 void PacketData::writePosition(Position position, std::vector<std::byte> &bytes) {

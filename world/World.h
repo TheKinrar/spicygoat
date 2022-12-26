@@ -20,6 +20,12 @@ public:
 
     const Position &getSpawnPosition() const;
 
+    void setBlockState(Position pos, BlockState state) {
+        auto& chunk = getChunk(pos.getChunkX(), pos.getChunkZ());
+        auto* section = chunk.getChunk(pos.getChunkY());
+        section->setBlockState(pos.getInChunkX(), pos.getInChunkY(), pos.getInChunkZ(), state);
+    }
+
 private:
     std::mutex m_chunkLoading;
 

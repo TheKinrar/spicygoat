@@ -10,7 +10,7 @@ int32_t Position::getX() const {
     return x;
 }
 
-int16_t Position::getY() const {
+int32_t Position::getY() const {
     return y;
 }
 

@@ -18,7 +18,12 @@ public:
 
     uint8_t getBitsPerBlock() const;
 
-    uint16_t getBlockStateId(BlockState &state);
+    [[nodiscard]]
+    int getBlocksPerLong() const {
+        return 64 / getBitsPerBlock();
+    }
+
+    int16_t getBlockStateId(BlockState &state);
 
     void writeToByteArray(std::vector<std::byte>&);
 
@@ -34,14 +39,14 @@ public:
         return *idToState.at(0);
     }
 
-private:
-    void addBlockState(BlockState &state, uint16_t id);
-    void finalize();
-
     std::string mappingToString();
 
-    std::map<BlockState, uint16_t> stateToId;
-    std::map<uint16_t, BlockState*> idToState;
+private:
+    void addBlockState(BlockState &state, int16_t id);
+    void finalize();
+
+    std::map<BlockState, int16_t> stateToId;
+    std::map<int16_t, BlockState*> idToState;
 
     uint8_t bitsPerBlock;
 

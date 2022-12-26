@@ -21,7 +21,7 @@ public:
 
     int32_t getZ() const;
 
-    Chunk* getChunk(int8_t y);
+    Chunk* getChunk(int32_t y);
 
     bool hasData();
 

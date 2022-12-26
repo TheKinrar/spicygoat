@@ -59,7 +59,7 @@ ChunkPalette *ChunkPalette::fromJson(nlohmann::json &json) {
     return palette;
 }
 
-void ChunkPalette::addBlockState(BlockState &state, uint16_t id) {
+void ChunkPalette::addBlockState(BlockState &state, int16_t id) {
     stateToId[state] = id;
     idToState[id] = &state;
 }
@@ -93,7 +93,7 @@ void ChunkPalette::writeToByteArray(std::vector<std::byte> &array) {
     }
 }
 
-uint16_t ChunkPalette::getBlockStateId(BlockState &state) {
+int16_t ChunkPalette::getBlockStateId(BlockState &state) {
     auto it = stateToId.find(state);
     return it == stateToId.end() ? -1 : it->second;
 }

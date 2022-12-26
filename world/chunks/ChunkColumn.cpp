@@ -24,7 +24,7 @@ int32_t ChunkColumn::getZ() const {
     return z;
 }
 
-Chunk *ChunkColumn::getChunk(int8_t y) {
+Chunk *ChunkColumn::getChunk(int32_t y) {
     return chunks[y + 4];
 }
 
