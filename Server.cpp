@@ -111,7 +111,7 @@ World& Server::getWorld() {
     return world;
 }
 
-ChunkPalette *Server::getPalette() const {
+std::shared_ptr<ChunkPalette> Server::getPalette() const {
     return palette;
 }
 

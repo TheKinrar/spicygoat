@@ -12,7 +12,8 @@
 
 class BlockState {
 public:
-    BlockState(const std::string &name);
+    BlockState() = default;
+    explicit BlockState(const std::string &name);
 
     void addProperty(const std::string& key, std::string value);
 

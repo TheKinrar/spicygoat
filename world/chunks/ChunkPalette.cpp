@@ -10,11 +10,11 @@
 #include <cmath>
 #include <iostream>
 
-ChunkPalette* ChunkPalette::fromNBT(nbt::tag_list &list) {
+std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     if(list.size() > 256)
         return Server::get()->getPalette();
 
-    auto palette = new ChunkPalette();
+    auto palette = std::make_shared<ChunkPalette>();
 
     for(int i = 0; i < list.size(); ++i) {
         auto & item = list.at(i).as<nbt::tag_compound>();
@@ -37,8 +37,8 @@ ChunkPalette* ChunkPalette::fromNBT(nbt::tag_list &list) {
     return palette;
 }
 
-ChunkPalette *ChunkPalette::fromJson(nlohmann::json &json) {
-    auto palette = new ChunkPalette();
+std::shared_ptr<ChunkPalette> ChunkPalette::fromJson(nlohmann::json &json) {
+    auto palette = std::make_shared<ChunkPalette>();
 
     for(nlohmann::json::iterator it = json.begin(); it != json.end(); ++it) {
         for(auto &e : it.value()["states"]) {
@@ -61,7 +61,7 @@ ChunkPalette *ChunkPalette::fromJson(nlohmann::json &json) {
 
 void ChunkPalette::addBlockState(BlockState &state, int16_t id) {
     stateToId[state] = id;
-    idToState[id] = &state;
+    idToState[id] = state;
 }
 
 void ChunkPalette::finalize() {
@@ -83,17 +83,17 @@ void ChunkPalette::writeToByteArray(std::vector<std::byte> &array) {
     PacketData::writeUnsignedByte(bitsPerBlock, array);
 
     if(single) {
-        PacketData::writeVarInt(Server::get()->getPalette()->getBlockStateId(*idToState.begin()->second), array);
+        PacketData::writeVarInt(Server::get()->getPalette()->getBlockStateId(idToState.begin()->second), array);
     } else if(!global) {
         PacketData::writeVarInt(idToState.size(), array);
 
         for(auto & pair : idToState) {
-            PacketData::writeVarInt(Server::get()->getPalette()->getBlockStateId(*pair.second), array);
+            PacketData::writeVarInt(Server::get()->getPalette()->getBlockStateId(pair.second), array);
         }
     }
 }
 
-int16_t ChunkPalette::getBlockStateId(BlockState &state) {
+int16_t ChunkPalette::getBlockStateId(const BlockState &state) const {
     auto it = stateToId.find(state);
     return it == stateToId.end() ? -1 : it->second;
 }
@@ -106,10 +106,10 @@ std::string ChunkPalette::mappingToString() {
     std::string str;
 
     for(auto & pair : idToState) {
-        str += std::to_string(pair.first) + " -> " + pair.second->toString();
+        str += std::to_string(pair.first) + " -> " + pair.second.toString();
 
         if(!global)
-            str += std::string(" -> ") + std::to_string(Server::get()->getPalette()->getBlockStateId(*pair.second));
+            str += std::string(" -> ") + std::to_string(Server::get()->getPalette()->getBlockStateId(pair.second));
 
         str += '\n';
     }

@@ -37,8 +37,9 @@ void Chunk::loadNBT(nbt::tag_compound& nbt) {
         skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
 }
 
-ChunkPalette *Chunk::getPalette() const {
-    return palette;
+[[nodiscard]]
+const ChunkPalette& Chunk::getPalette() const {
+    return *palette;
 }
 
 bool Chunk::hasData() {

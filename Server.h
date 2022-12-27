@@ -34,13 +34,13 @@ public:
 
     World& getWorld();
 
-    [[nodiscard]] ChunkPalette *getPalette() const;
+    [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
     [[nodiscard]] const std::vector<std::byte> &getCodec() const;
 
     void broadcastPacket(Packet*);
 
 private:
-    ChunkPalette *palette;
+    std::shared_ptr<ChunkPalette> palette;
     std::vector<std::byte> codec;
 
     std::forward_list<EntityPlayer*> players;
