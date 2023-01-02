@@ -4,7 +4,7 @@
 
 #include "PacketSpawnPlayer.h"
 
-PacketSpawnPlayer::PacketSpawnPlayer(const int32_t eid, const uuid_t& uuid, const double x, const double y,
+PacketSpawnPlayer::PacketSpawnPlayer(const int32_t eid, stud::uuid uuid, const double x, const double y,
                                      const double z, const float yaw, const float pitch) : ClientBoundPacket(0x04),
                                                                                            eid(eid), uuid(uuid), x(x),
                                                                                            y(y), z(z), yaw(yaw),

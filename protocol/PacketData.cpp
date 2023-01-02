@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
-#include <endian.h>
+#include "../../util/endian.h"
 
 #include "PacketData.h"
 
@@ -133,15 +133,17 @@ void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) 
     }
 }
 
-void PacketData::readUuid(uuid_t& dst) {
-    for(unsigned char& i : dst) {
-        i = readByte();
+stud::uuid PacketData::readUuid() {
+    stud::uuid::binary_type dst;
+    for(uint8_t& i : dst) {
+        i = readUnsignedByte();
     }
+    return stud::uuid(dst);
 }
 
-void PacketData::writeUuid(const uuid_t &uuid, std::vector<std::byte> &bytes) {
-    for(unsigned char i : uuid) {
-        bytes.push_back(std::byte(i));
+void PacketData::writeUuid(stud::uuid uuid, std::vector<std::byte> &bytes) {
+    for(uint8_t i : uuid.binary()) {
+        writeUnsignedByte(i, bytes);
     }
 }
 

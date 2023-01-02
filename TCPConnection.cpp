@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <libnet.h>
 #include <sstream>
 
 #include "Server.h"
@@ -60,7 +59,7 @@ void TCPConnection::task() {
             }
         }
     } catch(std::exception &e) {
-        close(sock);
+        closesocket(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
         TCPServer::get().removeConnection(this);
 
@@ -128,7 +127,7 @@ void TCPConnection::keepAlive(int64_t millis) {
         }
     } else {
         if(millis - latestKeepAlive > 30000) {
-            close(sock); // TODO proper timeout
+            closesocket(sock); // TODO proper timeout
         }
     }
 }
@@ -154,6 +153,6 @@ const PacketListener &TCPConnection::getListener() const {
 }
 
 void TCPConnection::disconnect() {
-    close(sock);
+    closesocket(sock);
 }
 

@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <uuid/uuid.h>
+#include <libstud/uuid.hxx>
 #include <iostream>
 
 #include "LoginListener.h"
@@ -15,7 +15,7 @@ LoginListener::LoginListener(TCPConnection &connection) : connection(connection)
 
 void LoginListener::onLoginStart(const PacketLoginStart &packet) {
     connection.username = packet.name;
-    uuid_generate(connection.uuid); // TODO generate offline UUID like official server does
+    connection.uuid = stud::uuid::generate(false); // TODO generate offline UUID like official server does
 
     // Velocity
     std::vector<std::byte> request;
@@ -43,7 +43,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         std::string address = data.readString();
         std::cout << connection.getName() << " proxies " << address << std::endl;
 
-        data.readUuid(connection.uuid);
+        connection.uuid = data.readUuid();
         std::string proxiedUsername = data.readString();
 
         std::cout << connection.username << " vs " << proxiedUsername << std::endl;

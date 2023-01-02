@@ -7,18 +7,16 @@
 
 #include "../ClientBoundPacket.h"
 
-#include <uuid/uuid.h>
-
 class PacketLoginSuccess : public ClientBoundPacket {
 public:
-    PacketLoginSuccess(uuid_t uuid, const std::string &username);
+    PacketLoginSuccess(stud::uuid uuid, const std::string &username);
 
     std::vector<std::byte> bytes() override;
 
     [[nodiscard]] std::string toString() const override;
 
 private:
-    uuid_t uuid{};
+    stud::uuid uuid;
     std::string username;
 };
 

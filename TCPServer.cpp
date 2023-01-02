@@ -10,12 +10,28 @@
 #include <thread>
 
 TCPServer::TCPServer() {
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    ioctl(sock, FIONBIO);
+#ifdef _WIN64
+    WSAData wsaData = {};
+    if(WSAStartup(MAKEWORD(2, 2), &wsaData)) {
+        std::cerr << "WSAStartup failed: " << WSAGetLastError() << std::endl;
+    }
+#endif
 
+    sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+#ifdef __linux__
+    ioctl(sock, FIONBIO);
     int enable = 1;
     setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
     setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(int));
+#endif
+
+#ifdef _WIN64
+    u_long blockMode = 0;
+    char reuseAddrOpt = 1;
+    ioctlsocket(sock, FIONBIO, &blockMode);
+    setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &reuseAddrOpt, sizeof(reuseAddrOpt));
+#endif
 
     sockaddr_in sin{};
     sin.sin_family = AF_INET;
@@ -23,10 +39,13 @@ TCPServer::TCPServer() {
     sin.sin_port = htons(25565);
 
     errno = 0;
-    bind(sock, (sockaddr*) &sin, sizeof(sin));
-
-    if(errno) {
+    if(bind(sock, (sockaddr*) &sin, sizeof(sin))) {
+#ifdef __linux__
         std::cerr << "bind failed: " << strerror(errno) << std::endl;
+#endif
+#ifdef _WIN64
+        std::cerr << "bind failed: " << WSAGetLastError() << std::endl;
+#endif
         exit(1);
     }
 
@@ -52,7 +71,14 @@ TCPServer::~TCPServer() {
 
 void TCPServer::accept() {
     while(running) {
+
+#ifdef __linux__
         int ret = poll(fds, 1, 100);
+#endif
+
+#ifdef _WIN64
+        int ret = WSAPoll(fds, 1, 100);
+#endif
 
         if(ret > 0) {
             std::cout << "accept" << std::endl;
@@ -71,7 +97,7 @@ void TCPServer::accept() {
     for(auto conn : connections) {
         conn->disconnect();
     }
-    close(sock);
+    closesocket(sock);
 }
 
 void TCPServer::keepAliveTask() {

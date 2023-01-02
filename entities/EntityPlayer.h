@@ -7,7 +7,6 @@
 
 class TCPConnection;
 
-#include <uuid/uuid.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -20,11 +19,11 @@ class TCPConnection;
 
 class EntityPlayer : public Entity {
 public:
-    EntityPlayer(uuid_t &uuid, std::string& name, TCPConnection &conn);
+    EntityPlayer(stud::uuid uuid, std::string& name, TCPConnection &conn);
 
     void tick() override;
 
-    const uuid_t& getUuid() const;
+    stud::uuid getUuid() const;
 
     const std::string &getName() const;
 
@@ -40,7 +39,7 @@ protected:
     void chunkChanged() override;
 
 private:
-    uuid_t uuid;
+    stud::uuid uuid;
     std::string name;
 
     TCPConnection &conn;

@@ -7,10 +7,17 @@
 
 #include "TCPConnection.h"
 
+#ifdef __linux__
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <libnet.h>
 #include <poll.h>
+#endif
+
+#ifdef _WIN64
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#endif
 
 class TCPServer {
 public:
@@ -33,7 +40,7 @@ public:
 private:
     bool running = true;
 
-    int sock;
+    unsigned long long sock;
     pollfd fds[10];
 
     std::forward_list<TCPConnection*> connections;

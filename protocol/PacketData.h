@@ -11,11 +11,10 @@
 #include <iostream>
 #include <exception>
 #include <memory>
-#include <netinet/in.h>
 #include <string>
-#include <uuid/uuid.h>
 #include <vector>
 #include <cmath>
+#include <libstud/uuid.hxx>
 
 class PacketData {
 public:
@@ -48,8 +47,8 @@ public:
     uint64_t readUnsignedLong();
     static void writeUnsignedLong(uint64_t, std::vector<std::byte> &);
 
-    void readUuid(uuid_t&);
-    static void writeUuid(const uuid_t&, std::vector<std::byte> &);
+    stud::uuid readUuid();
+    static void writeUuid(stud::uuid, std::vector<std::byte> &);
 
     float readFloat();
     static void writeFloat(float, std::vector<std::byte> &);
@@ -57,7 +56,7 @@ public:
     static void writeAngle(float val, std::vector<std::byte> &bytes) {
         val = std::remainder(val, 360.0f);
         if(val < 0) val += 360;
-        writeUnsignedByte(static_cast<uint>((val * 256) / 360), bytes);
+        writeUnsignedByte(static_cast<uint8_t>((val * 256) / 360), bytes);
     }
 
     double readDouble();

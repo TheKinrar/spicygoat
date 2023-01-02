@@ -5,9 +5,17 @@
 #ifndef SPICYGOAT_TCPCONNECTION_H
 #define SPICYGOAT_TCPCONNECTION_H
 
-#include <netinet/in.h>
 #include <thread>
 #include <mutex>
+
+#ifdef __linux__
+#include <netinet/in.h>
+#define closesocket close
+#endif
+
+#ifdef _WIN64
+#include <winsock2.h>
+#endif
 
 class EntityPlayer;
 class PacketListener;
@@ -42,7 +50,7 @@ public:
     void confirmKeepAlive(int64_t id);
 
     std::string username;
-    uuid_t uuid;
+    stud::uuid uuid;
 
 private:
     int sock;
@@ -59,7 +67,7 @@ private:
     ProtocolState state = ProtocolState::HANDSHAKE;
     std::unique_ptr<PacketListener> listener;
 
-    EntityPlayer *player;
+    EntityPlayer *player = nullptr;
 
     int readVarInt();
 };

@@ -8,8 +8,8 @@
 #include "entities/EntityPlayer.h"
 #include "world/World.h"
 #include <vector>
-#include <uuid/uuid.h>
 #include <string>
+#include <libstud/uuid.hxx>
 
 class Server {
 public:
@@ -22,7 +22,7 @@ public:
 
     void run();
 
-    EntityPlayer* createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn);
+    EntityPlayer* createPlayer(stud::uuid uuid, std::string name, TCPConnection &conn);
     void removePlayer(EntityPlayer&);
     [[nodiscard]] const std::forward_list<Entity*>& getEntities() const;
     [[nodiscard]] const std::forward_list<EntityPlayer*>& getPlayers() const;

@@ -54,7 +54,7 @@ void Server::run() {
     tcpThread.join();
 }
 
-EntityPlayer* Server::createPlayer(uuid_t &uuid, std::string name, TCPConnection &conn) {
+EntityPlayer* Server::createPlayer(stud::uuid uuid, std::string name, TCPConnection &conn) {
     auto player = new EntityPlayer(uuid, name, conn);
 
     std::forward_list<EntityPlayer*> array;
@@ -79,7 +79,7 @@ void Server::removePlayer(EntityPlayer &p) {
     players.remove(&p);
     playerCount--;
 
-    std::forward_list<std::reference_wrapper<const uuid_t>> array;
+    std::forward_list<stud::uuid> array;
     array.emplace_front(p.getUuid());
     auto packetForAll = new PacketPlayerInfoRemove(array);
     broadcastPacket(packetForAll);
