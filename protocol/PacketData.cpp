@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
-#include "../../util/endian.h"
+#include "../util/endian.h"
 
 #include "PacketData.h"
 

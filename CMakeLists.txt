@@ -26,6 +26,7 @@ FetchContent_Declare(uuid
         GIT_TAG bfe7620a86681d5c743228d0f7ea8cbee6320bc2)
 FetchContent_MakeAvailable(uuid)
 
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 set(NBT_BUILD_TESTS OFF)
 FetchContent_Declare(nbt++
         GIT_REPOSITORY https://github.com/ljfa-ag/libnbtplusplus
