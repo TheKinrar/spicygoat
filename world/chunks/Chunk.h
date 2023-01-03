@@ -55,6 +55,31 @@ public:
         writeBlockState(blockStates, *palette, x, y, z, id);
     }
 
+    BlockState getBlockState(int x, int y, int z) {
+        if(!hasData())
+            throw std::runtime_error("Can't get block in unloaded chunk");
+
+        return palette->getBlockState(readBlockState(blockStates, *palette, x, y, z));
+    }
+
+    int16_t countAirBlocks() {
+        if(palette->isSingle() && palette->getSingleBlockState().isAir()) {
+            return 4096;
+        } else {
+            int16_t n;
+            for(int x = 0; x < 16; ++x) {
+                for(int y = 0; y < 16; ++y) {
+                    for(int z = 0; z < 16; ++z) {
+                        if(getBlockState(x, y, z).isAir()) {
+                            n++;
+                        }
+                    }
+                }
+            }
+            return n;
+        }
+    }
+
 private:
     void rewriteData(const ChunkPalette& from, const ChunkPalette& to) {
         std::vector<int64_t> newStates((4096 * to.getBitsPerBlock()) / 64);

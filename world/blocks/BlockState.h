@@ -19,6 +19,13 @@ public:
 
     const std::string &getName() const;
 
+    [[nodiscard]]
+    bool isAir() const {
+        return name == "minecraft:air"
+            || name == "minecraft:cave_air"
+            || name == "minecraft:void_air";
+    }
+
     bool operator<(const BlockState &rhs) const;
 
     bool operator>(const BlockState &rhs) const;
