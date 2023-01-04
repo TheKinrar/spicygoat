@@ -36,7 +36,6 @@ public:
     World& getWorld();
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
-    [[nodiscard]] const std::vector<std::byte> &getCodec() const;
     [[nodiscard]] const Registry &getItemRegistry() const { return itemRegistry; }
 
     void broadcastPacket(Packet*);
@@ -46,7 +45,6 @@ private:
     static void loadRegistry(Registry& registry, nlohmann::json root);
 
     std::shared_ptr<ChunkPalette> palette;
-    std::vector<std::byte> codec;
     Registry itemRegistry = Registry("minecraft:item");
 
     std::forward_list<EntityPlayer*> players;

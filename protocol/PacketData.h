@@ -16,6 +16,7 @@
 #include <vector>
 #include <cmath>
 #include <libstud/uuid.hxx>
+#include <span>
 
 class PacketData {
 public:
@@ -78,6 +79,11 @@ public:
 
     void readByteArray(std::vector<std::byte>& dst, size_t len);
     static void writeByteArray(const std::vector<std::byte> &, std::vector<std::byte> &);
+    static void writeByteArray(const std::span<const std::byte> &span, std::vector<std::byte> &to) {
+        std::vector<std::byte> temp;
+        temp.assign(span.begin(), span.end());
+        writeByteArray(temp, to);
+    }
 
     Position readPosition();
     static void writePosition(Position position, std::vector<std::byte> &);

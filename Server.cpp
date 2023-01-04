@@ -10,34 +10,17 @@
 #include "tracking/PlayerTracker.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
 #include "protocol/packets/play/clientbound/PacketDestroyEntities.h"
+#include "resources_out/resources.h"
 
 Server::Server() {
-    std::ifstream ifs("blocks.json");
-    nlohmann::json j;
-    ifs >> j;
+    nlohmann::json j = nlohmann::json::parse(Resources::blocks());
     palette = ChunkPalette::fromJson(j);
-    ifs.close();
-
-    std::ifstream ifsc("codec.dat", std::ios::binary);
-    ifsc.unsetf(std::ios::skipws);
-    ifsc.seekg(0, std::ios::end);
-    size_t len = ifsc.tellg();
-    ifsc.seekg(0, std::ios::beg);
-    std::vector<unsigned char> vec;
-    vec.reserve(len);
-    vec.insert(vec.begin(),
-                 std::istream_iterator<unsigned char>(ifsc), std::istream_iterator<unsigned char>());
-    codec.reserve(len);
-    for(unsigned char& c : vec) codec.push_back(static_cast<std::byte>(c));
 
     loadRegistries();
 }
 
 void Server::loadRegistries() {
-    std::ifstream ifs("registries.json");
-    nlohmann::json j;
-    ifs >> j;
-    ifs.close();
+    nlohmann::json j = nlohmann::json::parse(Resources::registries());
 
     loadRegistry(itemRegistry, j);
 }
@@ -147,10 +130,6 @@ void Server::broadcastPacket(Packet *packet) {
 
 unsigned long Server::getPlayerCount() const {
     return playerCount;
-}
-
-const std::vector<std::byte> &Server::getCodec() const {
-    return codec;
 }
 
 std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {

@@ -8,6 +8,7 @@
 #include "nbt_tags.h"
 #include "../../../../Server.h"
 #include "../../../../config/Config.h"
+#include "resources_out/resources.h"
 
 PacketJoinGame::PacketJoinGame(EntityPlayer *player) {
     this->player = player;
@@ -119,7 +120,7 @@ std::vector<std::byte> PacketJoinGame::bytes() {
     codec.put("minecraft:dimension_type", std::move(dimRegistry()));
     codec.put("minecraft:worldgen/biome", std::move(biomeRegistry()));
     std::vector<std::byte> codecBytes = nbtBytes(codec);*/
-    PacketData::writeByteArray(Server::get()->getCodec(), array); // TODO dimensions/biomes codec
+    PacketData::writeByteArray(Resources::codec(), array); // TODO dimensions/biomes codec
 
     PacketData::writeString("minecraft:overworld", array); // current world type
     PacketData::writeString("minecraft:overworld", array); // current world name

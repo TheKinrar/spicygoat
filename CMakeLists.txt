@@ -13,7 +13,7 @@ FetchContent_MakeAvailable(zlib)
 
 FetchContent_Declare(json
         GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-        GIT_TAG v3.9.1)
+        GIT_TAG v3.11.2)
 FetchContent_MakeAvailable(json)
 
 FetchContent_Declare(toml11
@@ -33,15 +33,34 @@ FetchContent_Declare(nbt++
         GIT_TAG v2.5)
 FetchContent_MakeAvailable(nbt++)
 
+if(NOT WIN32)
+    FetchContent_Declare(embed
+            GIT_REPOSITORY https://github.com/MiSo1289/cmake-embed
+            GIT_TAG 20273c330d8e727cfc587002c451ec368c4cfef3)
+    FetchContent_MakeAvailable(embed)
+endif()
 
-set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_CXX_STANDARD 20)
 
 add_executable(SpicyGoat main.cpp TCPServer.cpp TCPServer.h TCPConnection.cpp TCPConnection.h protocol/PacketData.cpp protocol/PacketData.h protocol/packets/Packet.cpp protocol/packets/Packet.h protocol/packets/handshake/PacketHandshake.cpp protocol/packets/handshake/PacketHandshake.h protocol/ProtocolState.h protocol/packets/status/PacketRequest.cpp protocol/packets/status/PacketRequest.h protocol/packets/status/PacketResponse.cpp protocol/packets/status/PacketResponse.h protocol/packets/ServerBoundPacket.cpp protocol/packets/ServerBoundPacket.h protocol/packets/ClientBoundPacket.cpp protocol/packets/ClientBoundPacket.h protocol/packets/status/PacketPing.cpp protocol/packets/status/PacketPing.h protocol/packets/status/PacketPong.cpp protocol/packets/status/PacketPong.h protocol/packets/login/PacketLoginStart.cpp protocol/packets/login/PacketLoginStart.h protocol/packets/login/PacketLoginStart.cpp protocol/packets/login/PacketLoginStart.h protocol/packets/login/PacketLoginSuccess.cpp protocol/packets/login/PacketLoginSuccess.h protocol/packets/play/clientbound/PacketJoinGame.cpp protocol/packets/play/clientbound/PacketJoinGame.h entities/Entity.cpp entities/Entity.h entities/EntityPlayer.cpp entities/EntityPlayer.h Server.cpp Server.h protocol/packets/play/clientbound/PacketPluginMessageCB.cpp protocol/packets/play/clientbound/PacketPluginMessageCB.h protocol/channels/ChannelMessage.cpp protocol/channels/ChannelMessage.h protocol/channels/minecraft/CMBrand.cpp protocol/channels/minecraft/CMBrand.h protocol/packets/play/clientbound/PacketServerDifficulty.cpp protocol/packets/play/clientbound/PacketServerDifficulty.h protocol/packets/play/clientbound/PacketSpawnPosition.cpp protocol/packets/play/clientbound/PacketSpawnPosition.h world/geo/Position.cpp world/geo/Position.h protocol/packets/play/clientbound/PacketPlayerAbilities.cpp protocol/packets/play/clientbound/PacketPlayerAbilities.h protocol/packets/play/serverbound/PacketClientSettings.cpp protocol/packets/play/serverbound/PacketClientSettings.h protocol/packets/play/serverbound/PacketPluginMessageSB.cpp protocol/packets/play/serverbound/PacketPluginMessageSB.h protocol/packets/play/clientbound/PacketPlayerLocationCB.cpp protocol/packets/play/clientbound/PacketPlayerLocationCB.h world/geo/Location.cpp world/geo/Location.h protocol/packets/play/serverbound/PacketTeleportConfirm.cpp protocol/packets/play/serverbound/PacketTeleportConfirm.h protocol/packets/play/serverbound/PacketPlayerPositionLook.cpp protocol/packets/play/serverbound/PacketPlayerPositionLook.h protocol/packets/play/serverbound/PacketClientStatus.cpp protocol/packets/play/serverbound/PacketClientStatus.h protocol/packets/play/clientbound/PacketChunkData.cpp protocol/packets/play/clientbound/PacketChunkData.h world/chunks/ChunkColumn.cpp world/chunks/ChunkColumn.h world/chunks/Chunk.cpp world/chunks/Chunk.h protocol/packets/play/serverbound/PacketPlayerPosition.cpp protocol/packets/play/serverbound/PacketPlayerPosition.h protocol/packets/play/serverbound/PacketPlayerLook.cpp protocol/packets/play/serverbound/PacketPlayerLook.h protocol/packets/play/clientbound/PacketKeepAliveCB.cpp protocol/packets/play/clientbound/PacketKeepAliveCB.h protocol/packets/play/serverbound/PacketKeepAliveSB.cpp protocol/packets/play/serverbound/PacketKeepAliveSB.h world/World.cpp world/World.h world/chunks/Region.cpp world/chunks/Region.h world/geo/Position2D.cpp world/geo/Position2D.h protocol/packets/play/clientbound/PacketUnloadChunk.cpp protocol/packets/play/clientbound/PacketUnloadChunk.h protocol/packets/play/serverbound/PacketEntityAction.cpp protocol/packets/play/serverbound/PacketEntityAction.h protocol/packets/play/serverbound/PacketPlayerAbilitiesSB.cpp protocol/packets/play/serverbound/PacketPlayerAbilitiesSB.h world/chunks/ChunkPalette.cpp world/chunks/ChunkPalette.h world/blocks/BlockState.cpp world/blocks/BlockState.h protocol/packets/play/clientbound/PacketPlayerInfo.cpp protocol/packets/play/clientbound/PacketPlayerInfo.h protocol/packets/play/clientbound/PacketEntityMoveLook.cpp protocol/packets/play/clientbound/PacketEntityMoveLook.h protocol/packets/play/serverbound/PacketPlayerDigging.cpp protocol/packets/play/serverbound/PacketPlayerDigging.h network/PacketListener.h network/listeners/PlayerConnection.cpp network/listeners/PlayerConnection.h network/PacketListenerPlay.cpp network/PacketListenerPlay.h network/listeners/HandshakeListener.cpp network/listeners/HandshakeListener.h network/PacketListenerHandshake.cpp network/PacketListenerHandshake.h protocol/packets.h protocol/packets.cpp protocol.h network/PacketListenerLogin.cpp network/PacketListenerLogin.h network/listeners/LoginListener.cpp network/listeners/LoginListener.h network/PacketListenerStatus.cpp network/PacketListenerStatus.h network/listeners/StatusListener.cpp network/listeners/StatusListener.h protocol/packets/enum.h protocol/packets/play/serverbound/PacketChatMessageSB.cpp protocol/packets/play/serverbound/PacketChatMessageSB.h protocol/packets/play/clientbound/PacketChatMessageCB.cpp protocol/packets/play/clientbound/PacketChatMessageCB.h tracking/EntityTracker.cpp tracking/EntityTracker.h tracking/PlayerTracker.cpp tracking/PlayerTracker.h protocol/packets/play/clientbound/PacketEntityMove.cpp protocol/packets/play/clientbound/PacketEntityMove.h protocol/packets/play/clientbound/PacketEntityLook.cpp protocol/packets/play/clientbound/PacketEntityLook.h protocol/packets/play/clientbound/PacketDestroyEntities.cpp protocol/packets/play/clientbound/PacketDestroyEntities.h protocol/packets/play/clientbound/PacketSpawnPlayer.cpp protocol/packets/play/clientbound/PacketSpawnPlayer.h protocol/packets/play/clientbound/PacketEntityTeleport.cpp protocol/packets/play/clientbound/PacketEntityTeleport.h protocol/packets/play/clientbound/PacketRenderCenter.h protocol/packets/play/clientbound/PacketPlayerInfoRemove.h protocol/packets/login/PacketPluginRequest.h protocol/packets/login/PacketPluginResponse.h protocol/packets/play/clientbound/PacketEntityHeadRotation.h config/Config.h util/endian.h protocol/packets/play/serverbound/PacketSetCreativeSlot.h item/ItemStack.h inventory/PlayerInventory.h util/Registry.h protocol/packets/play/serverbound/PacketUseItemOn.h world/geo/Face.h)
 target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json uuid pthread nbt++ toml11 stud-uuid zlibstatic)
 if(WIN32)
+    target_sources(SpicyGoat PRIVATE resources/blocks.json resources/codec.dat resources/registries.json)
+    set_source_files_properties(resources/blocks.json resources/codec.dat resources/registries.json PROPERTIES LANGUAGE RC)
     target_link_libraries(SpicyGoat PUBLIC wsock32 ws2_32)
+else()
+    add_embedded_binary_resources(
+            SpicyGoat_resources
+            OUT_DIR resources_out
+            HEADER resources.h
+            NAMESPACE Resources
+            RESOURCE_NAMES blocks codec registries
+            RESOURCES
+            "${PROJECT_SOURCE_DIR}/resources/blocks.json"
+            "${PROJECT_SOURCE_DIR}/resources/codec.dat"
+            "${PROJECT_SOURCE_DIR}/resources/registries.json"
+    )
+    target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources)
 endif()
 add_compile_options(SpicyGoat -static-libstdc++)
-configure_file(blocks.json blocks.json COPYONLY)
-configure_file(codec.dat codec.dat COPYONLY)
-configure_file(registries.json registries.json COPYONLY)
