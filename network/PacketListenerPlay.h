@@ -24,6 +24,8 @@ public:
     virtual void onPlayerAbilities(const PacketPlayerAbilitiesSB& packet) = 0;
     virtual void onPlayerDigging(const PacketPlayerDigging& packet) = 0;
     virtual void onEntityAction(const PacketEntityAction& packet) = 0;
+    virtual void onSetCreativeSlot(const PacketSetCreativeSlot &packet) = 0;
+    virtual void onUseItemOn(const PacketUseItemOn &packet) = 0;
 };
 
 

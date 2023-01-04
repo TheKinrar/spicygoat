@@ -6,6 +6,7 @@
 #define SPICYGOAT_PACKETDATA_H
 
 #include "../world/geo/Position.h"
+#include "../item/ItemStack.h"
 #include <bitset>
 #include <stdexcept>
 #include <iostream>
@@ -31,6 +32,9 @@ public:
     uint8_t readUnsignedByte();
     static void writeUnsignedByte(uint8_t val, std::vector<std::byte> &bytes);
 
+    int16_t readShort() {
+        return readUnsignedShort();
+    }
     static void writeShort(int16_t val, std::vector<std::byte> &bytes);
 
     uint16_t readUnsignedShort();
@@ -64,6 +68,10 @@ public:
 
     int readVarInt();
     static void writeVarInt(int, std::vector<std::byte> &);
+
+    Face readFace() {
+        return static_cast<Face>(readVarInt());
+    }
 
     std::string readString();
     static void writeString(const std::string&, std::vector<std::byte> &);
@@ -103,7 +111,28 @@ public:
         writeByte(bitset.to_ulong() & 0xFF, bytes);
     }
 
-    const char* data;
+    ItemStack readItemStack() {
+        if(readBoolean()) {
+            int id = readVarInt();
+            int8_t count = readByte();
+            if(readByte()) {
+                pos--;
+
+                std::istringstream stream;
+                stream.rdbuf()->pubsetbuf(data + pos, remaining());
+                auto nbt = nbt::io::read_compound(stream).second;
+                pos += remaining();
+
+                return {id, count, std::move(nbt)};
+            } else {
+                return {id, count};
+            }
+        } else {
+            return {};
+        }
+    }
+
+    char* data;
     const int length;
     int pos;
 };

@@ -42,5 +42,11 @@ void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
         case Packets::S_ENTITY_ACTION:
             onEntityAction(static_cast<const PacketEntityAction&>(packet));
             break;
+        case Packets::S_SET_CREATIVE_SLOT:
+            onSetCreativeSlot(static_cast<const PacketSetCreativeSlot&>(packet));
+            break;
+        case Packets::S_USE_ITEM_ON:
+            onUseItemOn(static_cast<const PacketUseItemOn&>(packet));
+            break;
     }
 }

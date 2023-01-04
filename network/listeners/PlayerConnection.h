@@ -25,6 +25,8 @@ public:
     void onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) override;
     void onPlayerDigging(const PacketPlayerDigging& packet) override;
     void onEntityAction(const PacketEntityAction &packet) override;
+    void onSetCreativeSlot(const PacketSetCreativeSlot &packet) override;
+    void onUseItemOn(const PacketUseItemOn &packet) override;
 
 private:
     TCPConnection& connection;

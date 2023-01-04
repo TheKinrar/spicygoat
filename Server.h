@@ -7,6 +7,7 @@
 
 #include "entities/EntityPlayer.h"
 #include "world/World.h"
+#include "util/Registry.h"
 #include <vector>
 #include <string>
 #include <libstud/uuid.hxx>
@@ -36,12 +37,17 @@ public:
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
     [[nodiscard]] const std::vector<std::byte> &getCodec() const;
+    [[nodiscard]] const Registry &getItemRegistry() const { return itemRegistry; }
 
     void broadcastPacket(Packet*);
 
 private:
+    void loadRegistries();
+    static void loadRegistry(Registry& registry, nlohmann::json root);
+
     std::shared_ptr<ChunkPalette> palette;
     std::vector<std::byte> codec;
+    Registry itemRegistry = Registry("minecraft:item");
 
     std::forward_list<EntityPlayer*> players;
     int playerCount = 0;

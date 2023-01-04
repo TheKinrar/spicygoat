@@ -4,7 +4,7 @@
 
 #include "Position.h"
 
-Position::Position(int32_t x, int16_t y, int32_t z) : x(x), y(y), z(z) {}
+Position::Position(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 
 int32_t Position::getX() const {
     return x;

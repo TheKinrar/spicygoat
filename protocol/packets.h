@@ -43,7 +43,9 @@
 #include "packets/play/serverbound/PacketPlayerPosition.h"
 #include "packets/play/serverbound/PacketPlayerPositionLook.h"
 #include "packets/play/serverbound/PacketPluginMessageSB.h"
+#include "packets/play/serverbound/PacketSetCreativeSlot.h"
 #include "packets/play/serverbound/PacketTeleportConfirm.h"
+#include "packets/play/serverbound/PacketUseItemOn.h"
 
 namespace Packets {
     Packet* parse(PacketData* data, ProtocolState state);

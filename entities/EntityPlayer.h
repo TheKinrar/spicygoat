@@ -16,6 +16,7 @@ class TCPConnection;
 #include "../world/chunks/ChunkColumn.h"
 #include "../TCPConnection.h"
 #include "../world/geo/Position2D.h"
+#include "../inventory/PlayerInventory.h"
 
 class EntityPlayer : public Entity {
 public:
@@ -34,6 +35,8 @@ public:
     std::unique_ptr<ClientBoundPacket> removePacket() override;
 
     std::string toString() override;
+
+    PlayerInventory inventory;
 
 protected:
     void chunkChanged() override;

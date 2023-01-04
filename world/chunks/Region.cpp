@@ -54,7 +54,7 @@ ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
                 std::cerr << x << "." << z << std::endl;
             }
 
-            std::cout << "Chunk " << col.getPosition2D() << ";" << z << " loaded." << std::endl;
+//            std::cout << "Chunk " << col.getPosition2D() << ";" << z << " loaded." << std::endl;
         }
 
         return col;

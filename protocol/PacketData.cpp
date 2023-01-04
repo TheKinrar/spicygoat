@@ -197,7 +197,7 @@ Position PacketData::readPosition() {
     if(y >= 1 << 11) y -= 1 << 12;
     uint64_t z = val << 26 >> 38;
     if(z >= 1 << 25) z -= 1 << 26;
-    return {(int32_t) x, (int16_t) y, (int32_t) z};
+    return {(int32_t) x, (int32_t) y, (int32_t) z};
 }
 
 void PacketData::writePosition(Position position, std::vector<std::byte> &bytes) {

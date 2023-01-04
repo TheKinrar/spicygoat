@@ -68,3 +68,21 @@ void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
 
     Server::get()->broadcastPacket(new PacketChatMessageCB(player.getName() + ": " + packet.message));
 }
+
+void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
+    connection.getPlayer()->inventory.setSlot(packet.slot, packet.stack);
+}
+
+void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
+    if(Config::get().gamemode == 1) {
+        ItemStack stack = connection.getPlayer()->inventory.getSelected();
+        if(stack.present) {
+            auto key = Server::get()->getItemRegistry().entriesR.at(stack.id);
+            BlockState bs(key);
+            auto blockId = Server::get()->getPalette()->getBlockStateId(bs);
+            if(blockId != -1) {
+                Server::get()->getWorld().setBlockState(packet.position.relative(packet.face), bs);
+            }
+        }
+    }
+}

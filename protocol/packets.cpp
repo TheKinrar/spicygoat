@@ -58,6 +58,12 @@ Packet* Packets::parse(PacketData* data, ProtocolState state) {
                 return new PacketEntityAction(data);
             case 0x2F:
                 return nullptr; // TODO Animation
+            case S_CLOSE_WINDOW:
+                return nullptr;
+            case S_SET_CREATIVE_SLOT:
+                return new PacketSetCreativeSlot(data);
+            case S_USE_ITEM_ON:
+                return new PacketUseItemOn(data);
         }
     }
 

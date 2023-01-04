@@ -7,10 +7,12 @@
 
 #include <cstdint>
 #include <string>
+#include <stdexcept>
+#include "Face.h"
 
 class Position {
 public:
-    Position(int32_t x, int16_t y, int32_t z);
+    Position(int32_t x, int32_t y, int32_t z);
 
     [[nodiscard]]
     int32_t getX() const;
@@ -59,6 +61,31 @@ public:
     [[nodiscard]]
     int32_t getInChunkZ() const {
         return z < 0 ? (16 - (-z % 16)) % 16 : z % 16;
+    }
+
+    [[nodiscard]]
+    Position relative(Face face) const {
+        switch(face) {
+            case Face::Bottom:
+                return relative(0, -1, 0);
+            case Face::Top:
+                return relative(0, 1, 0);
+            case Face::North:
+                return relative(0, 0, -1);
+            case Face::South:
+                return relative(0, 0, 1);
+            case Face::West:
+                return relative(-1, 0, 0);
+            case Face::East:
+                return relative(1, 0, 0);
+        }
+
+        throw std::runtime_error("Bad enum value");
+    }
+
+    [[nodiscard]]
+    Position relative(int32_t x, int16_t y, int32_t z) const {
+        return {this->x + x, this->y + y, this->z + z};
     }
 
     [[nodiscard]]

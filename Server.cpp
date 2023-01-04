@@ -30,7 +30,31 @@ Server::Server() {
     codec.reserve(len);
     for(unsigned char& c : vec) codec.push_back(static_cast<std::byte>(c));
 
-    //std::cout << palette->toString(true) << std::endl; TODO
+    loadRegistries();
+}
+
+void Server::loadRegistries() {
+    std::ifstream ifs("registries.json");
+    nlohmann::json j;
+    ifs >> j;
+    ifs.close();
+
+    loadRegistry(itemRegistry, j);
+}
+
+void Server::loadRegistry(Registry& registry, nlohmann::json root) {
+    auto j = root[registry.id];
+
+    auto entries = j["entries"];
+    for(auto it = entries.begin(); it != entries.end(); ++it) {
+        registry.entries[it.key()] = it.value()["protocol_id"];
+        registry.entriesR[it.value()["protocol_id"]] = it.key();
+    }
+
+    auto defaultIt = j.find("default");
+    if(defaultIt != j.end()) {
+        registry.defaultEntry = defaultIt.value();
+    }
 }
 
 Server* Server::get() {
