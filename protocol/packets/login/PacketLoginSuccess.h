@@ -9,14 +9,14 @@
 
 class PacketLoginSuccess : public ClientBoundPacket {
 public:
-    PacketLoginSuccess(stud::uuid uuid, const std::string &username);
+    PacketLoginSuccess(uuids::uuid uuid, const std::string &username);
 
     std::vector<std::byte> bytes() const override;
 
     [[nodiscard]] std::string toString() const override;
 
 private:
-    stud::uuid uuid;
+    uuids::uuid uuid;
     std::string username;
 };
 

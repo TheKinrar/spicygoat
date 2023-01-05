@@ -4,7 +4,7 @@
 
 #include "PacketLoginSuccess.h"
 
-PacketLoginSuccess::PacketLoginSuccess(stud::uuid uuid, const std::string &username) {
+PacketLoginSuccess::PacketLoginSuccess(uuids::uuid uuid, const std::string &username) {
     this->uuid = uuid;
     this->username = username;
 }
@@ -19,5 +19,5 @@ std::vector<std::byte> PacketLoginSuccess::bytes() const {
 }
 
 std::string PacketLoginSuccess::toString() const {
-    return std::string("PacketLoginSuccess{uuid=") + uuid.string() + ",username=" + username + "}";
+    return std::string("PacketLoginSuccess{uuid=") + to_string(uuid) + ",username=" + username + "}";
 }

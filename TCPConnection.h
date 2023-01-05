@@ -58,7 +58,7 @@ public:
     void confirmKeepAlive(int64_t id);
 
     std::string username;
-    stud::uuid uuid;
+    uuids::uuid uuid;
 
     bool alive = true;
 

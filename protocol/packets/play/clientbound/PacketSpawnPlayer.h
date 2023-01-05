@@ -6,13 +6,13 @@
 #define SPICYGOAT_PACKETSPAWNPLAYER_H
 
 
-#include <libstud/uuid.hxx>
+#include <uuid.h>
 
 #include "../../ClientBoundPacket.h"
 
 class PacketSpawnPlayer : public ClientBoundPacket {
 public:
-    explicit PacketSpawnPlayer(const int32_t eid, stud::uuid uuid, const double x, const double y, const double z,
+    explicit PacketSpawnPlayer(const int32_t eid, uuids::uuid uuid, const double x, const double y, const double z,
                       const float yaw, const float pitch);
 
     std::vector<std::byte> bytes() const override;
@@ -20,7 +20,7 @@ public:
     std::string toString() const override;
 
     const int32_t eid;
-    const stud::uuid uuid;
+    const uuids::uuid uuid;
     const double x, y, z;
     const float yaw, pitch;
 };

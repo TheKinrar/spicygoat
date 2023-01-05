@@ -61,7 +61,7 @@ void Server::run() {
     tcpThread.join();
 }
 
-std::shared_ptr<EntityPlayer> Server::createPlayer(stud::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn) {
+std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn) {
     auto player = std::make_shared<EntityPlayer>(uuid, name, conn);
 
     std::vector<std::shared_ptr<EntityPlayer>> array;
@@ -83,7 +83,7 @@ void Server::removePlayer(EntityPlayer &p) {
     players.erase(p.getUuid());
     playerCount--;
 
-    std::forward_list<stud::uuid> array;
+    std::forward_list<uuids::uuid> array;
     array.emplace_front(p.getUuid());
     broadcastPacket(PacketPlayerInfoRemove(array));
 

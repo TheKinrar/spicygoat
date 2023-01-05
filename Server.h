@@ -10,7 +10,7 @@
 #include "util/Registry.h"
 #include <vector>
 #include <string>
-#include <libstud/uuid.hxx>
+#include <uuid.h>
 
 class Server {
 public:
@@ -23,7 +23,7 @@ public:
 
     void run();
 
-    std::shared_ptr<EntityPlayer> createPlayer(stud::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);
+    std::shared_ptr<EntityPlayer> createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);
     void removePlayer(EntityPlayer&);
     int32_t nextEID();
     static std::unique_ptr<EntityTracker> createTracker(Entity&);
@@ -61,7 +61,7 @@ private:
     std::shared_ptr<ChunkPalette> palette;
     Registry itemRegistry = Registry("minecraft:item");
 
-    std::map<stud::uuid, std::shared_ptr<EntityPlayer>> players;
+    std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;
 
     int32_t next_eid = 0;

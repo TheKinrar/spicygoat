@@ -17,7 +17,7 @@ std::string PacketLoginStart::toString() const {
     if(hasUuid) {
       return std::string("PacketLoginStart{name=") + name
              + ",hasUuid=" + std::to_string(hasUuid)
-             + ",uuid=" + uuid.string()
+             + ",uuid=" + to_string(uuid)
              + "}";
     } else {
       return std::string("PacketLoginStart{name=") + name +

@@ -16,7 +16,7 @@ public:
 
     std::string name;
     bool hasUuid;
-    stud::uuid uuid;
+    uuids::uuid uuid;
 };
 
 

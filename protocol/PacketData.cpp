@@ -140,17 +140,17 @@ void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) 
     }
 }
 
-stud::uuid PacketData::readUuid() {
-    stud::uuid::binary_type dst;
-    for(uint8_t& i : dst) {
+uuids::uuid PacketData::readUuid() {
+    std::array<uuids::uuid::value_type, 16> dst{};
+    for(uuids::uuid::value_type& i : dst) {
         i = readUnsignedByte();
     }
-    return stud::uuid(dst);
+    return {dst};
 }
 
-void PacketData::writeUuid(stud::uuid uuid, std::vector<std::byte> &bytes) {
-    for(uint8_t i : uuid.binary()) {
-        writeUnsignedByte(i, bytes);
+void PacketData::writeUuid(uuids::uuid uuid, std::vector<std::byte> &bytes) {
+    for(std::byte i : uuid.as_bytes()) {
+        writeUnsignedByte(static_cast<uint8_t>(i), bytes);
     }
 }
 

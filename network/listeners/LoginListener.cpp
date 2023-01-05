@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <libstud/uuid.hxx>
+#include <uuid.h>
 #include <iostream>
 #include <utility>
 
@@ -15,8 +15,15 @@
 LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}
 
 void LoginListener::onLoginStart(const PacketLoginStart &packet) {
+    std::random_device rd;
+    std::array<int, std::mt19937::state_size> seed_data{};
+    std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
+    std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
+    std::mt19937 generator(seq);
+    uuids::uuid_random_generator gen{generator};
+
     connection->username = packet.name;
-    connection->uuid = stud::uuid::generate(false); // TODO generate offline UUID like official server does
+    connection->uuid = gen(); // TODO generate offline UUID like official server does
 
     // Velocity
     std::vector<std::byte> request;

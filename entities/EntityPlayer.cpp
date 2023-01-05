@@ -12,7 +12,7 @@
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
 
-EntityPlayer::EntityPlayer(stud::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn) : conn(std::move(conn)) {
+EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn) : conn(std::move(conn)) {
     this->uuid = uuid;
     this->name = name;
 }
@@ -88,7 +88,7 @@ std::string EntityPlayer::toString() {
     return std::string("EntityPlayer{name=") + name + "}";
 }
 
-stud::uuid EntityPlayer::getUuid() const {
+uuids::uuid EntityPlayer::getUuid() const {
     return uuid;
 }
 

@@ -20,11 +20,11 @@ class TCPConnection;
 
 class EntityPlayer : public Entity {
 public:
-    EntityPlayer(stud::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn);
+    EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn);
 
     void tick() override;
 
-    stud::uuid getUuid() const;
+    uuids::uuid getUuid() const;
 
     const std::string &getName() const;
 
@@ -42,7 +42,7 @@ protected:
     void chunkChanged() override;
 
 private:
-    stud::uuid uuid;
+    uuids::uuid uuid;
     std::string name;
 
     std::shared_ptr<TCPConnection> conn;

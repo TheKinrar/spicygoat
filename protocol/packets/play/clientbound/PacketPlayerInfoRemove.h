@@ -11,7 +11,7 @@
 
 class PacketPlayerInfoRemove : public ClientBoundPacket {
 public:
-    explicit PacketPlayerInfoRemove(const std::forward_list<stud::uuid> &uuids) : uuids(uuids) {}
+    explicit PacketPlayerInfoRemove(const std::forward_list<uuids::uuid> &uuids) : uuids(uuids) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
@@ -33,7 +33,7 @@ public:
                + ",...}";
     }
 
-    const std::forward_list<stud::uuid> uuids;
+    const std::forward_list<uuids::uuid> uuids;
 };
 
 

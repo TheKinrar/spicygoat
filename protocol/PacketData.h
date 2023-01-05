@@ -15,7 +15,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
-#include <libstud/uuid.hxx>
+#include <uuid.h>
 #include <span>
 
 class PacketData {
@@ -52,8 +52,8 @@ public:
     uint64_t readUnsignedLong();
     static void writeUnsignedLong(uint64_t, std::vector<std::byte> &);
 
-    stud::uuid readUuid();
-    static void writeUuid(stud::uuid, std::vector<std::byte> &);
+    uuids::uuid readUuid();
+    static void writeUuid(uuids::uuid, std::vector<std::byte> &);
 
     float readFloat();
     static void writeFloat(float, std::vector<std::byte> &);
