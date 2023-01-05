@@ -20,6 +20,7 @@
 #include "packets/login/PacketLoginSuccess.h"
 #include "packets/login/PacketPluginResponse.h"
 
+#include "packets/play/clientbound/PacketBlockUpdate.h"
 #include "packets/play/clientbound/PacketChunkData.h"
 #include "packets/play/clientbound/PacketEntityMoveLook.h"
 #include "packets/play/clientbound/PacketJoinGame.h"

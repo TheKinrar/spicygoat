@@ -55,6 +55,9 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
         if(Config::get().gamemode == 1) {
             Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+
+            Server::get().broadcastPacket(PacketBlockUpdate(packet.position,
+                                                            Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
         }
     }
 }
@@ -82,6 +85,9 @@ void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
             auto blockId = Server::get().getPalette()->getBlockStateId(bs);
             if(blockId != -1) {
                 Server::get().getWorld().setBlockState(packet.position.relative(packet.face), bs);
+
+                Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
+                        Server::get().getPalette()->getBlockStateId(bs)));
             }
         }
     }
