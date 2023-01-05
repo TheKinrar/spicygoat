@@ -10,7 +10,7 @@
 
 class PacketEntityAction : public ServerBoundPacket {
 public:
-    explicit PacketEntityAction(PacketData* data);
+    explicit PacketEntityAction(PacketData& data);
 
     std::string toString() const override;
 

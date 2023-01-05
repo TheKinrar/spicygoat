@@ -13,7 +13,7 @@ class PacketSpawnPosition : public ClientBoundPacket {
 public:
     explicit PacketSpawnPosition(Position position);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

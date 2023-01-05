@@ -12,7 +12,7 @@
 
 class PacketResponse : public ClientBoundPacket {
 public:
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 };

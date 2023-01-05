@@ -10,12 +10,12 @@
 
 class HandshakeListener : public PacketListenerHandshake {
 public:
-    explicit HandshakeListener(TCPConnection &connection);
+    explicit HandshakeListener(std::shared_ptr<TCPConnection> connection);
 
     void onHandshake(const PacketHandshake &packet) override;
 
 private:
-    TCPConnection& connection;
+    std::shared_ptr<TCPConnection> connection;
 };
 
 

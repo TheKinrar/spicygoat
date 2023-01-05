@@ -5,9 +5,9 @@
 #include "PacketPlayerInfo.h"
 #include <iostream>
 
-PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::forward_list<EntityPlayer*> &players) : ClientBoundPacket(0x32), action(action), players(players) {}
+PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::vector<std::shared_ptr<EntityPlayer>> &players) : ClientBoundPacket(0x32), action(action), players(players) {}
 
-std::vector<std::byte> PacketPlayerInfo::bytes() {
+std::vector<std::byte> PacketPlayerInfo::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x36, array);
 
@@ -21,7 +21,7 @@ std::vector<std::byte> PacketPlayerInfo::bytes() {
     PacketData::writeFixedBitSet(actionsMask, array);
     PacketData::writeVarInt(std::distance(players.begin(), players.end()), array);
 
-    for(auto player : players) {
+    for(auto& player : players) {
         PacketData::writeUuid(player->getUuid(), array);
 
         switch(action) {

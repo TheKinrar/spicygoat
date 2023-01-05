@@ -12,7 +12,7 @@ public:
     explicit PacketRenderCenter(int x, int z) : x(x), z(z) {}
 
     [[nodiscard]]
-    std::vector<std::byte> bytes() override {
+    std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x4A, array);
         PacketData::writeVarInt(x, array);

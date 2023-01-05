@@ -35,7 +35,7 @@ public:
     bool isRunning() const;
     void stop();
 
-    void removeConnection(TCPConnection*);
+    void removeConnection(const TCPConnection&);
 
 private:
     bool running = true;
@@ -43,7 +43,9 @@ private:
     unsigned long long sock;
     pollfd fds[10];
 
-    std::forward_list<TCPConnection*> connections;
+    std::forward_list<std::shared_ptr<TCPConnection>> connections;
+
+    std::unique_ptr<std::thread> keepAliveThread;
 };
 
 

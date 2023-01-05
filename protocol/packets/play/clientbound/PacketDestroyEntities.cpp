@@ -6,7 +6,7 @@
 
 PacketDestroyEntities::PacketDestroyEntities(int32_t eid) : ClientBoundPacket(0x36), eid(eid) {}
 
-std::vector<std::byte> PacketDestroyEntities::bytes() {
+std::vector<std::byte> PacketDestroyEntities::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x3A, array);
     PacketData::writeVarInt(1, array);

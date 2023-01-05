@@ -4,8 +4,8 @@
 
 #include "PacketKeepAliveSB.h"
 
-PacketKeepAliveSB::PacketKeepAliveSB(PacketData *data) : ServerBoundPacket(Packets::S_KEEP_ALIVE) {
-    this->id = data->readLong();
+PacketKeepAliveSB::PacketKeepAliveSB(PacketData& data) : ServerBoundPacket(Packets::S_KEEP_ALIVE) {
+    this->id = data.readLong();
 }
 
 std::string PacketKeepAliveSB::toString() const {

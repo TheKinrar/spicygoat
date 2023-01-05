@@ -4,8 +4,8 @@
 
 #include "PacketClientStatus.h"
 
-PacketClientStatus::PacketClientStatus(PacketData *data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
-    this->action = data->readVarInt();
+PacketClientStatus::PacketClientStatus(PacketData& data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
+    this->action = data.readVarInt();
 }
 
 std::string PacketClientStatus::toString() const {

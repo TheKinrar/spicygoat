@@ -13,7 +13,7 @@ public:
     PacketPlayerAbilities(bool invulnerable, bool flying, bool allowFlying, bool creative,
             float flyingSpeed, float fovModifier);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

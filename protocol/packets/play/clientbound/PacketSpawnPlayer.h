@@ -15,7 +15,7 @@ public:
     explicit PacketSpawnPlayer(const int32_t eid, stud::uuid uuid, const double x, const double y, const double z,
                       const float yaw, const float pitch);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

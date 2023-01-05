@@ -10,5 +10,5 @@ ChannelMessage::ChannelMessage(const char* channel) {
 }
 
 void ChannelMessage::send(std::vector<std::byte> data, TCPConnection &conn) {
-    conn.sendPacket(new PacketPluginMessageCB(channel, data));
+    conn.sendPacket(PacketPluginMessageCB(channel, data));
 }

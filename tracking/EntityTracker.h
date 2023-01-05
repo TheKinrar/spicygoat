@@ -13,10 +13,11 @@ class Entity;
 class EntityTracker {
 public:
     explicit EntityTracker(Entity &self);
+    virtual ~EntityTracker() = default;
 
     virtual void tick() = 0;
 
-    virtual void broadcast(ClientBoundPacket& packet) = 0;
+    virtual void broadcast(const ClientBoundPacket& packet) = 0;
 
 protected:
     Entity& self;

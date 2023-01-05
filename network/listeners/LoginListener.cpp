@@ -4,6 +4,7 @@
 
 #include <libstud/uuid.hxx>
 #include <iostream>
+#include <utility>
 
 #include "LoginListener.h"
 #include "../../Server.h"
@@ -11,16 +12,16 @@
 #include "PlayerConnection.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
 
-LoginListener::LoginListener(TCPConnection &connection) : connection(connection) {}
+LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}
 
 void LoginListener::onLoginStart(const PacketLoginStart &packet) {
-    connection.username = packet.name;
-    connection.uuid = stud::uuid::generate(false); // TODO generate offline UUID like official server does
+    connection->username = packet.name;
+    connection->uuid = stud::uuid::generate(false); // TODO generate offline UUID like official server does
 
     // Velocity
     std::vector<std::byte> request;
     PacketData::writeByte(4, request); // Velocity protocol version (MODERN_LAZY_SESSION)
-    connection.sendPacket(new PacketPluginRequest(42, "velocity:player_info", request));
+    connection->sendPacket(PacketPluginRequest(42, "velocity:player_info", request));
 }
 
 void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
@@ -28,9 +29,9 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         throw std::runtime_error("Unexpected plugin response");
 
     if(response.successful) {
-        std::cout << connection.getName() << " is a proxy" << std::endl;
+        std::cout << connection->getName() << " is a proxy" << std::endl;
 
-        PacketData data(reinterpret_cast<char *>(const_cast<std::byte *>(response.data.data())), response.data.size()); // TODO oskour
+        PacketData data = response.data;
 
         std::vector<std::byte> signature;
         data.readByteArray(signature, 32);
@@ -41,13 +42,13 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
             throw std::runtime_error("Unsupported Velocity protocol version");
 
         std::string address = data.readString();
-        std::cout << connection.getName() << " proxies " << address << std::endl;
+        std::cout << connection->getName() << " proxies " << address << std::endl;
 
-        connection.uuid = data.readUuid();
+        connection->uuid = data.readUuid();
         std::string proxiedUsername = data.readString();
 
-        std::cout << connection.username << " vs " << proxiedUsername << std::endl;
-        connection.username = proxiedUsername;
+        std::cout << connection->username << " vs " << proxiedUsername << std::endl;
+        connection->username = proxiedUsername;
 
         // Properties!
         int propertyCount = data.readVarInt();
@@ -63,20 +64,20 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         std::cout << "remaining: " << data.remaining() << std::endl;
     }
 
-    connection.sendPacket(new PacketLoginSuccess(connection.uuid, connection.username));
-    connection.setState(ProtocolState::PLAY);
+    connection->sendPacket(PacketLoginSuccess(connection->uuid, connection->username));
+    connection->setState(ProtocolState::PLAY);
 
-    EntityPlayer *player = Server::get()->createPlayer(connection.uuid, connection.username, connection);
-    connection.setPlayer(player);
+    auto player = Server::get().createPlayer(connection->uuid, connection->username, connection);
+    connection->setPlayer(player);
 
-    auto pos = Server::get()->getWorld().getSpawnPosition();
-    connection.sendPacket(new PacketJoinGame(player));
-    CMBrand(std::string("SpicyGoat")).send(connection);
-    connection.sendPacket(new PacketServerDifficulty(0)); // TODO difficulty
-    connection.sendPacket(new PacketSpawnPosition(pos));
-    connection.sendPacket(new PacketPlayerAbilities(false, false, true, false, 0.05, 0.1)); // TODO player abilities
-    connection.sendPacket(new PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0))); // TODO player location
-    connection.getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
+    auto pos = Server::get().getWorld().getSpawnPosition();
+    connection->sendPacket(PacketJoinGame(player));
+    CMBrand(std::string("SpicyGoat")).send(*connection);
+    connection->sendPacket(PacketServerDifficulty(0)); // TODO difficulty
+    connection->sendPacket(PacketSpawnPosition(pos));
+    connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1)); // TODO player abilities
+    connection->sendPacket(PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0))); // TODO player location
+    connection->getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
 
-    connection.setListener(std::make_unique<PlayerConnection>(connection, *player));
+    connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
 }

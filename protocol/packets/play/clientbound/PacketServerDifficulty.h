@@ -11,7 +11,7 @@ class PacketServerDifficulty : public ClientBoundPacket {
 public:
     explicit PacketServerDifficulty(uint8_t difficulty);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

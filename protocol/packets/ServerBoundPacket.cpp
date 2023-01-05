@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include "ServerBoundPacket.h"
 
-std::vector<std::byte> ServerBoundPacket::bytes() {
+std::vector<std::byte> ServerBoundPacket::bytes() const {
     throw std::runtime_error("Called bytes() on server-bound packet");
 }
 

@@ -20,7 +20,7 @@ class TCPConnection;
 
 class EntityPlayer : public Entity {
 public:
-    EntityPlayer(stud::uuid uuid, std::string& name, TCPConnection &conn);
+    EntityPlayer(stud::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn);
 
     void tick() override;
 
@@ -45,12 +45,12 @@ private:
     stud::uuid uuid;
     std::string name;
 
-    TCPConnection &conn;
+    std::shared_ptr<TCPConnection> conn;
 
     std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadedChunks;
     std::queue<std::reference_wrapper<ChunkColumn>> chunkSendQueue;
 
-    std::set<Entity*> nearbyEntities;
+    std::set<std::shared_ptr<Entity>> nearbyEntities;
 };
 
 

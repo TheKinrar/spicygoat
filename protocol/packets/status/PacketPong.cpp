@@ -8,7 +8,7 @@ PacketPong::PacketPong(int64_t payload) {
     this->payload = payload;
 }
 
-std::vector<std::byte> PacketPong::bytes() {
+std::vector<std::byte> PacketPong::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x01, array);
     PacketData::writeLong(payload, array);

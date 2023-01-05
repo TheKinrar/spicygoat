@@ -4,8 +4,8 @@
 
 #include "PacketTeleportConfirm.h"
 
-PacketTeleportConfirm::PacketTeleportConfirm(PacketData *data) : ServerBoundPacket(Packets::S_TELEPORT_CONFIRM) {
-    this->tpId = data->readVarInt();
+PacketTeleportConfirm::PacketTeleportConfirm(PacketData& data) : ServerBoundPacket(Packets::S_TELEPORT_CONFIRM) {
+    this->tpId = data.readVarInt();
 }
 
 std::string PacketTeleportConfirm::toString() const {

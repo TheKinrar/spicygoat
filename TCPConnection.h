@@ -7,6 +7,7 @@
 
 #include <thread>
 #include <mutex>
+#include <utility>
 
 #ifdef __linux__
 #include <netinet/in.h>
@@ -35,11 +36,15 @@ public:
 
     std::string getName();
 
-    void sendPacket(Packet* packet);
+    void sendPacket(const Packet& packet);
     void disconnect();
 
-    EntityPlayer* getPlayer();
-    void setPlayer(EntityPlayer* newPlayer);
+    std::shared_ptr<EntityPlayer> getPlayer() {
+        return player;
+    }
+    void setPlayer(std::shared_ptr<EntityPlayer> newPlayer) {
+        this->player = std::move(newPlayer);
+    }
 
     const PacketListener& getListener() const;
     void setListener(std::unique_ptr<PacketListener> newListener);
@@ -56,7 +61,7 @@ private:
     int sock;
     sockaddr_in addr;
 
-    std::thread *thread;
+    std::unique_ptr<std::thread> thread;
 
     std::mutex m_send;
 
@@ -67,7 +72,7 @@ private:
     ProtocolState state = ProtocolState::HANDSHAKE;
     std::unique_ptr<PacketListener> listener;
 
-    EntityPlayer *player = nullptr;
+    std::shared_ptr<EntityPlayer> player;
 
     int readVarInt();
 };

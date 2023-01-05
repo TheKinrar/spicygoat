@@ -12,7 +12,7 @@ class PacketPong : public ClientBoundPacket {
 public:
     explicit PacketPong(int64_t payload);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

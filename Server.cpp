@@ -40,8 +40,8 @@ void Server::loadRegistry(Registry& registry, nlohmann::json root) {
     }
 }
 
-Server* Server::get() {
-    static auto instance = new Server();
+Server& Server::get() {
+    static Server instance;
     return instance;
 }
 
@@ -61,47 +61,34 @@ void Server::run() {
     tcpThread.join();
 }
 
-EntityPlayer* Server::createPlayer(stud::uuid uuid, std::string name, TCPConnection &conn) {
-    auto player = new EntityPlayer(uuid, name, conn);
+std::shared_ptr<EntityPlayer> Server::createPlayer(stud::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn) {
+    auto player = std::make_shared<EntityPlayer>(uuid, name, conn);
 
-    std::forward_list<EntityPlayer*> array;
-    array.push_front(player);
-    auto packetForAll = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array);
-    broadcastPacket(packetForAll);
-    delete(packetForAll);
+    std::vector<std::shared_ptr<EntityPlayer>> array;
+    array.push_back(player);
+    broadcastPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array));
 
-    entities.push_front(player);
-    players.push_front(player);
+    players[uuid] = player;
+    entities[player->getEID()] = player;
     playerCount++;
 
-    auto packetForOne = new PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players);
-    conn.sendPacket(packetForOne);
-    delete(packetForOne);
+    auto players = getPlayers();
+    conn->sendPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players));
 
     return player;
 }
 
 void Server::removePlayer(EntityPlayer &p) {
-    entities.remove(&p);
-    players.remove(&p);
+    entities.erase(p.getEID());
+    players.erase(p.getUuid());
     playerCount--;
 
     std::forward_list<stud::uuid> array;
     array.emplace_front(p.getUuid());
-    auto packetForAll = new PacketPlayerInfoRemove(array);
-    broadcastPacket(packetForAll);
-    delete(packetForAll);
+    broadcastPacket(PacketPlayerInfoRemove(array));
 
     // TODO this should be handled by the EntityTracker
-    broadcastPacket(new PacketDestroyEntities(p.getEID()));
-}
-
-const std::forward_list<Entity *> &Server::getEntities() const {
-    return entities;
-}
-
-const std::forward_list<EntityPlayer *> &Server::getPlayers() const {
-    return players;
+    broadcastPacket(PacketDestroyEntities(p.getEID()));
 }
 
 int32_t Server::nextEID() {
@@ -109,7 +96,7 @@ int32_t Server::nextEID() {
 }
 
 void Server::tick() {
-    for(auto p : players) {
+    for(auto &p : getPlayers()) {
         p->tick();
     }
 }
@@ -122,9 +109,9 @@ std::shared_ptr<ChunkPalette> Server::getPalette() const {
     return palette;
 }
 
-void Server::broadcastPacket(Packet *packet) {
-    for(auto &player : players) {
-        player->getConnection().sendPacket(packet);
+void Server::broadcastPacket(const Packet& packet) {
+    for(auto& player : players) {
+        player.second->getConnection().sendPacket(packet);
     }
 }
 

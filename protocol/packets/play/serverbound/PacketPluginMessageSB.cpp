@@ -4,9 +4,9 @@
 
 #include "PacketPluginMessageSB.h"
 
-PacketPluginMessageSB::PacketPluginMessageSB(PacketData *data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
-    this->channel = data->readString();
-    data->readByteArray(this->data, data->remaining());
+PacketPluginMessageSB::PacketPluginMessageSB(PacketData& data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
+    this->channel = data.readString();
+    data.readByteArray(this->data, data.remaining());
 }
 
 std::string PacketPluginMessageSB::toString() const {

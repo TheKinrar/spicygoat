@@ -11,11 +11,15 @@
 class Packet {
 public:
     explicit Packet(int id);
+    virtual ~Packet() = default;
 
+    [[nodiscard]]
     int getId() const;
 
-    virtual std::vector<std::byte> bytes() = 0;
+    [[nodiscard]]
+    virtual std::vector<std::byte> bytes() const = 0;
 
+    [[nodiscard]]
     virtual std::string toString() const = 0;
 
 private:

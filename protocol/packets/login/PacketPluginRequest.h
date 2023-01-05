@@ -17,7 +17,7 @@ public:
                                                                                                         data(data) {}
 
     [[nodiscard]]
-    std::vector<std::byte> bytes() override {
+    std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x04, array);
         PacketData::writeVarInt(id, array);

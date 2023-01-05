@@ -15,14 +15,14 @@ class Region {
 public:
     static std::unique_ptr<Region> load(int32_t x, int32_t z);
 
-    Region(int32_t x, int32_t z, char* data) : x(x), z(z), data(data) {}
+    Region(int32_t x, int32_t z, std::shared_ptr<char[]> data) : x(x), z(z), data(std::move(data)) {}
 
     ChunkColumn& getColumn(int32_t x, int32_t z);
 
 private:
     const int32_t x, z;
 
-    char *data;
+    std::shared_ptr<char[]> data;
 
     std::unordered_map<Position2D, std::unique_ptr<ChunkColumn>> columns;
 };

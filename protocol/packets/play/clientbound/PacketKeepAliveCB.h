@@ -12,7 +12,7 @@ class PacketKeepAliveCB : public ClientBoundPacket {
 public:
     explicit PacketKeepAliveCB(int64_t id);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

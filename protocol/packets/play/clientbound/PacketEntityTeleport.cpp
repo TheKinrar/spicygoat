@@ -6,7 +6,7 @@
 
 PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround) : ClientBoundPacket(0x56), eid(eid), loc(loc), onGround(onGround) {}
 
-std::vector<std::byte> PacketEntityTeleport::bytes() {
+std::vector<std::byte> PacketEntityTeleport::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x64, array);
     PacketData::writeVarInt(eid, array);

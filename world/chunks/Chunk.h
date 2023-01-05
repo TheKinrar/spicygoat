@@ -23,6 +23,7 @@ private:
 
 public:
     Chunk(int32_t x, int32_t y, int32_t z);
+    Chunk(const Chunk&) = delete;
 
     int32_t getX() const;
 

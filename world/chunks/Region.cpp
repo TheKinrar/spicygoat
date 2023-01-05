@@ -15,11 +15,11 @@ std::unique_ptr<Region> Region::load(int32_t x, int32_t z) {
     std::fpos len = ifs.tellg();
     ifs.seekg(0, std::ios::beg);
 
-    char *bytes = new char[len];
-    ifs.read(bytes, len);
+    auto bytes = std::make_shared<char[]>(len);
+    ifs.read(bytes.get(), len);
     ifs.close();
 
-    return std::make_unique<Region>(x, z, bytes);
+    return std::make_unique<Region>(x, z, std::move(bytes));
 }
 
 ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
@@ -29,13 +29,15 @@ ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
         columns[Position2D(x, z)] = std::make_unique<ChunkColumn>((this->x * 32) + x, (this->z * 32) + z);
         auto& col = *columns[Position2D(x, z)];
 
-        PacketData header(data + ((z % 32) * 32 + (x % 32)) * 4);
+        PacketData header(data);
+        header.pos = ((z % 32) * 32 + (x % 32)) * 4;
         uint32_t offset = ((header.readUnsignedByte() & 0x0F) << 16) | ((header.readUnsignedByte() & 0xFF) << 8) | (header.readUnsignedByte() & 0xFF);
         uint8_t size = header.readUnsignedByte();
         if(offset) {
             offset *= 4096;
 
-            PacketData chunkData(data + offset, size);
+            PacketData chunkData(data, size);
+            chunkData.pos = offset;
             uint32_t chunkSize = chunkData.readUnsignedInt();
             uint8_t chunkCompression = chunkData.readUnsignedByte();
 
@@ -43,7 +45,7 @@ ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
                 throw std::runtime_error("Unsupported chunk compression type");
 
             std::istringstream stream;
-            stream.rdbuf()->pubsetbuf(data + offset + 5, chunkSize - 1);
+            stream.rdbuf()->pubsetbuf(data.get() + offset + 5, chunkSize - 1);
             zlib::izlibstream zs(stream);
 
             try {

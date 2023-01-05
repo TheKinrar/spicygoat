@@ -6,7 +6,7 @@
 
 PacketPlayerLocationCB::PacketPlayerLocationCB(Location location) : location(location) {}
 
-std::vector<std::byte> PacketPlayerLocationCB::bytes() {
+std::vector<std::byte> PacketPlayerLocationCB::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x38, array);
     PacketData::writeDouble(location.getX(), array);

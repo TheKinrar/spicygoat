@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "EntityPlayer.h"
 #include "../Server.h"
 #include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
@@ -11,7 +12,7 @@
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
 
-EntityPlayer::EntityPlayer(stud::uuid uuid, std::string& name, TCPConnection &conn) : conn(conn) {
+EntityPlayer::EntityPlayer(stud::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn) : conn(std::move(conn)) {
     this->uuid = uuid;
     this->name = name;
 }
@@ -27,7 +28,7 @@ void EntityPlayer::tick() {
         auto& chunk = chunkSendQueue.front().get();
 
         if(chunk.hasData()) {
-            conn.sendPacket(new PacketChunkData(chunk));
+            conn->sendPacket(PacketChunkData(chunk));
         } else {
             std::cerr << "no data for column " << chunk.toString() << std::endl;
         }
@@ -43,7 +44,7 @@ void EntityPlayer::tick() {
 void EntityPlayer::chunkChanged() {
     Entity::chunkChanged();
 
-    conn.sendPacket(new PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
+    conn->sendPacket(PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
     int32_t min_x = getLocation().getChunkX() - Server::VIEW_DISTANCE;
     int32_t max_x = getLocation().getChunkX() + Server::VIEW_DISTANCE;
@@ -54,7 +55,7 @@ void EntityPlayer::chunkChanged() {
         auto& chunk = it.second.get();
 
         if(chunk.getX() < min_x || chunk.getX() > max_x || chunk.getZ() < min_z || chunk.getZ() > max_z) {
-            conn.sendPacket(new PacketUnloadChunk(chunk));
+            conn->sendPacket(PacketUnloadChunk(chunk));
             loadedChunks.erase(it.first);
         }
     }
@@ -64,7 +65,7 @@ void EntityPlayer::chunkChanged() {
             Position2D pos(x, z);
 
             if(loadedChunks.find(pos) == loadedChunks.end()) {
-                ChunkColumn& column = Server::get()->getWorld().getChunk(x, z);
+                ChunkColumn& column = Server::get().getWorld().getChunk(x, z);
                 chunkSendQueue.emplace(column);
                 loadedChunks.emplace(pos, column);
             }
@@ -72,8 +73,8 @@ void EntityPlayer::chunkChanged() {
     }
 
     nearbyEntities.clear();
-    for(auto* e : Server::get()->getEntities()) {
-        if(e != this) {
+    for(auto &e : Server::get().getEntities()) {
+        if(e.get() != this) {
             double d = e->getLocation().distanceSquared(getLocation());
 
             if(d <= Server::ENTITY_VIEW_DISTANCE_SQ) {
@@ -96,7 +97,7 @@ const std::string &EntityPlayer::getName() const {
 }
 
 TCPConnection &EntityPlayer::getConnection() const {
-    return conn;
+    return *conn;
 }
 
 std::unique_ptr<ClientBoundPacket> EntityPlayer::createPacket() {

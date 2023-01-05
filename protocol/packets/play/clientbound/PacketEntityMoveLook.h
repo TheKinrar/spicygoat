@@ -13,7 +13,7 @@ class PacketEntityMoveLook : public ClientBoundPacket {
 public:
     PacketEntityMoveLook(int32_t eid, double dx, double dy, double dz, float yaw, float pitch, bool onGround);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

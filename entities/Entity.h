@@ -18,6 +18,7 @@ class EntityTracker;
 class Entity {
 public:
     explicit Entity();
+    virtual ~Entity() = default;
 
     int32_t getEID();
 
@@ -36,6 +37,14 @@ public:
     virtual void tick();
 
     virtual std::string toString();
+
+    bool operator==(const Entity &rhs) const {
+        return eid == rhs.eid;
+    }
+
+    bool operator!=(const Entity &rhs) const {
+        return !(rhs == *this);
+    }
 
 protected:
     virtual void chunkChanged();

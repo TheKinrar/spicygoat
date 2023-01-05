@@ -8,7 +8,7 @@
 
 PacketChatMessageCB::PacketChatMessageCB(const std::string &message) : message(message) {}
 
-std::vector<std::byte> PacketChatMessageCB::bytes() {
+std::vector<std::byte> PacketChatMessageCB::bytes() const {
     nlohmann::json j;
     j["text"] = message;
 

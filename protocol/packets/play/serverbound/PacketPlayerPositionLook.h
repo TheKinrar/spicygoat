@@ -10,7 +10,7 @@
 
 class PacketPlayerPositionLook : public ServerBoundPacket {
 public:
-    explicit PacketPlayerPositionLook(PacketData* data);
+    explicit PacketPlayerPositionLook(PacketData& data);
 
     std::string toString() const override;
 

@@ -11,7 +11,7 @@
 #include "../protocol/packets/play/clientbound/PacketEntityHeadRotation.h"
 
 Entity::Entity() {
-    eid = Server::get()->nextEID();
+    eid = Server::get().nextEID();
     tracker = Server::createTracker(*this);
 }
 

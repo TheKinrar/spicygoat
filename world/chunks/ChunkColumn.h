@@ -14,6 +14,7 @@
 class ChunkColumn {
 public:
     ChunkColumn(int32_t x, int32_t z);
+    ChunkColumn(const ChunkColumn&) = delete;
 
     Position2D getPosition2D();
 
@@ -21,7 +22,7 @@ public:
 
     int32_t getZ() const;
 
-    Chunk* getChunk(int32_t y);
+    Chunk& getChunk(int32_t y);
 
     bool hasData();
 
@@ -34,7 +35,7 @@ public:
 
 private:
     int32_t x, z;
-    Chunk* chunks[24];
+    std::unique_ptr<Chunk> chunks[24];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
 };

@@ -14,7 +14,7 @@ class ServerBoundPacket : public Packet {
 public:
     explicit ServerBoundPacket(int id);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 };
 
 

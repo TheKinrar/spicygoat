@@ -13,7 +13,7 @@ class PacketEntityMove : public ClientBoundPacket {
 public:
     PacketEntityMove(int32_t eid, double dx, double dy, double dz, bool onGround);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

@@ -6,11 +6,11 @@
 #include "PacketHandshake.h"
 #include "../../../Server.h"
 
-PacketHandshake::PacketHandshake(PacketData *data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
-    protocolVersion = data->readVarInt();
-    serverAddress = data->readString();
-    serverPort = data->readUnsignedShort();
-    nextState = static_cast<ProtocolState>(data->readVarInt());
+PacketHandshake::PacketHandshake(PacketData& data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
+    protocolVersion = data.readVarInt();
+    serverAddress = data.readString();
+    serverPort = data.readUnsignedShort();
+    nextState = static_cast<ProtocolState>(data.readVarInt());
 }
 
 int PacketHandshake::getProtocolVersion() const {

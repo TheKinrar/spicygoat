@@ -4,10 +4,10 @@
 
 #include "PacketPlayerLook.h"
 
-PacketPlayerLook::PacketPlayerLook(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
-    yaw = data->readFloat();
-    pitch = data->readFloat();
-    onGround = data->readBoolean();
+PacketPlayerLook::PacketPlayerLook(PacketData& data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
+    yaw = data.readFloat();
+    pitch = data.readFloat();
+    onGround = data.readBoolean();
 }
 
 std::string PacketPlayerLook::toString() const {

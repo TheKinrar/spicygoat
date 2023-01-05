@@ -5,11 +5,11 @@
 #include "PacketLoginStart.h"
 #include "../../packets.h"
 
-PacketLoginStart::PacketLoginStart(PacketData *data) : ServerBoundPacket(Packets::S_LOGIN_START) {
-    this->name = data->readString();
-    this->hasUuid = data->readBoolean();
+PacketLoginStart::PacketLoginStart(PacketData& data) : ServerBoundPacket(Packets::S_LOGIN_START) {
+    this->name = data.readString();
+    this->hasUuid = data.readBoolean();
     if(hasUuid) {
-        this->uuid = data->readUuid();
+        this->uuid = data.readUuid();
     }
 }
 

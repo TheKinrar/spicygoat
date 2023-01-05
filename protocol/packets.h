@@ -48,7 +48,7 @@
 #include "packets/play/serverbound/PacketUseItemOn.h"
 
 namespace Packets {
-    Packet* parse(PacketData* data, ProtocolState state);
+    std::unique_ptr<Packet> parse(PacketData& data, ProtocolState state);
 }
 
 #endif //SPICYGOAT_PACKETS_H

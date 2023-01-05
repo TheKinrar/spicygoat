@@ -4,8 +4,8 @@
 
 #include "PacketPlayerAbilitiesSB.h"
 
-PacketPlayerAbilitiesSB::PacketPlayerAbilitiesSB(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_ABILITIES) {
-    flying = data->readUnsignedByte() & 0x02u;
+PacketPlayerAbilitiesSB::PacketPlayerAbilitiesSB(PacketData& data) : ServerBoundPacket(Packets::S_PLAYER_ABILITIES) {
+    flying = data.readUnsignedByte() & 0x02u;
 }
 
 std::string PacketPlayerAbilitiesSB::toString() const {

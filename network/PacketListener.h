@@ -10,6 +10,7 @@
 
 class PacketListener {
 public:
+    virtual ~PacketListener() = default;
     virtual void handle(const ServerBoundPacket&) = 0;
 };
 

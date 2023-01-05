@@ -9,8 +9,8 @@
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 
 void PlayerTracker::tick() {
-    for(auto player : Server::get()->getPlayers()) {
-        if(player == &self) continue;
+    for(auto& player : Server::get().getPlayers()) {
+        if(*player == self) continue;
 
         Location a = player->getLocation();
         Location b = self.getLocation();
@@ -23,19 +23,19 @@ void PlayerTracker::tick() {
         if(dx <= n && dx >= -n && dy <= n && dy >= -n && dz <= n && dz >= -n) {
             if(players.insert(player).second) {
                 std::cout << "+track " << player->getName() << std::endl;
-                player->getConnection().sendPacket(self.createPacket().get());
+                player->getConnection().sendPacket(*self.createPacket());
             }
         } else {
             if(players.erase(player)) {
                 std::cout << "-track " << player->getName() << std::endl;
-                player->getConnection().sendPacket(self.removePacket().get());
+                player->getConnection().sendPacket(*self.removePacket());
             }
         }
     }
 }
 
-void PlayerTracker::broadcast(ClientBoundPacket &packet) {
-    for(auto player : players) {
-        player->getConnection().sendPacket(&packet);
+void PlayerTracker::broadcast(const ClientBoundPacket &packet) {
+    for(auto &player : players) {
+        player->getConnection().sendPacket(packet);
     }
 }

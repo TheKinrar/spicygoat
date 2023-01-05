@@ -19,17 +19,31 @@ public:
     inline static const int ENTITY_VIEW_DISTANCE_SQ = ENTITY_VIEW_DISTANCE * ENTITY_VIEW_DISTANCE;
 
     Server();
-    static Server* get();
+    static Server& get();
 
     void run();
 
-    EntityPlayer* createPlayer(stud::uuid uuid, std::string name, TCPConnection &conn);
+    std::shared_ptr<EntityPlayer> createPlayer(stud::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);
     void removePlayer(EntityPlayer&);
-    [[nodiscard]] const std::forward_list<Entity*>& getEntities() const;
-    [[nodiscard]] const std::forward_list<EntityPlayer*>& getPlayers() const;
     int32_t nextEID();
     static std::unique_ptr<EntityTracker> createTracker(Entity&);
     unsigned long getPlayerCount() const;
+
+    [[nodiscard]]
+    std::vector<std::shared_ptr<Entity>> getEntities() const {
+        std::vector<std::shared_ptr<Entity>> vec;
+        for (auto &item: entities)
+            vec.push_back(item.second);
+        return vec;
+    }
+
+    [[nodiscard]]
+    std::vector<std::shared_ptr<EntityPlayer>> getPlayers() const {
+        std::vector<std::shared_ptr<EntityPlayer>> vec;
+        for (auto &item: players)
+            vec.push_back(item.second);
+        return vec;
+    }
 
     void tick();
 
@@ -38,7 +52,7 @@ public:
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
     [[nodiscard]] const Registry &getItemRegistry() const { return itemRegistry; }
 
-    void broadcastPacket(Packet*);
+    void broadcastPacket(const Packet&);
 
 private:
     void loadRegistries();
@@ -47,11 +61,11 @@ private:
     std::shared_ptr<ChunkPalette> palette;
     Registry itemRegistry = Registry("minecraft:item");
 
-    std::forward_list<EntityPlayer*> players;
+    std::map<stud::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;
 
     int32_t next_eid = 0;
-    std::forward_list<Entity*> entities;
+    std::map<int32_t, std::shared_ptr<Entity>> entities;
 
     World world;
 };

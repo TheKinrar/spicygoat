@@ -17,10 +17,10 @@ public:
 
     void tick() override;
 
-    void broadcast(ClientBoundPacket &packet) override;
+    void broadcast(const ClientBoundPacket &packet) override;
 
 private:
-    std::set<EntityPlayer*> players;
+    std::set<std::shared_ptr<EntityPlayer>> players;
 };
 
 

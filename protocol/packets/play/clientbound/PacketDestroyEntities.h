@@ -12,7 +12,7 @@ class PacketDestroyEntities : public ClientBoundPacket {
 public:
     explicit PacketDestroyEntities(int32_t eid);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

@@ -6,7 +6,7 @@
 
 PacketKeepAliveCB::PacketKeepAliveCB(int64_t id) : id(id) {}
 
-std::vector<std::byte> PacketKeepAliveCB::bytes() {
+std::vector<std::byte> PacketKeepAliveCB::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x1F, array);
     PacketData::writeLong(id, array);

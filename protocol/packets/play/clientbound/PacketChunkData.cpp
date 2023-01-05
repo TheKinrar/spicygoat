@@ -8,7 +8,7 @@
 
 PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
 
-std::vector<std::byte> PacketChunkData::bytes() {
+std::vector<std::byte> PacketChunkData::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x20, array);
     PacketData::writeInt(chunkColumn.getX(), array);

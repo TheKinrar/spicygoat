@@ -13,7 +13,7 @@ class PacketEntityTeleport : public ClientBoundPacket {
 public:
     PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

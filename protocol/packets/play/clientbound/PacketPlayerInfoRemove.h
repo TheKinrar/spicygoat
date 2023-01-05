@@ -14,7 +14,7 @@ public:
     explicit PacketPlayerInfoRemove(const std::forward_list<stud::uuid> &uuids) : uuids(uuids) {}
 
     [[nodiscard]]
-    std::vector<std::byte> bytes() override {
+    std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x35, array);
 

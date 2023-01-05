@@ -24,8 +24,13 @@ int32_t ChunkColumn::getZ() const {
     return z;
 }
 
-Chunk *ChunkColumn::getChunk(int32_t y) {
-    return chunks[y + 4];
+Chunk &ChunkColumn::getChunk(int32_t y) {
+    auto& ptr = chunks[y + 4];
+    if(ptr) return *ptr;
+    else {
+        ptr = std::make_unique<Chunk>(x, y, z);
+        return *ptr;
+    }
 }
 
 Position2D ChunkColumn::getPosition2D() {
@@ -48,9 +53,7 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
                 } else {
 //                    std::cerr << "Loading " << x << ";" << (int) y << ";" << z << std::endl;
 
-                    auto chunk = new Chunk(x, y, z);
-                    chunk->loadNBT(section);
-                    chunks[y + 4] = chunk;
+                    getChunk(y).loadNBT(section);
                 }
             }
         }
@@ -61,16 +64,16 @@ uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
     uint16_t mask = 0;
 
     for(int8_t y = -4; y < 20; ++y) {
-        Chunk *chunk = getChunk(y);
+        auto& chunk = getChunk(y);
 
-        if (chunk == nullptr || !chunk->hasData()) {
+        if (!chunk.hasData()) {
             std::cerr << "WARNING: missing chunk data. client will not like this" << std::endl;
             continue;
         }
 
         mask |= (1u << y);
 
-        chunk->writeToByteArray(array);
+        chunk.writeToByteArray(array);
     }
 
     return mask;

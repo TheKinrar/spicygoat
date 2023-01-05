@@ -13,7 +13,7 @@ class PacketUnloadChunk : public ClientBoundPacket {
 public:
     explicit PacketUnloadChunk(ChunkColumn &chunkColumn);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

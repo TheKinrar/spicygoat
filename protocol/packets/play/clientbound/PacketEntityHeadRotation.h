@@ -13,7 +13,7 @@ public:
     PacketEntityHeadRotation(int eid, float headYaw) : eid(eid), headYaw(headYaw) {}
 
     [[nodiscard]]
-    std::vector<std::byte> bytes() override {
+    std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x3E, array);
         PacketData::writeVarInt(eid, array);

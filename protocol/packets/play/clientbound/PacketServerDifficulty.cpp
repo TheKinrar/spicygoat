@@ -8,7 +8,7 @@ PacketServerDifficulty::PacketServerDifficulty(uint8_t difficulty) {
     this->difficulty = difficulty;
 }
 
-std::vector<std::byte> PacketServerDifficulty::bytes() {
+std::vector<std::byte> PacketServerDifficulty::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x0B, array);
     PacketData::writeUnsignedByte(0, array);

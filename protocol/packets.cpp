@@ -7,63 +7,63 @@
 
 #include "packets.h"
 
-Packet* Packets::parse(PacketData* data, ProtocolState state) {
-    int id = data->readVarInt();
+std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
+    int id = data.readVarInt();
 
     if(state == ProtocolState::HANDSHAKE) {
         if(id == S_HANDSHAKE) {
-            return new PacketHandshake(data);
+            return std::make_unique<PacketHandshake>(data);
         }
     } else if(state == ProtocolState::STATUS) {
         switch(id) {
             case S_REQUEST:
-                return new PacketRequest(data);
+                return std::make_unique<PacketRequest>(data);
             case S_PING:
-                return new PacketPing(data);
+                return std::make_unique<PacketPing>(data);
         }
     } else if(state == ProtocolState::LOGIN) {
         switch(id) {
             case S_LOGIN_START:
-                return new PacketLoginStart(data);
+                return std::make_unique<PacketLoginStart>(data);
             case S_PLUGIN_RESPONSE:
-                return new PacketPluginResponse(data);
+                return std::make_unique<PacketPluginResponse>(data);
         }
     } else if(state == ProtocolState::PLAY) {
         switch(id) {
             case S_TELEPORT_CONFIRM:
-                return new PacketTeleportConfirm(data);
+                return std::make_unique<PacketTeleportConfirm>(data);
             case S_CHAT_MESSAGE:
-                return new PacketChatMessageSB(data);
+                return std::make_unique<PacketChatMessageSB>(data);
             case S_CLIENT_STATUS:
-                return new PacketClientStatus(data);
+                return std::make_unique<PacketClientStatus>(data);
             case S_CLIENT_SETTINGS:
-                return new PacketClientSettings(data);
+                return std::make_unique<PacketClientSettings>(data);
             case S_PLUGIN_MESSAGE:
-                return new PacketPluginMessageSB(data);
+                return std::make_unique<PacketPluginMessageSB>(data);
             case S_KEEP_ALIVE:
-                return new PacketKeepAliveSB(data);
+                return std::make_unique<PacketKeepAliveSB>(data);
             case S_PLAYER_POSITION:
-                return new PacketPlayerPosition(data);
+                return std::make_unique<PacketPlayerPosition>(data);
             case S_PLAYER_POSITION_LOOK:
-                return new PacketPlayerPositionLook(data);
+                return std::make_unique<PacketPlayerPositionLook>(data);
             case S_PLAYER_LOOK:
-                return new PacketPlayerLook(data);
+                return std::make_unique<PacketPlayerLook>(data);
             case 0x16:
                 return nullptr; // TODO Player
             case S_PLAYER_ABILITIES:
-                return new PacketPlayerAbilitiesSB(data);
+                return std::make_unique<PacketPlayerAbilitiesSB>(data);
             case S_PLAYER_DIGGING:
-                return new PacketPlayerDigging(data);
+                return std::make_unique<PacketPlayerDigging>(data);
             case S_ENTITY_ACTION:
-                return new PacketEntityAction(data);
+                return std::make_unique<PacketEntityAction>(data);
             case 0x2F:
                 return nullptr; // TODO Animation
             case S_CLOSE_WINDOW:
                 return nullptr;
             case S_SET_CREATIVE_SLOT:
-                return new PacketSetCreativeSlot(data);
+                return std::make_unique<PacketSetCreativeSlot>(data);
             case S_USE_ITEM_ON:
-                return new PacketUseItemOn(data);
+                return std::make_unique<PacketUseItemOn>(data);
         }
     }
 

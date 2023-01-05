@@ -8,7 +8,7 @@ PacketEntityMove::PacketEntityMove(int32_t eid, double dx, double dy, double dz,
                                                                                                   dy(dy), dz(dz),
                                                                                                   onGround(onGround) {}
 
-std::vector<std::byte> PacketEntityMove::bytes() {
+std::vector<std::byte> PacketEntityMove::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x27, array);
     PacketData::writeVarInt(eid, array);

@@ -62,7 +62,7 @@ TCPServer::TCPServer() {
     fds[0].fd = sock;
     fds[0].events = POLLIN;
 
-    new std::thread(&TCPServer::keepAliveTask, this);
+    keepAliveThread = std::make_unique<std::thread>(&TCPServer::keepAliveTask, this);
 }
 
 TCPServer::~TCPServer() {
@@ -87,8 +87,8 @@ void TCPServer::accept() {
             socklen_t csinlen = sizeof(csin);
             int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
 
-            auto conn = new TCPConnection(csock, csin);
-            conn->setListener(std::make_unique<HandshakeListener>(*conn));
+            auto conn = std::make_shared<TCPConnection>(csock, csin);
+            conn->setListener(std::make_unique<HandshakeListener>(conn));
             connections.push_front(conn);
         }
     }
@@ -122,8 +122,8 @@ void TCPServer::stop() {
     running = false;
 }
 
-void TCPServer::removeConnection(TCPConnection *conn) {
-    connections.remove(conn);
+void TCPServer::removeConnection(const TCPConnection& conn) {
+    connections.remove_if([&conn](const std::shared_ptr<TCPConnection>& e){return e.get() == &conn;});
 }
 
 TCPServer &TCPServer::get() {

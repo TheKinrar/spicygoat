@@ -10,14 +10,14 @@
 
 class LoginListener : public PacketListenerLogin {
 public:
-    explicit LoginListener(TCPConnection &connection);
+    explicit LoginListener(std::shared_ptr<TCPConnection> connection);
 
     void onLoginStart(const PacketLoginStart &packet) override;
 
     void onPluginResponse(const PacketPluginResponse &response) override;
 
 private:
-    TCPConnection& connection;
+    std::shared_ptr<TCPConnection> connection;
 };
 
 

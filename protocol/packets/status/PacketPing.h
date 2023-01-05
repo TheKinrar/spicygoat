@@ -10,7 +10,7 @@
 
 class PacketPing : public ServerBoundPacket {
 public:
-    explicit PacketPing(PacketData* data);
+    explicit PacketPing(PacketData& data);
 
     int64_t getPayload() const;
 

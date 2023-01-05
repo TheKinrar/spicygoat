@@ -9,7 +9,7 @@ PacketPlayerAbilities::PacketPlayerAbilities(bool invulnerable, bool flying, boo
                                              flying(flying), allowFlying(allowFlying), creative(creative),
                                              flyingSpeed(flyingSpeed), fovModifier(fovModifier) {}
 
-std::vector<std::byte> PacketPlayerAbilities::bytes() {
+std::vector<std::byte> PacketPlayerAbilities::bytes() const {
     int8_t field = invulnerable | (flying << 1) | (allowFlying << 2) | (creative << 3);
 
     std::vector<std::byte> array;

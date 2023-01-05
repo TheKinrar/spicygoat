@@ -5,7 +5,7 @@
 #include "PacketRequest.h"
 #include "PacketResponse.h"
 
-PacketRequest::PacketRequest(PacketData*) : ServerBoundPacket(Packets::S_REQUEST) {}
+PacketRequest::PacketRequest(PacketData&) : ServerBoundPacket(Packets::S_REQUEST) {}
 
 std::string PacketRequest::toString() const {
     return std::string("PacketRequest{}");

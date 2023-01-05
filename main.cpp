@@ -18,7 +18,7 @@ int main() {
     std::cout << "SpicyGoat is here!" << std::endl;
 
     Config::get();
-    Server::get()->run();
+    Server::get().run();
 
     return 0;
 }

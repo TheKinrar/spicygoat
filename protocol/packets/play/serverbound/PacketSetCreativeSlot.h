@@ -14,9 +14,9 @@ public:
     int16_t slot;
     ItemStack stack;
 
-    explicit PacketSetCreativeSlot(PacketData *data) : ServerBoundPacket(Packets::S_SET_CREATIVE_SLOT),
-            slot(data->readShort()),
-            stack(data->readItemStack()) {}
+    explicit PacketSetCreativeSlot(PacketData& data) : ServerBoundPacket(Packets::S_SET_CREATIVE_SLOT),
+            slot(data.readShort()),
+            stack(data.readItemStack()) {}
 
     [[nodiscard]]
     std::string toString() const override {

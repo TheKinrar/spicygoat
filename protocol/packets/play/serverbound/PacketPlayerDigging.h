@@ -10,7 +10,7 @@
 
 class PacketPlayerDigging : public ServerBoundPacket {
 public:
-    explicit PacketPlayerDigging(PacketData* data);
+    explicit PacketPlayerDigging(PacketData& data);
 
     std::string toString() const override;
 

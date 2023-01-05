@@ -7,9 +7,9 @@
 StatusListener::StatusListener(TCPConnection &connection) : connection(connection) {}
 
 void StatusListener::onRequest(const PacketRequest &request) {
-    connection.sendPacket(new PacketResponse());
+    connection.sendPacket(PacketResponse());
 }
 
 void StatusListener::onPing(const PacketPing &ping) {
-    connection.sendPacket(new PacketPong(ping.getPayload()));
+    connection.sendPacket(PacketPong(ping.getPayload()));
 }

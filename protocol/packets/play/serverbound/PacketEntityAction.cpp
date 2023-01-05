@@ -4,10 +4,10 @@
 
 #include "PacketEntityAction.h"
 
-PacketEntityAction::PacketEntityAction(PacketData *data) : ServerBoundPacket(Packets::S_ENTITY_ACTION) {
-    eid = data->readVarInt();
-    action = data->readVarInt();
-    jumpBoost = data->readVarInt();
+PacketEntityAction::PacketEntityAction(PacketData& data) : ServerBoundPacket(Packets::S_ENTITY_ACTION) {
+    eid = data.readVarInt();
+    action = data.readVarInt();
+    jumpBoost = data.readVarInt();
 }
 
 std::string PacketEntityAction::toString() const {

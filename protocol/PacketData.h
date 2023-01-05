@@ -20,7 +20,7 @@
 
 class PacketData {
 public:
-    explicit PacketData(char* data, int length = -1);
+    explicit PacketData(std::shared_ptr<char[]> data, int length = -1, int offset = 0);
 
     int remaining();
 
@@ -77,7 +77,14 @@ public:
     std::string readString();
     static void writeString(const std::string&, std::vector<std::byte> &);
 
+    PacketData readPacketData(size_t len) {
+        PacketData ret(data, len, pos);
+        pos += len;
+        return ret;
+    }
+
     void readByteArray(std::vector<std::byte>& dst, size_t len);
+
     static void writeByteArray(const std::vector<std::byte> &, std::vector<std::byte> &);
     static void writeByteArray(const std::span<const std::byte> &span, std::vector<std::byte> &to) {
         std::vector<std::byte> temp;
@@ -125,7 +132,7 @@ public:
                 pos--;
 
                 std::istringstream stream;
-                stream.rdbuf()->pubsetbuf(data + pos, remaining());
+                stream.rdbuf()->pubsetbuf(data.get() + pos, remaining());
                 auto nbt = nbt::io::read_compound(stream).second;
                 pos += remaining();
 
@@ -138,7 +145,8 @@ public:
         }
     }
 
-    char* data;
+    std::shared_ptr<char[]> data;
+    const int offset;
     const int length;
     int pos;
 };

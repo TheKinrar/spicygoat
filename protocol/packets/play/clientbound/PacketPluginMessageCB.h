@@ -12,7 +12,7 @@ class PacketPluginMessageCB : public ClientBoundPacket {
 public:
     PacketPluginMessageCB(std::string channel, std::vector<std::byte> data);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

@@ -54,7 +54,7 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
         if(Config::get().gamemode == 1) {
-            Server::get()->getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+            Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
         }
     }
 }
@@ -66,7 +66,7 @@ void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
     std::cout << "[CHAT] " << player.getName() << ": " << packet.message << std::endl;
 
-    Server::get()->broadcastPacket(new PacketChatMessageCB(player.getName() + ": " + packet.message));
+    Server::get().broadcastPacket(PacketChatMessageCB(player.getName() + ": " + packet.message));
 }
 
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
@@ -77,11 +77,11 @@ void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
     if(Config::get().gamemode == 1) {
         ItemStack stack = connection.getPlayer()->inventory.getSelected();
         if(stack.present) {
-            auto key = Server::get()->getItemRegistry().entriesR.at(stack.id);
+            auto key = Server::get().getItemRegistry().entriesR.at(stack.id);
             BlockState bs(key);
-            auto blockId = Server::get()->getPalette()->getBlockStateId(bs);
+            auto blockId = Server::get().getPalette()->getBlockStateId(bs);
             if(blockId != -1) {
-                Server::get()->getWorld().setBlockState(packet.position.relative(packet.face), bs);
+                Server::get().getWorld().setBlockState(packet.position.relative(packet.face), bs);
             }
         }
     }

@@ -4,15 +4,15 @@
 
 #include "PacketClientSettings.h"
 
-PacketClientSettings::PacketClientSettings(PacketData *data) : ServerBoundPacket(Packets::S_CLIENT_SETTINGS) {
-    locale = data->readString();
-    renderDistance = data->readByte();
-    chatMode = data->readVarInt();
-    chatColors = data->readBoolean();
-    displayedSkinParts = data->readUnsignedByte();
-    mainHand = data->readVarInt();
-    textFiltering = data->readBoolean();
-    serverListings = data->readBoolean();
+PacketClientSettings::PacketClientSettings(PacketData& data) : ServerBoundPacket(Packets::S_CLIENT_SETTINGS) {
+    locale = data.readString();
+    renderDistance = data.readByte();
+    chatMode = data.readVarInt();
+    chatColors = data.readBoolean();
+    displayedSkinParts = data.readUnsignedByte();
+    mainHand = data.readVarInt();
+    textFiltering = data.readBoolean();
+    serverListings = data.readBoolean();
 }
 
 std::string PacketClientSettings::toString() const {

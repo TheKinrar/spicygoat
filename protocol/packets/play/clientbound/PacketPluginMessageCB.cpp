@@ -9,7 +9,7 @@ PacketPluginMessageCB::PacketPluginMessageCB(std::string channel, std::vector<st
     this->data = data;
 }
 
-std::vector<std::byte> PacketPluginMessageCB::bytes() {
+std::vector<std::byte> PacketPluginMessageCB::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x15, array);
     PacketData::writeString(channel, array);

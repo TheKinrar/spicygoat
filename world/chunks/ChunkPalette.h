@@ -45,7 +45,7 @@ public:
     }
 
     [[nodiscard]]
-    std::shared_ptr<ChunkPalette> grow(BlockState newState) const {
+    std::shared_ptr<ChunkPalette> grow(const BlockState& newState) const {
         auto grown = std::make_shared<ChunkPalette>(*this);
         grown->addBlockState(newState, (int16_t) grown->stateToId.size());
         return grown;
@@ -54,7 +54,7 @@ public:
     std::string mappingToString();
 
 private:
-    void addBlockState(BlockState &state, int16_t id);
+    void addBlockState(const BlockState& state, int16_t id);
     void finalize();
 
     std::map<BlockState, int16_t> stateToId;

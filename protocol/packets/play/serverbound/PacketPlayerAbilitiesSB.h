@@ -10,7 +10,7 @@
 
 class PacketPlayerAbilitiesSB : public ServerBoundPacket {
 public:
-    explicit PacketPlayerAbilitiesSB(PacketData* data);
+    explicit PacketPlayerAbilitiesSB(PacketData& data);
 
     std::string toString() const override;
 

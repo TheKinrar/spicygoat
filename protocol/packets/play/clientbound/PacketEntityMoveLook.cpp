@@ -8,7 +8,7 @@ PacketEntityMoveLook::PacketEntityMoveLook(int32_t eid, double dx, double dy, do
                                            bool onGround) : ClientBoundPacket(0x28), eid(eid), dx(dx), dy(dy), dz(dz), yaw(yaw), pitch(pitch),
                                                             onGround(onGround) {}
 
-std::vector<std::byte> PacketEntityMoveLook::bytes() {
+std::vector<std::byte> PacketEntityMoveLook::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x28, array);
     PacketData::writeVarInt(eid, array);

@@ -9,12 +9,12 @@
 
 using json = nlohmann::json;
 
-std::vector<std::byte> PacketResponse::bytes() {
+std::vector<std::byte> PacketResponse::bytes() const {
     json j;
     j["version"]["name"] = Protocol::PROTOCOL_VERSION_NAME;
     j["version"]["protocol"] = Protocol::PROTOCOL_VERSION_NUMBER;
     j["players"]["max"] = 20;
-    j["players"]["online"] = Server::get()->getPlayerCount();
+    j["players"]["online"] = Server::get().getPlayerCount();
     j["players"]["sample"] = json::array();
     j["description"]["text"] = "§e§lSpicyGoat - 1.19.3\n§r§cExperimental server";
 

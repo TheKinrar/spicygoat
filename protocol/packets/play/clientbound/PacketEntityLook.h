@@ -13,7 +13,7 @@ class PacketEntityLook : public ClientBoundPacket {
 public:
     PacketEntityLook(int32_t eid, Location &from, Location &to, bool onGround);
 
-    std::vector<std::byte> bytes() override;
+    std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 

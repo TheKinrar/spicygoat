@@ -10,7 +10,7 @@
 
 class PacketRequest : public ServerBoundPacket {
 public:
-    explicit PacketRequest(PacketData*);
+    explicit PacketRequest(PacketData&);
 
     std::string toString() const override;
 };

@@ -9,7 +9,7 @@ PacketLoginSuccess::PacketLoginSuccess(stud::uuid uuid, const std::string &usern
     this->username = username;
 }
 
-std::vector<std::byte> PacketLoginSuccess::bytes() {
+std::vector<std::byte> PacketLoginSuccess::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x02, array);
     PacketData::writeUuid(uuid, array);

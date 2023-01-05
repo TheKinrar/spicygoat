@@ -10,7 +10,7 @@
 #include "../../../../config/Config.h"
 #include "resources_out/resources.h"
 
-PacketJoinGame::PacketJoinGame(EntityPlayer *player) {
+PacketJoinGame::PacketJoinGame(std::shared_ptr<EntityPlayer> player) {
     this->player = player;
 }
 
@@ -104,7 +104,7 @@ nbt::tag_compound biomeRegistry() {
     return registry;
 }
 
-std::vector<std::byte> PacketJoinGame::bytes() {
+std::vector<std::byte> PacketJoinGame::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x24, array);
     PacketData::writeInt(player->getEID(), array);

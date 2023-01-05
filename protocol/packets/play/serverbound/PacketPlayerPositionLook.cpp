@@ -4,13 +4,13 @@
 
 #include "PacketPlayerPositionLook.h"
 
-PacketPlayerPositionLook::PacketPlayerPositionLook(PacketData *data) : ServerBoundPacket(Packets::S_PLAYER_POSITION_LOOK) {
-    x = data->readDouble();
-    y = data->readDouble();
-    z = data->readDouble();
-    yaw = data->readFloat();
-    pitch = data->readFloat();
-    onGround = data->readBoolean();
+PacketPlayerPositionLook::PacketPlayerPositionLook(PacketData& data) : ServerBoundPacket(Packets::S_PLAYER_POSITION_LOOK) {
+    x = data.readDouble();
+    y = data.readDouble();
+    z = data.readDouble();
+    yaw = data.readFloat();
+    pitch = data.readFloat();
+    onGround = data.readBoolean();
 }
 
 std::string PacketPlayerPositionLook::toString() const {

@@ -9,10 +9,17 @@
 
 #include "PacketData.h"
 
-PacketData::PacketData(char *data, int length) : data(data), length(length), pos(0) {}
+PacketData::PacketData(std::shared_ptr<char[]> data, int length, int offset) :
+        data(std::move(data)),
+        length(length),
+        offset(offset),
+        pos(offset) {}
 
 int PacketData::remaining() {
-    return length - pos;
+    if(length == -1)
+        return -1;
+
+    return length - (pos - offset);
 }
 
 bool PacketData::readBoolean() {
@@ -86,7 +93,7 @@ uint16_t PacketData::readUnsignedShort() {
 }
 
 int32_t PacketData::readInt() {
-    int64_t val = be32toh(*((int32_t*) (data + pos)));
+    int64_t val = be32toh(*((int32_t*) (data.get() + pos)));
     pos += 4;
     return val;
 }
@@ -98,7 +105,7 @@ void PacketData::writeInt(int32_t val, std::vector<std::byte> &bytes) {
 }
 
 uint32_t PacketData::readUnsignedInt() {
-    uint32_t val = be32toh(*((uint32_t*) (data + pos)));
+    uint32_t val = be32toh(*((uint32_t*) (data.get() + pos)));
     pos += 4;
     return val;
 }
@@ -110,7 +117,7 @@ void PacketData::writeUnsignedInt(uint32_t val, std::vector<std::byte> &bytes) {
 }
 
 int64_t PacketData::readLong() {
-    int64_t val = be64toh(*((int64_t*) (data + pos)));
+    int64_t val = be64toh(*((int64_t*) (data.get() + pos)));
     pos += 8;
     return val;
 }
@@ -122,7 +129,7 @@ void PacketData::writeLong(int64_t val, std::vector<std::byte> &bytes) {
 }
 
 uint64_t PacketData::readUnsignedLong() {
-    uint64_t val = be64toh(*((uint64_t*) (data + pos)));
+    uint64_t val = be64toh(*((uint64_t*) (data.get() + pos)));
     pos += 8;
     return val;
 }
@@ -167,7 +174,7 @@ void PacketData::writeDouble(double val, std::vector<std::byte> &bytes) {
 
 std::string PacketData::readString() {
     int stringByteLength = readVarInt();
-    std::string string(data + pos, stringByteLength);
+    std::string string(data.get() + pos, stringByteLength);
     pos += stringByteLength;
     return string;
 }
