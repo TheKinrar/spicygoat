@@ -16,10 +16,12 @@ public:
     }
 
     int64_t gamemode;
+    int64_t port;
 
 private:
     Config() : data(toml::parse<toml::preserve_comments>("config.toml")) {
         gamemode = toml::find<toml::integer>(data, "gamemode");
+        port = toml::find<toml::integer>(data, "port");
     }
 
     toml::value data;

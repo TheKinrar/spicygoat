@@ -4,6 +4,7 @@
 
 #include "TCPServer.h"
 #include "network/listeners/HandshakeListener.h"
+#include "config/Config.h"
 
 #include <iostream>
 #include <memory>
@@ -36,7 +37,7 @@ TCPServer::TCPServer() {
     sockaddr_in sin{};
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = inet_addr("0.0.0.0");
-    sin.sin_port = htons(25565);
+    sin.sin_port = htons(Config::get().port);
 
     errno = 0;
     if(bind(sock, (sockaddr*) &sin, sizeof(sin))) {
