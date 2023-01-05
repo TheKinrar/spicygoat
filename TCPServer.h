@@ -5,6 +5,7 @@
 #ifndef SPICYGOAT_TCPSERVER_H
 #define SPICYGOAT_TCPSERVER_H
 
+#include <list>
 #include "TCPConnection.h"
 
 #ifdef __linux__
@@ -35,15 +36,13 @@ public:
     bool isRunning() const;
     void stop();
 
-    void removeConnection(const TCPConnection&);
-
 private:
     bool running = true;
 
     unsigned long long sock;
     pollfd fds[10];
 
-    std::forward_list<std::shared_ptr<TCPConnection>> connections;
+    std::list<std::shared_ptr<TCPConnection>> connections;
 
     std::unique_ptr<std::thread> keepAliveThread;
 };

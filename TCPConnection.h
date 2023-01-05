@@ -30,6 +30,9 @@ public:
     TCPConnection(int sock, sockaddr_in addr);
     TCPConnection(const TCPConnection&) = delete;
     void operator=(const TCPConnection&) = delete;
+    virtual ~TCPConnection() {
+        thread->join();
+    }
 
     ProtocolState getState() const;
     void setState(ProtocolState newState);
@@ -56,6 +59,8 @@ public:
 
     std::string username;
     stud::uuid uuid;
+
+    bool alive = true;
 
 private:
     int sock;

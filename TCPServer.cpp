@@ -104,9 +104,17 @@ void TCPServer::keepAliveTask() {
     while(running) {
         int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
-        for(auto connection : connections) {
-            if(connection->getState() == ProtocolState::PLAY) {
-                connection->keepAlive(millis);
+        auto it = connections.begin();
+        while(it != connections.end()) {
+            auto& connection = *it;
+            if(!connection->alive) {
+                it = connections.erase(it);
+            } else {
+                if(connection->getState() == ProtocolState::PLAY) {
+                    connection->keepAlive(millis);
+                }
+
+                ++it;
             }
         }
 
@@ -120,10 +128,6 @@ bool TCPServer::isRunning() const {
 
 void TCPServer::stop() {
     running = false;
-}
-
-void TCPServer::removeConnection(const TCPConnection& conn) {
-    connections.remove_if([&conn](const std::shared_ptr<TCPConnection>& e){return e.get() == &conn;});
 }
 
 TCPServer &TCPServer::get() {

@@ -61,12 +61,13 @@ void TCPConnection::task() {
     } catch(std::exception &e) {
         closesocket(sock);
         std::cout << getName() << " disconnected: " << e.what() << std::endl;
-        TCPServer::get().removeConnection(*this);
 
         if(player) {
             Server::get().removePlayer(*player);
         }
     }
+
+    alive = false;
 }
 
 int TCPConnection::readVarInt() {
