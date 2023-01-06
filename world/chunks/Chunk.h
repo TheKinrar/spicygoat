@@ -67,7 +67,7 @@ public:
         if(palette->isSingle() && palette->getSingleBlockState().isAir()) {
             return 4096;
         } else {
-            int16_t n;
+            int16_t n = 0;
             for(int x = 0; x < 16; ++x) {
                 for(int y = 0; y < 16; ++y) {
                     for(int z = 0; z < 16; ++z) {
