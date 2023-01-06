@@ -9,11 +9,13 @@
 
 #include "../chunks/Chunk.h"
 #include "../chunks/ChunkColumn.h"
+#include "Position.h"
 
 class Location {
    public:
     Location();
     Location(double x, double y, double z, float yaw, float pitch);
+    explicit Location(Position pos) : x(pos.getX()), y(pos.getY()), z(pos.getZ()), yaw(0), pitch(0) {};
 
     void setX(double x);
 

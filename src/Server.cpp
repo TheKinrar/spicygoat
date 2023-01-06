@@ -83,6 +83,9 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
 }
 
 void Server::removePlayer(EntityPlayer& p) {
+    p.syncData();
+    p.getData().save();
+
     entities.erase(p.getEID());
     players.erase(p.getUuid());
     playerCount--;

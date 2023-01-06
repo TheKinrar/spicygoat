@@ -64,11 +64,11 @@ bool Location::operator!=(const Location &rhs) const {
 }
 
 int32_t Location::getChunkX() const {
-    return (int32_t)(getX() / 16);
+    return Position((int32_t) x, (int32_t) y, (int32_t) z).getChunkX();
 }
 
 int32_t Location::getChunkZ() const {
-    return (int32_t)(getZ() / 16);
+    return Position((int32_t) x, (int32_t) y, (int32_t) z).getChunkZ();
 }
 
 double Location::distanceSquared(const Location &other) const {

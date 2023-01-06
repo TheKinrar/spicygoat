@@ -19,6 +19,7 @@ EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<
     : conn(std::move(conn)) {
     this->uuid = uuid;
     this->name = name;
+    this->data = PlayerData::load(uuid);
 }
 
 void EntityPlayer::tick() {

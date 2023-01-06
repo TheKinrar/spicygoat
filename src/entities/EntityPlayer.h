@@ -15,6 +15,7 @@ class TCPConnection;
 #include "../TCPConnection.h"
 #include "../config/Config.h"
 #include "../inventory/PlayerInventory.h"
+#include "../persist/PlayerData.h"
 #include "../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../world/chunks/ChunkColumn.h"
 #include "../world/geo/ChunkPosition.h"
@@ -31,6 +32,14 @@ class EntityPlayer : public Entity {
     uuids::uuid getUuid() const;
 
     const std::string &getName() const;
+
+    PlayerData &getData() const {
+        return *data;
+    }
+
+    void syncData() {
+        data->setLocation(getLocation());
+    }
 
     int getRenderDistance() const {
         return renderDistance;
@@ -74,6 +83,8 @@ class EntityPlayer : public Entity {
     uuids::uuid uuid;
     std::string name;
     int gamemode = Config::get().gamemode;
+
+    std::unique_ptr<PlayerData> data;
 
     std::shared_ptr<TCPConnection> conn;
 

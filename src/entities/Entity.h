@@ -26,6 +26,11 @@ class Entity {
 
     bool isOnGround() const;
 
+    void setLocation(Location loc) {
+        this->location = loc;
+        this->nextLocation = loc;
+    }
+
     void setNextLocation(Location loc);
     void setNextPosition(double x, double y, double z);
     void setNextLook(float yaw, float pitch);

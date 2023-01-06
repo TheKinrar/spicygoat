@@ -83,14 +83,16 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     auto player = Server::get().createPlayer(connection->uuid, connection->username, connection);
     connection->setPlayer(player);
 
-    auto pos = Server::get().getWorld().getSpawnPosition();
+    auto spawnPos = Server::get().getWorld().getSpawnPosition();
+    auto loc = player->getData().getLocation(Location(spawnPos));
+    player->setLocation(loc);
+
     connection->sendPacket(PacketJoinGame(player));
     CMBrand(std::string("SpicyGoat")).send(*connection);
     connection->sendPacket(PacketServerDifficulty(0));  // TODO difficulty
-    connection->sendPacket(PacketSpawnPosition(pos));
+    connection->sendPacket(PacketSpawnPosition(spawnPos));
     connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
-    connection->sendPacket(PacketRenderCenter(pos.getChunkX(), pos.getChunkZ()));
-    connection->getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
+    connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
 }
