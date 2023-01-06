@@ -37,6 +37,16 @@ class ChunkPalette {
         return idToState.at(0);
     }
 
+    [[nodiscard]] std::vector<BlockState> getBlockStatesByName(const std::string& name) const {
+        std::vector<BlockState> vec;
+        for(const auto& item : stateToId) {
+            if(item.first.getName() == name) {
+                vec.push_back(item.first);
+            }
+        }
+        return vec;
+    }
+
     [[nodiscard]] BlockState getBlockState(int16_t id) const {
         return idToState.at(id);
     }

@@ -23,6 +23,7 @@ int main() {
     std::cout << "SpicyGoat is here!" << std::endl;
 
     Config::get();
+    Server::get().loadRegistries();
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandGm>());
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandTp>());

@@ -12,6 +12,7 @@
 
 #include "commands/CommandEngine.h"
 #include "entities/EntityPlayer.h"
+#include "item/ItemRegistry.h"
 #include "util/Registry.h"
 #include "world/World.h"
 
@@ -23,6 +24,8 @@ class Server {
 
     Server();
     static Server& get();
+
+    void loadRegistries();
 
     void run();
 
@@ -62,20 +65,19 @@ class Server {
     }
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
-    [[nodiscard]] const Registry& getItemRegistry() const {
+    [[nodiscard]] const ItemRegistry& getItemRegistry() const {
         return itemRegistry;
     }
 
     void broadcastPacket(const Packet&);
 
    private:
-    void loadRegistries();
     static void loadRegistry(Registry& registry, nlohmann::json root);
 
     CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;
-    Registry itemRegistry = Registry("minecraft:item");
+    ItemRegistry itemRegistry;
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;

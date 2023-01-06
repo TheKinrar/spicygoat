@@ -91,19 +91,9 @@ void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
-    if(player.getGamemode() == 1) {
-        ItemStack stack = connection.getPlayer()->inventory.getSelected();
-        if(stack.present) {
-            auto key = Server::get().getItemRegistry().entriesR.at(stack.id);
-            BlockState bs(key);
-            auto blockId = Server::get().getPalette()->getBlockStateId(bs);
-            if(blockId != -1) {
-                Server::get().getWorld().setBlockState(packet.position.relative(packet.face), bs);
-
-                Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
-                                                                Server::get().getPalette()->getBlockStateId(bs)));
-            }
-        }
+    ItemStack stack = connection.getPlayer()->inventory.getSelected();
+    if(stack.present) {
+        Server::get().getItemRegistry().get(stack.id).onUseOn(player, packet);
     }
 }
 

@@ -11,11 +11,21 @@
 
 struct Registry {
     const std::string id;
-    std::unordered_map<std::string, int32_t> entries;
-    std::unordered_map<int32_t, std::string> entriesR;
-    std::string defaultEntry;
+    std::unordered_map<std::string, int32_t> keyToId;
+    std::unordered_map<int32_t, std::string> idToKey;
+    std::string defaultKey;
 
+   public:
     explicit Registry(std::string id) : id(std::move(id)) {}
+
+    virtual void addMapping(const std::string& key, int32_t id) {
+        keyToId.emplace(key, id);
+        idToKey.emplace(id, key);
+    }
+
+    int32_t getId(const std::string& key) const {
+        return keyToId.at(key);
+    }
 };
 
 #endif  // SPICYGOAT_REGISTRY_H
