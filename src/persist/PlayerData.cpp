@@ -47,6 +47,5 @@ void PlayerData::setInventory(const PlayerInventory& source) {
             inv.push_back(std::move(item));
         }
     }
-    std::cout << inv.size() << std::endl;
     nbt->put("Inventory", std::move(inv));
 }
