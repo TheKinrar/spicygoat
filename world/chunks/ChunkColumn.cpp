@@ -27,12 +27,12 @@ int32_t ChunkColumn::getZ() const {
 }
 
 Chunk &ChunkColumn::getChunk(int32_t y) {
-    auto &ptr = chunks[y + 4];
+    auto &ptr = chunks[y + 5];
     if(ptr)
         return *ptr;
     else {
-        ptr = std::make_unique<Chunk>(x, y, z);
-        return *ptr;
+        chunks[y + 5] = std::make_unique<Chunk>(x, y, z);
+        return *chunks[y + 5];
     }
 }
 
@@ -49,12 +49,9 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
                 auto section = value.as<nbt::tag_compound>();
                 int8_t y = section.at("Y").as<nbt::tag_byte>();
 
-                if(y < -4 || y > 19) {
+                if(y < -5 || y > 20) {
 //                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" << (int)y << ";" << z
 //                              << std::endl;
-                } else if(chunks[y + 4]) {
-                    std::cerr << "WARNING: chunk already loaded! skipping " << x << ";" << (int)y << ";" << z
-                              << std::endl;
                 } else {
                     //                    std::cerr << "Loading " << x << ";" << (int) y << ";" << z << std::endl;
 
@@ -65,9 +62,7 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
     }
 }
 
-uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
-    uint16_t mask = 0;
-
+void ChunkColumn::writeDataToByteArray(std::vector<std::byte> &array) {
     for(int8_t y = -4; y < 20; ++y) {
         auto &chunk = getChunk(y);
 
@@ -76,12 +71,46 @@ uint16_t ChunkColumn::writeToByteArray(std::vector<std::byte> &array) {
             continue;
         }
 
-        mask |= (1u << y);
+        chunk.writeDataToByteArray(array);
+    }
+}
 
-        chunk.writeToByteArray(array);
+void ChunkColumn::writeLightToByteArray(std::vector<std::byte> &array) {
+    std::bitset<26> blockMask, skyMask;
+    std::vector<std::byte> blockData, skyData;
+
+    for(int8_t y = -5; y < 21; ++y) {
+        auto &chunk = getChunk(y);
+
+        if(chunk.hasBlockLightData()) {
+            blockMask.set(y + 5);
+            PacketData::writeVarInt(chunk.getBlockLightData().size(), blockData);
+            PacketData::writeByteArray(chunk.getBlockLightData(), blockData);
+        }
+
+        if(chunk.hasSkyLightData()) {
+            skyMask.set(y + 5);
+            PacketData::writeVarInt(chunk.getSkyLightData().size(), skyData);
+            PacketData::writeByteArray(chunk.getSkyLightData(), skyData);
+        }
     }
 
-    return mask;
+    std::bitset<26> emptyBlockMask = blockMask;
+    emptyBlockMask.flip();
+    std::bitset<26> emptySkyMask = skyMask;
+    emptySkyMask.flip();
+
+    PacketData::writeBoolean(true, array);  // Trust edges
+
+    PacketData::writeBitSet(skyMask, array);
+    PacketData::writeBitSet(blockMask, array);
+    PacketData::writeBitSet(skyMask, array);
+    PacketData::writeBitSet(blockMask, array);
+
+    PacketData::writeVarInt(skyMask.count(), array);
+    PacketData::writeByteArray(skyData, array);
+    PacketData::writeVarInt(blockMask.count(), array);
+    PacketData::writeByteArray(blockData, array);
 }
 
 void ChunkColumn::writeHeightMapsToByteArray(std::vector<std::byte> &array) {

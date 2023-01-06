@@ -28,14 +28,15 @@ class ChunkColumn {
 
     void setNbt(std::unique_ptr<nbt::tag_compound>& nbt);
 
-    uint16_t writeToByteArray(std::vector<std::byte>&);
+    void writeDataToByteArray(std::vector<std::byte>&);
+    void writeLightToByteArray(std::vector<std::byte>&);
     void writeHeightMapsToByteArray(std::vector<std::byte>&);
 
     std::string toString();
 
    private:
     int32_t x, z;
-    std::unique_ptr<Chunk> chunks[24];
+    std::unique_ptr<Chunk> chunks[26];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
 };

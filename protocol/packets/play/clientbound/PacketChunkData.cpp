@@ -19,25 +19,14 @@ std::vector<std::byte> PacketChunkData::bytes() const {
     chunkColumn.writeHeightMapsToByteArray(array);
 
     std::vector<std::byte> data;
-    chunkColumn.writeToByteArray(data);
+    chunkColumn.writeDataToByteArray(data);
 
     PacketData::writeVarInt(data.size(), array);
     PacketData::writeByteArray(data, array);
 
     PacketData::writeVarInt(0, array);  // TODO: block entities
 
-    PacketData::writeBoolean(true, array);  // Trust edges
-
-    // Dummy bitset for light data, assuming 24 chunks per column
-    std::bitset<26> bitset;
-
-    PacketData::writeBitSet(bitset, array);  // sky light mask
-    PacketData::writeBitSet(bitset, array);  // block light mask
-    PacketData::writeBitSet(bitset, array);  // empty sky light mask
-    PacketData::writeBitSet(bitset, array);  // empty block light mask
-
-    PacketData::writeVarInt(0, array);  // no sky light
-    PacketData::writeVarInt(0, array);  // no block light
+    chunkColumn.writeLightToByteArray(array);
 
     return array;
 }

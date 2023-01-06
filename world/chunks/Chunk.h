@@ -20,8 +20,8 @@ class Chunk {
     std::shared_ptr<ChunkPalette> palette;
     std::vector<int64_t> blockStates;
 
-    std::vector<int8_t> blockLight;
-    std::vector<int8_t> skyLight;
+    std::vector<std::byte> blockLight;
+    std::vector<std::byte> skyLight;
 
    public:
     Chunk(int32_t x, int32_t y, int32_t z);
@@ -37,9 +37,27 @@ class Chunk {
 
     bool hasData();
 
+    bool hasBlockLightData() {
+        return !blockLight.empty();
+    }
+
+    bool hasSkyLightData() {
+        return !skyLight.empty();
+    }
+
+    [[nodiscard]]
+    const std::vector<std::byte>& getBlockLightData() const {
+        return blockLight;
+    }
+
+    [[nodiscard]]
+    const std::vector<std::byte>& getSkyLightData() const {
+        return skyLight;
+    }
+
     void loadNBT(nbt::tag_compound&);
 
-    void writeToByteArray(std::vector<std::byte>& array);
+    void writeDataToByteArray(std::vector<std::byte>& array);
 
     void setBlockState(int x, int y, int z, BlockState state) {
         if(!hasData()) throw std::runtime_error("Can't set block in unloaded chunk");
