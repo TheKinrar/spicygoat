@@ -147,3 +147,7 @@ void EntityPlayer::teleport(const Location& loc) {
     this->getConnection().sendPacket(PacketPlayerLocationCB(loc));
     this->setNextLocation(loc);
 }
+
+void EntityPlayer::setFlyingSpeed(float speed) {
+    this->getConnection().sendPacket(PacketPlayerAbilities(false, true, true, false, speed, 0.1));
+}

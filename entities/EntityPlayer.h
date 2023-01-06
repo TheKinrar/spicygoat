@@ -43,6 +43,8 @@ class EntityPlayer : public Entity {
 
     void teleport(const Location& loc);
 
+    void setFlyingSpeed(float speed);
+
     TCPConnection &getConnection() const;
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;
