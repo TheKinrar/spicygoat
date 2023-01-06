@@ -42,6 +42,7 @@ void EntityPlayer::tick() {
 
             if(chunk.hasData()) {
                 conn->sendPacket(PacketChunkData(chunk));
+                loadedChunks.emplace(pos, chunk);
                 ++n;
             } else {
                 std::cerr << "no data for column " << chunk.toString() << std::endl;
@@ -49,8 +50,9 @@ void EntityPlayer::tick() {
         }
 
         chunkSendQueue.pop();
+        queuedChunks.erase(pos);
 
-        if(++n == 5) break;
+        if(n == 5) break;
     }
 
     if(!spawned && chunkSendQueue.empty()) {
@@ -110,8 +112,10 @@ void EntityPlayer::chunkChanged() {
 void EntityPlayer::loadChunk(int32_t x, int32_t z) {
     ChunkPosition pos(x, 0, z);
 
-    if(loadedChunks.find(pos) == loadedChunks.end()) {
+    if(loadedChunks.find(pos) == loadedChunks.end()
+       && queuedChunks.find(pos) == queuedChunks.end()) {
         chunkSendQueue.emplace(pos);
+        queuedChunks.emplace(pos);
     }
 }
 

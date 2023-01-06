@@ -47,6 +47,19 @@ class ChunkPosition {
     bool operator!=(const ChunkPosition &rhs) const {
         return !(rhs == *this);
     }
+
+    bool operator<(const ChunkPosition &rhs) const {
+        return std::tie(x, y, z) < std::tie(rhs.x, rhs.y, rhs.z);
+    }
+    bool operator>(const ChunkPosition &rhs) const {
+        return rhs < *this;
+    }
+    bool operator<=(const ChunkPosition &rhs) const {
+        return !(rhs < *this);
+    }
+    bool operator>=(const ChunkPosition &rhs) const {
+        return !(*this < rhs);
+    }
 };
 
 template <>
