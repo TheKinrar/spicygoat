@@ -13,20 +13,25 @@
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
 #include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
+#include "../../util/md5.h"
 #include "PlayerConnection.h"
 
 LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}
 
 void LoginListener::onLoginStart(const PacketLoginStart &packet) {
-    std::random_device rd;
-    std::array<int, std::mt19937::state_size> seed_data{};
-    std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));
-    std::seed_seq seq(std::begin(seed_data), std::end(seed_data));
-    std::mt19937 generator(seq);
-    uuids::uuid_random_generator gen{generator};
+    std::string uuidName = "OfflinePlayer:" + packet.name;
+    MD5 hasher;
+    hasher.add(uuidName.data(), uuidName.size());
+    std::array<uuids::uuid::value_type, 16> bin{};
+    hasher.getHash(bin.data());
+
+    bin[6]  &= 0x0f;  /* clear version        */
+    bin[6]  |= 0x30;  /* set to version 3     */
+    bin[8]  &= 0x3f;  /* clear variant        */
+    bin[8]  |= 0x80;  /* set to IETF variant  */
 
     connection->username = packet.name;
-    connection->uuid = gen();  // TODO generate offline UUID like official server does
+    connection->uuid = {bin};
 
     // Velocity
     std::vector<std::byte> request;
