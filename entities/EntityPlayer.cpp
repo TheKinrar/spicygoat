@@ -10,6 +10,7 @@
 #include "../Server.h"
 #include "../protocol/packets/play/clientbound/PacketChunkData.h"
 #include "../protocol/packets/play/clientbound/PacketDestroyEntities.h"
+#include "../protocol/packets/play/clientbound/PacketGameEvent.h"
 #include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
 #include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
@@ -150,4 +151,10 @@ void EntityPlayer::teleport(const Location& loc) {
 
 void EntityPlayer::setFlyingSpeed(float speed) {
     this->getConnection().sendPacket(PacketPlayerAbilities(false, true, true, false, speed, 0.1));
+}
+
+void EntityPlayer::setGamemode(int gamemode) {
+    getConnection().sendPacket(PacketGameEvent(PacketGameEvent::Event::ChangeGamemode, gamemode));
+
+    this->gamemode = gamemode;
 }

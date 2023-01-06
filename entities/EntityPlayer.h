@@ -13,6 +13,7 @@ class TCPConnection;
 #include <vector>
 
 #include "../TCPConnection.h"
+#include "../config/Config.h"
 #include "../inventory/PlayerInventory.h"
 #include "../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../world/chunks/ChunkColumn.h"
@@ -39,6 +40,12 @@ class EntityPlayer : public Entity {
         this->renderDistance = renderDistance;
     }
 
+    int getGamemode() const {
+        return gamemode;
+    }
+
+    void setGamemode(int gamemode);
+
     void sendMessage(const std::string& message) const;
 
     void teleport(const Location& loc);
@@ -63,6 +70,7 @@ class EntityPlayer : public Entity {
 
     uuids::uuid uuid;
     std::string name;
+    int gamemode = Config::get().gamemode;
 
     std::shared_ptr<TCPConnection> conn;
 

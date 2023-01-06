@@ -55,7 +55,7 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
-        if(Config::get().gamemode == 1) {
+        if(player.getGamemode() == 1) {
             Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
 
             Server::get().broadcastPacket(PacketBlockUpdate(
@@ -85,7 +85,7 @@ void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
-    if(Config::get().gamemode == 1) {
+    if(player.getGamemode() == 1) {
         ItemStack stack = connection.getPlayer()->inventory.getSelected();
         if(stack.present) {
             auto key = Server::get().getItemRegistry().entriesR.at(stack.id);
