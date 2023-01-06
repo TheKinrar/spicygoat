@@ -38,6 +38,8 @@ class EntityPlayer : public Entity {
 
     void setRenderDistance(int renderDistance) {
         this->renderDistance = renderDistance;
+
+        checkChunks();
     }
 
     int getGamemode() const {
@@ -66,6 +68,7 @@ class EntityPlayer : public Entity {
     void chunkChanged() override;
 
    private:
+    void checkChunks();
     void loadChunk(int32_t x, int32_t z);
 
     uuids::uuid uuid;

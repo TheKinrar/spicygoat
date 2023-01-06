@@ -58,7 +58,7 @@ void EntityPlayer::tick() {
     if(!spawned && chunkSendQueue.empty()) {
         conn->sendPacket(PacketPlayerLocationCB(getLocation()));
         spawned = true;
-        chunkChanged(); // Trigger loading of more chunks
+        checkChunks();
     }
 }
 
@@ -67,6 +67,21 @@ void EntityPlayer::chunkChanged() {
 
     conn->sendPacket(PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
+    checkChunks();
+
+    nearbyEntities.clear();
+    for(auto& e : Server::get().getEntities()) {
+        if(e.get() != this) {
+            double d = e->getLocation().distanceSquared(getLocation());
+
+            if(d <= Server::ENTITY_VIEW_DISTANCE_SQ) {
+                nearbyEntities.insert(e);
+            }
+        }
+    }
+}
+
+void EntityPlayer::checkChunks() {
     int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Server::VIEW_DISTANCE) : 1;
     int32_t cx = getLocation().getChunkX();
     int32_t cz = getLocation().getChunkZ();
@@ -94,17 +109,6 @@ void EntityPlayer::chunkChanged() {
         for(int32_t z = cz - i + 1; z <= cz + i - 1; ++z) {
             loadChunk(cx - i, z);
             loadChunk(cx + i, z);
-        }
-    }
-
-    nearbyEntities.clear();
-    for(auto& e : Server::get().getEntities()) {
-        if(e.get() != this) {
-            double d = e->getLocation().distanceSquared(getLocation());
-
-            if(d <= Server::ENTITY_VIEW_DISTANCE_SQ) {
-                nearbyEntities.insert(e);
-            }
         }
     }
 }
