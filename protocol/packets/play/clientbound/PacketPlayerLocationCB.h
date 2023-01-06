@@ -5,21 +5,19 @@
 #ifndef SPICYGOAT_PACKETPLAYERLOCATIONCB_H
 #define SPICYGOAT_PACKETPLAYERLOCATIONCB_H
 
-
 #include "../../../../world/geo/Location.h"
 #include "../../ClientBoundPacket.h"
 
 class PacketPlayerLocationCB : public ClientBoundPacket {
-public:
+   public:
     explicit PacketPlayerLocationCB(Location location);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     Location location;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERLOCATIONCB_H
+#endif  // SPICYGOAT_PACKETPLAYERLOCATIONCB_H

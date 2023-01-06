@@ -5,25 +5,21 @@
 #ifndef SPICYGOAT_BLOCKSTATE_H
 #define SPICYGOAT_BLOCKSTATE_H
 
-
-#include <string>
 #include <cstdint>
 #include <map>
+#include <string>
 
 class BlockState {
-public:
+   public:
     BlockState() = default;
     explicit BlockState(const std::string &name);
 
-    void addProperty(const std::string& key, std::string value);
+    void addProperty(const std::string &key, std::string value);
 
     const std::string &getName() const;
 
-    [[nodiscard]]
-    bool isAir() const {
-        return name == "minecraft:air"
-            || name == "minecraft:cave_air"
-            || name == "minecraft:void_air";
+    [[nodiscard]] bool isAir() const {
+        return name == "minecraft:air" || name == "minecraft:cave_air" || name == "minecraft:void_air";
     }
 
     bool operator<(const BlockState &rhs) const;
@@ -36,11 +32,10 @@ public:
 
     std::string toString();
 
-private:
+   private:
     std::string name;
 
     std::map<std::string, std::string> properties;
 };
 
-
-#endif //SPICYGOAT_BLOCKSTATE_H
+#endif  // SPICYGOAT_BLOCKSTATE_H

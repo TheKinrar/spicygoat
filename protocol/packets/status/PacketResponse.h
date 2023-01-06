@@ -5,17 +5,16 @@
 #ifndef SPICYGOAT_PACKETRESPONSE_H
 #define SPICYGOAT_PACKETRESPONSE_H
 
-#include "../Packet.h"
-#include "../ClientBoundPacket.h"
-
 #include <vector>
 
+#include "../ClientBoundPacket.h"
+#include "../Packet.h"
+
 class PacketResponse : public ClientBoundPacket {
-public:
+   public:
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 };
 
-
-#endif //SPICYGOAT_PACKETRESPONSE_H
+#endif  // SPICYGOAT_PACKETRESPONSE_H

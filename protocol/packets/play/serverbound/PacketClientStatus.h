@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETCLIENTSTATUS_H
 #define SPICYGOAT_PACKETCLIENTSTATUS_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketClientStatus : public ServerBoundPacket {
-public:
+   public:
     explicit PacketClientStatus(PacketData& data);
 
     std::string toString() const override;
@@ -17,5 +16,4 @@ public:
     int action;
 };
 
-
-#endif //SPICYGOAT_PACKETCLIENTSTATUS_H
+#endif  // SPICYGOAT_PACKETCLIENTSTATUS_H

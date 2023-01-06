@@ -8,11 +8,10 @@
 #include "../../ClientBoundPacket.h"
 
 class PacketRenderCenter : public ClientBoundPacket {
-public:
+   public:
     explicit PacketRenderCenter(int x, int z) : x(x), z(z) {}
 
-    [[nodiscard]]
-    std::vector<std::byte> bytes() const override {
+    [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x4A, array);
         PacketData::writeVarInt(x, array);
@@ -20,13 +19,11 @@ public:
         return array;
     }
 
-    [[nodiscard]]
-    std::string toString() const override {
-        return std::string("PacketRenderCenter{x=") + std::to_string(x)
-                + ",z=" + std::to_string(z) + "}";
+    [[nodiscard]] std::string toString() const override {
+        return std::string("PacketRenderCenter{x=") + std::to_string(x) + ",z=" + std::to_string(z) + "}";
     }
 
     const int x, z;
 };
 
-#endif //SPICYGOAT_PACKETRENDERCENTER_H
+#endif  // SPICYGOAT_PACKETRENDERCENTER_H

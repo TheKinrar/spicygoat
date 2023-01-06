@@ -2,15 +2,17 @@
 // Created by thekinrar on 18/09/2020.
 //
 
+#include "LoginListener.h"
+
 #include <uuid.h>
+
 #include <iostream>
 #include <utility>
 
-#include "LoginListener.h"
 #include "../../Server.h"
 #include "../../protocol/channels/minecraft/CMBrand.h"
-#include "PlayerConnection.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
+#include "PlayerConnection.h"
 
 LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}
 
@@ -23,17 +25,16 @@ void LoginListener::onLoginStart(const PacketLoginStart &packet) {
     uuids::uuid_random_generator gen{generator};
 
     connection->username = packet.name;
-    connection->uuid = gen(); // TODO generate offline UUID like official server does
+    connection->uuid = gen();  // TODO generate offline UUID like official server does
 
     // Velocity
     std::vector<std::byte> request;
-    PacketData::writeByte(4, request); // Velocity protocol version (MODERN_LAZY_SESSION)
+    PacketData::writeByte(4, request);  // Velocity protocol version (MODERN_LAZY_SESSION)
     connection->sendPacket(PacketPluginRequest(42, "velocity:player_info", request));
 }
 
 void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
-    if(response.id != 42)
-        throw std::runtime_error("Unexpected plugin response");
+    if(response.id != 42) throw std::runtime_error("Unexpected plugin response");
 
     if(response.successful) {
         std::cout << connection->getName() << " is a proxy" << std::endl;
@@ -45,8 +46,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         // TODO verify signature
 
         int protocolVersion = data.readVarInt();
-        if(protocolVersion != 4)
-            throw std::runtime_error("Unsupported Velocity protocol version");
+        if(protocolVersion != 4) throw std::runtime_error("Unsupported Velocity protocol version");
 
         std::string address = data.readString();
         std::cout << connection->getName() << " proxies " << address << std::endl;
@@ -80,10 +80,11 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     auto pos = Server::get().getWorld().getSpawnPosition();
     connection->sendPacket(PacketJoinGame(player));
     CMBrand(std::string("SpicyGoat")).send(*connection);
-    connection->sendPacket(PacketServerDifficulty(0)); // TODO difficulty
+    connection->sendPacket(PacketServerDifficulty(0));  // TODO difficulty
     connection->sendPacket(PacketSpawnPosition(pos));
-    connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1)); // TODO player abilities
-    connection->sendPacket(PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0))); // TODO player location
+    connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
+    connection->sendPacket(
+        PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0)));  // TODO player location
     connection->getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));

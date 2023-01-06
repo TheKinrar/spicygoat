@@ -3,8 +3,9 @@
 //
 
 #include "HandshakeListener.h"
-#include "StatusListener.h"
+
 #include "LoginListener.h"
+#include "StatusListener.h"
 
 void HandshakeListener::onHandshake(const PacketHandshake &packet) {
     if(packet.getNextState() == ProtocolState::STATUS) {

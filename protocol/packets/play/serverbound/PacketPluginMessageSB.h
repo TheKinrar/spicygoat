@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLUGINMESSAGESB_H
 #define SPICYGOAT_PACKETPLUGINMESSAGESB_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketPluginMessageSB : public ServerBoundPacket {
-public:
+   public:
     explicit PacketPluginMessageSB(PacketData& data);
 
     std::string toString() const override;
@@ -18,5 +17,4 @@ public:
     std::vector<std::byte> data;
 };
 
-
-#endif //SPICYGOAT_PACKETPLUGINMESSAGESB_H
+#endif  // SPICYGOAT_PACKETPLUGINMESSAGESB_H

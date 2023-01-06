@@ -2,10 +2,10 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <stdexcept>
-#include <sstream>
-
 #include "packets.h"
+
+#include <sstream>
+#include <stdexcept>
 
 std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
     int id = data.readVarInt();
@@ -49,7 +49,7 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
             case S_PLAYER_LOOK:
                 return std::make_unique<PacketPlayerLook>(data);
             case 0x16:
-                return nullptr; // TODO Player
+                return nullptr;  // TODO Player
             case S_PLAYER_ABILITIES:
                 return std::make_unique<PacketPlayerAbilitiesSB>(data);
             case S_PLAYER_DIGGING:
@@ -57,7 +57,7 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
             case S_ENTITY_ACTION:
                 return std::make_unique<PacketEntityAction>(data);
             case 0x2F:
-                return nullptr; // TODO Animation
+                return nullptr;  // TODO Animation
             case S_CLOSE_WINDOW:
                 return nullptr;
             case S_SET_CREATIVE_SLOT:

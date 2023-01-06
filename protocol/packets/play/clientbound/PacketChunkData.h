@@ -5,21 +5,19 @@
 #ifndef SPICYGOAT_PACKETCHUNKDATA_H
 #define SPICYGOAT_PACKETCHUNKDATA_H
 
-
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/chunks/ChunkColumn.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketChunkData : public ClientBoundPacket {
-public:
+   public:
     explicit PacketChunkData(ChunkColumn &chunkColumn);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     ChunkColumn &chunkColumn;
 };
 
-
-#endif //SPICYGOAT_PACKETCHUNKDATA_H
+#endif  // SPICYGOAT_PACKETCHUNKDATA_H

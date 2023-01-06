@@ -6,20 +6,11 @@
 #define SPICYGOAT_PACKETS_H
 
 #include "../protocol.h"
-
 #include "packets/enum.h"
-
 #include "packets/handshake/PacketHandshake.h"
-
-#include "packets/status/PacketPing.h"
-#include "packets/status/PacketPong.h"
-#include "packets/status/PacketRequest.h"
-#include "packets/status/PacketResponse.h"
-
 #include "packets/login/PacketLoginStart.h"
 #include "packets/login/PacketLoginSuccess.h"
 #include "packets/login/PacketPluginResponse.h"
-
 #include "packets/play/clientbound/PacketBlockUpdate.h"
 #include "packets/play/clientbound/PacketChunkData.h"
 #include "packets/play/clientbound/PacketEntityMoveLook.h"
@@ -32,7 +23,6 @@
 #include "packets/play/clientbound/PacketServerDifficulty.h"
 #include "packets/play/clientbound/PacketSpawnPosition.h"
 #include "packets/play/clientbound/PacketUnloadChunk.h"
-
 #include "packets/play/serverbound/PacketChatMessageSB.h"
 #include "packets/play/serverbound/PacketClientSettings.h"
 #include "packets/play/serverbound/PacketClientStatus.h"
@@ -47,9 +37,13 @@
 #include "packets/play/serverbound/PacketSetCreativeSlot.h"
 #include "packets/play/serverbound/PacketTeleportConfirm.h"
 #include "packets/play/serverbound/PacketUseItemOn.h"
+#include "packets/status/PacketPing.h"
+#include "packets/status/PacketPong.h"
+#include "packets/status/PacketRequest.h"
+#include "packets/status/PacketResponse.h"
 
 namespace Packets {
-    std::unique_ptr<Packet> parse(PacketData& data, ProtocolState state);
+std::unique_ptr<Packet> parse(PacketData& data, ProtocolState state);
 }
 
-#endif //SPICYGOAT_PACKETS_H
+#endif  // SPICYGOAT_PACKETS_H

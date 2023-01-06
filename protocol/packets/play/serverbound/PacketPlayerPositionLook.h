@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLAYERLOCATIONSB_H
 #define SPICYGOAT_PACKETPLAYERLOCATIONSB_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketPlayerPositionLook : public ServerBoundPacket {
-public:
+   public:
     explicit PacketPlayerPositionLook(PacketData& data);
 
     std::string toString() const override;
@@ -19,5 +18,4 @@ public:
     bool onGround;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERLOCATIONSB_H
+#endif  // SPICYGOAT_PACKETPLAYERLOCATIONSB_H

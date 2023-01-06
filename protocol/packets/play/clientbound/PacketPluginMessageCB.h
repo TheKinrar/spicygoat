@@ -5,21 +5,19 @@
 #ifndef SPICYGOAT_PACKETPLUGINMESSAGECB_H
 #define SPICYGOAT_PACKETPLUGINMESSAGECB_H
 
-
 #include "../../ClientBoundPacket.h"
 
 class PacketPluginMessageCB : public ClientBoundPacket {
-public:
+   public:
     PacketPluginMessageCB(std::string channel, std::vector<std::byte> data);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     std::string channel;
     std::vector<std::byte> data;
 };
 
-
-#endif //SPICYGOAT_PACKETPLUGINMESSAGECB_H
+#endif  // SPICYGOAT_PACKETPLUGINMESSAGECB_H

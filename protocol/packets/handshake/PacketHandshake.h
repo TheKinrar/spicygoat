@@ -7,27 +7,25 @@
 
 #include <string>
 
-#include "../ServerBoundPacket.h"
 #include "../../ProtocolState.h"
-
+#include "../ServerBoundPacket.h"
 
 class PacketHandshake : public ServerBoundPacket {
-public:
+   public:
     explicit PacketHandshake(PacketData& data);
 
     int getProtocolVersion() const;
-    const std::string &getServerAddress() const;
+    const std::string& getServerAddress() const;
     uint16_t getServerPort() const;
     int getNextState() const;
 
     std::string toString() const override;
 
-private:
+   private:
     int protocolVersion;
     std::string serverAddress;
     uint16_t serverPort;
     ProtocolState nextState;
 };
 
-
-#endif //SPICYGOAT_PACKETHANDSHAKE_H
+#endif  // SPICYGOAT_PACKETHANDSHAKE_H

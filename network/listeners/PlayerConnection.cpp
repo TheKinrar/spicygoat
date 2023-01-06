@@ -2,14 +2,16 @@
 // Created by thekinrar on 17/09/2020.
 //
 
-#include <iostream>
 #include "PlayerConnection.h"
-#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+
+#include <iostream>
+
 #include "../../Server.h"
 #include "../../config/Config.h"
+#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 
-PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player) : connection(connection),
-                                                                                      player(player) {}
+PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
+    : connection(connection), player(player) {}
 
 void PlayerConnection::onTeleportConfirm(const PacketTeleportConfirm &packet) {
     // TODO confirm TP
@@ -56,8 +58,8 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
         if(Config::get().gamemode == 1) {
             Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
 
-            Server::get().broadcastPacket(PacketBlockUpdate(packet.position,
-                                                            Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
+            Server::get().broadcastPacket(PacketBlockUpdate(
+                packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
         }
     }
 }
@@ -87,7 +89,7 @@ void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
                 Server::get().getWorld().setBlockState(packet.position.relative(packet.face), bs);
 
                 Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
-                        Server::get().getPalette()->getBlockStateId(bs)));
+                                                                Server::get().getPalette()->getBlockStateId(bs)));
             }
         }
     }

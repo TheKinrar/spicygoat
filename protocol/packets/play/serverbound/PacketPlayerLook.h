@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLAYERLOOK_H
 #define SPICYGOAT_PACKETPLAYERLOOK_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketPlayerLook : public ServerBoundPacket {
-public:
+   public:
     explicit PacketPlayerLook(PacketData& data);
 
     std::string toString() const override;
@@ -18,5 +17,4 @@ public:
     bool onGround;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERLOOK_H
+#endif  // SPICYGOAT_PACKETPLAYERLOOK_H

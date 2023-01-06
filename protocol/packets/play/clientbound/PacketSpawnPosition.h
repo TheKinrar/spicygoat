@@ -8,18 +8,16 @@
 #include "../../../../world/geo/Position.h"
 #include "../../ClientBoundPacket.h"
 
-
 class PacketSpawnPosition : public ClientBoundPacket {
-public:
+   public:
     explicit PacketSpawnPosition(Position position);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     Position position;
 };
 
-
-#endif //SPICYGOAT_PACKETSPAWNPOSITION_H
+#endif  // SPICYGOAT_PACKETSPAWNPOSITION_H

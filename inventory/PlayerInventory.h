@@ -5,7 +5,6 @@
 #ifndef SPICYGOAT_PLAYERINVENTORY_H
 #define SPICYGOAT_PLAYERINVENTORY_H
 
-
 #include <utility>
 
 #include "../item/ItemStack.h"
@@ -16,10 +15,9 @@ class PlayerInventory {
     ItemStack slots[PLAYER_INVENTORY_SIZE];
     int selectedSlot = 36;
 
-public:
+   public:
     void setSlot(int slot, ItemStack stack) {
-        if(slot < 5)
-            throw std::runtime_error("Can't set crafting slots");
+        if(slot < 5) throw std::runtime_error("Can't set crafting slots");
 
         slots[slot] = std::move(stack);
     }
@@ -33,5 +31,4 @@ public:
     }
 };
 
-
-#endif //SPICYGOAT_PLAYERINVENTORY_H
+#endif  // SPICYGOAT_PLAYERINVENTORY_H

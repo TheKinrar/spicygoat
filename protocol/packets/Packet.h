@@ -5,26 +5,22 @@
 #ifndef SPICYGOAT_PACKET_H
 #define SPICYGOAT_PACKET_H
 
-#include "enum.h"
 #include "../PacketData.h"
+#include "enum.h"
 
 class Packet {
-public:
+   public:
     explicit Packet(int id);
     virtual ~Packet() = default;
 
-    [[nodiscard]]
-    int getId() const;
+    [[nodiscard]] int getId() const;
 
-    [[nodiscard]]
-    virtual std::vector<std::byte> bytes() const = 0;
+    [[nodiscard]] virtual std::vector<std::byte> bytes() const = 0;
 
-    [[nodiscard]]
-    virtual std::string toString() const = 0;
+    [[nodiscard]] virtual std::string toString() const = 0;
 
-private:
+   private:
     int id;
 };
 
-
-#endif //SPICYGOAT_PACKET_H
+#endif  // SPICYGOAT_PACKET_H

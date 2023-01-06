@@ -7,20 +7,21 @@
 
 class TCPConnection;
 
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <queue>
-#include "Entity.h"
-#include "../world/geo/Location.h"
-#include "../world/chunks/ChunkColumn.h"
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "../TCPConnection.h"
-#include "../world/geo/Position2D.h"
 #include "../inventory/PlayerInventory.h"
+#include "../world/chunks/ChunkColumn.h"
+#include "../world/geo/Location.h"
+#include "../world/geo/Position2D.h"
+#include "Entity.h"
 
 class EntityPlayer : public Entity {
-public:
-    EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn);
+   public:
+    EntityPlayer(uuids::uuid uuid, std::string &name, std::shared_ptr<TCPConnection> conn);
 
     void tick() override;
 
@@ -38,10 +39,10 @@ public:
 
     PlayerInventory inventory;
 
-protected:
+   protected:
     void chunkChanged() override;
 
-private:
+   private:
     uuids::uuid uuid;
     std::string name;
 
@@ -53,5 +54,4 @@ private:
     std::set<std::shared_ptr<Entity>> nearbyEntities;
 };
 
-
-#endif //SPICYGOAT_ENTITYPLAYER_H
+#endif  // SPICYGOAT_ENTITYPLAYER_H

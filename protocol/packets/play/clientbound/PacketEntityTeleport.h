@@ -5,23 +5,21 @@
 #ifndef SPICYGOAT_PACKETENTITYTELEPORT_H
 #define SPICYGOAT_PACKETENTITYTELEPORT_H
 
-
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/geo/Location.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketEntityTeleport : public ClientBoundPacket {
-public:
+   public:
     PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int32_t eid;
     Location loc;
     bool onGround;
 };
 
-
-#endif //SPICYGOAT_PACKETENTITYTELEPORT_H
+#endif  // SPICYGOAT_PACKETENTITYTELEPORT_H

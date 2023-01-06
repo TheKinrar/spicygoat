@@ -5,15 +5,14 @@
 #ifndef SPICYGOAT_PACKETSPAWNPLAYER_H
 #define SPICYGOAT_PACKETSPAWNPLAYER_H
 
-
 #include <uuid.h>
 
 #include "../../ClientBoundPacket.h"
 
 class PacketSpawnPlayer : public ClientBoundPacket {
-public:
+   public:
     explicit PacketSpawnPlayer(const int32_t eid, uuids::uuid uuid, const double x, const double y, const double z,
-                      const float yaw, const float pitch);
+                               const float yaw, const float pitch);
 
     std::vector<std::byte> bytes() const override;
 
@@ -25,5 +24,4 @@ public:
     const float yaw, pitch;
 };
 
-
-#endif //SPICYGOAT_PACKETSPAWNPLAYER_H
+#endif  // SPICYGOAT_PACKETSPAWNPLAYER_H

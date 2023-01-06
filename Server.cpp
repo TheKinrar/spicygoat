@@ -2,15 +2,17 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include "Server.h"
+
 #include <fstream>
 #include <iostream>
-#include "Server.h"
-#include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
+
 #include "TCPServer.h"
-#include "tracking/PlayerTracker.h"
-#include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
 #include "protocol/packets/play/clientbound/PacketDestroyEntities.h"
+#include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
+#include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
 #include "resources_out/resources.h"
+#include "tracking/PlayerTracker.h"
 
 Server::Server() {
     nlohmann::json j = nlohmann::json::parse(Resources::blocks());
@@ -51,7 +53,8 @@ void Server::run() {
     while(TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();
         tick();
-        long tickTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();
+        long tickTime =
+            std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now() - tickStart).count();
 
         if(tickTime < 50000) {
             std::this_thread::sleep_for(std::chrono::microseconds(50000 - tickTime));
@@ -61,7 +64,8 @@ void Server::run() {
     tcpThread.join();
 }
 
-std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn) {
+std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string name,
+                                                   std::shared_ptr<TCPConnection> conn) {
     auto player = std::make_shared<EntityPlayer>(uuid, name, conn);
 
     std::vector<std::shared_ptr<EntityPlayer>> array;
@@ -78,7 +82,7 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     return player;
 }
 
-void Server::removePlayer(EntityPlayer &p) {
+void Server::removePlayer(EntityPlayer& p) {
     entities.erase(p.getEID());
     players.erase(p.getUuid());
     playerCount--;
@@ -96,7 +100,7 @@ int32_t Server::nextEID() {
 }
 
 void Server::tick() {
-    for(auto &p : getPlayers()) {
+    for(auto& p : getPlayers()) {
         p->tick();
     }
 }
@@ -122,4 +126,3 @@ unsigned long Server::getPlayerCount() const {
 std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {
     return std::make_unique<PlayerTracker>(e);
 }
-

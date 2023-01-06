@@ -8,16 +8,15 @@
 #include "../../ClientBoundPacket.h"
 
 class PacketServerDifficulty : public ClientBoundPacket {
-public:
+   public:
     explicit PacketServerDifficulty(uint8_t difficulty);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     uint8_t difficulty;
 };
 
-
-#endif //SPICYGOAT_PACKETSERVERDIFFICULTY_H
+#endif  // SPICYGOAT_PACKETSERVERDIFFICULTY_H

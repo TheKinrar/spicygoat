@@ -5,8 +5,8 @@
 #ifndef SPICYGOAT_TCPCONNECTION_H
 #define SPICYGOAT_TCPCONNECTION_H
 
-#include <thread>
 #include <mutex>
+#include <thread>
 #include <utility>
 
 #ifdef __linux__
@@ -21,12 +21,12 @@
 class EntityPlayer;
 class PacketListener;
 
-#include "protocol.h"
-#include "network/PacketListener.h"
 #include "entities/EntityPlayer.h"
+#include "network/PacketListener.h"
+#include "protocol.h"
 
 class TCPConnection {
-public:
+   public:
     TCPConnection(int sock, sockaddr_in addr);
     TCPConnection(const TCPConnection&) = delete;
     void operator=(const TCPConnection&) = delete;
@@ -62,7 +62,7 @@ public:
 
     bool alive = true;
 
-private:
+   private:
     int sock;
     sockaddr_in addr;
 
@@ -82,5 +82,4 @@ private:
     int readVarInt();
 };
 
-
-#endif //SPICYGOAT_TCPCONNECTION_H
+#endif  // SPICYGOAT_TCPCONNECTION_H

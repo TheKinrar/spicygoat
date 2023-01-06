@@ -8,17 +8,16 @@
 #include "../ClientBoundPacket.h"
 
 class PacketLoginSuccess : public ClientBoundPacket {
-public:
+   public:
     PacketLoginSuccess(uuids::uuid uuid, const std::string &username);
 
     std::vector<std::byte> bytes() const override;
 
     [[nodiscard]] std::string toString() const override;
 
-private:
+   private:
     uuids::uuid uuid;
     std::string username;
 };
 
-
-#endif //SPICYGOAT_PACKETLOGINSUCCESS_H
+#endif  // SPICYGOAT_PACKETLOGINSUCCESS_H

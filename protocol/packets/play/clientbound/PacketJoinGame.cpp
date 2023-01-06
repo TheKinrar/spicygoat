@@ -2,12 +2,15 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include <io/stream_writer.h>
-#include <sstream>
 #include "PacketJoinGame.h"
-#include "nbt_tags.h"
+
+#include <io/stream_writer.h>
+
+#include <sstream>
+
 #include "../../../../Server.h"
 #include "../../../../config/Config.h"
+#include "nbt_tags.h"
 #include "resources_out/resources.h"
 
 PacketJoinGame::PacketJoinGame(std::shared_ptr<EntityPlayer> player) {
@@ -19,7 +22,7 @@ std::vector<std::byte> nbtBytes(const nbt::tag_compound& tag) {
     nbt::io::stream_writer(out).write_tag("", tag);
     std::string out_str = out.str();
     std::vector<std::byte> out_arr;
-    for(char &c : out_str) {
+    for(char& c : out_str) {
         out_arr.push_back(static_cast<std::byte>(c));
     }
     return out_arr;
@@ -108,9 +111,9 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(0x24, array);
     PacketData::writeInt(player->getEID(), array);
-    PacketData::writeBoolean(false, array); // TODO hardcore
+    PacketData::writeBoolean(false, array);  // TODO hardcore
     PacketData::writeUnsignedByte(Config::get().gamemode, array);
-    PacketData::writeUnsignedByte(255, array); // TODO prev gamemode
+    PacketData::writeUnsignedByte(255, array);  // TODO prev gamemode
 
     // TODO world names []
     PacketData::writeVarInt(1, array);
@@ -120,20 +123,20 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     codec.put("minecraft:dimension_type", std::move(dimRegistry()));
     codec.put("minecraft:worldgen/biome", std::move(biomeRegistry()));
     std::vector<std::byte> codecBytes = nbtBytes(codec);*/
-    PacketData::writeByteArray(Resources::codec(), array); // TODO dimensions/biomes codec
+    PacketData::writeByteArray(Resources::codec(), array);  // TODO dimensions/biomes codec
 
-    PacketData::writeString("minecraft:overworld", array); // current world type
-    PacketData::writeString("minecraft:overworld", array); // current world name
+    PacketData::writeString("minecraft:overworld", array);  // current world type
+    PacketData::writeString("minecraft:overworld", array);  // current world name
 
-    PacketData::writeLong(0, array); // TODO first 8B of sha-256 hash of seed
-    PacketData::writeVarInt(1, array); // TODO max players
-    PacketData::writeVarInt(10, array); // TODO render distance
-    PacketData::writeVarInt(10, array); // TODO simulation distance
-    PacketData::writeBoolean(false, array); // TODO reduced debug info
-    PacketData::writeBoolean(true, array); // TODO enable respawn screen (false if doImmediateRespawn gamerule)
-    PacketData::writeBoolean(false, array); // TODO debug mode
-    PacketData::writeBoolean(false, array); // TODO superflat
-    PacketData::writeBoolean(false, array); // has death location
+    PacketData::writeLong(0, array);         // TODO first 8B of sha-256 hash of seed
+    PacketData::writeVarInt(1, array);       // TODO max players
+    PacketData::writeVarInt(10, array);      // TODO render distance
+    PacketData::writeVarInt(10, array);      // TODO simulation distance
+    PacketData::writeBoolean(false, array);  // TODO reduced debug info
+    PacketData::writeBoolean(true, array);   // TODO enable respawn screen (false if doImmediateRespawn gamerule)
+    PacketData::writeBoolean(false, array);  // TODO debug mode
+    PacketData::writeBoolean(false, array);  // TODO superflat
+    PacketData::writeBoolean(false, array);  // has death location
     return array;
 }
 

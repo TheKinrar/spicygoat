@@ -4,7 +4,8 @@
 
 #include "PacketEntityTeleport.h"
 
-PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround) : ClientBoundPacket(0x56), eid(eid), loc(loc), onGround(onGround) {}
+PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround)
+    : ClientBoundPacket(0x56), eid(eid), loc(loc), onGround(onGround) {}
 
 std::vector<std::byte> PacketEntityTeleport::bytes() const {
     std::vector<std::byte> array;

@@ -3,6 +3,7 @@
 //
 
 #include "Location.h"
+
 #include "../World.h"
 
 Location::Location() : Location(0, 0, 0, 0, 0) {}
@@ -30,12 +31,8 @@ float Location::getPitch() const {
 }
 
 std::string Location::toString() const {
-    return std::string("Location{") + std::to_string(x)
-            + "," + std::to_string(y)
-            + "," + std::to_string(z)
-            + "," + std::to_string(yaw)
-            + "," + std::to_string(pitch)
-            + "}";
+    return std::string("Location{") + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + "," +
+           std::to_string(yaw) + "," + std::to_string(pitch) + "}";
 }
 
 void Location::setX(double x) {
@@ -59,11 +56,7 @@ void Location::setPitch(float pitch) {
 }
 
 bool Location::operator==(const Location &rhs) const {
-    return x == rhs.x &&
-           y == rhs.y &&
-           z == rhs.z &&
-           yaw == rhs.yaw &&
-           pitch == rhs.pitch;
+    return x == rhs.x && y == rhs.y && z == rhs.z && yaw == rhs.yaw && pitch == rhs.pitch;
 }
 
 bool Location::operator!=(const Location &rhs) const {
@@ -71,11 +64,11 @@ bool Location::operator!=(const Location &rhs) const {
 }
 
 int32_t Location::getChunkX() const {
-    return (int32_t) (getX() / 16);
+    return (int32_t)(getX() / 16);
 }
 
 int32_t Location::getChunkZ() const {
-    return (int32_t) (getZ() / 16);
+    return (int32_t)(getZ() / 16);
 }
 
 double Location::distanceSquared(const Location &other) const {
@@ -83,5 +76,5 @@ double Location::distanceSquared(const Location &other) const {
     double dy = y - other.y;
     double dz = z - other.z;
 
-    return dx*dx + dy*dy + dz*dz;
+    return dx * dx + dy * dy + dz * dz;
 }

@@ -19,7 +19,5 @@ int32_t Position::getZ() const {
 }
 
 std::string Position::toString() const {
-    return std::string("Position{x=") + std::to_string(x)
-            + ",y=" + std::to_string(y)
-            + ",z=" + std::to_string(z) + "}";
+    return std::string("Position{x=") + std::to_string(x) + ",y=" + std::to_string(y) + ",z=" + std::to_string(z) + "}";
 }

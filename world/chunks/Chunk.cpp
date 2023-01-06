@@ -3,9 +3,12 @@
 //
 
 #include "Chunk.h"
-#include "../../protocol/PacketData.h"
+
 #include <tag_array.h>
+
 #include <iostream>
+
+#include "../../protocol/PacketData.h"
 
 Chunk::Chunk(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 
@@ -30,15 +33,12 @@ void Chunk::loadNBT(nbt::tag_compound& nbt) {
         }
     }
 
-    if (nbt.has_key("BlockLight"))
-        blockLight = nbt.at("BlockLight").as<nbt::tag_byte_array>().get();
+    if(nbt.has_key("BlockLight")) blockLight = nbt.at("BlockLight").as<nbt::tag_byte_array>().get();
 
-    if (nbt.has_key("SkyLight"))
-        skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
+    if(nbt.has_key("SkyLight")) skyLight = nbt.at("SkyLight").as<nbt::tag_byte_array>().get();
 }
 
-[[nodiscard]]
-const ChunkPalette& Chunk::getPalette() const {
+[[nodiscard]] const ChunkPalette& Chunk::getPalette() const {
     return *palette;
 }
 
@@ -46,10 +46,10 @@ bool Chunk::hasData() {
     return palette != nullptr;
 }
 
-void Chunk::writeToByteArray(std::vector<std::byte> &array) {
+void Chunk::writeToByteArray(std::vector<std::byte>& array) {
     PacketData::writeShort(4096 - countAirBlocks(), array);
 
-    //std::cout << palette->toString(true) << std::endl; TODO
+    // std::cout << palette->toString(true) << std::endl; TODO
     palette->writeToByteArray(array);
 
     std::vector<std::byte> data;
@@ -60,7 +60,7 @@ void Chunk::writeToByteArray(std::vector<std::byte> &array) {
     PacketData::writeByteArray(data, array);
 
     // TODO fake biomes
-    PacketData::writeUnsignedByte(0, array); // single palette (0 b/entry)
-    PacketData::writeVarInt(0, array); // biome ID 0 in global palette
-    PacketData::writeVarInt(0, array); // no data (because single palette)
+    PacketData::writeUnsignedByte(0, array);  // single palette (0 b/entry)
+    PacketData::writeVarInt(0, array);        // biome ID 0 in global palette
+    PacketData::writeVarInt(0, array);        // no data (because single palette)
 }

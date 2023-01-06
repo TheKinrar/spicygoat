@@ -5,20 +5,18 @@
 #ifndef SPICYGOAT_PACKETPONG_H
 #define SPICYGOAT_PACKETPONG_H
 
-
 #include "../ClientBoundPacket.h"
 
 class PacketPong : public ClientBoundPacket {
-public:
+   public:
     explicit PacketPong(int64_t payload);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int64_t payload;
 };
 
-
-#endif //SPICYGOAT_PACKETPONG_H
+#endif  // SPICYGOAT_PACKETPONG_H

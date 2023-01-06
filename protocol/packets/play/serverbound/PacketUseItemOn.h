@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETUSEITEMON_H
 #define SPICYGOAT_PACKETUSEITEMON_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketUseItemOn : public ServerBoundPacket {
-public:
+   public:
     int hand;
     Position position;
     Face face;
@@ -19,21 +18,20 @@ public:
     bool insideBlock;
     int sequence;
 
-    explicit PacketUseItemOn(PacketData& data) : ServerBoundPacket(Packets::S_USE_ITEM_ON),
-            hand(data.readVarInt()),
-            position(data.readPosition()),
-            face(data.readFace()),
-            cursorX(data.readFloat()),
-            cursorY(data.readFloat()),
-            cursorZ(data.readFloat()),
-            insideBlock(data.readBoolean()),
-            sequence(data.readVarInt()) {}
+    explicit PacketUseItemOn(PacketData& data)
+        : ServerBoundPacket(Packets::S_USE_ITEM_ON),
+          hand(data.readVarInt()),
+          position(data.readPosition()),
+          face(data.readFace()),
+          cursorX(data.readFloat()),
+          cursorY(data.readFloat()),
+          cursorZ(data.readFloat()),
+          insideBlock(data.readBoolean()),
+          sequence(data.readVarInt()) {}
 
-    [[nodiscard]]
-    std::string toString() const override {
+    [[nodiscard]] std::string toString() const override {
         return "PacketUseItemOn{...}";
     }
 };
 
-
-#endif //SPICYGOAT_PACKETUSEITEMON_H
+#endif  // SPICYGOAT_PACKETUSEITEMON_H

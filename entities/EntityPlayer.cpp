@@ -2,17 +2,20 @@
 // Created by thekinrar on 01/04/19.
 //
 
+#include "EntityPlayer.h"
+
 #include <iostream>
 #include <utility>
-#include "EntityPlayer.h"
+
 #include "../Server.h"
-#include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 #include "../protocol/packets/play/clientbound/PacketChunkData.h"
 #include "../protocol/packets/play/clientbound/PacketDestroyEntities.h"
-#include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
+#include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
+#include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 
-EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn) : conn(std::move(conn)) {
+EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn)
+    : conn(std::move(conn)) {
     this->uuid = uuid;
     this->name = name;
 }
@@ -20,8 +23,7 @@ EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<
 void EntityPlayer::tick() {
     Entity::tick();
 
-    if(loadedChunks.empty())
-        chunkChanged();
+    if(loadedChunks.empty()) chunkChanged();
 
     int n = 0;
     while(!chunkSendQueue.empty()) {
@@ -36,8 +38,7 @@ void EntityPlayer::tick() {
         chunkSendQueue.pop();
 
         ++n;
-        if(++n == 5)
-            break;
+        if(++n == 5) break;
     }
 }
 
@@ -73,7 +74,7 @@ void EntityPlayer::chunkChanged() {
     }
 
     nearbyEntities.clear();
-    for(auto &e : Server::get().getEntities()) {
+    for(auto& e : Server::get().getEntities()) {
         if(e.get() != this) {
             double d = e->getLocation().distanceSquared(getLocation());
 
@@ -92,20 +93,17 @@ uuids::uuid EntityPlayer::getUuid() const {
     return uuid;
 }
 
-const std::string &EntityPlayer::getName() const {
+const std::string& EntityPlayer::getName() const {
     return name;
 }
 
-TCPConnection &EntityPlayer::getConnection() const {
+TCPConnection& EntityPlayer::getConnection() const {
     return *conn;
 }
 
 std::unique_ptr<ClientBoundPacket> EntityPlayer::createPacket() {
-    return std::make_unique<PacketSpawnPlayer>(
-            getEID(), uuid,
-            getLocation().getX(), getLocation().getY(), getLocation().getZ(),
-            getLocation().getYaw(), getLocation().getPitch()
-    );
+    return std::make_unique<PacketSpawnPlayer>(getEID(), uuid, getLocation().getX(), getLocation().getY(),
+                                               getLocation().getZ(), getLocation().getYaw(), getLocation().getPitch());
 }
 
 std::unique_ptr<ClientBoundPacket> EntityPlayer::removePacket() {

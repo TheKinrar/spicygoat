@@ -5,21 +5,23 @@
 #ifndef SPICYGOAT_PACKETDATA_H
 #define SPICYGOAT_PACKETDATA_H
 
-#include "../world/geo/Position.h"
-#include "../item/ItemStack.h"
+#include <uuid.h>
+
 #include <bitset>
-#include <stdexcept>
-#include <iostream>
+#include <cmath>
 #include <exception>
+#include <iostream>
 #include <memory>
+#include <span>
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <cmath>
-#include <uuid.h>
-#include <span>
+
+#include "../item/ItemStack.h"
+#include "../world/geo/Position.h"
 
 class PacketData {
-public:
+   public:
     explicit PacketData(std::shared_ptr<char[]> data, int length = -1, int offset = 0);
 
     int remaining();
@@ -75,7 +77,7 @@ public:
     }
 
     std::string readString();
-    static void writeString(const std::string&, std::vector<std::byte> &);
+    static void writeString(const std::string &, std::vector<std::byte> &);
 
     PacketData readPacketData(size_t len) {
         PacketData ret(data, len, pos);
@@ -83,7 +85,7 @@ public:
         return ret;
     }
 
-    void readByteArray(std::vector<std::byte>& dst, size_t len);
+    void readByteArray(std::vector<std::byte> &dst, size_t len);
 
     static void writeByteArray(const std::vector<std::byte> &, std::vector<std::byte> &);
     static void writeByteArray(const std::span<const std::byte> &span, std::vector<std::byte> &to) {
@@ -96,30 +98,28 @@ public:
     static void writePosition(Position position, std::vector<std::byte> &);
 
     template <size_t N>
-    static void writeBitSet(const std::bitset<N>& bitset, std::vector<std::byte>& bytes) {
-      if(bitset.size() > 64)
-        throw std::runtime_error("bitsets of more than 64 bits are not supported");
+    static void writeBitSet(const std::bitset<N> &bitset, std::vector<std::byte> &bytes) {
+        if(bitset.size() > 64) throw std::runtime_error("bitsets of more than 64 bits are not supported");
 
-      if(bitset.size() == 0) {
-        writeVarInt(0, bytes);
-      } else {
-        writeVarInt(1, bytes);
-        writeUnsignedLong(bitset.to_ulong(), bytes);
-      }
+        if(bitset.size() == 0) {
+            writeVarInt(0, bytes);
+        } else {
+            writeVarInt(1, bytes);
+            writeUnsignedLong(bitset.to_ulong(), bytes);
+        }
     }
 
     template <size_t N>
-    void readFixedBitSet(std::bitset<N>& dst) {
-        for(int i = 1; i < (N+7)/8; ++i) {
+    void readFixedBitSet(std::bitset<N> &dst) {
+        for(int i = 1; i < (N + 7) / 8; ++i) {
             dst << 8;
             dst |= readByte();
         }
     }
 
     template <size_t N>
-    static void writeFixedBitSet(const std::bitset<N>& bitset, std::vector<std::byte>& bytes) {
-        if(bitset.size() > 8)
-            throw std::runtime_error("bitsets of more than 8 bits are not supported");
+    static void writeFixedBitSet(const std::bitset<N> &bitset, std::vector<std::byte> &bytes) {
+        if(bitset.size() > 8) throw std::runtime_error("bitsets of more than 8 bits are not supported");
 
         writeByte(bitset.to_ulong() & 0xFF, bytes);
     }
@@ -151,5 +151,4 @@ public:
     int pos;
 };
 
-
-#endif //SPICYGOAT_PACKETDATA_H
+#endif  // SPICYGOAT_PACKETDATA_H

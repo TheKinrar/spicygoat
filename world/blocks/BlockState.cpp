@@ -2,13 +2,14 @@
 // Created by thekinrar on 09/04/19.
 //
 
+#include "BlockState.h"
+
 #include <cstdint>
 #include <utility>
-#include "BlockState.h"
 
 BlockState::BlockState(const std::string &name) : name(name) {}
 
-void BlockState::addProperty(const std::string& key, std::string value) {
+void BlockState::addProperty(const std::string &key, std::string value) {
     properties[key] = std::move(value);
 }
 
@@ -17,10 +18,8 @@ const std::string &BlockState::getName() const {
 }
 
 bool BlockState::operator<(const BlockState &rhs) const {
-    if (name < rhs.name)
-        return true;
-    if (rhs.name < name)
-        return false;
+    if(name < rhs.name) return true;
+    if(rhs.name < name) return false;
     return properties < rhs.properties;
 }
 

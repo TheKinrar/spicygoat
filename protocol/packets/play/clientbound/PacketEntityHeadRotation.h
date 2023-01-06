@@ -5,15 +5,13 @@
 #ifndef SPICYGOAT_PACKETENTITYHEADROTATION_H
 #define SPICYGOAT_PACKETENTITYHEADROTATION_H
 
-
 #include "../../ClientBoundPacket.h"
 
 class PacketEntityHeadRotation : public ClientBoundPacket {
-public:
+   public:
     PacketEntityHeadRotation(int eid, float headYaw) : eid(eid), headYaw(headYaw) {}
 
-    [[nodiscard]]
-    std::vector<std::byte> bytes() const override {
+    [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x3E, array);
         PacketData::writeVarInt(eid, array);
@@ -21,15 +19,13 @@ public:
         return array;
     }
 
-    [[nodiscard]]
-    std::string toString() const override {
-        return std::string("PacketEntityHeadRotation{eid=") + std::to_string(eid)
-                + ",headYaw=" + std::to_string(headYaw) + "}";
+    [[nodiscard]] std::string toString() const override {
+        return std::string("PacketEntityHeadRotation{eid=") + std::to_string(eid) +
+               ",headYaw=" + std::to_string(headYaw) + "}";
     }
 
     int eid;
     float headYaw;
 };
 
-
-#endif //SPICYGOAT_PACKETENTITYHEADROTATION_H
+#endif  // SPICYGOAT_PACKETENTITYHEADROTATION_H

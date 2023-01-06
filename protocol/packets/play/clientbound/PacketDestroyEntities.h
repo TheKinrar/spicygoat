@@ -5,20 +5,18 @@
 #ifndef SPICYGOAT_PACKETDESTROYENTITIES_H
 #define SPICYGOAT_PACKETDESTROYENTITIES_H
 
-
 #include "../../ClientBoundPacket.h"
 
 class PacketDestroyEntities : public ClientBoundPacket {
-public:
+   public:
     explicit PacketDestroyEntities(int32_t eid);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int32_t eid;
 };
 
-
-#endif //SPICYGOAT_PACKETDESTROYENTITIES_H
+#endif  // SPICYGOAT_PACKETDESTROYENTITIES_H

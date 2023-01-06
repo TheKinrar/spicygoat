@@ -5,20 +5,18 @@
 #ifndef SPICYGOAT_PACKETCHATMESSAGECB_H
 #define SPICYGOAT_PACKETCHATMESSAGECB_H
 
-
 #include "../../ClientBoundPacket.h"
 
 class PacketChatMessageCB : public ClientBoundPacket {
-public:
+   public:
     explicit PacketChatMessageCB(const std::string &message);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     const std::string message;
 };
 
-
-#endif //SPICYGOAT_PACKETCHATMESSAGECB_H
+#endif  // SPICYGOAT_PACKETCHATMESSAGECB_H

@@ -5,14 +5,16 @@
 #ifndef SPICYGOAT_CHUNK_H
 #define SPICYGOAT_CHUNK_H
 
-#include <tag_compound.h>
 #include <stdint-gcc.h>
-#include <iostream>
+#include <tag_compound.h>
+
 #include <bitset>
+#include <iostream>
+
 #include "ChunkPalette.h"
 
 class Chunk {
-private:
+   private:
     int32_t x, y, z;
 
     std::shared_ptr<ChunkPalette> palette;
@@ -21,7 +23,7 @@ private:
     std::vector<int8_t> blockLight;
     std::vector<int8_t> skyLight;
 
-public:
+   public:
     Chunk(int32_t x, int32_t y, int32_t z);
     Chunk(const Chunk&) = delete;
 
@@ -31,18 +33,16 @@ public:
 
     int32_t getZ() const;
 
-    [[nodiscard]]
-    const ChunkPalette& getPalette() const;
+    [[nodiscard]] const ChunkPalette& getPalette() const;
 
     bool hasData();
 
     void loadNBT(nbt::tag_compound&);
 
-    void writeToByteArray(std::vector<std::byte> &array);
+    void writeToByteArray(std::vector<std::byte>& array);
 
     void setBlockState(int x, int y, int z, BlockState state) {
-        if(!hasData())
-            throw std::runtime_error("Can't set block in unloaded chunk");
+        if(!hasData()) throw std::runtime_error("Can't set block in unloaded chunk");
 
         int16_t id = palette->getBlockStateId(state);
         if(id == -1) {
@@ -57,8 +57,7 @@ public:
     }
 
     BlockState getBlockState(int x, int y, int z) {
-        if(!hasData())
-            throw std::runtime_error("Can't get block in unloaded chunk");
+        if(!hasData()) throw std::runtime_error("Can't get block in unloaded chunk");
 
         return palette->getBlockState(readBlockState(blockStates, *palette, x, y, z));
     }
@@ -81,49 +80,48 @@ public:
         }
     }
 
-private:
+   private:
     void rewriteData(const ChunkPalette& from, const ChunkPalette& to) {
         std::vector<int64_t> newStates((4096 * to.getBitsPerBlock()) / 64);
         for(int x = 0; x < 16; ++x) {
             for(int y = 0; y < 16; ++y) {
                 for(int z = 0; z < 16; ++z) {
-                    writeBlockState(newStates, to, x, y, z,
-                                    readBlockState(blockStates, from, x, y, z));
+                    writeBlockState(newStates, to, x, y, z, readBlockState(blockStates, from, x, y, z));
                 }
             }
         }
         blockStates = newStates;
     }
 
-    [[nodiscard]]
-    static int64_t readBlockState(const std::vector<int64_t>& data, const ChunkPalette& palette, int x, int y, int z) {
-        int i = (((16 * y) + z) * 16) + x; // Block number
-        int iLong = i / palette.getBlocksPerLong(); // Index of the long containing the block
-        int offset = i % palette.getBlocksPerLong(); // Offset of the block in the long
-        int beforeBits = offset * palette.getBitsPerBlock(); // Count of prefix bits in the long
+    [[nodiscard]] static int64_t readBlockState(const std::vector<int64_t>& data, const ChunkPalette& palette, int x,
+                                                int y, int z) {
+        int i = (((16 * y) + z) * 16) + x;                    // Block number
+        int iLong = i / palette.getBlocksPerLong();           // Index of the long containing the block
+        int offset = i % palette.getBlocksPerLong();          // Offset of the block in the long
+        int beforeBits = offset * palette.getBitsPerBlock();  // Count of prefix bits in the long
 
-        uint64_t mask = (((uint64_t) 1 << palette.getBitsPerBlock()) - 1);
+        uint64_t mask = (((uint64_t)1 << palette.getBitsPerBlock()) - 1);
 
-        return (int64_t) ((data[iLong] >> beforeBits) & mask);
+        return (int64_t)((data[iLong] >> beforeBits) & mask);
     }
 
-    static void writeBlockState(std::vector<int64_t>& data, const ChunkPalette& palette, int x, int y, int z, int64_t id) {
+    static void writeBlockState(std::vector<int64_t>& data, const ChunkPalette& palette, int x, int y, int z,
+                                int64_t id) {
         if(palette.getBitsPerBlock() != 0) {
-            int i = (((16 * y) + z) * 16) + x; // Block number
-            int iLong = i / palette.getBlocksPerLong(); // Index of the long containing the block
-            int offset = i % palette.getBlocksPerLong(); // Offset of the block in the long
-            int beforeBits = offset * palette.getBitsPerBlock(); // Count of prefix bits in the long
-            int afterBits = 64 - beforeBits - palette.getBitsPerBlock(); // Count of suffix bits in the long
+            int i = (((16 * y) + z) * 16) + x;                            // Block number
+            int iLong = i / palette.getBlocksPerLong();                   // Index of the long containing the block
+            int offset = i % palette.getBlocksPerLong();                  // Offset of the block in the long
+            int beforeBits = offset * palette.getBitsPerBlock();          // Count of prefix bits in the long
+            int afterBits = 64 - beforeBits - palette.getBitsPerBlock();  // Count of suffix bits in the long
 
-            uint64_t beforeMask = ((uint64_t) 1 << beforeBits) - 1; // Prefix mask
-            uint64_t afterMask = (((uint64_t) 1 << afterBits) - 1) << (64 - afterBits); // Suffix mask
+            uint64_t beforeMask = ((uint64_t)1 << beforeBits) - 1;                      // Prefix mask
+            uint64_t afterMask = (((uint64_t)1 << afterBits) - 1) << (64 - afterBits);  // Suffix mask
 
             uint64_t current = data[iLong];
             uint64_t updated = (current & beforeMask) | (id << beforeBits) | (current & afterMask);
-            data[iLong] = (int64_t) updated;
+            data[iLong] = (int64_t)updated;
         }
     }
 };
 
-
-#endif //SPICYGOAT_CHUNK_H
+#endif  // SPICYGOAT_CHUNK_H

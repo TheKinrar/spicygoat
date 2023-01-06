@@ -2,22 +2,19 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include <stdexcept>
-#include <algorithm>
-#include <iostream>
-#include "../util/endian.h"
-
 #include "PacketData.h"
 
-PacketData::PacketData(std::shared_ptr<char[]> data, int length, int offset) :
-        data(std::move(data)),
-        length(length),
-        offset(offset),
-        pos(offset) {}
+#include <algorithm>
+#include <iostream>
+#include <stdexcept>
+
+#include "../util/endian.h"
+
+PacketData::PacketData(std::shared_ptr<char[]> data, int length, int offset)
+    : data(std::move(data)), length(length), offset(offset), pos(offset) {}
 
 int PacketData::remaining() {
-    if(length == -1)
-        return -1;
+    if(length == -1) return -1;
 
     return length - (pos - offset);
 }
@@ -76,10 +73,9 @@ int PacketData::readVarInt() {
 void PacketData::writeVarInt(int value, std::vector<std::byte> &bytes) {
     do {
         uint8_t byte = value & 0b01111111;
-        value = (int) ((unsigned int) value >> 7);
+        value = (int)((unsigned int)value >> 7);
 
-        if(value)
-            byte |= 0b10000000;
+        if(value) byte |= 0b10000000;
 
         bytes.push_back(std::byte(byte));
     } while(value);
@@ -89,11 +85,11 @@ uint16_t PacketData::readUnsignedShort() {
     uint8_t a = readByte();
     uint8_t b = readByte();
 
-    return (((uint16_t) a) << 8) | (0x00ff & b);
+    return (((uint16_t)a) << 8) | (0x00ff & b);
 }
 
 int32_t PacketData::readInt() {
-    int64_t val = be32toh(*((int32_t*) (data.get() + pos)));
+    int64_t val = be32toh(*((int32_t *)(data.get() + pos)));
     pos += 4;
     return val;
 }
@@ -105,7 +101,7 @@ void PacketData::writeInt(int32_t val, std::vector<std::byte> &bytes) {
 }
 
 uint32_t PacketData::readUnsignedInt() {
-    uint32_t val = be32toh(*((uint32_t*) (data.get() + pos)));
+    uint32_t val = be32toh(*((uint32_t *)(data.get() + pos)));
     pos += 4;
     return val;
 }
@@ -117,7 +113,7 @@ void PacketData::writeUnsignedInt(uint32_t val, std::vector<std::byte> &bytes) {
 }
 
 int64_t PacketData::readLong() {
-    int64_t val = be64toh(*((int64_t*) (data.get() + pos)));
+    int64_t val = be64toh(*((int64_t *)(data.get() + pos)));
     pos += 8;
     return val;
 }
@@ -129,7 +125,7 @@ void PacketData::writeLong(int64_t val, std::vector<std::byte> &bytes) {
 }
 
 uint64_t PacketData::readUnsignedLong() {
-    uint64_t val = be64toh(*((uint64_t*) (data.get() + pos)));
+    uint64_t val = be64toh(*((uint64_t *)(data.get() + pos)));
     pos += 8;
     return val;
 }
@@ -142,7 +138,7 @@ void PacketData::writeUnsignedLong(uint64_t val, std::vector<std::byte> &bytes) 
 
 uuids::uuid PacketData::readUuid() {
     std::array<uuids::uuid::value_type, 16> dst{};
-    for(uuids::uuid::value_type& i : dst) {
+    for(uuids::uuid::value_type &i : dst) {
         i = readUnsignedByte();
     }
     return {dst};
@@ -156,20 +152,20 @@ void PacketData::writeUuid(uuids::uuid uuid, std::vector<std::byte> &bytes) {
 
 float PacketData::readFloat() {
     int32_t val = readInt();
-    return *((float*)(&val));
+    return *((float *)(&val));
 }
 
 void PacketData::writeFloat(float val, std::vector<std::byte> &bytes) {
-    writeUnsignedInt(*(uint32_t*)((float*)(&val)), bytes);
+    writeUnsignedInt(*(uint32_t *)((float *)(&val)), bytes);
 }
 
 double PacketData::readDouble() {
     int64_t val = readLong();
-    return *((double*)(&val));
+    return *((double *)(&val));
 }
 
 void PacketData::writeDouble(double val, std::vector<std::byte> &bytes) {
-    writeUnsignedLong(*(uint64_t*)((float*)(&val)), bytes);
+    writeUnsignedLong(*(uint64_t *)((float *)(&val)), bytes);
 }
 
 std::string PacketData::readString() {
@@ -179,14 +175,14 @@ std::string PacketData::readString() {
     return string;
 }
 
-void PacketData::writeString(const std::string& string, std::vector<std::byte> &bytes) {
+void PacketData::writeString(const std::string &string, std::vector<std::byte> &bytes) {
     writeVarInt(string.length(), bytes);
 
     std::transform(string.begin(), string.end(), std::back_inserter(bytes),
-            [](unsigned char c) { return std::byte(c);});
+                   [](unsigned char c) { return std::byte(c); });
 }
 
-void PacketData::readByteArray(std::vector<std::byte>& dst, size_t len) {
+void PacketData::readByteArray(std::vector<std::byte> &dst, size_t len) {
     for(size_t i = 0; i < len; i++) {
         dst.push_back(std::byte(readByte()));
     }
@@ -204,13 +200,12 @@ Position PacketData::readPosition() {
     if(y >= 1 << 11) y -= 1 << 12;
     uint64_t z = val << 26 >> 38;
     if(z >= 1 << 25) z -= 1 << 26;
-    return {(int32_t) x, (int32_t) y, (int32_t) z};
+    return {(int32_t)x, (int32_t)y, (int32_t)z};
 }
 
 void PacketData::writePosition(Position position, std::vector<std::byte> &bytes) {
-    uint64_t val = ((((uint64_t) position.getX()) & 0x3FFFFFF) << 38) |
-            ((((uint64_t) position.getZ()) & 0x3FFFFFF) << 12) |
-            (((uint64_t) position.getY()) & 0xFFF);
+    uint64_t val = ((((uint64_t)position.getX()) & 0x3FFFFFF) << 38) |
+                   ((((uint64_t)position.getZ()) & 0x3FFFFFF) << 12) | (((uint64_t)position.getY()) & 0xFFF);
 
     writeUnsignedLong(val, bytes);
 }

@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLAYERDIGGING_H
 #define SPICYGOAT_PACKETPLAYERDIGGING_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketPlayerDigging : public ServerBoundPacket {
-public:
+   public:
     explicit PacketPlayerDigging(PacketData& data);
 
     std::string toString() const override;
@@ -30,5 +29,4 @@ public:
     const int sequence;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERDIGGING_H
+#endif  // SPICYGOAT_PACKETPLAYERDIGGING_H

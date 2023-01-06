@@ -5,20 +5,18 @@
 #ifndef SPICYGOAT_CMBRAND_H
 #define SPICYGOAT_CMBRAND_H
 
-
 #include "../ChannelMessage.h"
 
 class CMBrand : public ChannelMessage {
-public:
+   public:
     explicit CMBrand(std::string brand);
 
     void send(TCPConnection &conn);
 
     std::string toString() override;
 
-private:
+   private:
     std::string brand;
 };
 
-
-#endif //SPICYGOAT_CMBRAND_H
+#endif  // SPICYGOAT_CMBRAND_H

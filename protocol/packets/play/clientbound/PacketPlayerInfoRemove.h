@@ -5,16 +5,15 @@
 #ifndef SPICYGOAT_PACKETPLAYERINFOREMOVE_H
 #define SPICYGOAT_PACKETPLAYERINFOREMOVE_H
 
-
 #include <forward_list>
+
 #include "../../ClientBoundPacket.h"
 
 class PacketPlayerInfoRemove : public ClientBoundPacket {
-public:
+   public:
     explicit PacketPlayerInfoRemove(const std::forward_list<uuids::uuid> &uuids) : uuids(uuids) {}
 
-    [[nodiscard]]
-    std::vector<std::byte> bytes() const override {
+    [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
         PacketData::writeVarInt(0x35, array);
 
@@ -26,15 +25,12 @@ public:
         return array;
     }
 
-    [[nodiscard]]
-    std::string toString() const override {
-        return std::string("PacketPlayerInfoRemove{count=")
-                + std::to_string(std::distance(uuids.begin(), uuids.end()))
-               + ",...}";
+    [[nodiscard]] std::string toString() const override {
+        return std::string("PacketPlayerInfoRemove{count=") +
+               std::to_string(std::distance(uuids.begin(), uuids.end())) + ",...}";
     }
 
     const std::forward_list<uuids::uuid> uuids;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERINFOREMOVE_H
+#endif  // SPICYGOAT_PACKETPLAYERINFOREMOVE_H

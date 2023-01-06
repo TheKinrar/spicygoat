@@ -3,6 +3,7 @@
 //
 
 #include "PacketLoginStart.h"
+
 #include "../../packets.h"
 
 PacketLoginStart::PacketLoginStart(PacketData& data) : ServerBoundPacket(Packets::S_LOGIN_START) {
@@ -15,12 +16,9 @@ PacketLoginStart::PacketLoginStart(PacketData& data) : ServerBoundPacket(Packets
 
 std::string PacketLoginStart::toString() const {
     if(hasUuid) {
-      return std::string("PacketLoginStart{name=") + name
-             + ",hasUuid=" + std::to_string(hasUuid)
-             + ",uuid=" + to_string(uuid)
-             + "}";
+        return std::string("PacketLoginStart{name=") + name + ",hasUuid=" + std::to_string(hasUuid) +
+               ",uuid=" + to_string(uuid) + "}";
     } else {
-      return std::string("PacketLoginStart{name=") + name +
-             ",hasUuid=" + std::to_string(hasUuid) + "}";
+        return std::string("PacketLoginStart{name=") + name + ",hasUuid=" + std::to_string(hasUuid) + "}";
     }
 }

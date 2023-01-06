@@ -2,9 +2,9 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include <nlohmann/json.hpp>
-
 #include "PacketChatMessageCB.h"
+
+#include <nlohmann/json.hpp>
 
 PacketChatMessageCB::PacketChatMessageCB(const std::string &message) : message(message) {}
 

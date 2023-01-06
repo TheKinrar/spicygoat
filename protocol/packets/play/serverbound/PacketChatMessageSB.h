@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETCHATMESSAGESB_H
 #define SPICYGOAT_PACKETCHATMESSAGESB_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketChatMessageSB : public ServerBoundPacket {
-public:
+   public:
     explicit PacketChatMessageSB(PacketData& data);
 
     std::string toString() const override;
@@ -24,5 +23,4 @@ public:
     std::bitset<20> ack;
 };
 
-
-#endif //SPICYGOAT_PACKETCHATMESSAGESB_H
+#endif  // SPICYGOAT_PACKETCHATMESSAGESB_H

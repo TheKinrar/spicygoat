@@ -2,14 +2,16 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include <iostream>
 #include "PlayerTracker.h"
+
+#include <iostream>
+
 #include "../Server.h"
 
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 
 void PlayerTracker::tick() {
-    for(auto& player : Server::get().getPlayers()) {
+    for(auto &player : Server::get().getPlayers()) {
         if(*player == self) continue;
 
         Location a = player->getLocation();

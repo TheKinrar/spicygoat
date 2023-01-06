@@ -7,15 +7,15 @@
 
 class Packet;
 
-#include "Packet.h"
 #include <vector>
 
+#include "Packet.h"
+
 class ServerBoundPacket : public Packet {
-public:
+   public:
     explicit ServerBoundPacket(int id);
 
     std::vector<std::byte> bytes() const override;
 };
 
-
-#endif //SPICYGOAT_SERVERBOUNDPACKET_H
+#endif  // SPICYGOAT_SERVERBOUNDPACKET_H

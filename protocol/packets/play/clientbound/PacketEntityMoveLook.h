@@ -5,24 +5,22 @@
 #ifndef SPICYGOAT_PACKETENTITYMOVELOOK_H
 #define SPICYGOAT_PACKETENTITYMOVELOOK_H
 
-
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/geo/Location.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketEntityMoveLook : public ClientBoundPacket {
-public:
+   public:
     PacketEntityMoveLook(int32_t eid, double dx, double dy, double dz, float yaw, float pitch, bool onGround);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int32_t eid;
     double dx, dy, dz;
     float yaw, pitch;
     bool onGround;
 };
 
-
-#endif //SPICYGOAT_PACKETENTITYMOVELOOK_H
+#endif  // SPICYGOAT_PACKETENTITYMOVELOOK_H

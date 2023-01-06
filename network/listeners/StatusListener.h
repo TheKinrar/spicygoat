@@ -5,19 +5,17 @@
 #ifndef SPICYGOAT_STATUSLISTENER_H
 #define SPICYGOAT_STATUSLISTENER_H
 
-
 #include "../PacketListenerStatus.h"
 
 class StatusListener : public PacketListenerStatus {
-public:
+   public:
     explicit StatusListener(TCPConnection &connection);
 
     void onRequest(const PacketRequest &request) override;
     void onPing(const PacketPing &ping) override;
 
-private:
-    TCPConnection& connection;
+   private:
+    TCPConnection &connection;
 };
 
-
-#endif //SPICYGOAT_STATUSLISTENER_H
+#endif  // SPICYGOAT_STATUSLISTENER_H

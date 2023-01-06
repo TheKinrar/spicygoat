@@ -5,7 +5,6 @@
 #ifndef SPICYGOAT_REGISTRY_H
 #define SPICYGOAT_REGISTRY_H
 
-
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -19,5 +18,4 @@ struct Registry {
     explicit Registry(std::string id) : id(std::move(id)) {}
 };
 
-
-#endif //SPICYGOAT_REGISTRY_H
+#endif  // SPICYGOAT_REGISTRY_H

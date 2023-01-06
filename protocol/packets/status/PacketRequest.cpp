@@ -3,6 +3,7 @@
 //
 
 #include "PacketRequest.h"
+
 #include "PacketResponse.h"
 
 PacketRequest::PacketRequest(PacketData&) : ServerBoundPacket(Packets::S_REQUEST) {}

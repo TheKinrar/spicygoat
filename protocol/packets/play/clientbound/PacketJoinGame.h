@@ -5,21 +5,19 @@
 #ifndef SPICYGOAT_PACKETJOINGAME_H
 #define SPICYGOAT_PACKETJOINGAME_H
 
-
-#include "../../ClientBoundPacket.h"
 #include "../../../../entities/EntityPlayer.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketJoinGame : public ClientBoundPacket {
-public:
+   public:
     explicit PacketJoinGame(std::shared_ptr<EntityPlayer> player);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     std::shared_ptr<EntityPlayer> player;
 };
 
-
-#endif //SPICYGOAT_PACKETJOINGAME_H
+#endif  // SPICYGOAT_PACKETJOINGAME_H

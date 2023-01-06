@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETLOGINSTART_H
 #define SPICYGOAT_PACKETLOGINSTART_H
 
-
 #include "../ServerBoundPacket.h"
 
 class PacketLoginStart : public ServerBoundPacket {
-public:
+   public:
     explicit PacketLoginStart(PacketData& data);
 
     std::string toString() const override;
@@ -19,5 +18,4 @@ public:
     uuids::uuid uuid;
 };
 
-
-#endif //SPICYGOAT_PACKETLOGINSTART_H
+#endif  // SPICYGOAT_PACKETLOGINSTART_H

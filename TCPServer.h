@@ -6,13 +6,14 @@
 #define SPICYGOAT_TCPSERVER_H
 
 #include <list>
+
 #include "TCPConnection.h"
 
 #ifdef __linux__
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <libnet.h>
+#include <netinet/in.h>
 #include <poll.h>
+#include <sys/socket.h>
 #endif
 
 #ifdef _WIN64
@@ -21,7 +22,7 @@
 #endif
 
 class TCPServer {
-public:
+   public:
     TCPServer();
     ~TCPServer();
     TCPServer(const TCPServer&) = delete;
@@ -36,7 +37,7 @@ public:
     bool isRunning() const;
     void stop();
 
-private:
+   private:
     bool running = true;
 
     unsigned long long sock;
@@ -47,5 +48,4 @@ private:
     std::unique_ptr<std::thread> keepAliveThread;
 };
 
-
-#endif //SPICYGOAT_TCPSERVER_H
+#endif  // SPICYGOAT_TCPSERVER_H

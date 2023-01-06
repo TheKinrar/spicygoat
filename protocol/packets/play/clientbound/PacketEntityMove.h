@@ -5,23 +5,21 @@
 #ifndef SPICYGOAT_PACKETENTITYMOVE_H
 #define SPICYGOAT_PACKETENTITYMOVE_H
 
-
-#include "../../ClientBoundPacket.h"
 #include "../../../../world/geo/Location.h"
+#include "../../ClientBoundPacket.h"
 
 class PacketEntityMove : public ClientBoundPacket {
-public:
+   public:
     PacketEntityMove(int32_t eid, double dx, double dy, double dz, bool onGround);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int32_t eid;
     double dx, dy, dz;
     bool onGround;
 };
 
-
-#endif //SPICYGOAT_PACKETENTITYMOVE_H
+#endif  // SPICYGOAT_PACKETENTITYMOVE_H

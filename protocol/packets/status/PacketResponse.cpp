@@ -3,9 +3,10 @@
 //
 
 #include "PacketResponse.h"
-#include "../../../Server.h"
 
 #include <nlohmann/json.hpp>
+
+#include "../../../Server.h"
 
 using json = nlohmann::json;
 

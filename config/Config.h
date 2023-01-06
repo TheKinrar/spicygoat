@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_CONFIG_H
 #define SPICYGOAT_CONFIG_H
 
-
 #include <toml.hpp>
 
 class Config {
-public:
+   public:
     static const Config& get() {
         static Config instance;
         return instance;
@@ -18,7 +17,7 @@ public:
     int64_t gamemode;
     int64_t port;
 
-private:
+   private:
     Config() : data(toml::parse<toml::preserve_comments>("config.toml")) {
         gamemode = toml::find<toml::integer>(data, "gamemode");
         port = toml::find<toml::integer>(data, "port");
@@ -27,5 +26,4 @@ private:
     toml::value data;
 };
 
-
-#endif //SPICYGOAT_CONFIG_H
+#endif  // SPICYGOAT_CONFIG_H

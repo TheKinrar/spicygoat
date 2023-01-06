@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETKEEPALIVESB_H
 #define SPICYGOAT_PACKETKEEPALIVESB_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketKeepAliveSB : public ServerBoundPacket {
-public:
+   public:
     explicit PacketKeepAliveSB(PacketData& data);
 
     std::string toString() const override;
@@ -17,5 +16,4 @@ public:
     int64_t id;
 };
 
-
-#endif //SPICYGOAT_PACKETKEEPALIVESB_H
+#endif  // SPICYGOAT_PACKETKEEPALIVESB_H

@@ -5,20 +5,18 @@
 #ifndef SPICYGOAT_PACKETKEEPALIVECB_H
 #define SPICYGOAT_PACKETKEEPALIVECB_H
 
-
 #include "../../ClientBoundPacket.h"
 
 class PacketKeepAliveCB : public ClientBoundPacket {
-public:
+   public:
     explicit PacketKeepAliveCB(int64_t id);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
-private:
+   private:
     int64_t id;
 };
 
-
-#endif //SPICYGOAT_PACKETKEEPALIVECB_H
+#endif  // SPICYGOAT_PACKETKEEPALIVECB_H

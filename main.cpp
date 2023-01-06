@@ -1,6 +1,7 @@
 #include <iostream>
-#include "TCPServer.h"
+
 #include "Server.h"
+#include "TCPServer.h"
 #include "config/Config.h"
 
 void sigterm_handler(int) {

@@ -5,14 +5,14 @@
 #ifndef SPICYGOAT_CHUNKCOLUMN_H
 #define SPICYGOAT_CHUNKCOLUMN_H
 
-
 #include <stdint-gcc.h>
 #include <tag_compound.h>
-#include "Chunk.h"
+
 #include "../geo/Position2D.h"
+#include "Chunk.h"
 
 class ChunkColumn {
-public:
+   public:
     ChunkColumn(int32_t x, int32_t z);
     ChunkColumn(const ChunkColumn&) = delete;
 
@@ -26,19 +26,18 @@ public:
 
     bool hasData();
 
-    void setNbt(std::unique_ptr<nbt::tag_compound> &nbt);
+    void setNbt(std::unique_ptr<nbt::tag_compound>& nbt);
 
     uint16_t writeToByteArray(std::vector<std::byte>&);
     void writeHeightMapsToByteArray(std::vector<std::byte>&);
 
     std::string toString();
 
-private:
+   private:
     int32_t x, z;
     std::unique_ptr<Chunk> chunks[24];
 
     std::unique_ptr<nbt::tag_compound> nbt = nullptr;
 };
 
-
-#endif //SPICYGOAT_CHUNKCOLUMN_H
+#endif  // SPICYGOAT_CHUNKCOLUMN_H

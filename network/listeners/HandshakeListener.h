@@ -5,18 +5,16 @@
 #ifndef SPICYGOAT_HANDSHAKELISTENER_H
 #define SPICYGOAT_HANDSHAKELISTENER_H
 
-
 #include "../PacketListenerHandshake.h"
 
 class HandshakeListener : public PacketListenerHandshake {
-public:
+   public:
     explicit HandshakeListener(std::shared_ptr<TCPConnection> connection);
 
     void onHandshake(const PacketHandshake &packet) override;
 
-private:
+   private:
     std::shared_ptr<TCPConnection> connection;
 };
 
-
-#endif //SPICYGOAT_HANDSHAKELISTENER_H
+#endif  // SPICYGOAT_HANDSHAKELISTENER_H

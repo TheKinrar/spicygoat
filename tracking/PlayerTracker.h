@@ -5,23 +5,21 @@
 #ifndef SPICYGOAT_PLAYERTRACKER_H
 #define SPICYGOAT_PLAYERTRACKER_H
 
-
 #include <set>
 
-#include "EntityTracker.h"
 #include "../entities/EntityPlayer.h"
+#include "EntityTracker.h"
 
 class PlayerTracker : public EntityTracker {
-public:
+   public:
     explicit PlayerTracker(Entity &self);
 
     void tick() override;
 
     void broadcast(const ClientBoundPacket &packet) override;
 
-private:
+   private:
     std::set<std::shared_ptr<EntityPlayer>> players;
 };
 
-
-#endif //SPICYGOAT_PLAYERTRACKER_H
+#endif  // SPICYGOAT_PLAYERTRACKER_H

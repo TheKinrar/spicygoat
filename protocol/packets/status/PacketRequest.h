@@ -9,11 +9,10 @@
 #include "../ServerBoundPacket.h"
 
 class PacketRequest : public ServerBoundPacket {
-public:
+   public:
     explicit PacketRequest(PacketData&);
 
     std::string toString() const override;
 };
 
-
-#endif //SPICYGOAT_PACKETREQUEST_H
+#endif  // SPICYGOAT_PACKETREQUEST_H

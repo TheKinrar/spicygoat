@@ -5,14 +5,12 @@
 #ifndef SPICYGOAT_PACKETLISTENER_H
 #define SPICYGOAT_PACKETLISTENER_H
 
-
 #include "../protocol/packets.h"
 
 class PacketListener {
-public:
+   public:
     virtual ~PacketListener() = default;
     virtual void handle(const ServerBoundPacket&) = 0;
 };
 
-
-#endif //SPICYGOAT_PACKETLISTENER_H
+#endif  // SPICYGOAT_PACKETLISTENER_H

@@ -7,18 +7,19 @@
 
 #include <map>
 #include <mutex>
-#include "geo/Position2D.h"
+
 #include "chunks/Region.h"
 #include "geo/Position.h"
+#include "geo/Position2D.h"
 
 class World {
-public:
+   public:
     World();
 
     Region& getRegion(int32_t x, int32_t z);
     ChunkColumn& getChunk(int32_t x, int32_t z);
 
-    const Position &getSpawnPosition() const;
+    const Position& getSpawnPosition() const;
 
     void setBlockState(Position pos, BlockState state) {
         auto& chunk = getChunk(pos.getChunkX(), pos.getChunkZ());
@@ -26,7 +27,7 @@ public:
         section.setBlockState(pos.getInChunkX(), pos.getInChunkY(), pos.getInChunkZ(), state);
     }
 
-private:
+   private:
     std::mutex m_chunkLoading;
 
     std::unordered_map<Position2D, std::unique_ptr<Region>> regions;
@@ -34,5 +35,4 @@ private:
     Position spawnPosition = Position(0, 0, 0);
 };
 
-
-#endif //SPICYGOAT_WORLD_H
+#endif  // SPICYGOAT_WORLD_H

@@ -2,26 +2,27 @@
 // Created by thekinrar on 30/03/19.
 //
 
+#include "TCPConnection.h"
+
 #include <iostream>
 #include <sstream>
 
 #include "Server.h"
-#include "TCPConnection.h"
 #include "TCPServer.h"
 #include "entities/EntityPlayer.h"
 #include "protocol.h"
 
-TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr){
+TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
     thread = std::make_unique<std::thread>(&TCPConnection::task, this);
 }
 
-void TCPConnection::sendPacket(const Packet& packet) {
+void TCPConnection::sendPacket(const Packet &packet) {
     m_send.lock();
 
-//    int i = packet->getId();
-//    if(i == Packets::...) {
-//        std::cout << getName() << " <= " << packet->toString() << std::endl;
-//    }
+    //    int i = packet->getId();
+    //    if(i == Packets::...) {
+    //        std::cout << getName() << " <= " << packet->toString() << std::endl;
+    //    }
 
     std::vector<std::byte> data = packet.bytes();
 
@@ -29,7 +30,7 @@ void TCPConnection::sendPacket(const Packet& packet) {
     PacketData::writeVarInt(data.size(), bytes);
     bytes.insert(bytes.end(), data.begin(), data.end());
 
-    send(sock, (char*) bytes.data(), bytes.size(), 0);
+    send(sock, (char *)bytes.data(), bytes.size(), 0);
     m_send.unlock();
 }
 
@@ -47,13 +48,14 @@ void TCPConnection::task() {
             auto packet = Packets::parse(packetData, state);
 
             if(packet && packetData.remaining()) {
-              std::stringstream ss;
-              ss << "Protocol error: extra data (" << std::to_string(packetData.remaining()) << " B) left after parsing " << packet->toString();
-              throw std::runtime_error(ss.str());
+                std::stringstream ss;
+                ss << "Protocol error: extra data (" << std::to_string(packetData.remaining())
+                   << " B) left after parsing " << packet->toString();
+                throw std::runtime_error(ss.str());
             }
 
-            if (packet) {
-//                std::cout << getName() << " => " << packet->toString() << std::endl;
+            if(packet) {
+                //                std::cout << getName() << " => " << packet->toString() << std::endl;
 
                 if(listener) listener->handle(dynamic_cast<const ServerBoundPacket &>(*packet));
             }
@@ -104,7 +106,8 @@ ProtocolState TCPConnection::getState() const {
 }
 
 std::string TCPConnection::getName() {
-    return std::string(inet_ntoa(addr.sin_addr)) + ":" + std::to_string(htons(addr.sin_port)) + "/" + std::to_string(state);
+    return std::string(inet_ntoa(addr.sin_addr)) + ":" + std::to_string(htons(addr.sin_port)) + "/" +
+           std::to_string(state);
 }
 
 void TCPConnection::keepAlive(int64_t millis) {
@@ -120,17 +123,15 @@ void TCPConnection::keepAlive(int64_t millis) {
         }
     } else {
         if(millis - latestKeepAlive > 30000) {
-            closesocket(sock); // TODO proper timeout
+            closesocket(sock);  // TODO proper timeout
         }
     }
 }
 
 void TCPConnection::confirmKeepAlive(int64_t id) {
-    if(id != latestKeepAlive)
-        throw std::runtime_error("Protocol error: invalid keep alive ID");
+    if(id != latestKeepAlive) throw std::runtime_error("Protocol error: invalid keep alive ID");
 
-    if(keepAliveOk)
-        throw std::runtime_error("Protocol error: keep alive already confirmed");
+    if(keepAliveOk) throw std::runtime_error("Protocol error: keep alive already confirmed");
 
     m_keepAlive.lock();
     keepAliveOk = true;
@@ -148,4 +149,3 @@ const PacketListener &TCPConnection::getListener() const {
 void TCPConnection::disconnect() {
     closesocket(sock);
 }
-

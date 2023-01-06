@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLAYERABILITIESSB_H
 #define SPICYGOAT_PACKETPLAYERABILITIESSB_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketPlayerAbilitiesSB : public ServerBoundPacket {
-public:
+   public:
     explicit PacketPlayerAbilitiesSB(PacketData& data);
 
     std::string toString() const override;
@@ -17,5 +16,4 @@ public:
     bool flying;
 };
 
-
-#endif //SPICYGOAT_PACKETPLAYERABILITIESSB_H
+#endif  // SPICYGOAT_PACKETPLAYERABILITIESSB_H

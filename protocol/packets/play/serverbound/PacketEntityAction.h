@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETENTITYACTION_H
 #define SPICYGOAT_PACKETENTITYACTION_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketEntityAction : public ServerBoundPacket {
-public:
+   public:
     explicit PacketEntityAction(PacketData& data);
 
     std::string toString() const override;
@@ -19,5 +18,4 @@ public:
     int8_t jumpBoost;
 };
 
-
-#endif //SPICYGOAT_PACKETENTITYACTION_H
+#endif  // SPICYGOAT_PACKETENTITYACTION_H

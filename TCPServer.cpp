@@ -3,12 +3,13 @@
 //
 
 #include "TCPServer.h"
-#include "network/listeners/HandshakeListener.h"
-#include "config/Config.h"
 
 #include <iostream>
 #include <memory>
 #include <thread>
+
+#include "config/Config.h"
+#include "network/listeners/HandshakeListener.h"
 
 TCPServer::TCPServer() {
 #ifdef _WIN64
@@ -40,7 +41,7 @@ TCPServer::TCPServer() {
     sin.sin_port = htons(Config::get().port);
 
     errno = 0;
-    if(bind(sock, (sockaddr*) &sin, sizeof(sin))) {
+    if(bind(sock, (sockaddr *)&sin, sizeof(sin))) {
 #ifdef __linux__
         std::cerr << "bind failed: " << strerror(errno) << std::endl;
 #endif
@@ -72,7 +73,6 @@ TCPServer::~TCPServer() {
 
 void TCPServer::accept() {
     while(running) {
-
 #ifdef __linux__
         int ret = poll(fds, 1, 100);
 #endif
@@ -86,7 +86,7 @@ void TCPServer::accept() {
 
             sockaddr_in csin;
             socklen_t csinlen = sizeof(csin);
-            int csock = ::accept(sock, (sockaddr *) &csin, &csinlen);
+            int csock = ::accept(sock, (sockaddr *)&csin, &csinlen);
 
             auto conn = std::make_shared<TCPConnection>(csock, csin);
             conn->setListener(std::make_unique<HandshakeListener>(conn));
@@ -103,11 +103,13 @@ void TCPServer::accept() {
 
 void TCPServer::keepAliveTask() {
     while(running) {
-        int64_t millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        int64_t millis =
+            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+                .count();
 
         auto it = connections.begin();
         while(it != connections.end()) {
-            auto& connection = *it;
+            auto &connection = *it;
             if(!connection->alive) {
                 it = connections.erase(it);
             } else {

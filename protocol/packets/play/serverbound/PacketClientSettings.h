@@ -5,11 +5,10 @@
 #ifndef SPICYGOAT_PACKETCLIENTSETTINGS_H
 #define SPICYGOAT_PACKETCLIENTSETTINGS_H
 
-
 #include "../../ServerBoundPacket.h"
 
 class PacketClientSettings : public ServerBoundPacket {
-public:
+   public:
     explicit PacketClientSettings(PacketData& data);
 
     std::string toString() const override;
@@ -24,5 +23,4 @@ public:
     bool serverListings;
 };
 
-
-#endif //SPICYGOAT_PACKETCLIENTSETTINGS_H
+#endif  // SPICYGOAT_PACKETCLIENTSETTINGS_H

@@ -6,11 +6,12 @@
 #define SPICYGOAT_LOCATION_H
 
 #include <string>
+
 #include "../chunks/Chunk.h"
 #include "../chunks/ChunkColumn.h"
 
 class Location {
-public:
+   public:
     Location();
     Location(double x, double y, double z, float yaw, float pitch);
 
@@ -38,7 +39,7 @@ public:
 
     int32_t getChunkZ() const;
 
-    [[nodiscard]] double distanceSquared(const Location& other) const;
+    [[nodiscard]] double distanceSquared(const Location &other) const;
 
     std::string toString() const;
 
@@ -46,10 +47,9 @@ public:
 
     bool operator!=(const Location &rhs) const;
 
-private:
+   private:
     double x, y, z;
     float yaw, pitch;
 };
 
-
-#endif //SPICYGOAT_LOCATION_H
+#endif  // SPICYGOAT_LOCATION_H

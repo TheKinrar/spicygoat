@@ -2,13 +2,15 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include <iostream>
 #include "Entity.h"
+
+#include <iostream>
+
 #include "../Server.h"
-#include "../protocol/packets/play/clientbound/PacketEntityMove.h"
-#include "../protocol/packets/play/clientbound/PacketEntityLook.h"
-#include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
 #include "../protocol/packets/play/clientbound/PacketEntityHeadRotation.h"
+#include "../protocol/packets/play/clientbound/PacketEntityLook.h"
+#include "../protocol/packets/play/clientbound/PacketEntityMove.h"
+#include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
 
 Entity::Entity() {
     eid = Server::get().nextEID();
@@ -43,16 +45,15 @@ void Entity::tick() {
     tracker->tick();
 
     if(location != nextLocation) {
-        bool newChunk = location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
+        bool newChunk =
+            location.getChunkX() != nextLocation.getChunkX() || location.getChunkZ() != nextLocation.getChunkZ();
 
         m_nextLocation.lock();
 
-        bool moved = (location.getX() != nextLocation.getX())
-                || (location.getY() != nextLocation.getY())
-                || (location.getZ() != nextLocation.getZ());
+        bool moved = (location.getX() != nextLocation.getX()) || (location.getY() != nextLocation.getY()) ||
+                     (location.getZ() != nextLocation.getZ());
 
-        bool looked = (location.getYaw() != nextLocation.getYaw())
-                || (location.getPitch() != nextLocation.getPitch());
+        bool looked = (location.getYaw() != nextLocation.getYaw()) || (location.getPitch() != nextLocation.getPitch());
 
         if(moved) {
             double dx = nextLocation.getX() - location.getX();
@@ -92,8 +93,7 @@ void Entity::tick() {
     onGround = nextOnGround;
 }
 
-void Entity::chunkChanged() {
-}
+void Entity::chunkChanged() {}
 
 std::string Entity::toString() {
     return std::string("Entity{eid=") + std::to_string(eid) + "}";

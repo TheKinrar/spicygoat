@@ -5,15 +5,6 @@
 #ifndef SPICYGOAT_FACE_H
 #define SPICYGOAT_FACE_H
 
+enum class Face { Bottom, Top, North, South, West, East };
 
-enum class Face {
-    Bottom,
-    Top,
-    North,
-    South,
-    West,
-    East
-};
-
-
-#endif //SPICYGOAT_FACE_H
+#endif  // SPICYGOAT_FACE_H

@@ -5,18 +5,18 @@
 #ifndef SPICYGOAT_ENTITY_H
 #define SPICYGOAT_ENTITY_H
 
-#include <mutex>
 #include <cstdint>
-#include <string>
+#include <mutex>
 #include <set>
+#include <string>
 
 class EntityTracker;
-#include "../world/geo/Location.h"
-#include "../tracking/EntityTracker.h"
 #include "../protocol/packets/ClientBoundPacket.h"
+#include "../tracking/EntityTracker.h"
+#include "../world/geo/Location.h"
 
 class Entity {
-public:
+   public:
     explicit Entity();
     virtual ~Entity() = default;
 
@@ -46,10 +46,10 @@ public:
         return !(rhs == *this);
     }
 
-protected:
+   protected:
     virtual void chunkChanged();
 
-private:
+   private:
     int32_t eid;
 
     Location location;
@@ -63,5 +63,4 @@ private:
     std::unique_ptr<EntityTracker> tracker;
 };
 
-
-#endif //SPICYGOAT_ENTITY_H
+#endif  // SPICYGOAT_ENTITY_H

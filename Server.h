@@ -5,15 +5,17 @@
 #ifndef SPICYGOAT_SERVER_H
 #define SPICYGOAT_SERVER_H
 
-#include "entities/EntityPlayer.h"
-#include "world/World.h"
-#include "util/Registry.h"
-#include <vector>
-#include <string>
 #include <uuid.h>
 
+#include <string>
+#include <vector>
+
+#include "entities/EntityPlayer.h"
+#include "util/Registry.h"
+#include "world/World.h"
+
 class Server {
-public:
+   public:
     inline static const int VIEW_DISTANCE = 10;
     inline static const int ENTITY_VIEW_DISTANCE = 50;
     inline static const int ENTITY_VIEW_DISTANCE_SQ = ENTITY_VIEW_DISTANCE * ENTITY_VIEW_DISTANCE;
@@ -29,19 +31,15 @@ public:
     static std::unique_ptr<EntityTracker> createTracker(Entity&);
     unsigned long getPlayerCount() const;
 
-    [[nodiscard]]
-    std::vector<std::shared_ptr<Entity>> getEntities() const {
+    [[nodiscard]] std::vector<std::shared_ptr<Entity>> getEntities() const {
         std::vector<std::shared_ptr<Entity>> vec;
-        for (auto &item: entities)
-            vec.push_back(item.second);
+        for(auto& item : entities) vec.push_back(item.second);
         return vec;
     }
 
-    [[nodiscard]]
-    std::vector<std::shared_ptr<EntityPlayer>> getPlayers() const {
+    [[nodiscard]] std::vector<std::shared_ptr<EntityPlayer>> getPlayers() const {
         std::vector<std::shared_ptr<EntityPlayer>> vec;
-        for (auto &item: players)
-            vec.push_back(item.second);
+        for(auto& item : players) vec.push_back(item.second);
         return vec;
     }
 
@@ -50,11 +48,13 @@ public:
     World& getWorld();
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
-    [[nodiscard]] const Registry &getItemRegistry() const { return itemRegistry; }
+    [[nodiscard]] const Registry& getItemRegistry() const {
+        return itemRegistry;
+    }
 
     void broadcastPacket(const Packet&);
 
-private:
+   private:
     void loadRegistries();
     static void loadRegistry(Registry& registry, nlohmann::json root);
 
@@ -70,5 +70,4 @@ private:
     World world;
 };
 
-
-#endif //SPICYGOAT_SERVER_H
+#endif  // SPICYGOAT_SERVER_H
