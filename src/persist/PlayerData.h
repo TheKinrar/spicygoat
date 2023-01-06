@@ -15,6 +15,7 @@
 #include <fstream>
 #include <utility>
 
+#include "../inventory/PlayerInventory.h"
 #include "../world/geo/Location.h"
 #include "uuid.h"
 
@@ -69,5 +70,55 @@ class PlayerData {
         rot.push_back(loc.getPitch());
         nbt->put("Pos", std::move(pos));
         nbt->put("Rotation", std::move(rot));
+    }
+
+    [[nodiscard]]
+    PlayerInventory getInventory() const;
+
+    void setInventory(const PlayerInventory& source);
+
+   private:
+    static int dataSlotToNetwork(int slot) {
+        if(slot == -106) // Off-hand
+            return 45;
+        if(slot == 100) // Boots
+            return 8;
+        if(slot == 101) // Leggings
+            return 7;
+        if(slot == 102) // Chestplate
+            return 6;
+        if(slot == 103) // Helmet
+            return 5;
+
+        if(slot >= 0) {
+            if(slot <= 8)
+                return slot + 36;
+            if(slot <= 35)
+                return slot;
+        }
+
+        throw std::runtime_error("Illegal data slot ID");
+    }
+
+    static int networkSlotToData(int slot) {
+        if(slot == 45) // Off-hand
+            return -106;
+        if(slot == 8) // Boots
+            return 100;
+        if(slot == 7) // Leggings
+            return 101;
+        if(slot == 6) // Chestplate
+            return 102;
+        if(slot == 5) // Helmet
+            return 103;
+
+        if(slot <= 44) {
+            if(slot >= 36)
+                return slot - 36;
+            if(slot >= 9)
+                return slot;
+        }
+
+        throw std::runtime_error("Illegal network slot ID");
     }
 };

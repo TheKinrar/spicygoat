@@ -37,9 +37,8 @@ class EntityPlayer : public Entity {
         return *data;
     }
 
-    void syncData() {
-        data->setLocation(getLocation());
-    }
+    void pullData();
+    void pushData();
 
     int getRenderDistance() const {
         return renderDistance;

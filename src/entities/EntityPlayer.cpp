@@ -20,6 +20,7 @@ EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<
     this->uuid = uuid;
     this->name = name;
     this->data = PlayerData::load(uuid);
+    pullData();
 }
 
 void EntityPlayer::tick() {
@@ -166,4 +167,14 @@ void EntityPlayer::setGamemode(int gamemode) {
     getConnection().sendPacket(PacketGameEvent(PacketGameEvent::Event::ChangeGamemode, gamemode));
 
     this->gamemode = gamemode;
+}
+
+void EntityPlayer::pullData() {
+    setLocation(data->getLocation(Location(Server::get().getWorld().getSpawnPosition())));
+    inventory = data->getInventory();
+}
+
+void EntityPlayer::pushData() {
+    data->setLocation(getLocation());
+    data->setInventory(inventory);
 }

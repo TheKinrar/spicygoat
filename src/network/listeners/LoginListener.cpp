@@ -13,6 +13,7 @@
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
 #include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
+#include "../../protocol/packets/play/clientbound/PacketSetInventoryContent.h"
 #include "../../util/md5.h"
 #include "PlayerConnection.h"
 
@@ -84,8 +85,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     connection->setPlayer(player);
 
     auto spawnPos = Server::get().getWorld().getSpawnPosition();
-    auto loc = player->getData().getLocation(Location(spawnPos));
-    player->setLocation(loc);
+    auto loc = player->getLocation();
 
     connection->sendPacket(PacketJoinGame(player));
     CMBrand(std::string("SpicyGoat")).send(*connection);
@@ -93,6 +93,8 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     connection->sendPacket(PacketSpawnPosition(spawnPos));
     connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
     connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
+
+    connection->sendPacket(PacketSetInventoryContent(0, player->inventory.getSlots(), {}));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
 }

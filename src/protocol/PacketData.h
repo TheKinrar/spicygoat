@@ -145,6 +145,32 @@ class PacketData {
         }
     }
 
+    static void writeItemStack(const ItemStack& is, std::vector<std::byte> &bytes) {
+        PacketData::writeBoolean(is.present, bytes);
+        if(is.present) {
+            PacketData::writeVarInt(is.id, bytes);
+            PacketData::writeByte(is.count, bytes);
+            if(is.hasNbt) {
+                PacketData::writeNbt(*is.nbt, bytes);
+            } else {
+                PacketData::writeByte(0, bytes);
+            }
+        }
+    }
+
+    static void writeNbt(const nbt::tag& tag, std::vector<std::byte> &bytes) {
+        std::ostringstream stream;
+        nbt::io::write_tag("", tag, stream);
+
+        auto string = stream.str();
+        std::vector<std::byte> vec;
+        vec.reserve(string.size());
+        for(const auto &item : string)
+            vec.push_back(std::byte(item));
+
+        writeByteArray(vec, bytes);
+    }
+
     std::shared_ptr<char[]> data;
     const int offset;
     const int length;

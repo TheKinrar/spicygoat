@@ -22,17 +22,25 @@ class PlayerInventory {
         slots[slot] = std::move(stack);
     }
 
-    ItemStack getSlot(int slot) {
+    [[nodiscard]]
+    std::vector<ItemStack> getSlots() const {
+        return {std::begin(slots), std::end(slots)};
+    }
+
+    [[nodiscard]]
+    ItemStack getSlot(int slot) const {
         return slots[slot];
     }
 
-    ItemStack getSelected() {
+    [[nodiscard]]
+    ItemStack getSelected() const {
         return getSlot(selectedSlot);
     }
 
     [[nodiscard]] int getSelectedSlot() const {
         return selectedSlot;
     }
+
     void setSelectedSlot(int selectedSlot) {
         this->selectedSlot = selectedSlot;
     }
