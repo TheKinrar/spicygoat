@@ -66,6 +66,10 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
                 return std::make_unique<PacketSetCreativeSlot>(data);
             case S_USE_ITEM_ON:
                 return std::make_unique<PacketUseItemOn>(data);
+            case S_SET_HELD_ITEM:
+                return std::make_unique<PacketSetHeldItem>(data);
+            case S_USE_ITEM:
+                return nullptr;
         }
     }
 

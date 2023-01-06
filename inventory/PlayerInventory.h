@@ -29,6 +29,13 @@ class PlayerInventory {
     ItemStack getSelected() {
         return getSlot(selectedSlot);
     }
+
+    [[nodiscard]] int getSelectedSlot() const {
+        return selectedSlot;
+    }
+    void setSelectedSlot(int selectedSlot) {
+        this->selectedSlot = selectedSlot;
+    }
 };
 
 #endif  // SPICYGOAT_PLAYERINVENTORY_H

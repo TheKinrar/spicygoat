@@ -27,6 +27,7 @@ class PlayerConnection : public PacketListenerPlay {
     void onEntityAction(const PacketEntityAction &packet) override;
     void onSetCreativeSlot(const PacketSetCreativeSlot &packet) override;
     void onUseItemOn(const PacketUseItemOn &packet) override;
+    void onSetHeldItem(const PacketSetHeldItem &packet) override;
 
    private:
     TCPConnection &connection;

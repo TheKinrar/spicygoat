@@ -100,3 +100,7 @@ void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
         }
     }
 }
+
+void PlayerConnection::onSetHeldItem(const PacketSetHeldItem &packet) {
+    player.inventory.setSelectedSlot(36 + packet.getSlot());
+}

@@ -26,6 +26,7 @@ class PacketListenerPlay : public PacketListener {
     virtual void onEntityAction(const PacketEntityAction& packet) = 0;
     virtual void onSetCreativeSlot(const PacketSetCreativeSlot& packet) = 0;
     virtual void onUseItemOn(const PacketUseItemOn& packet) = 0;
+    virtual void onSetHeldItem(const PacketSetHeldItem& packet) = 0;
 };
 
 #endif  // SPICYGOAT_PACKETLISTENERPLAY_H

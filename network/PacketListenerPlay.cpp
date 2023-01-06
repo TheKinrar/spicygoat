@@ -51,5 +51,8 @@ void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
         case Packets::S_USE_ITEM_ON:
             onUseItemOn(static_cast<const PacketUseItemOn &>(packet));
             break;
+        case Packets::S_SET_HELD_ITEM:
+            onSetHeldItem(static_cast<const PacketSetHeldItem &>(packet));
+            break;
     }
 }

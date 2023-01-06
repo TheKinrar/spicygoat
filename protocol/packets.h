@@ -36,6 +36,7 @@
 #include "packets/play/serverbound/PacketPlayerPositionLook.h"
 #include "packets/play/serverbound/PacketPluginMessageSB.h"
 #include "packets/play/serverbound/PacketSetCreativeSlot.h"
+#include "packets/play/serverbound/PacketSetHeldItem.h"
 #include "packets/play/serverbound/PacketTeleportConfirm.h"
 #include "packets/play/serverbound/PacketUseItemOn.h"
 #include "packets/status/PacketPing.h"

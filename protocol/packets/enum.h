@@ -32,8 +32,10 @@ static const int S_PLAYER_LOOK = 0x15;
 static const int S_PLAYER_ABILITIES = 0x1B;
 static const int S_PLAYER_DIGGING = 0x1C;
 static const int S_ENTITY_ACTION = 0x1D;
+static const int S_SET_HELD_ITEM = 0x28;
 static const int S_SET_CREATIVE_SLOT = 0x2B;
 static const int S_USE_ITEM_ON = 0x31;
+static const int S_USE_ITEM = 0x32;
 }  // namespace Packets
 
 #endif  // SPICYGOAT_ENUM_H
