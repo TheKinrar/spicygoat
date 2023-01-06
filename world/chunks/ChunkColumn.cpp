@@ -50,8 +50,8 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
                 int8_t y = section.at("Y").as<nbt::tag_byte>();
 
                 if(y < -4 || y > 19) {
-                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" << (int)y << ";" << z
-                              << std::endl;
+//                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" << (int)y << ";" << z
+//                              << std::endl;
                 } else if(chunks[y + 4]) {
                     std::cerr << "WARNING: chunk already loaded! skipping " << x << ";" << (int)y << ";" << z
                               << std::endl;
