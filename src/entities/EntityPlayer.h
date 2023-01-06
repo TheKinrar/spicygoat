@@ -62,6 +62,10 @@ class EntityPlayer : public Entity {
 
     void setFlyingSpeed(float speed);
 
+    bool isSpawned() const {
+        return spawned;
+    }
+
     TCPConnection &getConnection() const;
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;

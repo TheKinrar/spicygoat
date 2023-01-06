@@ -34,17 +34,23 @@ void PlayerConnection::onKeepAlive(const PacketKeepAliveSB &packet) {
 }
 
 void PlayerConnection::onPlayerPosition(const PacketPlayerPosition &packet) {
+    if(!player.isSpawned()) return;
+
     player.setNextPosition(packet.x, packet.y, packet.z);
     player.setNextOnGround(packet.onGround);
 }
 
 void PlayerConnection::onPlayerPositionLook(const PacketPlayerPositionLook &packet) {
+    if(!player.isSpawned()) return;
+
     player.setNextPosition(packet.x, packet.y, packet.z);
     player.setNextLook(packet.yaw, packet.pitch);
     player.setNextOnGround(packet.onGround);
 }
 
 void PlayerConnection::onPlayerLook(const PacketPlayerLook &packet) {
+    if(!player.isSpawned()) return;
+
     player.setNextLook(packet.yaw, packet.pitch);
     player.setNextOnGround(packet.onGround);
 }
