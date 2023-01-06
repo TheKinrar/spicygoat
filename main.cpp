@@ -14,6 +14,7 @@ int main() {
     static_assert(sizeof(float) == 4);
     static_assert(sizeof(double) == 8);
 
+    signal(SIGPIPE, SIG_IGN);
     signal(SIGTERM, sigterm_handler);
 
     std::cout << "SpicyGoat is here!" << std::endl;
