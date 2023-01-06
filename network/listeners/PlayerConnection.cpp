@@ -74,6 +74,12 @@ void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
     Server::get().broadcastPacket(PacketChatMessageCB(player.getName() + ": " + packet.message));
 }
 
+void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
+    std::cout << "[CMD] " << player.getName() << ": " << packet.getMessage() << std::endl;
+
+    Server::get().getCommandEngine().runCommand(packet.getMessage(), player);
+}
+
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
     connection.getPlayer()->inventory.setSlot(packet.slot, packet.stack);
 }

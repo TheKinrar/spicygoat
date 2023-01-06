@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "commands/CommandEngine.h"
 #include "entities/EntityPlayer.h"
 #include "util/Registry.h"
 #include "world/World.h"
@@ -43,9 +44,22 @@ class Server {
         return vec;
     }
 
+    [[nodiscard]] std::optional<std::shared_ptr<EntityPlayer>> getPlayer(const std::string& name) const {
+        auto it = std::find_if(players.begin(), players.end(),
+                               [name](auto& e) { return e.second->getName() == name; });
+        if(it == players.end())
+            return {};
+        else
+            return it->second;
+    }
+
     void tick();
 
     World& getWorld();
+
+    CommandEngine& getCommandEngine() {
+        return commandEngine;
+    }
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
     [[nodiscard]] const Registry& getItemRegistry() const {
@@ -57,6 +71,8 @@ class Server {
    private:
     void loadRegistries();
     static void loadRegistry(Registry& registry, nlohmann::json root);
+
+    CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;
     Registry itemRegistry = Registry("minecraft:item");

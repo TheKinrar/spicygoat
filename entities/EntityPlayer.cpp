@@ -138,3 +138,12 @@ std::unique_ptr<ClientBoundPacket> EntityPlayer::createPacket() {
 std::unique_ptr<ClientBoundPacket> EntityPlayer::removePacket() {
     return std::make_unique<PacketDestroyEntities>(getEID());
 }
+
+void EntityPlayer::sendMessage(const std::string& message) const {
+    getConnection().sendPacket(PacketChatMessageCB(message));
+}
+
+void EntityPlayer::teleport(const Location& loc) {
+    this->getConnection().sendPacket(PacketPlayerLocationCB(loc));
+    this->setNextLocation(loc);
+}

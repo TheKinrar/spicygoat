@@ -6,6 +6,9 @@
 
 void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {
+        case Packets::S_CHAT_COMMAND:
+            onChatCommand(static_cast<const PacketChatCommand &>(packet));
+            break;
         case Packets::S_CHAT_MESSAGE:
             onChatMessage(static_cast<const PacketChatMessageSB &>(packet));
             break;

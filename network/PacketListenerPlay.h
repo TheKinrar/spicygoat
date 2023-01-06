@@ -11,6 +11,7 @@ class PacketListenerPlay : public PacketListener {
    public:
     void handle(const ServerBoundPacket& packet) override;
 
+    virtual void onChatCommand(const PacketChatCommand& packet) = 0;
     virtual void onChatMessage(const PacketChatMessageSB& packet) = 0;
     virtual void onTeleportConfirm(const PacketTeleportConfirm& packet) = 0;
     virtual void onClientStatus(const PacketClientStatus& packet) = 0;

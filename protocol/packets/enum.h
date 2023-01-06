@@ -19,6 +19,7 @@ static const int S_PLUGIN_RESPONSE = 0x02;
 
 // Play SB
 static const int S_TELEPORT_CONFIRM = 0x00;
+static const int S_CHAT_COMMAND = 0x04;
 static const int S_CHAT_MESSAGE = 0x05;
 static const int S_CLIENT_STATUS = 0x06;
 static const int S_CLIENT_SETTINGS = 0x07;

@@ -65,6 +65,8 @@ TCPServer::TCPServer() {
     fds[0].events = POLLIN;
 
     keepAliveThread = std::make_unique<std::thread>(&TCPServer::keepAliveTask, this);
+
+    std::cout << "Ready!" << std::endl;
 }
 
 TCPServer::~TCPServer() {

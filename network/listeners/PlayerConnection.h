@@ -12,6 +12,7 @@ class PlayerConnection : public PacketListenerPlay {
    public:
     PlayerConnection(TCPConnection &connection, EntityPlayer &player);
 
+    void onChatCommand(const PacketChatCommand &packet) override;
     void onChatMessage(const PacketChatMessageSB &packet) override;
     void onTeleportConfirm(const PacketTeleportConfirm &packet) override;
     void onClientStatus(const PacketClientStatus &packet) override;

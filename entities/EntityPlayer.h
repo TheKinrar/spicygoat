@@ -14,6 +14,7 @@ class TCPConnection;
 
 #include "../TCPConnection.h"
 #include "../inventory/PlayerInventory.h"
+#include "../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../world/chunks/ChunkColumn.h"
 #include "../world/geo/ChunkPosition.h"
 #include "../world/geo/Location.h"
@@ -37,6 +38,10 @@ class EntityPlayer : public Entity {
     void setRenderDistance(int renderDistance) {
         this->renderDistance = renderDistance;
     }
+
+    void sendMessage(const std::string& message) const;
+
+    void teleport(const Location& loc);
 
     TCPConnection &getConnection() const;
 

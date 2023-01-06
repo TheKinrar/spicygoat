@@ -32,6 +32,8 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
         switch(id) {
             case S_TELEPORT_CONFIRM:
                 return std::make_unique<PacketTeleportConfirm>(data);
+            case S_CHAT_COMMAND:
+                return std::make_unique<PacketChatCommand>(data);
             case S_CHAT_MESSAGE:
                 return std::make_unique<PacketChatMessageSB>(data);
             case S_CLIENT_STATUS:

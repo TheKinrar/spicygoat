@@ -2,6 +2,7 @@
 
 #include "Server.h"
 #include "TCPServer.h"
+#include "commands/builtin/CommandTp.h"
 #include "config/Config.h"
 
 void sigterm_handler(int) {
@@ -20,6 +21,7 @@ int main() {
     std::cout << "SpicyGoat is here!" << std::endl;
 
     Config::get();
+    Server::get().getCommandEngine().registerCommand(std::make_unique<CommandTp>());
     Server::get().run();
 
     return 0;
