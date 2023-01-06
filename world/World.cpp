@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "geo/ChunkPosition.h"
+
 World::World() {
     std::ifstream ifs("world/level.dat", std::ios::binary);
     zlib::izlibstream buf(ifs);
@@ -39,8 +41,9 @@ Region& World::getRegion(int32_t x, int32_t z) {
 }
 
 ChunkColumn& World::getChunk(int32_t x, int32_t z) {
-    return getRegion(floor((double)x / 32), floor((double)z / 32))
-        .getColumn(x % 32 + (x < 0 ? 32 : 0), z % 32 + (z < 0 ? 32 : 0));
+    ChunkPosition pos(x, 0, z);
+    return getRegion(pos.getRegionX(), pos.getRegionZ())
+        .getColumn(pos.getInRegionX(), pos.getInRegionZ());
 }
 
 const Position& World::getSpawnPosition() const {

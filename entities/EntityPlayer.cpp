@@ -25,25 +25,37 @@ void EntityPlayer::tick() {
 
     if(loadedChunks.empty()) chunkChanged();
 
+    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Server::VIEW_DISTANCE) : 1;
+    int32_t cx = getLocation().getChunkX();
+    int32_t cz = getLocation().getChunkZ();
+    int32_t min_x = cx - effectiveViewDistance;
+    int32_t max_x = cx + effectiveViewDistance;
+    int32_t min_z = cz - effectiveViewDistance;
+    int32_t max_z = cz + effectiveViewDistance;
+
     int n = 0;
     while(!chunkSendQueue.empty()) {
-        auto& chunk = chunkSendQueue.front().get();
+        auto pos = chunkSendQueue.front();
+        if(pos.getX() >= min_x && pos.getX() <= max_x && pos.getZ() >= min_z && pos.getZ() <= max_z) {
+            auto& chunk = Server::get().getWorld().getChunk(pos);
 
-        if(chunk.hasData()) {
-            conn->sendPacket(PacketChunkData(chunk));
-        } else {
-            std::cerr << "no data for column " << chunk.toString() << std::endl;
+            if(chunk.hasData()) {
+                conn->sendPacket(PacketChunkData(chunk));
+                ++n;
+            } else {
+                std::cerr << "no data for column " << chunk.toString() << std::endl;
+            }
         }
 
         chunkSendQueue.pop();
 
-        ++n;
         if(++n == 5) break;
     }
 
     if(!spawned && chunkSendQueue.empty()) {
         conn->sendPacket(PacketPlayerLocationCB(getLocation()));
         spawned = true;
+        chunkChanged(); // Trigger loading of more chunks
     }
 }
 
@@ -52,11 +64,13 @@ void EntityPlayer::chunkChanged() {
 
     conn->sendPacket(PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
-    int effectiveViewDistance = spawned ? Server::VIEW_DISTANCE : 1;
-    int32_t min_x = getLocation().getChunkX() - effectiveViewDistance;
-    int32_t max_x = getLocation().getChunkX() + effectiveViewDistance;
-    int32_t min_z = getLocation().getChunkZ() - effectiveViewDistance;
-    int32_t max_z = getLocation().getChunkZ() + effectiveViewDistance;
+    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Server::VIEW_DISTANCE) : 1;
+    int32_t cx = getLocation().getChunkX();
+    int32_t cz = getLocation().getChunkZ();
+    int32_t min_x = cx - effectiveViewDistance;
+    int32_t max_x = cx + effectiveViewDistance;
+    int32_t min_z = cz - effectiveViewDistance;
+    int32_t max_z = cz + effectiveViewDistance;
 
     for(auto it : std::unordered_map(loadedChunks)) {
         auto& chunk = it.second.get();
@@ -67,15 +81,16 @@ void EntityPlayer::chunkChanged() {
         }
     }
 
-    for(int32_t x = min_x; x <= max_x; ++x) {
-        for(int32_t z = min_z; z <= max_z; ++z) {
-            Position2D pos(x, z);
+    loadChunk(cx, cz);
+    for(int i = 1; i <= effectiveViewDistance; ++i) {
+        for(int32_t x = cx - i; x <= cx + i; ++x) {
+            loadChunk(x, cz - i);
+            loadChunk(x, cz + i);
+        }
 
-            if(loadedChunks.find(pos) == loadedChunks.end()) {
-                ChunkColumn& column = Server::get().getWorld().getChunk(x, z);
-                chunkSendQueue.emplace(column);
-                loadedChunks.emplace(pos, column);
-            }
+        for(int32_t z = cz - i + 1; z <= cz + i - 1; ++z) {
+            loadChunk(cx - i, z);
+            loadChunk(cx + i, z);
         }
     }
 
@@ -88,6 +103,14 @@ void EntityPlayer::chunkChanged() {
                 nearbyEntities.insert(e);
             }
         }
+    }
+}
+
+void EntityPlayer::loadChunk(int32_t x, int32_t z) {
+    ChunkPosition pos(x, 0, z);
+
+    if(loadedChunks.find(pos) == loadedChunks.end()) {
+        chunkSendQueue.emplace(pos);
     }
 }
 

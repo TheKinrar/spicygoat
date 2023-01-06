@@ -81,8 +81,8 @@ class Chunk {
     }
 
     int16_t countAirBlocks() {
-        if(palette->isSingle() && palette->getSingleBlockState().isAir()) {
-            return 4096;
+        if(palette->isSingle()) {
+            return palette->getSingleBlockState().isAir() ? 4096 : 0;
         } else {
             int16_t n = 0;
             for(int x = 0; x < 16; ++x) {

@@ -15,6 +15,7 @@ class TCPConnection;
 #include "../TCPConnection.h"
 #include "../inventory/PlayerInventory.h"
 #include "../world/chunks/ChunkColumn.h"
+#include "../world/geo/ChunkPosition.h"
 #include "../world/geo/Location.h"
 #include "../world/geo/Position2D.h"
 #include "Entity.h"
@@ -28,6 +29,14 @@ class EntityPlayer : public Entity {
     uuids::uuid getUuid() const;
 
     const std::string &getName() const;
+
+    int getRenderDistance() const {
+        return renderDistance;
+    }
+
+    void setRenderDistance(int renderDistance) {
+        this->renderDistance = renderDistance;
+    }
 
     TCPConnection &getConnection() const;
 
@@ -43,16 +52,20 @@ class EntityPlayer : public Entity {
     void chunkChanged() override;
 
    private:
+    void loadChunk(int32_t x, int32_t z);
+
     uuids::uuid uuid;
     std::string name;
 
     std::shared_ptr<TCPConnection> conn;
 
-    std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadedChunks;
-    std::queue<std::reference_wrapper<ChunkColumn>> chunkSendQueue;
+    std::unordered_map<ChunkPosition, std::reference_wrapper<ChunkColumn>> loadedChunks;
+    std::queue<ChunkPosition> chunkSendQueue;
     bool spawned = false;
 
     std::set<std::shared_ptr<Entity>> nearbyEntities;
+
+    int renderDistance = 0;
 };
 
 #endif  // SPICYGOAT_ENTITYPLAYER_H

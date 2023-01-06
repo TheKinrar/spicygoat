@@ -9,6 +9,7 @@
 #include <mutex>
 
 #include "chunks/Region.h"
+#include "geo/ChunkPosition.h"
 #include "geo/Position.h"
 #include "geo/Position2D.h"
 
@@ -18,6 +19,9 @@ class World {
 
     Region& getRegion(int32_t x, int32_t z);
     ChunkColumn& getChunk(int32_t x, int32_t z);
+    ChunkColumn& getChunk(ChunkPosition pos) {
+        return getChunk(pos.getX(), pos.getZ());
+    }
 
     const Position& getSpawnPosition() const;
 

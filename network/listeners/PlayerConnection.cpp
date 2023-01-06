@@ -22,7 +22,7 @@ void PlayerConnection::onClientStatus(const PacketClientStatus &packet) {
 }
 
 void PlayerConnection::onClientSettings(const PacketClientSettings &packet) {
-    // TODO
+    player.setRenderDistance(packet.renderDistance);
 }
 
 void PlayerConnection::onPluginMessage(const PacketPluginMessageSB &packet) {
