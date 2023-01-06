@@ -40,6 +40,11 @@ void EntityPlayer::tick() {
         ++n;
         if(++n == 5) break;
     }
+
+    if(!spawned && chunkSendQueue.empty()) {
+        conn->sendPacket(PacketPlayerLocationCB(getLocation()));
+        spawned = true;
+    }
 }
 
 void EntityPlayer::chunkChanged() {
@@ -47,10 +52,11 @@ void EntityPlayer::chunkChanged() {
 
     conn->sendPacket(PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
-    int32_t min_x = getLocation().getChunkX() - Server::VIEW_DISTANCE;
-    int32_t max_x = getLocation().getChunkX() + Server::VIEW_DISTANCE;
-    int32_t min_z = getLocation().getChunkZ() - Server::VIEW_DISTANCE;
-    int32_t max_z = getLocation().getChunkZ() + Server::VIEW_DISTANCE;
+    int effectiveViewDistance = spawned ? Server::VIEW_DISTANCE : 1;
+    int32_t min_x = getLocation().getChunkX() - effectiveViewDistance;
+    int32_t max_x = getLocation().getChunkX() + effectiveViewDistance;
+    int32_t min_z = getLocation().getChunkZ() - effectiveViewDistance;
+    int32_t max_z = getLocation().getChunkZ() + effectiveViewDistance;
 
     for(auto it : std::unordered_map(loadedChunks)) {
         auto& chunk = it.second.get();

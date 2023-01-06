@@ -12,6 +12,7 @@
 #include "../../Server.h"
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
+#include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
 #include "PlayerConnection.h"
 
 LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}
@@ -83,8 +84,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     connection->sendPacket(PacketServerDifficulty(0));  // TODO difficulty
     connection->sendPacket(PacketSpawnPosition(pos));
     connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
-    connection->sendPacket(
-        PacketPlayerLocationCB(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0)));  // TODO player location
+    connection->sendPacket(PacketRenderCenter(pos.getChunkX(), pos.getChunkZ()));
     connection->getPlayer()->setNextLocation(Location(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));

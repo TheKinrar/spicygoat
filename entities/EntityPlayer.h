@@ -50,6 +50,7 @@ class EntityPlayer : public Entity {
 
     std::unordered_map<Position2D, std::reference_wrapper<ChunkColumn>> loadedChunks;
     std::queue<std::reference_wrapper<ChunkColumn>> chunkSendQueue;
+    bool spawned = false;
 
     std::set<std::shared_ptr<Entity>> nearbyEntities;
 };
