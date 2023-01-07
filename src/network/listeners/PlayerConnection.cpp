@@ -72,9 +72,14 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
         if(player.getGamemode() == 0) {
             auto loot = Server::get().getItemRegistry().getLoot(
                 Server::get().getWorld().getBlockState(packet.position));
+
+            Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+            Server::get().broadcastPacket(PacketBlockUpdate(
+                packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
+
             if(loot.present) {
                 auto e = std::make_unique<EntityItem>(loot);
-                e->setLocation(Location(packet.position));
+                e->setLocation(Location::center(packet.position));
                 Server::get().spawnEntity(std::move(e));
             }
         }

@@ -13,13 +13,16 @@
 class PlayerTracker : public EntityTracker {
    public:
     explicit PlayerTracker(Entity &self);
+    ~PlayerTracker() override;
 
     void tick() override;
 
     void broadcast(const ClientBoundPacket &packet) override;
+    void destroy() override;
 
    private:
     std::set<std::shared_ptr<EntityPlayer>> players;
+    bool destroyed = false;
 };
 
 #endif  // SPICYGOAT_PLAYERTRACKER_H

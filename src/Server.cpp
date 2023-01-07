@@ -98,10 +98,8 @@ void Server::removePlayer(EntityPlayer& p) {
 }
 
 void Server::removeEntity(Entity& entity) {
+    entity.getTracker().destroy();
     entities.erase(entity.getEID());
-
-    // TODO this should be handled by the EntityTracker
-    broadcastPacket(PacketDestroyEntities(entity.getEID()));
 }
 
 int32_t Server::nextEID() {

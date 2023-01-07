@@ -16,6 +16,9 @@ class Location {
     Location();
     Location(double x, double y, double z, float yaw, float pitch);
     explicit Location(Position pos) : x(pos.getX()), y(pos.getY()), z(pos.getZ()), yaw(0), pitch(0) {};
+    static Location center(Position pos) {
+        return {pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0};
+    }
 
     void setX(double x);
 

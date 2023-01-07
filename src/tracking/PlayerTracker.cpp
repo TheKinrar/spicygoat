@@ -10,7 +10,14 @@
 
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 
+PlayerTracker::~PlayerTracker() {
+    destroy();
+}
+
 void PlayerTracker::tick() {
+    if(destroyed)
+        return;
+
     for(auto &player : Server::get().getPlayers()) {
         if(*player == self) continue;
 
@@ -42,4 +49,13 @@ void PlayerTracker::broadcast(const ClientBoundPacket &packet) {
     for(auto &player : players) {
         player->getConnection().sendPacket(packet);
     }
+}
+
+void PlayerTracker::destroy() {
+    if(destroyed)
+        return;
+
+    destroyed = true;
+
+    broadcast(*self.removePacket());
 }

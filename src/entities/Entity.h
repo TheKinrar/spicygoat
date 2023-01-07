@@ -37,6 +37,11 @@ class Entity {
     virtual int getProtocolType();
 
     [[nodiscard]]
+    EntityTracker& getTracker() const {
+        return *tracker;
+    }
+
+    [[nodiscard]]
     const Location getLocation() const;
 
     [[nodiscard]]
