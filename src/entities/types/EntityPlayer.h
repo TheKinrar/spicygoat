@@ -12,24 +12,26 @@ class TCPConnection;
 #include <unordered_map>
 #include <vector>
 
-#include "../TCPConnection.h"
-#include "../config/Config.h"
-#include "../inventory/PlayerInventory.h"
-#include "../persist/PlayerData.h"
-#include "../protocol/packets/play/clientbound/PacketChatMessageCB.h"
-#include "../world/chunks/ChunkColumn.h"
-#include "../world/geo/ChunkPosition.h"
-#include "../world/geo/Location.h"
-#include "../world/geo/Position2D.h"
-#include "Entity.h"
+#include "../../TCPConnection.h"
+#include "../../config/Config.h"
+#include "../../inventory/PlayerInventory.h"
+#include "../../persist/PlayerData.h"
+#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+#include "../../world/chunks/ChunkColumn.h"
+#include "../../world/geo/ChunkPosition.h"
+#include "../../world/geo/Location.h"
+#include "../../world/geo/Position2D.h"
+#include "../Entity.h"
 
 class EntityPlayer : public Entity {
    public:
     EntityPlayer(uuids::uuid uuid, std::string &name, std::shared_ptr<TCPConnection> conn);
 
-    void tick() override;
+    std::string getType() override {
+        return "minecraft:player";
+    }
 
-    uuids::uuid getUuid() const;
+    void tick() override;
 
     const std::string &getName() const;
 
@@ -70,8 +72,6 @@ class EntityPlayer : public Entity {
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;
 
-    std::unique_ptr<ClientBoundPacket> removePacket() override;
-
     std::string toString() override;
 
     PlayerInventory inventory;
@@ -83,7 +83,6 @@ class EntityPlayer : public Entity {
     void checkChunks();
     void loadChunk(int32_t x, int32_t z);
 
-    uuids::uuid uuid;
     std::string name;
     int gamemode = Config::get().gamemode;
 

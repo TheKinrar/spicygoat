@@ -7,7 +7,7 @@
 
 #include <forward_list>
 
-#include "../../../../entities/EntityPlayer.h"
+#include "../../../../entities/types/EntityPlayer.h"
 #include "../../ClientBoundPacket.h"
 
 class PacketPlayerInfo : public ClientBoundPacket {

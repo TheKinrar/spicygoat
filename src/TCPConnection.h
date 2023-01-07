@@ -21,7 +21,7 @@
 class EntityPlayer;
 class PacketListener;
 
-#include "entities/EntityPlayer.h"
+#include "entities/types/EntityPlayer.h"
 #include "network/PacketListener.h"
 #include "protocol.h"
 

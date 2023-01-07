@@ -11,9 +11,13 @@
 #include "../protocol/packets/play/clientbound/PacketEntityLook.h"
 #include "../protocol/packets/play/clientbound/PacketEntityMove.h"
 #include "../protocol/packets/play/clientbound/PacketEntityTeleport.h"
+#include "../util/uuid.h"
 
-Entity::Entity() {
-    eid = Server::get().nextEID();
+Entity::Entity() : eid(Server::get().nextEID()), uuid(uuids::generate()) {
+    tracker = Server::createTracker(*this);
+}
+
+Entity::Entity(const uuids::uuid& uuid) : eid(Server::get().nextEID()), uuid(uuid) {
     tracker = Server::createTracker(*this);
 }
 
@@ -105,4 +109,8 @@ const Location Entity::getLocation() const {
 
 bool Entity::isOnGround() const {
     return onGround;
+}
+
+int Entity::getProtocolType() {
+    return Server::get().getEntityRegistry().getId(getType());
 }

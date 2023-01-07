@@ -10,7 +10,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "../entities/EntityPlayer.h"
+#include "../entities/types/EntityPlayer.h"
 #include "Command.h"
 
 class CommandEngine {

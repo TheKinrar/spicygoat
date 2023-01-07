@@ -26,6 +26,8 @@ void PlayerTracker::tick() {
             if(players.insert(player).second) {
                 std::cout << "+track " << player->getName() << std::endl;
                 player->getConnection().sendPacket(*self.createPacket());
+                auto metaPacket = self.metadataPacket();
+                if(metaPacket.has_value()) player->getConnection().sendPacket(**metaPacket);
             }
         } else {
             if(players.erase(player)) {

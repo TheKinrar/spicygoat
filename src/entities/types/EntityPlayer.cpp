@@ -7,17 +7,16 @@
 #include <iostream>
 #include <utility>
 
-#include "../Server.h"
-#include "../protocol/packets/play/clientbound/PacketChunkData.h"
-#include "../protocol/packets/play/clientbound/PacketDestroyEntities.h"
-#include "../protocol/packets/play/clientbound/PacketGameEvent.h"
-#include "../protocol/packets/play/clientbound/PacketRenderCenter.h"
-#include "../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
-#include "../protocol/packets/play/clientbound/PacketUnloadChunk.h"
+#include "../../Server.h"
+#include "../../protocol/packets/play/clientbound/PacketChunkData.h"
+#include "../../protocol/packets/play/clientbound/PacketDestroyEntities.h"
+#include "../../protocol/packets/play/clientbound/PacketGameEvent.h"
+#include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
+#include "../../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
+#include "../../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 
 EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn)
-    : conn(std::move(conn)) {
-    this->uuid = uuid;
+    : Entity(uuid), conn(std::move(conn)) {
     this->name = name;
     this->data = PlayerData::load(uuid);
     pullData();
@@ -118,10 +117,6 @@ std::string EntityPlayer::toString() {
     return std::string("EntityPlayer{name=") + name + "}";
 }
 
-uuids::uuid EntityPlayer::getUuid() const {
-    return uuid;
-}
-
 const std::string& EntityPlayer::getName() const {
     return name;
 }
@@ -131,12 +126,8 @@ TCPConnection& EntityPlayer::getConnection() const {
 }
 
 std::unique_ptr<ClientBoundPacket> EntityPlayer::createPacket() {
-    return std::make_unique<PacketSpawnPlayer>(getEID(), uuid, getLocation().getX(), getLocation().getY(),
+    return std::make_unique<PacketSpawnPlayer>(getEID(), getUuid(), getLocation().getX(), getLocation().getY(),
                                                getLocation().getZ(), getLocation().getYaw(), getLocation().getPitch());
-}
-
-std::unique_ptr<ClientBoundPacket> EntityPlayer::removePacket() {
-    return std::make_unique<PacketDestroyEntities>(getEID());
 }
 
 void EntityPlayer::sendMessage(const std::string& message) const {

@@ -7,7 +7,7 @@
 
 #include <set>
 
-#include "../entities/EntityPlayer.h"
+#include "../entities/types/EntityPlayer.h"
 #include "EntityTracker.h"
 
 class PlayerTracker : public EntityTracker {

@@ -138,7 +138,7 @@ class PacketData {
 
                 return {id, count, std::move(nbt)};
             } else {
-                return {id, count};
+                return ItemStack(id, count);
             }
         } else {
             return {};

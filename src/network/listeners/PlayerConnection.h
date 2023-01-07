@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_PLAYERCONNECTION_H
 #define SPICYGOAT_PLAYERCONNECTION_H
 
-#include "../../entities/EntityPlayer.h"
+#include "../../entities/types/EntityPlayer.h"
 #include "../PacketListenerPlay.h"
 
 class PlayerConnection : public PacketListenerPlay {

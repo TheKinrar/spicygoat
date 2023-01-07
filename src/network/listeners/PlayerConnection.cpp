@@ -8,6 +8,7 @@
 
 #include "../../Server.h"
 #include "../../config/Config.h"
+#include "../../entities/types/EntityItem.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
@@ -66,6 +67,16 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
 
             Server::get().broadcastPacket(PacketBlockUpdate(
                 packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
+        }
+    } else if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
+        if(player.getGamemode() == 0) {
+            auto loot = Server::get().getItemRegistry().getLoot(
+                Server::get().getWorld().getBlockState(packet.position));
+            if(loot.present) {
+                auto e = std::make_unique<EntityItem>(loot);
+                e->setLocation(Location(packet.position));
+                Server::get().spawnEntity(std::move(e));
+            }
         }
     }
 }

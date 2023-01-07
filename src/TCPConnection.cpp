@@ -9,7 +9,7 @@
 
 #include "Server.h"
 #include "TCPServer.h"
-#include "entities/EntityPlayer.h"
+#include "entities/types/EntityPlayer.h"
 #include "protocol.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {

@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "../../entities/EntityPlayer.h"
+#include "../../entities/types/EntityPlayer.h"
 #include "../Command.h"
 
 class CommandGm : public Command {

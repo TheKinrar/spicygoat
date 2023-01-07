@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_PACKETJOINGAME_H
 #define SPICYGOAT_PACKETJOINGAME_H
 
-#include "../../../../entities/EntityPlayer.h"
+#include "../../../../entities/types/EntityPlayer.h"
 #include "../../ClientBoundPacket.h"
 
 class PacketJoinGame : public ClientBoundPacket {

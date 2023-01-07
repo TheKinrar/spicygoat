@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "commands/CommandEngine.h"
-#include "entities/EntityPlayer.h"
+#include "entities/types/EntityPlayer.h"
 #include "item/ItemRegistry.h"
 #include "util/Registry.h"
 #include "world/World.h"
@@ -29,7 +29,9 @@ class Server {
     void run();
 
     std::shared_ptr<EntityPlayer> createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);
+    void spawnEntity(const std::shared_ptr<Entity>& entity);
     void removePlayer(EntityPlayer&);
+    void removeEntity(Entity& entity);
     int32_t nextEID();
     static std::unique_ptr<EntityTracker> createTracker(Entity&);
     unsigned long getPlayerCount() const;
@@ -67,6 +69,9 @@ class Server {
     [[nodiscard]] const ItemRegistry& getItemRegistry() const {
         return itemRegistry;
     }
+    [[nodiscard]] const Registry& getEntityRegistry() const {
+        return entityRegistry;
+    }
 
     void broadcastPacket(const Packet&);
 
@@ -76,6 +81,7 @@ class Server {
     CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;
+    Registry entityRegistry{"minecraft:entity_type"};
     ItemRegistry itemRegistry;
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;

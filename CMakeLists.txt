@@ -48,7 +48,7 @@ if(NOT WIN32)
 endif()
 
 
-add_executable(SpicyGoat)
+add_executable(SpicyGoat src/entities/types/EntityItem.cpp src/entities/types/EntityItem.h src/protocol/packets/play/clientbound/PacketSpawnEntity.h src/util/uuid.h src/protocol/packets/play/clientbound/PacketSetEntityMetadata.h src/entities/EntityMetadata.h)
 add_subdirectory(src)
 target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings)
 if(WIN32)

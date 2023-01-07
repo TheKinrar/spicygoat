@@ -7,7 +7,7 @@
 #include <string>
 #include <utility>
 
-#include "../entities/EntityPlayer.h"
+#include "../entities/types/EntityPlayer.h"
 #include "../protocol/packets/play/serverbound/PacketUseItemOn.h"
 
 class Item {

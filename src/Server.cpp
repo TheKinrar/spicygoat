@@ -22,6 +22,7 @@ Server::Server() {
 void Server::loadRegistries() {
     nlohmann::json j = nlohmann::json::parse(Resources::registries());
 
+    loadRegistry(entityRegistry, j);
     loadRegistry(itemRegistry, j);
 }
 
@@ -69,8 +70,8 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     array.push_back(player);
     broadcastPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, array));
 
+    spawnEntity(player);
     players[uuid] = player;
-    entities[player->getEID()] = player;
     playerCount++;
 
     auto players = getPlayers();
@@ -79,20 +80,28 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     return player;
 }
 
+void Server::spawnEntity(const std::shared_ptr<Entity>& entity) {
+    entities[entity->getEID()] = entity;
+}
+
 void Server::removePlayer(EntityPlayer& p) {
     p.pushData();
     p.getData().save();
 
-    entities.erase(p.getEID());
+    removeEntity(p);
     players.erase(p.getUuid());
     playerCount--;
 
     std::forward_list<uuids::uuid> array;
     array.emplace_front(p.getUuid());
     broadcastPacket(PacketPlayerInfoRemove(array));
+}
+
+void Server::removeEntity(Entity& entity) {
+    entities.erase(entity.getEID());
 
     // TODO this should be handled by the EntityTracker
-    broadcastPacket(PacketDestroyEntities(p.getEID()));
+    broadcastPacket(PacketDestroyEntities(entity.getEID()));
 }
 
 int32_t Server::nextEID() {
@@ -100,8 +109,8 @@ int32_t Server::nextEID() {
 }
 
 void Server::tick() {
-    for(auto& p : getPlayers()) {
-        p->tick();
+    for(auto& e : getEntities()) {
+        e->tick();
     }
 }
 

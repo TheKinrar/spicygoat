@@ -18,5 +18,9 @@ class BlockItem : public Item {
    public:
     BlockItem(const std::string& name, BlockState  block) : Item(name), block(std::move(block)) {}
 
+    [[nodiscard]] const BlockState& getBlock() const {
+        return block;
+    }
+
     void onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const override;
 };
