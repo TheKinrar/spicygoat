@@ -20,7 +20,6 @@ class Server {
    public:
     inline static const int VIEW_DISTANCE = 64;
     inline static const int ENTITY_VIEW_DISTANCE = 50;
-    inline static const int ENTITY_VIEW_DISTANCE_SQ = ENTITY_VIEW_DISTANCE * ENTITY_VIEW_DISTANCE;
 
     Server();
     static Server& get();

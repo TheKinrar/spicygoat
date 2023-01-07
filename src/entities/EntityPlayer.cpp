@@ -70,17 +70,6 @@ void EntityPlayer::chunkChanged() {
     conn->sendPacket(PacketRenderCenter(getLocation().getChunkX(), getLocation().getChunkZ()));
 
     checkChunks();
-
-    nearbyEntities.clear();
-    for(auto& e : Server::get().getEntities()) {
-        if(e.get() != this) {
-            double d = e->getLocation().distanceSquared(getLocation());
-
-            if(d <= Server::ENTITY_VIEW_DISTANCE_SQ) {
-                nearbyEntities.insert(e);
-            }
-        }
-    }
 }
 
 void EntityPlayer::checkChunks() {

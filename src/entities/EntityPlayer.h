@@ -96,8 +96,6 @@ class EntityPlayer : public Entity {
     std::set<ChunkPosition> queuedChunks;
     bool spawned = false;
 
-    std::set<std::shared_ptr<Entity>> nearbyEntities;
-
     int renderDistance = 0;
 };
 
