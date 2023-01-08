@@ -10,7 +10,6 @@
 #include "TCPConnection.h"
 
 #ifdef __linux__
-#include <libnet.h>
 #include <netinet/in.h>
 #include <poll.h>
 #include <sys/socket.h>
