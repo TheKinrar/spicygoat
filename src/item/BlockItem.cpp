@@ -12,5 +12,16 @@ void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) con
 
         Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
                                                         Server::get().getPalette()->getBlockStateId(block)));
+    } else if(player.getGamemode() == GameMode::GameMode::Survival ||
+              player.getGamemode() == GameMode::GameMode::Adventure) {
+        auto& inv = player.inventory;
+        auto stack = inv->getSelected();
+        stack.setCount(stack.count - 1);
+        inv->set(inv->getSelectedSlot(), stack);
+
+        Server::get().getWorld().setBlockState(packet.position.relative(packet.face), block);
+
+        Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
+                                                        Server::get().getPalette()->getBlockStateId(block)));
     }
 }

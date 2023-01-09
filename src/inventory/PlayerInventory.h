@@ -20,12 +20,6 @@ class PlayerInventory {
    public:
     explicit PlayerInventory(EntityPlayer& player) : player(player) {}
 
-    void setSlot(int slot, ItemStack stack) {
-        if(slot < 5) throw std::runtime_error("Can't set crafting slots");
-
-        slots[slot] = std::move(stack);
-    }
-
     [[nodiscard]]
     std::vector<ItemStack> getSlots() const {
         return {std::begin(slots), std::end(slots)};
@@ -117,5 +111,5 @@ class PlayerInventory {
         return remaining;
     }
 
-    void set(int slot, const ItemStack& stack);
+    void set(int slot, const ItemStack& stack, bool sendPacket = true);
 };

@@ -4,7 +4,9 @@
 
 #include "PlayerInventory.h"
 
-void PlayerInventory::set(int slot, const ItemStack& stack) {
+void PlayerInventory::set(int slot, const ItemStack& stack, bool sendPacket) {
     slots[slot] = stack;
-    player.getConnection().sendPacket(PacketSetInventorySlot(0, slot, stack));
+    if(sendPacket) {
+        player.getConnection().sendPacket(PacketSetInventorySlot(0, slot, stack));
+    }
 }

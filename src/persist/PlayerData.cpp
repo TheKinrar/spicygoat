@@ -14,14 +14,16 @@ PlayerInventory PlayerData::getInventory(EntityPlayer& player) const {
         for(const auto& e : inv) {
             auto& item = e.as<nbt::tag_compound>();
             if(item.has_key("tag")) {
-                ret.setSlot(dataSlotToNetwork(item.at("Slot").as<nbt::tag_byte>()),
+                ret.set(dataSlotToNetwork(item.at("Slot").as<nbt::tag_byte>()),
                             ItemStack(Server::get().getItemRegistry().keyToId.at(item.at("id").as<nbt::tag_string>()),
                                       item.at("Count").as<nbt::tag_byte>(),
-                                      std::make_unique<nbt::tag_compound>(item.at("tag").as<nbt::tag_compound>())));
+                                      std::make_unique<nbt::tag_compound>(item.at("tag").as<nbt::tag_compound>())),
+                        false);
             } else {
-                ret.setSlot(dataSlotToNetwork(item.at("Slot").as<nbt::tag_byte>()),
+                ret.set(dataSlotToNetwork(item.at("Slot").as<nbt::tag_byte>()),
                             ItemStack(Server::get().getItemRegistry().keyToId.at(item.at("id").as<nbt::tag_string>()),
-                                      item.at("Count").as<nbt::tag_byte>()));
+                                      item.at("Count").as<nbt::tag_byte>()),
+                        false);
             }
         }
     }
