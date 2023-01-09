@@ -54,6 +54,7 @@ class ChunkPalette {
     [[nodiscard]] std::shared_ptr<ChunkPalette> grow(const BlockState& newState) const {
         auto grown = std::make_shared<ChunkPalette>(*this);
         grown->addBlockState(newState, (int16_t)grown->stateToId.size());
+        grown->finalize();
         return grown;
     }
 

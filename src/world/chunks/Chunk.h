@@ -100,7 +100,10 @@ class Chunk {
 
    private:
     void rewriteData(const ChunkPalette& from, const ChunkPalette& to) {
-        std::vector<int64_t> newStates((4096 * to.getBitsPerBlock()) / 64);
+        if(to.isSingle())
+            return;
+
+        std::vector<int64_t> newStates(std::ceil((double) 4096 / to.getBlocksPerLong()));
         for(int x = 0; x < 16; ++x) {
             for(int y = 0; y < 16; ++y) {
                 for(int z = 0; z < 16; ++z) {
@@ -113,6 +116,9 @@ class Chunk {
 
     [[nodiscard]] static int64_t readBlockState(const std::vector<int64_t>& data, const ChunkPalette& palette, int x,
                                                 int y, int z) {
+        if(palette.isSingle())
+            return 0;
+
         int i = (((16 * y) + z) * 16) + x;                    // Block number
         int iLong = i / palette.getBlocksPerLong();           // Index of the long containing the block
         int offset = i % palette.getBlocksPerLong();          // Offset of the block in the long
