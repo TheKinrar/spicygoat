@@ -18,7 +18,9 @@ int main() {
     static_assert(sizeof(float) == 4);
     static_assert(sizeof(double) == 8);
 
+#ifdef __linux__
     signal(SIGPIPE, SIG_IGN);
+#endif
     signal(SIGTERM, sigterm_handler);
 
     std::cout << "SpicyGoat is here!" << std::endl;

@@ -40,33 +40,27 @@ FetchContent_Declare(abseil
         GIT_TAG 20220623.1)
 FetchContent_MakeAvailable(abseil)
 
-if(NOT WIN32)
-    FetchContent_Declare(embed
-            GIT_REPOSITORY https://github.com/MiSo1289/cmake-embed
-            GIT_TAG 20273c330d8e727cfc587002c451ec368c4cfef3)
-    FetchContent_MakeAvailable(embed)
-endif()
+FetchContent_Declare(embed
+        GIT_REPOSITORY https://github.com/MiSo1289/cmake-embed
+        GIT_TAG 20273c330d8e727cfc587002c451ec368c4cfef3)
+FetchContent_MakeAvailable(embed)
 
 
 add_executable(SpicyGoat)
 add_subdirectory(src)
+add_embedded_binary_resources(
+        SpicyGoat_resources
+        OUT_DIR resources_out
+        HEADER resources.h
+        NAMESPACE Resources
+        RESOURCE_NAMES blocks codec registries
+        RESOURCES
+        "${PROJECT_SOURCE_DIR}/resources/blocks.json"
+        "${PROJECT_SOURCE_DIR}/resources/codec.dat"
+        "${PROJECT_SOURCE_DIR}/resources/registries.json"
+)
 target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings)
+target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources -static)
 if(WIN32)
-    target_sources(SpicyGoat PRIVATE resources/blocks.json resources/codec.dat resources/registries.json)
-    set_source_files_properties(resources/blocks.json resources/codec.dat resources/registries.json PROPERTIES LANGUAGE RC)
-    target_link_libraries(SpicyGoat PUBLIC wsock32 ws2_32)
-else()
-    add_embedded_binary_resources(
-            SpicyGoat_resources
-            OUT_DIR resources_out
-            HEADER resources.h
-            NAMESPACE Resources
-            RESOURCE_NAMES blocks codec registries
-            RESOURCES
-            "${PROJECT_SOURCE_DIR}/resources/blocks.json"
-            "${PROJECT_SOURCE_DIR}/resources/codec.dat"
-            "${PROJECT_SOURCE_DIR}/resources/registries.json"
-    )
-    target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources)
+    target_link_libraries(SpicyGoat PRIVATE wsock32 ws2_32)
 endif()
-target_link_libraries(SpicyGoat PRIVATE -static)

@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_CHUNK_H
 #define SPICYGOAT_CHUNK_H
 
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include <tag_compound.h>
 
 #include <bitset>

@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_CHUNKCOLUMN_H
 #define SPICYGOAT_CHUNKCOLUMN_H
 
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include <tag_compound.h>
 
 #include "../geo/Position2D.h"

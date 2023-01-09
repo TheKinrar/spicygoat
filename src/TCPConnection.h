@@ -10,6 +10,7 @@
 #include <utility>
 
 #ifdef __linux__
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #define closesocket close
 #endif

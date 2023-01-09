@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_POSITION2D_H
 #define SPICYGOAT_POSITION2D_H
 
-#include <stdint-gcc.h>
+#include <stdint.h>
 
 #include <ostream>
 

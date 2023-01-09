@@ -4,10 +4,8 @@
 
 #include "TCPServer.h"
 
-#include <arpa/inet.h>
 #include <iostream>
 #include <memory>
-#include <sys/ioctl.h>
 #include <thread>
 
 #include "config/Config.h"
