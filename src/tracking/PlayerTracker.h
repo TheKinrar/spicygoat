@@ -17,6 +17,10 @@ class PlayerTracker : public EntityTracker {
 
     void tick() override;
 
+    [[nodiscard]]
+    const std::set<std::shared_ptr<EntityPlayer>>& getPlayers() const {
+        return players;
+    }
     void broadcast(const ClientBoundPacket &packet) override;
     void destroy() override;
 

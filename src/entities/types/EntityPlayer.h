@@ -5,6 +5,7 @@
 #ifndef SPICYGOAT_ENTITYPLAYER_H
 #define SPICYGOAT_ENTITYPLAYER_H
 
+class PlayerData;
 class TCPConnection;
 
 #include <queue>
@@ -74,7 +75,7 @@ class EntityPlayer : public Entity {
 
     std::string toString() override;
 
-    PlayerInventory inventory;
+    std::unique_ptr<PlayerInventory> inventory;
 
    protected:
     void chunkChanged() override;

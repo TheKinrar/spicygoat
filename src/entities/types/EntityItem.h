@@ -15,6 +15,8 @@ class EntityItem : public Entity {
    public:
     explicit EntityItem(ItemStack  stack) : stack(std::move(stack)) {}
 
+    void tick() override;
+
     std::string getType() override {
         return "minecraft:item";
     }

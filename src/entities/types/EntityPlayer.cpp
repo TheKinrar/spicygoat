@@ -16,7 +16,7 @@
 #include "../../protocol/packets/play/clientbound/PacketUnloadChunk.h"
 
 EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn)
-    : Entity(uuid), conn(std::move(conn)) {
+    : Entity(uuid), conn(std::move(conn)), inventory(std::make_unique<PlayerInventory>(*this)) {
     this->name = name;
     this->data = PlayerData::load(uuid);
     pullData();
@@ -151,10 +151,10 @@ void EntityPlayer::setGamemode(int gamemode) {
 
 void EntityPlayer::pullData() {
     setLocation(data->getLocation(Location(Server::get().getWorld().getSpawnPosition())));
-    inventory = data->getInventory();
+    inventory = std::make_unique<PlayerInventory>(data->getInventory(*this));
 }
 
 void EntityPlayer::pushData() {
     data->setLocation(getLocation());
-    data->setInventory(inventory);
+    data->setInventory(*inventory);
 }

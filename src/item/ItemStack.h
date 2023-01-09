@@ -22,6 +22,17 @@ struct ItemStack {
 
     ItemStack(int32_t id, int8_t count, const std::shared_ptr<nbt::tag_compound> &nbt)
         : present(true), id(id), count(count), hasNbt(true), nbt(nbt) {}
+
+    void setCount(int8_t count) {
+        ItemStack::count = count;
+        if(count == 0)
+            present = false;
+    }
+
+    [[nodiscard]]
+    bool compatibleWith(const ItemStack& o) const {
+        return id == o.id && !hasNbt && !o.hasNbt;
+    }
 };
 
 #endif  // SPICYGOAT_ITEMSTACK_H

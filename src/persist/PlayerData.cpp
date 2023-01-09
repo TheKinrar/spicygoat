@@ -6,8 +6,8 @@
 
 #include "../Server.h"
 
-PlayerInventory PlayerData::getInventory() const {
-    PlayerInventory ret;
+PlayerInventory PlayerData::getInventory(EntityPlayer& player) const {
+    PlayerInventory ret(player);
 
     if(nbt->has_key("Inventory")) {
         auto inv = nbt->at("Inventory").as<nbt::tag_list>();

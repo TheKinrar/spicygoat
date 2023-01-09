@@ -103,16 +103,16 @@ void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
 }
 
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
-    connection.getPlayer()->inventory.setSlot(packet.slot, packet.stack);
+    connection.getPlayer()->inventory->setSlot(packet.slot, packet.stack);
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
-    ItemStack stack = connection.getPlayer()->inventory.getSelected();
+    ItemStack stack = connection.getPlayer()->inventory->getSelected();
     if(stack.present) {
         Server::get().getItemRegistry().get(stack.id).onUseOn(player, packet);
     }
 }
 
 void PlayerConnection::onSetHeldItem(const PacketSetHeldItem &packet) {
-    player.inventory.setSelectedSlot(36 + packet.getSlot());
+    player.inventory->setSelectedSlot(36 + packet.getSlot());
 }

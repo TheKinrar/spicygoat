@@ -94,7 +94,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
     connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
 
-    connection->sendPacket(PacketSetInventoryContent(0, player->inventory.getSlots(), {}));
+    connection->sendPacket(PacketSetInventoryContent(0, player->inventory->getSlots(), {}));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
 }

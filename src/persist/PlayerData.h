@@ -15,6 +15,8 @@
 #include <fstream>
 #include <utility>
 
+class PlayerInventory;
+
 #include "../inventory/PlayerInventory.h"
 #include "../world/geo/Location.h"
 #include "uuid.h"
@@ -73,7 +75,7 @@ class PlayerData {
     }
 
     [[nodiscard]]
-    PlayerInventory getInventory() const;
+    PlayerInventory getInventory(EntityPlayer& player) const;
 
     void setInventory(const PlayerInventory& source);
 

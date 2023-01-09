@@ -30,6 +30,11 @@ class Location {
 
     void setPitch(float pitch);
 
+    [[nodiscard]]
+    Location add(double x, double y, double z) const {
+        return {this->x + x, this->y + y, this->z + z, yaw, pitch};
+    }
+
     double getX() const;
 
     double getY() const;
