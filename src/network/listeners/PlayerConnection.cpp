@@ -69,8 +69,7 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
                 packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
         }
     } else if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
-        if(player.getGamemode() == GameMode::GameMode::Survival ||
-           player.getGamemode() == GameMode::GameMode::Adventure) {
+        if(player.getGamemode() == GameMode::GameMode::Survival) {
             auto loot = Server::get().getItemRegistry().getLoot(
                 Server::get().getWorld().getBlockState(packet.position));
 

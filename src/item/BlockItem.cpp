@@ -12,8 +12,7 @@ void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) con
 
         Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
                                                         Server::get().getPalette()->getBlockStateId(block)));
-    } else if(player.getGamemode() == GameMode::GameMode::Survival ||
-              player.getGamemode() == GameMode::GameMode::Adventure) {
+    } else if(player.getGamemode() == GameMode::GameMode::Survival) {
         auto& inv = player.inventory;
         auto stack = inv->getSelected();
         stack.setCount(stack.count - 1);
