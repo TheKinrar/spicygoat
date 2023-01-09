@@ -78,3 +78,15 @@ void PlayerData::setAbilities(const PlayerAbilities& source) {
     data.insert("walkSpeed", nbt::tag_float(source.walkSpeed));
     nbt->put("abilities", std::move(data));
 }
+
+GameMode::GameMode PlayerData::getGameMode(GameMode::GameMode def) const {
+    if(nbt->has_key("playerGameType")) {
+        return static_cast<GameMode::GameMode>(nbt->at("playerGameType").as<nbt::tag_int>().get());
+    } else {
+        return def;
+    }
+}
+
+void PlayerData::setGameMode(const GameMode::GameMode& source) {
+    nbt->put("playerGameType", nbt::tag_int((int) source));
+}

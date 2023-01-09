@@ -85,6 +85,11 @@ class PlayerData {
 
     void setAbilities(const PlayerAbilities& source);
 
+    [[nodiscard]]
+    GameMode::GameMode getGameMode(GameMode::GameMode def) const;
+
+    void setGameMode(const GameMode::GameMode& source);
+
    private:
     static int dataSlotToNetwork(int slot) {
         if(slot == -106) // Off-hand

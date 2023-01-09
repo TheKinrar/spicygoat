@@ -155,12 +155,14 @@ void EntityPlayer::setGamemode(GameMode::GameMode gamemode) {
 
 void EntityPlayer::pullData() {
     setLocation(data->getLocation(Location(Server::get().getWorld().getSpawnPosition())));
+    gamemode = data->getGameMode(Config::get().gamemode);
     abilities = data->getAbilities();
     inventory = std::make_unique<PlayerInventory>(data->getInventory(*this));
 }
 
 void EntityPlayer::pushData() {
     data->setLocation(getLocation());
+    data->setGameMode(gamemode);
     data->setAbilities(abilities);
     data->setInventory(*inventory);
 }
