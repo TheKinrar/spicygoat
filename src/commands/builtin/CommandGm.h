@@ -28,7 +28,7 @@ class CommandGm : public Command {
                 return;
             }
 
-            sender.setGamemode(val);
+            sender.setGamemode(static_cast<GameMode::GameMode>(val));
         }
     }
 };

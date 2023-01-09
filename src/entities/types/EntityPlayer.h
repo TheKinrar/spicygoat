@@ -53,15 +53,21 @@ class EntityPlayer : public Entity {
         checkChunks();
     }
 
-    int getGamemode() const {
+    GameMode::GameMode getGamemode() const {
         return gamemode;
     }
 
-    void setGamemode(int gamemode);
+    void setGamemode(GameMode::GameMode gamemode);
+
+    void syncAbilities();
+
+    void sendAbilities() const;
 
     void sendMessage(const std::string& message) const;
 
     void teleport(const Location& loc);
+
+    void setFlying(bool flying, bool fromClient = false);
 
     void setFlyingSpeed(float speed);
 
@@ -85,7 +91,14 @@ class EntityPlayer : public Entity {
     void loadChunk(int32_t x, int32_t z);
 
     std::string name;
-    int gamemode = Config::get().gamemode;
+    GameMode::GameMode gamemode = Config::get().gamemode;
+
+    // Abilities
+    bool invulnerable{};
+    bool flying{};
+    bool allowFlying{};
+    bool creativeAbility{};
+    float flyingSpeed = 0.05;
 
     std::unique_ptr<PlayerData> data;
 

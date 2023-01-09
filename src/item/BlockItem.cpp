@@ -7,7 +7,7 @@
 #include "../Server.h"
 
 void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const {
-    if(player.getGamemode() == 1) {
+    if(player.getGamemode() == GameMode::GameMode::Creative) {
         Server::get().getWorld().setBlockState(packet.position.relative(packet.face), block);
 
         Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),

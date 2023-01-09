@@ -57,19 +57,19 @@ void PlayerConnection::onPlayerLook(const PacketPlayerLook &packet) {
 }
 
 void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) {
-    // TODO
+    player.setFlying(packet.flying, true);
 }
 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
-        if(player.getGamemode() == 1) {
+        if(player.getGamemode() == GameMode::GameMode::Creative) {
             Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
 
             Server::get().broadcastPacket(PacketBlockUpdate(
                 packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
         }
     } else if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
-        if(player.getGamemode() == 0) {
+        if(player.getGamemode() == GameMode::GameMode::Survival) {
             auto loot = Server::get().getItemRegistry().getLoot(
                 Server::get().getWorld().getBlockState(packet.position));
 

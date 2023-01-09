@@ -7,6 +7,8 @@
 
 #include <toml.hpp>
 
+#include "../util/GameMode.h"
+
 class Config {
    public:
     static const Config& get() {
@@ -14,12 +16,12 @@ class Config {
         return instance;
     }
 
-    int64_t gamemode;
+    GameMode::GameMode gamemode;
     int64_t port;
 
    private:
     Config() : data(toml::parse<toml::preserve_comments>("config.toml")) {
-        gamemode = toml::find<toml::integer>(data, "gamemode");
+        gamemode = GameMode::parse(toml::find<toml::integer>(data, "gamemode"));
         port = toml::find<toml::integer>(data, "port");
     }
 

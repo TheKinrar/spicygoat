@@ -91,7 +91,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     CMBrand(std::string("SpicyGoat")).send(*connection);
     connection->sendPacket(PacketServerDifficulty(0));  // TODO difficulty
     connection->sendPacket(PacketSpawnPosition(spawnPos));
-    connection->sendPacket(PacketPlayerAbilities(false, false, true, false, 0.05, 0.1));  // TODO player abilities
+    player->sendAbilities();
     connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
 
     connection->sendPacket(PacketSetInventoryContent(0, player->inventory->getSlots(), {}));

@@ -20,6 +20,7 @@ EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<
     this->name = name;
     this->data = PlayerData::load(uuid);
     pullData();
+    syncAbilities();
 }
 
 void EntityPlayer::tick() {
@@ -140,13 +141,16 @@ void EntityPlayer::teleport(const Location& loc) {
 }
 
 void EntityPlayer::setFlyingSpeed(float speed) {
-    this->getConnection().sendPacket(PacketPlayerAbilities(false, true, true, false, speed, 0.1));
+    this->flyingSpeed = speed;
+    sendAbilities();
 }
 
-void EntityPlayer::setGamemode(int gamemode) {
-    getConnection().sendPacket(PacketGameEvent(PacketGameEvent::Event::ChangeGamemode, gamemode));
-
+void EntityPlayer::setGamemode(GameMode::GameMode gamemode) {
     this->gamemode = gamemode;
+    syncAbilities();
+
+    getConnection().sendPacket(PacketGameEvent(PacketGameEvent::Event::ChangeGamemode, static_cast<float>(gamemode)));
+    sendAbilities();
 }
 
 void EntityPlayer::pullData() {
@@ -157,4 +161,39 @@ void EntityPlayer::pullData() {
 void EntityPlayer::pushData() {
     data->setLocation(getLocation());
     data->setInventory(*inventory);
+}
+
+void EntityPlayer::syncAbilities() {
+    switch(getGamemode()) {
+        case GameMode::GameMode::Survival:
+        case GameMode::GameMode::Adventure:
+            invulnerable = false;
+            flying = false;
+            allowFlying = false;
+            creativeAbility = false;
+            break;
+        case GameMode::GameMode::Creative:
+            invulnerable = true;
+            allowFlying = true;
+            creativeAbility = true;
+            break;
+        case GameMode::GameMode::Spectator:
+            invulnerable = true;
+            flying = true;
+            allowFlying = true;
+            creativeAbility = false;
+            break;
+    }
+}
+
+void EntityPlayer::sendAbilities() const {
+    getConnection().sendPacket(PacketPlayerAbilities(invulnerable, flying, allowFlying, creativeAbility, flyingSpeed, 0.1));
+}
+
+void EntityPlayer::setFlying(bool flying, bool fromClient) {
+    this->flying = flying;
+
+    if(!fromClient) {
+        sendAbilities();
+    }
 }

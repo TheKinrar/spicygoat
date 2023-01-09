@@ -112,7 +112,7 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     PacketData::writeVarInt(0x24, array);
     PacketData::writeInt(player->getEID(), array);
     PacketData::writeBoolean(false, array);  // TODO hardcore
-    PacketData::writeUnsignedByte(player->getGamemode(), array);
+    PacketData::writeUnsignedByte(static_cast<uint8_t>(player->getGamemode()), array);
     PacketData::writeUnsignedByte(255, array);  // TODO prev gamemode
 
     // TODO world names []
