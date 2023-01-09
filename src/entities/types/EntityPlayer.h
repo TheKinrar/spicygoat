@@ -18,6 +18,7 @@ class TCPConnection;
 #include "../../inventory/PlayerInventory.h"
 #include "../../persist/PlayerData.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+#include "../../util/PlayerAbilities.h"
 #include "../../world/chunks/ChunkColumn.h"
 #include "../../world/geo/ChunkPosition.h"
 #include "../../world/geo/Location.h"
@@ -93,12 +94,7 @@ class EntityPlayer : public Entity {
     std::string name;
     GameMode::GameMode gamemode = Config::get().gamemode;
 
-    // Abilities
-    bool invulnerable{};
-    bool flying{};
-    bool allowFlying{};
-    bool creativeAbility{};
-    float flyingSpeed = 0.05;
+    PlayerAbilities abilities{};
 
     std::unique_ptr<PlayerData> data;
 

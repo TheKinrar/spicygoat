@@ -18,6 +18,7 @@
 class PlayerInventory;
 
 #include "../inventory/PlayerInventory.h"
+#include "../util/PlayerAbilities.h"
 #include "../world/geo/Location.h"
 #include "uuid.h"
 
@@ -78,6 +79,11 @@ class PlayerData {
     PlayerInventory getInventory(EntityPlayer& player) const;
 
     void setInventory(const PlayerInventory& source);
+
+    [[nodiscard]]
+    PlayerAbilities getAbilities() const;
+
+    void setAbilities(const PlayerAbilities& source);
 
    private:
     static int dataSlotToNetwork(int slot) {

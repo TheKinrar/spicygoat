@@ -51,3 +51,30 @@ void PlayerData::setInventory(const PlayerInventory& source) {
     }
     nbt->put("Inventory", std::move(inv));
 }
+
+PlayerAbilities PlayerData::getAbilities() const {
+    if(nbt->has_key("abilities")) {
+        auto& data = nbt->at("abilities").as<nbt::tag_compound>();
+        return {
+            static_cast<bool>(data.at("invulnerable").as<nbt::tag_byte>()),
+            static_cast<bool>(data.at("flying").as<nbt::tag_byte>()),
+            static_cast<bool>(data.at("mayfly").as<nbt::tag_byte>()),
+            static_cast<bool>(data.at("instabuild").as<nbt::tag_byte>()),
+            data.at("flySpeed").as<nbt::tag_float>(),
+            data.at("walkSpeed").as<nbt::tag_float>(),
+        };
+    } else {
+        return {};
+    }
+}
+
+void PlayerData::setAbilities(const PlayerAbilities& source) {
+    nbt::tag_compound data;
+    data.insert("invulnerable", nbt::tag_byte(source.invulnerable));
+    data.insert("flying", nbt::tag_byte(source.flying));
+    data.insert("mayfly", nbt::tag_byte(source.allowFlying));
+    data.insert("instabuild", nbt::tag_byte(source.creative));
+    data.insert("flySpeed", nbt::tag_float(source.flySpeed));
+    data.insert("walkSpeed", nbt::tag_float(source.walkSpeed));
+    nbt->put("abilities", std::move(data));
+}

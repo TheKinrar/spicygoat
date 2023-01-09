@@ -5,25 +5,19 @@
 #ifndef SPICYGOAT_PACKETPLAYERABILITIES_H
 #define SPICYGOAT_PACKETPLAYERABILITIES_H
 
+#include "../../../../util/PlayerAbilities.h"
 #include "../../ClientBoundPacket.h"
 
 class PacketPlayerAbilities : public ClientBoundPacket {
    public:
-    PacketPlayerAbilities(bool invulnerable, bool flying, bool allowFlying, bool creative, float flyingSpeed,
-                          float fovModifier);
+    PacketPlayerAbilities(PlayerAbilities value);
 
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;
 
    private:
-    bool invulnerable;
-    bool flying;
-    bool allowFlying;
-    bool creative;
-
-    float flyingSpeed;
-    float fovModifier;
+    PlayerAbilities value;
 };
 
 #endif  // SPICYGOAT_PACKETPLAYERABILITIES_H

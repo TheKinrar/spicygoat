@@ -141,7 +141,7 @@ void EntityPlayer::teleport(const Location& loc) {
 }
 
 void EntityPlayer::setFlyingSpeed(float speed) {
-    this->flyingSpeed = speed;
+    this->abilities.flySpeed = speed;
     sendAbilities();
 }
 
@@ -155,11 +155,13 @@ void EntityPlayer::setGamemode(GameMode::GameMode gamemode) {
 
 void EntityPlayer::pullData() {
     setLocation(data->getLocation(Location(Server::get().getWorld().getSpawnPosition())));
+    abilities = data->getAbilities();
     inventory = std::make_unique<PlayerInventory>(data->getInventory(*this));
 }
 
 void EntityPlayer::pushData() {
     data->setLocation(getLocation());
+    data->setAbilities(abilities);
     data->setInventory(*inventory);
 }
 
@@ -167,31 +169,31 @@ void EntityPlayer::syncAbilities() {
     switch(getGamemode()) {
         case GameMode::GameMode::Survival:
         case GameMode::GameMode::Adventure:
-            invulnerable = false;
-            flying = false;
-            allowFlying = false;
-            creativeAbility = false;
+            abilities.invulnerable = false;
+            abilities.flying = false;
+            abilities.allowFlying = false;
+            abilities.creative = false;
             break;
         case GameMode::GameMode::Creative:
-            invulnerable = true;
-            allowFlying = true;
-            creativeAbility = true;
+            abilities.invulnerable = true;
+            abilities.allowFlying = true;
+            abilities.creative = true;
             break;
         case GameMode::GameMode::Spectator:
-            invulnerable = true;
-            flying = true;
-            allowFlying = true;
-            creativeAbility = false;
+            abilities.invulnerable = true;
+            abilities.flying = true;
+            abilities.allowFlying = true;
+            abilities.creative = false;
             break;
     }
 }
 
 void EntityPlayer::sendAbilities() const {
-    getConnection().sendPacket(PacketPlayerAbilities(invulnerable, flying, allowFlying, creativeAbility, flyingSpeed, 0.1));
+    getConnection().sendPacket(PacketPlayerAbilities(abilities));
 }
 
 void EntityPlayer::setFlying(bool flying, bool fromClient) {
-    this->flying = flying;
+    this->abilities.flying = flying;
 
     if(!fromClient) {
         sendAbilities();
