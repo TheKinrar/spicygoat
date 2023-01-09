@@ -18,7 +18,7 @@ void EntityItem::tick() {
             auto remaining = player->inventory->add(stack);
 
             if(remaining.count != stack.count) {
-                player->getConnection().sendPacket(PacketPickupItem(getEID(), player->getEID(), stack.count - remaining.count));
+                getTracker().broadcast(PacketPickupItem(getEID(), player->getEID(), stack.count - remaining.count));
                 if(!remaining.present) {
                     Server::get().removeEntity(*this);
                 } else {
