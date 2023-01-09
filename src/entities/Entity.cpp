@@ -60,11 +60,11 @@ void Entity::tick() {
         bool looked = (location.getYaw() != nextLocation.getYaw()) || (location.getPitch() != nextLocation.getPitch());
 
         if(moved) {
-            double dx = nextLocation.getX() - location.getX();
-            double dy = nextLocation.getY() - location.getY();
-            double dz = nextLocation.getZ() - location.getZ();
+            double dx = std::round(4096 * nextLocation.getX()) - std::round(4096 * location.getX());
+            double dy = std::round(4096 * nextLocation.getY()) - std::round(4096 * location.getY());
+            double dz = std::round(4096 * nextLocation.getZ()) - std::round(4096 * location.getZ());
 
-            if(dx < -8 || dx > 8 || dy < -8 || dy > 8 || dz < -8 || dz > 8) {
+            if(dx < -32768 || dx > 32767 || dy < -32768 || dy > 32767 || dz < -32768 || dz > 32767) {
                 PacketEntityTeleport p(eid, nextLocation, nextOnGround);
                 tracker->broadcast(p);
             } else if(looked) {
