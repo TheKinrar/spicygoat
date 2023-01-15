@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "../data/out/registries.h"
 #include "commands/CommandEngine.h"
 #include "entities/types/EntityPlayer.h"
 #include "item/ItemRegistry.h"
@@ -23,8 +24,6 @@ class Server {
 
     Server();
     static Server& get();
-
-    void loadRegistries();
 
     void run();
 
@@ -67,22 +66,18 @@ class Server {
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
     [[nodiscard]] const ItemRegistry& getItemRegistry() const {
-        return itemRegistry;
+        return Registries::item;
     }
     [[nodiscard]] const Registry& getEntityRegistry() const {
-        return entityRegistry;
+        return Registries::entity_type;
     }
 
     void broadcastPacket(const Packet&);
 
    private:
-    static void loadRegistry(Registry& registry, nlohmann::json root);
-
     CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;
-    Registry entityRegistry{"minecraft:entity_type"};
-    ItemRegistry itemRegistry;
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;

@@ -1,6 +1,7 @@
 #include <csignal>
 #include <iostream>
 
+#include "../data/out/registries.h"
 #include "Server.h"
 #include "TCPServer.h"
 #include "commands/builtin/CommandGm.h"
@@ -26,7 +27,7 @@ int main() {
     std::cout << "SpicyGoat is here!" << std::endl;
 
     Config::get();
-    Server::get().loadRegistries();
+    Registries::load();
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandGm>());
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
     Server::get().getCommandEngine().registerCommand(std::make_unique<CommandTp>());

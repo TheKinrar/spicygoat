@@ -4,8 +4,8 @@
 /build
 /data/__pycache__
 /data/generated
-/data/include
 /data/libraries
 /data/logs
+/data/out
 /data/versions
 /data/server.jar

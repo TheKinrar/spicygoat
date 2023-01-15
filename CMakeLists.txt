@@ -47,18 +47,17 @@ FetchContent_MakeAvailable(embed)
 
 
 add_executable(SpicyGoat)
+add_subdirectory(data)
 add_subdirectory(src)
-target_sources(SpicyGoat PRIVATE data/include/tags.h)
 add_embedded_binary_resources(
         SpicyGoat_resources
         OUT_DIR resources_out
         HEADER resources.h
         NAMESPACE Resources
-        RESOURCE_NAMES blocks codec registries
+        RESOURCE_NAMES blocks codec
         RESOURCES
         "${PROJECT_SOURCE_DIR}/resources/blocks.json"
         "${PROJECT_SOURCE_DIR}/resources/codec.dat"
-        "${PROJECT_SOURCE_DIR}/resources/registries.json"
 )
 target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings)
 target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources -static)

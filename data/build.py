@@ -25,7 +25,8 @@ load_tags('game_events')
 load_tags('items')
 
 
-cpp = CppFile('include/tags.h')
+cpp = CppFile('out/tags.h')
+cpp('#pragma once')
 cpp('#include <functional>')
 cpp('#include <vector>')
 cpp('#include "../../src/tags/Tag.h"')
@@ -37,12 +38,51 @@ with cpp.block('namespace Tags'):
                 ids = []
                 append_tag_ids(tag_type, registries['minecraft:' + tag_type[:-1]]['entries'], tag, ids)
 
-                CppVariable(name=sanitize(tag_name), type='Tag', initialization_value='Tag("minecraft:' + tag_name + '", {' + ', '.join(map(lambda e: str(e), ids)) + '})')\
+                CppVariable(name=sanitize(tag_name), type='inline Tag', initialization_value='Tag("minecraft:' + tag_name + '", {' + ', '.join(map(lambda e: str(e), ids)) + '})')\
                     .render_to_string(cpp)
 
-            CppVariable(name='All', type='std::vector<std::reference_wrapper<Tag>>', initialization_value='{' + ', '.join(map(lambda e: sanitize(e), tags[tag_type])) + '}') \
+            CppVariable(name='All', type='inline std::vector<std::reference_wrapper<Tag>>', initialization_value='{' + ', '.join(map(lambda e: sanitize(e), tags[tag_type])) + '}') \
                 .render_to_string(cpp)
 
+cpp.close()
+
+
+registry_classes = {'item': 'ItemRegistry'}
+registry_names = ['entity_type', 'item']
+hpp = CppFile('out/registries.h')
+hpp('#pragma once')
+hpp('#include "../../src/item/ItemRegistry.h"')
+cpp = CppFile('out/registries.cpp')
+cpp('#include "registries.h"')
+
+with hpp.block('namespace Registries'), cpp.block('namespace Registries'):
+    for registry_name in registry_names:
+        var_type = None
+        var_init = None
+        if registry_name in registry_classes:
+            var_type = registry_classes[registry_name]
+            var_init = var_type + '()'
+        else:
+            var_type = 'Registry'
+            var_init = 'Registry("minecraft:' + registry_name + '")'
+
+        CppVariable(name=registry_name, type='inline ' + var_type, initialization_value=var_init)\
+            .render_to_string(hpp)
+
+    def impl(self, cpp):
+        for registry_name in registry_names:
+            registry = registries['minecraft:' + registry_name]
+            if 'default' in registry:
+                cpp(registry_name + '.defaultKey = "' + registry['default'] + '";')
+
+            for entry_name, entry in registry['entries'].items():
+                cpp(registry_name + '.addMapping("' + entry_name + '", ' + str(entry['protocol_id']) + ');')
+
+    fun = CppFunction(name='load', ret_type='void', implementation_handle=impl)
+    fun.declaration().render_to_string(hpp)
+    fun.definition().render_to_string(cpp)
+
+hpp.close()
 cpp.close()
 
 

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <utility>
 
-#include "../../../data/include/tags.h"
+#include "../../../data/out/tags.h"
 #include "../../Server.h"
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"

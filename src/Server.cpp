@@ -19,27 +19,6 @@ Server::Server() {
     palette = ChunkPalette::fromJson(j);
 }
 
-void Server::loadRegistries() {
-    nlohmann::json j = nlohmann::json::parse(Resources::registries());
-
-    loadRegistry(entityRegistry, j);
-    loadRegistry(itemRegistry, j);
-}
-
-void Server::loadRegistry(Registry& registry, nlohmann::json root) {
-    auto j = root[registry.id];
-
-    auto entries = j["entries"];
-    for(auto it = entries.begin(); it != entries.end(); ++it) {
-        registry.addMapping(it.key(), it.value()["protocol_id"]);
-    }
-
-    auto defaultIt = j.find("default");
-    if(defaultIt != j.end()) {
-        registry.defaultKey = defaultIt.value();
-    }
-}
-
 Server& Server::get() {
     static Server instance;
     return instance;
