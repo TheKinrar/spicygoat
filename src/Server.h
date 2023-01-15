@@ -22,7 +22,6 @@ class Server {
     inline static const int VIEW_DISTANCE = 64;
     inline static const int ENTITY_VIEW_DISTANCE = 50;
 
-    Server();
     static Server& get();
 
     void run();
@@ -86,6 +85,8 @@ class Server {
     std::map<int32_t, std::shared_ptr<Entity>> entities;
 
     World world;
+
+    long startupTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 };
 
 #endif  // SPICYGOAT_SERVER_H

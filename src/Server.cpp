@@ -6,17 +6,15 @@
 
 #include <iostream>
 
-#include "TCPServer.h"
 #include "../data/out/blocks.h"
+#include "TCPServer.h"
+#include "commands/builtin/CommandGm.h"
+#include "commands/builtin/CommandSpeed.h"
+#include "commands/builtin/CommandTp.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
+#include "spdlog/spdlog.h"
 #include "tracking/PlayerTracker.h"
-
-Server::Server() {
-    palette = std::make_unique<ChunkPalette>();
-    Blocks::load(*palette);
-    palette->finalize();
-}
 
 Server& Server::get() {
     static Server instance;
@@ -24,7 +22,22 @@ Server& Server::get() {
 }
 
 void Server::run() {
+    spdlog::info("SpicyGoat dev build starting");
+
+    palette = std::make_unique<ChunkPalette>();
+    Blocks::load(*palette);
+    palette->finalize();
+
+    Registries::load();
+
+    getCommandEngine().registerCommand(std::make_unique<CommandGm>());
+    getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
+    getCommandEngine().registerCommand(std::make_unique<CommandTp>());
+
     std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
+
+    long elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() - startupTime;
+    spdlog::info("Ready! Started in {} s", (double) elapsed / 1000);
 
     while(TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();

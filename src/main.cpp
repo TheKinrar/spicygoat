@@ -1,13 +1,8 @@
 #include <csignal>
 #include <iostream>
 
-#include "../data/out/registries.h"
 #include "Server.h"
 #include "TCPServer.h"
-#include "commands/builtin/CommandGm.h"
-#include "commands/builtin/CommandSpeed.h"
-#include "commands/builtin/CommandTp.h"
-#include "config/Config.h"
 
 void sigterm_handler(int) {
     std::cout << "Stopping server" << std::endl;
@@ -24,13 +19,6 @@ int main() {
 #endif
     signal(SIGTERM, sigterm_handler);
 
-    std::cout << "SpicyGoat is here!" << std::endl;
-
-    Config::get();
-    Registries::load();
-    Server::get().getCommandEngine().registerCommand(std::make_unique<CommandGm>());
-    Server::get().getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
-    Server::get().getCommandEngine().registerCommand(std::make_unique<CommandTp>());
     Server::get().run();
 
     return 0;

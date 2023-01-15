@@ -11,8 +11,11 @@
 #include "TCPServer.h"
 #include "entities/types/EntityPlayer.h"
 #include "protocol.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/spdlog.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
+    logger = spdlog::stdout_color_mt("Connection/" + getName());
     thread = std::make_unique<std::thread>(&TCPConnection::task, this);
 }
 
@@ -35,7 +38,7 @@ void TCPConnection::sendPacket(const Packet &packet) {
 }
 
 void TCPConnection::task() {
-    std::cout << getName() << " connected" << std::endl;
+    logger->info("Connected");
 
     try {
         while(TCPServer::get().isRunning()) {
@@ -62,7 +65,7 @@ void TCPConnection::task() {
         }
     } catch(std::exception &e) {
         closesocket(sock);
-        std::cout << getName() << " disconnected: " << e.what() << std::endl;
+        logger->info("Disconnected: {}", e.what());
 
         if(player) {
             Server::get().removePlayer(*player);

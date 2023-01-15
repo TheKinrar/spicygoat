@@ -45,6 +45,11 @@ FetchContent_Declare(embed
         GIT_TAG 20273c330d8e727cfc587002c451ec368c4cfef3)
 FetchContent_MakeAvailable(embed)
 
+FetchContent_Declare(spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog
+        GIT_TAG v1.11.0)
+FetchContent_MakeAvailable(spdlog)
+
 
 add_executable(SpicyGoat)
 add_subdirectory(data)
@@ -58,7 +63,7 @@ add_embedded_binary_resources(
         RESOURCES
         "${PROJECT_SOURCE_DIR}/resources/codec.dat"
 )
-target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings)
+target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings spdlog::spdlog)
 target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources -static)
 if(WIN32)
     target_link_libraries(SpicyGoat PRIVATE wsock32 ws2_32)

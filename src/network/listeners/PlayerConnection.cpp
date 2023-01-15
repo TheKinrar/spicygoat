@@ -10,9 +10,14 @@
 #include "../../config/Config.h"
 #include "../../entities/types/EntityItem.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+
+static std::shared_ptr<spdlog::logger> chatLogger = spdlog::stdout_color_mt("Chat");
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
-    : connection(connection), player(player) {}
+    : connection(connection), player(player) {
+    logger = spdlog::stdout_color_mt("Player/" + player.getName());
+}
 
 void PlayerConnection::onTeleportConfirm(const PacketTeleportConfirm &packet) {
     // TODO confirm TP
@@ -91,13 +96,13 @@ void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
 }
 
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
-    std::cout << "[CHAT] " << player.getName() << ": " << packet.message << std::endl;
+    chatLogger->info("{}: {}", player.getName(), packet.message);
 
     Server::get().broadcastPacket(PacketChatMessageCB(player.getName() + ": " + packet.message));
 }
 
 void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
-    std::cout << "[CMD] " << player.getName() << ": " << packet.getMessage() << std::endl;
+    logger->info("Launching: {}", packet.getMessage());
 
     Server::get().getCommandEngine().runCommand(packet.getMessage(), player);
 }

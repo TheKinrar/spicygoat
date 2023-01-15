@@ -65,8 +65,6 @@ TCPServer::TCPServer() {
     fds[0].events = POLLIN;
 
     keepAliveThread = std::make_unique<std::thread>(&TCPServer::keepAliveTask, this);
-
-    std::cout << "Ready!" << std::endl;
 }
 
 TCPServer::~TCPServer() {
@@ -84,8 +82,6 @@ void TCPServer::accept() {
 #endif
 
         if(ret > 0) {
-            std::cout << "accept" << std::endl;
-
             sockaddr_in csin;
             socklen_t csinlen = sizeof(csin);
             int csock = ::accept(sock, (sockaddr *)&csin, &csinlen);

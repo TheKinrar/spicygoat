@@ -25,6 +25,7 @@ class PacketListener;
 #include "entities/types/EntityPlayer.h"
 #include "network/PacketListener.h"
 #include "protocol.h"
+#include "spdlog/logger.h"
 
 class TCPConnection {
    public:
@@ -50,6 +51,10 @@ class TCPConnection {
         this->player = std::move(newPlayer);
     }
 
+    spdlog::logger& getLogger() const {
+        return *logger;
+    }
+
     const PacketListener& getListener() const;
     void setListener(std::unique_ptr<PacketListener> newListener);
 
@@ -64,6 +69,8 @@ class TCPConnection {
     bool alive = true;
 
    private:
+    std::shared_ptr<spdlog::logger> logger;
+
     int sock;
     sockaddr_in addr;
 

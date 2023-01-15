@@ -81,6 +81,8 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         std::cout << "remaining: " << data.remaining() << std::endl;
     }
 
+    connection->getLogger().info("Logged in as {}", connection->username);
+
     connection->sendPacket(PacketLoginSuccess(connection->uuid, connection->username));
     connection->setState(ProtocolState::PLAY);
 

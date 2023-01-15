@@ -32,6 +32,8 @@ class PlayerConnection : public PacketListenerPlay {
    private:
     TCPConnection &connection;
     EntityPlayer &player;
+
+    std::shared_ptr<spdlog::logger> logger;
 };
 
 #endif  // SPICYGOAT_PLAYERCONNECTION_H
