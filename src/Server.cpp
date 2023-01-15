@@ -4,19 +4,18 @@
 
 #include "Server.h"
 
-#include <fstream>
 #include <iostream>
 
 #include "TCPServer.h"
-#include "protocol/packets/play/clientbound/PacketDestroyEntities.h"
+#include "../data/out/blocks.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
-#include "resources_out/resources.h"
 #include "tracking/PlayerTracker.h"
 
 Server::Server() {
-    nlohmann::json j = nlohmann::json::parse(Resources::blocks());
-    palette = ChunkPalette::fromJson(j);
+    palette = std::make_unique<ChunkPalette>();
+    Blocks::load(*palette);
+    palette->finalize();
 }
 
 Server& Server::get() {

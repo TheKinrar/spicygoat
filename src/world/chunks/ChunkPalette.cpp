@@ -39,28 +39,6 @@ std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     return palette;
 }
 
-std::shared_ptr<ChunkPalette> ChunkPalette::fromJson(nlohmann::json &json) {
-    auto palette = std::make_shared<ChunkPalette>();
-
-    for(nlohmann::json::iterator it = json.begin(); it != json.end(); ++it) {
-        for(auto &e : it.value()["states"]) {
-            BlockState state(it.key());
-
-            if(e.find("properties") != e.end()) {
-                for(auto prop_it = e["properties"].begin(); prop_it != e["properties"].end(); ++prop_it) {
-                    state.addProperty(prop_it.key(), prop_it.value());
-                }
-            }
-
-            palette->addBlockState(state, e["id"]);
-        }
-    }
-
-    palette->finalize();
-
-    return palette;
-}
-
 void ChunkPalette::addBlockState(const BlockState &state, int16_t id) {
     stateToId[state] = id;
     idToState[id] = state;

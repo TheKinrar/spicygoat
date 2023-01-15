@@ -15,7 +15,6 @@
 class ChunkPalette {
    public:
     static std::shared_ptr<ChunkPalette> fromNBT(nbt::tag_list&);
-    static std::shared_ptr<ChunkPalette> fromJson(nlohmann::json&);
 
     uint8_t getBitsPerBlock() const;
 
@@ -60,10 +59,10 @@ class ChunkPalette {
 
     std::string mappingToString();
 
-   private:
     void addBlockState(const BlockState& state, int16_t id);
     void finalize();
 
+   private:
     std::map<BlockState, int16_t> stateToId;
     std::map<int16_t, BlockState> idToState;
 

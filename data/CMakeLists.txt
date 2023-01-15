@@ -1,1 +1,2 @@
-target_sources(SpicyGoat PRIVATE out/registries.cpp out/registries.h out/tags.h)
+file(GLOB DATA_OUT_SRC out/*.h out/*.cpp)
+target_sources(SpicyGoat PRIVATE ${DATA_OUT_SRC})

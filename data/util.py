@@ -43,3 +43,7 @@ def append_tag_ids(tag_type, registry, tag, dst):
 def sanitize(name):
     return name.replace('/', '_')
 
+
+def chunks(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i+n]

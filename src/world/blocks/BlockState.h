@@ -13,9 +13,12 @@ class BlockState {
    public:
     BlockState() = default;
     explicit BlockState(const std::string &name);
+    explicit BlockState(std::string name, std::map<std::string, std::string> properties) :
+          name(std::move(name)), properties(std::move(properties)) {};
 
     void addProperty(const std::string &key, std::string value);
 
+    [[nodiscard]]
     const std::string &getName() const;
 
     [[nodiscard]] bool isAir() const {

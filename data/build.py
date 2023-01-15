@@ -17,12 +17,60 @@ if not os.path.exists('generated'):
     subprocess.call(['java', '-DbundlerMainClass=net.minecraft.data.Main', '-jar', 'server.jar', '--reports', '--server'])
 
 
+blocks = load_json('generated/reports/blocks.json')
 registries = load_json('generated/reports/registries.json')
 load_tags('blocks')
 load_tags('entity_types')
 load_tags('fluids')
 load_tags('game_events')
 load_tags('items')
+
+
+hpp = CppFile('out/blocks.h')
+hpp('#pragma once')
+hpp('#include "../../src/world/chunks/ChunkPalette.h"')
+cpp = CppFile('out/blocks.cpp')
+cpp('#include "blocks.h"')
+
+with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
+    lines = []
+    for block_name, block in blocks.items():
+        for state in block['states']:
+            props = []
+
+            if 'properties' in state:
+                for k, v in state['properties'].items():
+                    props.append('{"' + k + '", "' + v + '"}')
+
+            lines.append('palette.addBlockState(BlockState("' + block_name + '", {' + ', '.join(props) + '}), ' + str(state['id']) + ');')
+
+    lines_chunked = list(chunks(lines, 1000))
+    for n, file_lines in enumerate(lines_chunked):
+        def impl(self, cpp):
+            for line in file_lines:
+                cpp(line)
+
+        cppn = CppFile('out/blocks.' + str(n) + '.cpp')
+        cppn('#include "blocks.h"')
+        with cppn.block('namespace Blocks'):
+            fun = CppFunction(name='load_' + str(n), ret_type='void', implementation_handle=impl)
+            fun.add_argument('ChunkPalette& palette')
+            fun.declaration().render_to_string(hpp)
+            fun.definition().render_to_string(cppn)
+        cppn.close()
+
+    def impl(self, cpp):
+        for n in range(0, len(lines_chunked)):
+            cpp('load_' + str(n) + '(palette);')
+
+    fun = CppFunction(name='load', ret_type='void', implementation_handle=impl)
+    fun.add_argument('ChunkPalette& palette')
+    fun.declaration().render_to_string(hpp)
+    fun.definition().render_to_string(cpp)
+
+
+hpp.close()
+cpp.close()
 
 
 cpp = CppFile('out/tags.h')

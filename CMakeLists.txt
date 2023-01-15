@@ -54,9 +54,8 @@ add_embedded_binary_resources(
         OUT_DIR resources_out
         HEADER resources.h
         NAMESPACE Resources
-        RESOURCE_NAMES blocks codec
+        RESOURCE_NAMES codec
         RESOURCES
-        "${PROJECT_SOURCE_DIR}/resources/blocks.json"
         "${PROJECT_SOURCE_DIR}/resources/codec.dat"
 )
 target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings)
