@@ -9,11 +9,14 @@
 #include <iostream>
 #include <utility>
 
+#include "../../../data/include/tags.h"
 #include "../../Server.h"
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "../../protocol/packets/login/PacketPluginRequest.h"
 #include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
 #include "../../protocol/packets/play/clientbound/PacketSetInventoryContent.h"
+#include "../../protocol/packets/play/clientbound/PacketUpdateTags.h"
+#include "../../tags/Tag.h"
 #include "../../util/md5.h"
 #include "PlayerConnection.h"
 
@@ -95,6 +98,14 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
 
     connection->sendPacket(PacketSetInventoryContent(0, player->inventory->getSlots(), {}));
+
+    std::map<std::string, std::vector<std::reference_wrapper<Tag>>> tags;
+    tags.emplace("minecraft:block", Tags::blocks::All);
+    tags.emplace("minecraft:entity_type", Tags::entity_types::All);
+    tags.emplace("minecraft:fluid", Tags::fluids::All);
+    tags.emplace("minecraft:game_event", Tags::game_events::All);
+    tags.emplace("minecraft:item", Tags::items::All);
+    connection->sendPacket(PacketUpdateTags(tags));
 
     connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
 }

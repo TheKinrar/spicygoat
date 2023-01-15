@@ -48,6 +48,7 @@ FetchContent_MakeAvailable(embed)
 
 add_executable(SpicyGoat)
 add_subdirectory(src)
+target_sources(SpicyGoat PRIVATE data/include/tags.h)
 add_embedded_binary_resources(
         SpicyGoat_resources
         OUT_DIR resources_out
