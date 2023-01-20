@@ -12,12 +12,15 @@
 #include "../../entities/types/EntityItem.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/spdlog.h"
 
 static std::shared_ptr<spdlog::logger> chatLogger = spdlog::stdout_color_mt("Chat");
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
     : connection(connection), player(player) {
-    logger = spdlog::stdout_color_mt("Player/" + player.getName());
+    auto loggerName = "Player/" + player.getName();
+    logger = spdlog::get(loggerName);
+    if(!logger) logger = spdlog::stdout_color_mt(loggerName);
 }
 
 void PlayerConnection::onTeleportConfirm(const PacketTeleportConfirm &packet) {
