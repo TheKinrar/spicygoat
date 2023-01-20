@@ -10,7 +10,7 @@
 #include <map>
 #include <nlohmann/json.hpp>
 
-#include "../blocks/BlockState.h"
+#include "../../block/BlockState.h"
 
 class ChunkPalette {
    public:
@@ -22,7 +22,7 @@ class ChunkPalette {
         return 64 / getBitsPerBlock();
     }
 
-    int16_t getBlockStateId(const BlockState& state) const;
+    int16_t getBlockStateId(const std::shared_ptr<BlockState>& state) const;
 
     void writeToByteArray(std::vector<std::byte>&);
 
@@ -32,25 +32,25 @@ class ChunkPalette {
         return single;
     }
 
-    [[nodiscard]] const BlockState& getSingleBlockState() const {
+    [[nodiscard]] const std::shared_ptr<BlockState>& getSingleBlockState() const {
         return idToState.at(0);
     }
 
-    [[nodiscard]] std::vector<BlockState> getBlockStatesByName(const std::string& name) const {
-        std::vector<BlockState> vec;
+    [[nodiscard]] std::vector<std::shared_ptr<BlockState>> getBlockStatesByName(const std::string& name) const {
+        std::vector<std::shared_ptr<BlockState>> vec;
         for(const auto& item : stateToId) {
-            if(item.first.getName() == name) {
+            if(item.first->getBlock().getName().toString() == name) {
                 vec.push_back(item.first);
             }
         }
         return vec;
     }
 
-    [[nodiscard]] BlockState getBlockState(int16_t id) const {
+    [[nodiscard]] const std::shared_ptr<BlockState>& getBlockState(int16_t id) const {
         return idToState.at(id);
     }
 
-    [[nodiscard]] std::shared_ptr<ChunkPalette> grow(const BlockState& newState) const {
+    [[nodiscard]] std::shared_ptr<ChunkPalette> grow(const std::shared_ptr<BlockState>& newState) const {
         auto grown = std::make_shared<ChunkPalette>(*this);
         grown->addBlockState(newState, (int16_t)grown->stateToId.size());
         grown->finalize();
@@ -59,12 +59,13 @@ class ChunkPalette {
 
     std::string mappingToString();
 
-    void addBlockState(const BlockState& state, int16_t id);
+    void loadGlobal();
+    void addBlockState(const std::shared_ptr<BlockState>& state, int16_t id);
     void finalize();
 
    private:
-    std::map<BlockState, int16_t> stateToId;
-    std::map<int16_t, BlockState> idToState;
+    std::map<std::shared_ptr<BlockState>, int16_t> stateToId;
+    std::map<int16_t, std::shared_ptr<BlockState>> idToState;
 
     uint8_t bitsPerBlock;
 

@@ -25,13 +25,13 @@ class World {
 
     const Position& getSpawnPosition() const;
 
-    BlockState getBlockState(Position pos) {
+    const std::shared_ptr<BlockState>& getBlockState(Position pos) {
         auto& chunk = getChunk(pos.getChunkX(), pos.getChunkZ());
         auto& section = chunk.getChunk(pos.getChunkY());
         return section.getBlockState(pos.getInChunkX(), pos.getInChunkY(), pos.getInChunkZ());
     }
 
-    void setBlockState(Position pos, BlockState state) {
+    void setBlockState(Position pos, const std::shared_ptr<BlockState>& state) {
         auto& chunk = getChunk(pos.getChunkX(), pos.getChunkZ());
         auto& section = chunk.getChunk(pos.getChunkY());
         section.setBlockState(pos.getInChunkX(), pos.getInChunkY(), pos.getInChunkZ(), state);

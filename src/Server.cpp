@@ -21,14 +21,16 @@ Server& Server::get() {
     return instance;
 }
 
-void Server::run() {
+Server::Server() {
     spdlog::info("SpicyGoat dev build starting");
+}
 
+void Server::run() {
     palette = std::make_unique<ChunkPalette>();
-    Blocks::load(*palette);
+    palette->loadGlobal();
     palette->finalize();
 
-    Registries::load();
+    Registries::load(blockRegistry, entityRegistry, itemRegistry);
 
     getCommandEngine().registerCommand(std::make_unique<CommandGm>());
     getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());

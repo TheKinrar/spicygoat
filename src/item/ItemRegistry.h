@@ -20,7 +20,7 @@ class ItemRegistry : public Registry {
     }
 
     void addBlockItem(std::unique_ptr<BlockItem> item) {
-        blockItems.emplace(item->getBlock().getName(), getId(item->getName()));
+        blockItems.emplace(item->getBlock()->getBlock().getName().toString(), getId(item->getName()));
         add(std::move(item));
     }
 
@@ -34,5 +34,5 @@ class ItemRegistry : public Registry {
         return *items.at(id);
     }
 
-    ItemStack getLoot(const BlockState& block) const;
+    ItemStack getLoot(const std::shared_ptr<BlockState>& block) const;
 };

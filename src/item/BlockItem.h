@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "../world/blocks/BlockState.h"
 #include "Item.h"
 
 #include <utility>
@@ -13,12 +12,12 @@
  * An item that represents a placeable block.
  */
 class BlockItem : public Item {
-    BlockState block;
+    const std::shared_ptr<BlockState> block;
 
    public:
-    BlockItem(const std::string& name, BlockState  block) : Item(name), block(std::move(block)) {}
+    BlockItem(const std::string& name, const std::shared_ptr<BlockState>& block) : Item(name), block(block) {}
 
-    [[nodiscard]] const BlockState& getBlock() const {
+    [[nodiscard]] const std::shared_ptr<BlockState>& getBlock() const {
         return block;
     }
 

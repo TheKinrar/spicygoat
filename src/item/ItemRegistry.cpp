@@ -24,8 +24,8 @@ void ItemRegistry::addMapping(const std::string& key, int32_t id) {
     }
 }
 
-ItemStack ItemRegistry::getLoot(const BlockState& block) const {
-    auto it = blockItems.find(block.getName());
+ItemStack ItemRegistry::getLoot(const std::shared_ptr<BlockState>& block) const {
+    auto it = blockItems.find(block->getBlock().getName().toString());
     if(it == blockItems.end())
         return {};
     else

@@ -17,6 +17,7 @@ struct Registry {
 
    public:
     explicit Registry(std::string id) : id(std::move(id)) {}
+    Registry(const Registry&) = delete;
 
     virtual void addMapping(const std::string& key, int32_t id) {
         keyToId.emplace(key, id);
@@ -25,6 +26,10 @@ struct Registry {
 
     int32_t getId(const std::string& key) const {
         return keyToId.at(key);
+    }
+
+    std::string getKey(int32_t id) const {
+        return idToKey.at(id);
     }
 };
 

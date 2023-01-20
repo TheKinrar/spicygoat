@@ -23,6 +23,7 @@ class Server {
     inline static const int ENTITY_VIEW_DISTANCE = 50;
 
     static Server& get();
+    Server(const Server&) = delete;
 
     void run();
 
@@ -64,19 +65,27 @@ class Server {
     }
 
     [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
-    [[nodiscard]] const ItemRegistry& getItemRegistry() const {
-        return Registries::item;
+    [[nodiscard]] BlockRegistry& getBlockRegistry() {
+        return blockRegistry;
     }
-    [[nodiscard]] const Registry& getEntityRegistry() const {
-        return Registries::entity_type;
+    [[nodiscard]] ItemRegistry& getItemRegistry() {
+        return itemRegistry;
+    }
+    [[nodiscard]] Registry& getEntityRegistry() {
+        return entityRegistry;
     }
 
     void broadcastPacket(const Packet&);
 
    private:
+    Server();
+
     CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;
+    BlockRegistry blockRegistry = BlockRegistry();
+    ItemRegistry itemRegistry = ItemRegistry();
+    Registry entityRegistry = Registry("minecraft:entity_type");
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;

@@ -21,13 +21,13 @@ std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     for(int i = 0; i < list.size(); ++i) {
         auto &item = list.at(i).as<nbt::tag_compound>();
 
-        BlockState state(item.at("Name").as<nbt::tag_string>().get());
+        auto state = Server::get().getBlockRegistry().get(item.at("Name").as<nbt::tag_string>().get()).getDefaultState();
 
         if(item.has_key("Properties")) {
             auto props = item.at("Properties").as<nbt::tag_compound>();
 
             for(auto &prop : props) {
-                state.addProperty(prop.first, prop.second.as<nbt::tag_string>().get());
+                state = state->with(prop.first, prop.second.as<nbt::tag_string>().get());
             }
         }
 
@@ -39,7 +39,17 @@ std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     return palette;
 }
 
-void ChunkPalette::addBlockState(const BlockState &state, int16_t id) {
+void ChunkPalette::loadGlobal() {
+    global = true;
+    int16_t id = 0;
+    for(const auto &block : Server::get().getBlockRegistry().getBlocks()) {
+        for(const auto &state : block.get().getStates()) {
+            addBlockState(state, id++);
+        }
+    }
+}
+
+void ChunkPalette::addBlockState(const std::shared_ptr<BlockState>& state, int16_t id) {
     stateToId[state] = id;
     idToState[id] = state;
 }
@@ -72,7 +82,7 @@ void ChunkPalette::writeToByteArray(std::vector<std::byte> &array) {
     }
 }
 
-int16_t ChunkPalette::getBlockStateId(const BlockState &state) const {
+int16_t ChunkPalette::getBlockStateId(const std::shared_ptr<BlockState> &state) const {
     auto it = stateToId.find(state);
     return it == stateToId.end() ? -1 : it->second;
 }
@@ -86,7 +96,7 @@ std::string ChunkPalette::mappingToString() {
     std::string str;
 
     for(auto &pair : idToState) {
-        str += std::to_string(pair.first) + " -> " + pair.second.toString();
+        str += std::to_string(pair.first) + " -> " + pair.second->toString();
 
         if(!global)
             str += std::string(" -> ") + std::to_string(Server::get().getPalette()->getBlockStateId(pair.second));

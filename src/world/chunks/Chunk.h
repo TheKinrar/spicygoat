@@ -59,7 +59,7 @@ class Chunk {
 
     void writeDataToByteArray(std::vector<std::byte>& array);
 
-    void setBlockState(int x, int y, int z, BlockState state) {
+    void setBlockState(int x, int y, int z, const std::shared_ptr<BlockState>& state) {
         if(!hasData()) throw std::runtime_error("Can't set block in unloaded chunk");
 
         int16_t id = palette->getBlockStateId(state);
@@ -74,7 +74,7 @@ class Chunk {
         writeBlockState(blockStates, *palette, x, y, z, id);
     }
 
-    BlockState getBlockState(int x, int y, int z) {
+    const std::shared_ptr<BlockState>& getBlockState(int x, int y, int z) {
         if(!hasData()) throw std::runtime_error("Can't get block in unloaded chunk");
 
         return palette->getBlockState(readBlockState(blockStates, *palette, x, y, z));
@@ -82,13 +82,13 @@ class Chunk {
 
     int16_t countAirBlocks() {
         if(palette->isSingle()) {
-            return palette->getSingleBlockState().isAir() ? 4096 : 0;
+            return palette->getSingleBlockState()->getBlock().isAir() ? 4096 : 0;
         } else {
             int16_t n = 0;
             for(int x = 0; x < 16; ++x) {
                 for(int y = 0; y < 16; ++y) {
                     for(int z = 0; z < 16; ++z) {
-                        if(getBlockState(x, y, z).isAir()) {
+                        if(getBlockState(x, y, z)->getBlock().isAir()) {
                             n++;
                         }
                     }

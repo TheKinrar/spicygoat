@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "../../../data/out/blocks.h"
 #include "../../Server.h"
 #include "../../config/Config.h"
 #include "../../entities/types/EntityItem.h"
@@ -68,19 +69,19 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
         if(player.getGamemode() == GameMode::GameMode::Creative) {
-            Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+            Server::get().getWorld().setBlockState(packet.position, Blocks::air.getDefaultState());
 
             Server::get().broadcastPacket(PacketBlockUpdate(
-                packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
+                packet.position, Server::get().getPalette()->getBlockStateId(Blocks::air.getDefaultState())));
         }
     } else if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
         if(player.getGamemode() == GameMode::GameMode::Survival) {
             auto loot = Server::get().getItemRegistry().getLoot(
                 Server::get().getWorld().getBlockState(packet.position));
 
-            Server::get().getWorld().setBlockState(packet.position, BlockState("minecraft:air"));
+            Server::get().getWorld().setBlockState(packet.position, Blocks::air.getDefaultState());
             Server::get().broadcastPacket(PacketBlockUpdate(
-                packet.position, Server::get().getPalette()->getBlockStateId(BlockState("minecraft:air"))));
+                packet.position, Server::get().getPalette()->getBlockStateId(Blocks::air.getDefaultState())));
 
             if(loot.present) {
                 auto e = std::make_unique<EntityItem>(loot);
