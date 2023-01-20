@@ -67,8 +67,8 @@ void TCPConnection::task() {
         closesocket(sock);
         logger->info("Disconnected: {}", e.what());
 
-        if(player) {
-            Server::get().removePlayer(*player);
+        if(!player.expired()) {
+            Server::get().removePlayer(*player.lock());
         }
     }
 

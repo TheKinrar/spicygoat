@@ -44,11 +44,8 @@ class TCPConnection {
     void sendPacket(const Packet& packet);
     void disconnect();
 
-    std::shared_ptr<EntityPlayer> getPlayer() {
-        return player;
-    }
-    void setPlayer(std::shared_ptr<EntityPlayer> newPlayer) {
-        this->player = std::move(newPlayer);
+    void setPlayer(const std::shared_ptr<EntityPlayer>& newPlayer) {
+        this->player = newPlayer;
     }
 
     spdlog::logger& getLogger() const {
@@ -85,7 +82,7 @@ class TCPConnection {
     ProtocolState state = ProtocolState::HANDSHAKE;
     std::unique_ptr<PacketListener> listener;
 
-    std::shared_ptr<EntityPlayer> player;
+    std::weak_ptr<EntityPlayer> player;
 
     int readVarInt();
 };

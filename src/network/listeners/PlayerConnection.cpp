@@ -109,11 +109,11 @@ void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
 }
 
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
-    connection.getPlayer()->inventory->set(packet.slot, packet.stack);
+    player.inventory->set(packet.slot, packet.stack);
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
-    ItemStack stack = connection.getPlayer()->inventory->getSelected();
+    ItemStack stack = player.inventory->getSelected();
     if(stack.present) {
         Server::get().getItemRegistry().get(stack.id).onUseOn(player, packet);
     }

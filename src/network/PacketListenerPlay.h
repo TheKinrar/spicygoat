@@ -10,6 +10,7 @@
 class PacketListenerPlay : public PacketListener {
    public:
     void handle(const ServerBoundPacket& packet) override;
+    ~PacketListenerPlay() override = default;
 
     virtual void onChatCommand(const PacketChatCommand& packet) = 0;
     virtual void onChatMessage(const PacketChatMessageSB& packet) = 0;
