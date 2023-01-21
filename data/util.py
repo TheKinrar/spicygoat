@@ -26,7 +26,7 @@ def get_tag(tag_type, tag_name):
 
 def load_tags(tag_type):
     for path in Path('generated/data/minecraft/tags/' + tag_type).glob('**/*.json'):
-        filename = str(path.relative_to('generated/data/minecraft/tags/' + tag_type))
+        filename = str(path.relative_to('generated/data/minecraft/tags/' + tag_type)).replace('\\', '/')
         if filename.endswith('.json'):
             tag_name = filename[:-5]
             get_tag(tag_type, tag_name)
