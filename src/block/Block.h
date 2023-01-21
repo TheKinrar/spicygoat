@@ -17,6 +17,7 @@ class BlockState;
 class Block {
     Identifier name;
     std::vector<std::reference_wrapper<const Property>> properties;
+    std::vector<std::string> defaultValues;
     std::vector<std::shared_ptr<BlockState>> states;
     std::unordered_map<int, std::unordered_map<std::shared_ptr<PropertyValue>, std::vector<std::shared_ptr<BlockState>>>> table;
     std::shared_ptr<BlockState> defaultState;
@@ -25,6 +26,8 @@ class Block {
     Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties);
     Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties, const std::vector<std::string>& defaultValues);
     Block(const Block&) = delete;
+
+    void load();
 
     [[nodiscard]]
     const Identifier& getName() const {

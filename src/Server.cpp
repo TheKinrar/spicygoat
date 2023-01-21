@@ -26,6 +26,9 @@ Server::Server() {
 }
 
 void Server::run() {
+    for(Block& block : blockRegistry.getBlocks())
+        block.load();
+
     palette = std::make_unique<ChunkPalette>();
     palette->loadGlobal();
     palette->finalize();

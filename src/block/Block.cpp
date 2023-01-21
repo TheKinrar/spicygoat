@@ -9,7 +9,18 @@
 #include "../../data/out/registries.h"
 #include "../Server.h"
 
-Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties) : name(std::move(name)), properties(properties) {
+Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties)
+    : name(std::move(name)), properties(properties) {
+    Server::get().getBlockRegistry().add(*this);
+}
+
+Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties,
+             const std::vector<std::string>& defaultValues)
+    : name(std::move(name)), properties(properties), defaultValues(defaultValues) {
+    Server::get().getBlockRegistry().add(*this);
+}
+
+void Block::load() {
     std::vector<size_t> indexes;
     indexes.resize(properties.size());
 
@@ -43,19 +54,11 @@ nextState:
         }
     }
 
-    defaultState = states[0];
-
     for(auto& state : states)
         state->load();
 
-    Server::get().getBlockRegistry().add(*this);
-}
-
-Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties,
-             const std::vector<std::string>& defaultValues) : Block(std::move(name), properties) {
-    auto state = getDefaultState();
-    for(int i = 0; i < properties.size(); ++i) {
-        state = state->with(properties.at(i), defaultValues.at(i));
+    defaultState = states[0];
+    for(int i = 0; i < defaultValues.size(); ++i) {
+        defaultState = defaultState->with(properties.at(i), defaultValues.at(i));
     }
-    defaultState = state;
 }
