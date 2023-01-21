@@ -8,6 +8,7 @@
 #include <list>
 
 #include "TCPConnection.h"
+#include "spdlog/spdlog.h"
 
 #ifdef __linux__
 #include <arpa/inet.h>
@@ -40,6 +41,8 @@ class TCPServer {
 
    private:
     bool running = true;
+
+    std::shared_ptr<spdlog::logger> logger;
 
     unsigned long long sock;
     pollfd fds[10];

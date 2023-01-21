@@ -12,6 +12,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "../../Server.h"
+
 std::unique_ptr<Region> Region::load(int32_t x, int32_t z) {
     std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"),
                       std::ios::binary | std::ios::ate);
@@ -51,15 +53,8 @@ ChunkColumn &Region::getColumn(int32_t x, int32_t z) {
             stream.rdbuf()->pubsetbuf(data.get() + offset + 5, chunkSize - 1);
             zlib::izlibstream zs(stream);
 
-            try {
-                auto nbt = nbt::io::read_compound(zs).second;
-                col.setNbt(nbt);
-            } catch(std::exception &e) {
-                std::cerr << e.what() << std::endl;
-                std::cerr << x << "." << z << std::endl;
-            }
-
-            //            std::cout << "Chunk " << col.getPosition2D() << ";" << z << " loaded." << std::endl;
+            auto nbt = nbt::io::read_compound(zs).second;
+            col.setNbt(nbt);
         }
 
         return col;

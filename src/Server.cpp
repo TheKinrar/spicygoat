@@ -14,6 +14,7 @@
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 #include "tracking/PlayerTracker.h"
 
 Server& Server::get() {
@@ -22,7 +23,8 @@ Server& Server::get() {
 }
 
 Server::Server() {
-    spdlog::info("SpicyGoat dev build starting");
+    logger = spdlog::stdout_color_mt("Server");
+    logger->info("SpicyGoat dev build starting");
 }
 
 void Server::run() {

@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "../../protocol/PacketData.h"
+#include "spdlog/spdlog.h"
 
 ChunkColumn::ChunkColumn(int32_t x, int32_t z) : x(x), z(z) {
     for(auto &chunk : chunks) chunk = nullptr;
@@ -67,8 +68,7 @@ void ChunkColumn::writeDataToByteArray(std::vector<std::byte> &array) {
         auto &chunk = getChunk(y);
 
         if(!chunk.hasData()) {
-            std::cerr << "WARNING: missing chunk data. client will not like this" << std::endl;
-            continue;
+            throw std::runtime_error("Missing chunk data");
         }
 
         chunk.writeDataToByteArray(array);

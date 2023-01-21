@@ -47,7 +47,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     if(response.id != 42) throw std::runtime_error("Unexpected plugin response");
 
     if(response.successful) {
-        std::cout << connection->getName() << " is a proxy" << std::endl;
+        connection->getLogger().info("Proxy detected");
 
         PacketData data = response.data;
 
@@ -59,13 +59,10 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
         if(protocolVersion != 4) throw std::runtime_error("Unsupported Velocity protocol version");
 
         std::string address = data.readString();
-        std::cout << connection->getName() << " proxies " << address << std::endl;
+        connection->getLogger().info("Forwarded address: " + address);
 
         connection->uuid = data.readUuid();
-        std::string proxiedUsername = data.readString();
-
-        std::cout << connection->username << " vs " << proxiedUsername << std::endl;
-        connection->username = proxiedUsername;
+        connection->username = data.readString();
 
         // Properties!
         int propertyCount = data.readVarInt();
@@ -77,8 +74,6 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
                 std::string signature = data.readString();
             }
         }
-
-        std::cout << "remaining: " << data.remaining() << std::endl;
     }
 
     connection->getLogger().info("Logged in as {}", connection->username);

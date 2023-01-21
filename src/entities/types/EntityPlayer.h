@@ -24,6 +24,7 @@ class TCPConnection;
 #include "../../world/geo/Location.h"
 #include "../../world/geo/Position2D.h"
 #include "../Entity.h"
+#include "spdlog/logger.h"
 
 class EntityPlayer : public Entity {
    public:
@@ -76,6 +77,10 @@ class EntityPlayer : public Entity {
         return spawned;
     }
 
+    spdlog::logger& getLogger() const {
+        return *logger;
+    }
+
     TCPConnection &getConnection() const;
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;
@@ -90,6 +95,8 @@ class EntityPlayer : public Entity {
    private:
     void checkChunks();
     void loadChunk(int32_t x, int32_t z);
+
+    std::shared_ptr<spdlog::logger> logger;
 
     std::string name;
     GameMode::GameMode gamemode = Config::get().gamemode;

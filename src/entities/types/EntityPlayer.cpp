@@ -14,9 +14,15 @@
 #include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
 #include "../../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
 #include "../../protocol/packets/play/clientbound/PacketUnloadChunk.h"
+#include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn)
     : Entity(uuid), conn(std::move(conn)), inventory(std::make_unique<PlayerInventory>(*this)) {
+    auto loggerName = "Player/" + name;
+    logger = spdlog::get(loggerName);
+    if(!logger) logger = spdlog::stdout_color_mt(loggerName);
+
     this->name = name;
     this->data = PlayerData::load(uuid);
     pullData();
@@ -47,7 +53,7 @@ void EntityPlayer::tick() {
                 loadedChunks.emplace(pos, chunk);
                 ++n;
             } else {
-                std::cerr << "no data for column " << chunk.toString() << std::endl;
+                logger->warn("No data for " + chunk.toString());
             }
         }
 

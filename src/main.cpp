@@ -5,8 +5,6 @@
 #include "TCPServer.h"
 
 void sigterm_handler(int) {
-    std::cout << "Stopping server" << std::endl;
-
     TCPServer::get().stop();
 }
 

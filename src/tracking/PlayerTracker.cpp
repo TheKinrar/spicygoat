@@ -31,14 +31,12 @@ void PlayerTracker::tick() {
 
         if(dx <= n && dx >= -n && dy <= n && dy >= -n && dz <= n && dz >= -n) {
             if(players.insert(player).second) {
-                std::cout << "+track " << player->getName() << std::endl;
                 player->getConnection().sendPacket(*self.createPacket());
                 auto metaPacket = self.metadataPacket();
                 if(metaPacket.has_value()) player->getConnection().sendPacket(**metaPacket);
             }
         } else {
             if(players.erase(player)) {
-                std::cout << "-track " << player->getName() << std::endl;
                 player->getConnection().sendPacket(*self.removePacket());
             }
         }

@@ -80,6 +80,8 @@ class Server {
    private:
     Server();
 
+    std::shared_ptr<spdlog::logger> logger;
+
     CommandEngine commandEngine;
 
     std::shared_ptr<ChunkPalette> palette;

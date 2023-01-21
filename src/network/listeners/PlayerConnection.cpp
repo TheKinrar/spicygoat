@@ -17,11 +17,7 @@
 static std::shared_ptr<spdlog::logger> chatLogger = spdlog::stdout_color_mt("Chat");
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
-    : connection(connection), player(player) {
-    auto loggerName = "Player/" + player.getName();
-    logger = spdlog::get(loggerName);
-    if(!logger) logger = spdlog::stdout_color_mt(loggerName);
-}
+    : connection(connection), player(player) {}
 
 void PlayerConnection::onTeleportConfirm(const PacketTeleportConfirm &packet) {
     // TODO confirm TP
@@ -106,7 +102,7 @@ void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
 }
 
 void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
-    logger->info("Launching: {}", packet.getMessage());
+    player.getLogger().info("Launching: {}", packet.getMessage());
 
     Server::get().getCommandEngine().runCommand(packet.getMessage(), player);
 }

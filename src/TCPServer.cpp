@@ -10,12 +10,15 @@
 
 #include "config/Config.h"
 #include "network/listeners/HandshakeListener.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 
 TCPServer::TCPServer() {
+    logger = spdlog::stdout_color_mt("TCPServer");
+
 #ifdef _WIN64
     WSAData wsaData = {};
     if(WSAStartup(MAKEWORD(2, 2), &wsaData)) {
-        std::cerr << "WSAStartup failed: " << WSAGetLastError() << std::endl;
+        logger->error("WSAStartup failed: " + std::to_string(WSAGetLastError()));
     }
 #endif
 
@@ -43,10 +46,10 @@ TCPServer::TCPServer() {
     errno = 0;
     if(bind(sock, (sockaddr *)&sin, sizeof(sin))) {
 #ifdef __linux__
-        std::cerr << "bind failed: " << strerror(errno) << std::endl;
+        logger->error("bind failed: " + std::string(strerror(errno)));
 #endif
 #ifdef _WIN64
-        std::cerr << "bind failed: " << WSAGetLastError() << std::endl;
+        logger->error("bind failed: " + std::to_string(WSAGetLastError()));
 #endif
         exit(1);
     }
@@ -55,7 +58,7 @@ TCPServer::TCPServer() {
     listen(sock, 5);
 
     if(errno) {
-        std::cerr << "listen failed: " << strerror(errno) << std::endl;
+        logger->error("listen failed: " + std::string(strerror(errno)));
         exit(1);
     }
 
@@ -68,7 +71,7 @@ TCPServer::TCPServer() {
 }
 
 TCPServer::~TCPServer() {
-    std::cout << "TCP server stopped" << std::endl;
+    logger->info("Stopped");
 }
 
 void TCPServer::accept() {
@@ -92,7 +95,7 @@ void TCPServer::accept() {
         }
     }
 
-    std::cout << "TCP server stopping" << std::endl;
+    logger->info("Shutting down");
     for(auto conn : connections) {
         conn->disconnect();
     }
