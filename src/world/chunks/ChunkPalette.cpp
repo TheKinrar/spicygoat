@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "../../../data/out/blocks.h"
 #include "../../Server.h"
 #include "../../protocol/PacketData.h"
 
@@ -42,7 +43,7 @@ std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
 void ChunkPalette::loadGlobal() {
     global = true;
     int16_t id = 0;
-    for(const auto &block : Server::get().getBlockRegistry().getBlocks()) {
+    for(const auto &block : Blocks::All) {
         for(const auto &state : block.get().getStates()) {
             addBlockState(state, id++);
         }

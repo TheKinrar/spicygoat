@@ -40,9 +40,12 @@ for f in glob.glob('out/*'):
 
 hpp = CppFile('out/blocks.h')
 hpp('#pragma once')
+hpp('#include <vector>')
 hpp('#include "../../src/block/Block.h"')
+cpp = CppFile('out/blocks.cpp')
+cpp('#include "blocks.h"')
 
-with hpp.block('namespace Blocks'):
+with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
     lines = []
     for block_name, block in blocks:
         block['short_name'] = block_name.replace('minecraft:', '')
@@ -58,6 +61,9 @@ with hpp.block('namespace Blocks'):
 
         lines.append(line)
 
+    CppVariable(name='All', type='extern const std::vector<std::reference_wrapper<const Block>>').render_to_string(hpp)
+    cpp('const std::vector<std::reference_wrapper<const Block>> All = {' + ', '.join(map(lambda e: e[1]['short_name'], blocks)) + '};')
+
     lines_chunked = list(chunks(lines, 100))
     for n, file_lines in enumerate(lines_chunked):
         cppn = CppFile('out/blocks.' + str(n) + '.cpp')
@@ -69,6 +75,7 @@ with hpp.block('namespace Blocks'):
         cppn.close()
 
 hpp.close()
+cpp.close()
 
 
 cpp = CppFile('out/tags.h')
