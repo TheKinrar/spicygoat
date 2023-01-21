@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
-project(SpicyGoat)
+project(spicygoat)
 set(CMAKE_CXX_STANDARD 20)
 
 
@@ -51,11 +51,11 @@ FetchContent_Declare(spdlog
 FetchContent_MakeAvailable(spdlog)
 
 
-add_executable(SpicyGoat)
+add_executable(spicygoat)
 add_subdirectory(data)
 add_subdirectory(src)
 add_embedded_binary_resources(
-        SpicyGoat_resources
+        spicygoat_resources
         OUT_DIR resources_out
         HEADER resources.h
         NAMESPACE Resources
@@ -63,8 +63,8 @@ add_embedded_binary_resources(
         RESOURCES
         "${PROJECT_SOURCE_DIR}/resources/codec.dat"
 )
-target_link_libraries(SpicyGoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings spdlog::spdlog)
-target_link_libraries(SpicyGoat PRIVATE SpicyGoat_resources -static)
+target_link_libraries(spicygoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings spdlog::spdlog)
+target_link_libraries(spicygoat PRIVATE spicygoat_resources -static)
 if(WIN32)
-    target_link_libraries(SpicyGoat PRIVATE wsock32 ws2_32)
+    target_link_libraries(spicygoat PRIVATE wsock32 ws2_32)
 endif()

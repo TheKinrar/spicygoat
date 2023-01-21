@@ -8,3 +8,7 @@
 /data/out
 /data/versions
 /data/server.jar
+/packaging/archlinux/pkg
+/packaging/archlinux/spicygoat
+/packaging/archlinux/src
+/packaging/archlinux/*.pkg*

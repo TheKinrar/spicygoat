@@ -1,0 +1,15 @@
+# Maintainer: Amaury Rousseau <kinrar at kinrar dot io>
+
+pkgname="spicygoat"
+pkgver=$CI_PIPELINE_IID
+pkgrel="1"
+pkgdesc="SpicyGoat Minecraft server"
+arch=("x86_64")
+
+source=("spicygoat")
+
+sha256sums=("SKIP")
+
+package() {
+  install -Dm755 "$srcdir/spicygoat" "$pkgdir/usr/bin/spicygoat"
+}

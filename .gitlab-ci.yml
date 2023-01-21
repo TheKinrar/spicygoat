@@ -1,0 +1,47 @@
+image: gcc
+
+cache:
+  paths:
+    - build/spicygoat
+    - packaging/archlinux/spicygoat-*.pkg.tar.zst
+
+build:
+  stage: build
+  script:
+    - apt-get update
+    - apt-get -y install openjdk-17-jre-headless python3-pip xxd
+    - wget -nv https://github.com/Kitware/CMake/releases/download/v3.25.2/cmake-3.25.2-linux-x86_64.sh
+    - chmod +x cmake-3.25.2-linux-x86_64.sh
+    - ./cmake-3.25.2-linux-x86_64.sh --skip-license --prefix=/
+    - cd data
+    - pip3 install -r requirements.txt
+    - python3 build.py
+    - cd ..
+    - mkdir -p build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE=Release ..
+    - make -j$(nproc)
+
+package_archlinux:
+  stage: build
+  image: archlinux:base-devel
+  script:
+    - cd packaging/archlinux
+    - rm -f *.pkg.tar.zst
+    - chmod o+w .
+    - ln -s ../../build/spicygoat .
+    - su -s /bin/sh -c 'makepkg -d -f' nobody
+
+deploy:
+  stage: deploy
+  script:
+    - 'eval $(ssh-agent -s)'
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - scp packaging/archlinux/spicygoat-$CI_PIPELINE_IID-1-x86_64.pkg.tar.zst root@arch.kinrar.io:/srv/repo/kinrar/x86_64
+    - ssh root@arch.kinrar.io "cd /srv/repo/kinrar/x86_64; repo-add -n -R -p kinrar.db.tar.gz spicygoat-$CI_PIPELINE_IID-1-x86_64.pkg.tar.zst"
+  only:
+    - master

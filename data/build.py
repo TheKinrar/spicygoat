@@ -19,6 +19,9 @@ if not os.path.exists('generated'):
     print('Generating server data')
     subprocess.call(['java', '-DbundlerMainClass=net.minecraft.data.Main', '-jar', 'server.jar', '--reports', '--server'])
 
+if not os.path.exists('out'):
+    os.makedirs('out')
+
 
 blocks = load_json('generated/reports/blocks.json')
 blocks = sorted(blocks.items(), key=lambda item: min(map(lambda state: state['id'], item[1]['states'])))
