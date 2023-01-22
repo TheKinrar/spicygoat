@@ -19,7 +19,7 @@ void ItemRegistry::addMapping(const std::string& key, int32_t id) {
             add(std::make_unique<Item>(key));
         } else {
             // Yay! We'll default to placing the first state.
-            addBlockItem(std::make_unique<BlockItem>(key, sameNameBlocks.front()));
+            addBlockItem(std::make_unique<BlockItem>(key, sameNameBlocks.front()->getBlock()));
         }
     }
 }

@@ -10,7 +10,9 @@
 
 class BlockState;
 
+#include "../protocol/packets/play/serverbound/PacketUseItemOn.h"
 #include "../util/Identifier.h"
+#include "../world/geo/Location.h"
 #include "BlockState.h"
 #include "property/Property.h"
 
@@ -42,6 +44,11 @@ class Block {
     [[nodiscard]]
     const std::shared_ptr<BlockState>& getDefaultState() const {
         return defaultState;
+    }
+
+    [[nodiscard]]
+    virtual std::shared_ptr<BlockState> getStateToPlace(const Location& loc, const PacketUseItemOn& packet) const {
+        return getDefaultState();
     }
 
     [[nodiscard]]

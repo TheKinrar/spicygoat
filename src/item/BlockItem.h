@@ -12,12 +12,12 @@
  * An item that represents a placeable block.
  */
 class BlockItem : public Item {
-    const std::shared_ptr<BlockState> block;
+    const Block& block;
 
    public:
-    BlockItem(const std::string& name, const std::shared_ptr<BlockState>& block) : Item(name), block(block) {}
+    BlockItem(const std::string& name, const Block& block) : Item(name), block(block) {}
 
-    [[nodiscard]] const std::shared_ptr<BlockState>& getBlock() const {
+    [[nodiscard]] const Block& getBlock() const {
         return block;
     }
 

@@ -7,8 +7,6 @@
 
 #include <string>
 
-#include "../chunks/Chunk.h"
-#include "../chunks/ChunkColumn.h"
 #include "Position.h"
 
 class Location {

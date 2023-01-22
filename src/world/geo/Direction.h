@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cmath>
 #include <utility>
 
 #include "../../util/Enum.h"
@@ -17,6 +18,15 @@ class Direction : public Enum {
    public:
     static const Direction down, up, north, south, west, east;
     static const std::vector<Direction> values;
+
+    static const Direction& fromYaw(float yaw) {
+        auto v = std::remainder(yaw, 360.0f);
+        if(v < -135) return north;
+        if(v < -45) return east;
+        if(v < 45) return south;
+        if(v < 135) return west;
+        return north;
+    }
 };
 
 inline const Direction Direction::down = Direction("down", Axis::y);

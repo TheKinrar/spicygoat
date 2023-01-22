@@ -6,6 +6,7 @@ import os.path
 import subprocess
 import urllib.request
 
+from blocks import block_to_class
 from properties import translate_property
 from util import *
 
@@ -41,7 +42,7 @@ for f in glob.glob('out/*'):
 hpp = CppFile('out/blocks.h')
 hpp('#pragma once')
 hpp('#include <vector>')
-hpp('#include "../../src/block/Block.h"')
+hpp('#include "../../src/block/types.h"')
 cpp = CppFile('out/blocks.cpp')
 cpp('#include "blocks.h"')
 
@@ -49,15 +50,17 @@ with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
     lines = []
     for block_name, block in blocks:
         block['short_name'] = block_name.replace('minecraft:', '')
+        block_class = block_to_class(block['short_name'])
+        block_props = ', {' + ', '.join(map(lambda p: 'Properties::' + translate_property(block['short_name'], p), block.get('properties', {}).items())) + '}' if block_class == 'Block' else ''
 
-        CppVariable(name=block['short_name'], type='extern const Block').render_to_string(hpp)
-        line = 'const Block ' + block['short_name'] + ' = Block({"' + block['short_name'] + '"}, {' + ', '.join(map(lambda p: 'Properties::' + translate_property(block['short_name'], p), block.get('properties', {}).items())) + '}'
+        CppVariable(name=block['short_name'], type='extern const ' + block_class).render_to_string(hpp)
+        line = 'const ' + block_class + ' ' + block['short_name'] + ' = {{"' + block['short_name'] + '"}' + block_props
 
         for state in block['states']:
             if 'default' in state and state['default'] and 'properties' in state:
                 line += ', {' + ', '.join(map(lambda v: '"' + v + '"', state['properties'].values())) + '}'
 
-        line += ');'
+        line += '};'
 
         lines.append(line)
 

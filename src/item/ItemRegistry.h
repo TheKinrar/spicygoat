@@ -20,7 +20,7 @@ class ItemRegistry : public Registry {
     }
 
     void addBlockItem(std::unique_ptr<BlockItem> item) {
-        blockItems.emplace(item->getBlock()->getBlock().getName().toString(), getId(item->getName()));
+        blockItems.emplace(item->getBlock().getName().toString(), getId(item->getName()));
         add(std::move(item));
     }
 
