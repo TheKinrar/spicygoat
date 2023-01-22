@@ -12,6 +12,8 @@ class PlayerConnection : public PacketListenerPlay {
    public:
     PlayerConnection(TCPConnection &connection, EntityPlayer &player);
 
+    void tick() override;
+
     void onChatCommand(const PacketChatCommand &packet) override;
     void onChatMessage(const PacketChatMessageSB &packet) override;
     void onTeleportConfirm(const PacketTeleportConfirm &packet) override;
@@ -32,6 +34,9 @@ class PlayerConnection : public PacketListenerPlay {
    private:
     TCPConnection &connection;
     EntityPlayer &player;
+    int sequence = -1;
+
+    void updateSequence(int sequence);
 };
 
 #endif  // SPICYGOAT_PLAYERCONNECTION_H

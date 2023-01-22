@@ -10,6 +10,7 @@
 #include "../../Server.h"
 #include "../../config/Config.h"
 #include "../../entities/types/EntityItem.h"
+#include "../../protocol/packets/play/clientbound/PacketAckAction.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
@@ -18,6 +19,19 @@ static std::shared_ptr<spdlog::logger> chatLogger = spdlog::stdout_color_mt("Cha
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
     : connection(connection), player(player) {}
+
+void PlayerConnection::tick() {
+    if(sequence != -1) {
+        connection.sendPacket(PacketAckAction(sequence));
+        sequence = -1;
+    }
+}
+
+void PlayerConnection::updateSequence(int sequence) {
+    if(sequence > this->sequence) {
+        this->sequence = sequence;
+    }
+}
 
 void PlayerConnection::onTeleportConfirm(const PacketTeleportConfirm &packet) {
     // TODO confirm TP
@@ -66,6 +80,8 @@ void PlayerConnection::onPlayerAbilities(const PacketPlayerAbilitiesSB &packet) 
 }
 
 void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
+    updateSequence(packet.sequence);
+
     if(packet.status == PacketPlayerDigging::Status::STARTED_DIGGING) {
         if(player.getGamemode() == GameMode::GameMode::Creative) {
             Server::get().getWorld().setBlockState(packet.position, Blocks::air.getDefaultState());
@@ -112,6 +128,8 @@ void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
+    updateSequence(packet.sequence);
+
     ItemStack stack = player.inventory->getSelected();
     if(stack.present) {
         Server::get().getItemRegistry().get(stack.id).onUseOn(player, packet);

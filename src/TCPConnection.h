@@ -52,7 +52,7 @@ class TCPConnection {
         return *logger;
     }
 
-    const PacketListener& getListener() const;
+    PacketListener& getListener() const;
     void setListener(std::unique_ptr<PacketListener> newListener);
 
     void task();

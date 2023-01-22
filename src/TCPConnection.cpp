@@ -145,7 +145,7 @@ void TCPConnection::setListener(std::unique_ptr<PacketListener> newListener) {
     listener = std::move(newListener);
 }
 
-const PacketListener &TCPConnection::getListener() const {
+PacketListener &TCPConnection::getListener() const {
     return *listener;
 }
 

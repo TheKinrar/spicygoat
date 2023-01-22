@@ -30,6 +30,8 @@ EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<
 }
 
 void EntityPlayer::tick() {
+    conn->getListener().tick();
+
     Entity::tick();
 
     if(loadedChunks.empty()) chunkChanged();
