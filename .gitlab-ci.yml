@@ -3,9 +3,10 @@ image: gcc
 cache:
   paths:
     - build/spicygoat
+    - build/spicygoat.exe
     - packaging/archlinux/spicygoat-*.pkg.tar.zst
 
-build:
+build_linux:
   stage: build
   script:
     - apt-get update
@@ -13,17 +14,23 @@ build:
     - wget -nv https://github.com/Kitware/CMake/releases/download/v3.25.2/cmake-3.25.2-linux-x86_64.sh
     - chmod +x cmake-3.25.2-linux-x86_64.sh
     - ./cmake-3.25.2-linux-x86_64.sh --skip-license --prefix=/
-    - cd data
-    - pip3 install -r requirements.txt
-    - python3 build.py
-    - cd ..
-    - mkdir -p build
-    - cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release ..
-    - make -j$(nproc)
+    - sh build.sh
+  artifacts:
+    paths:
+      - build/spicygoat
+
+build_windows:
+  stage: build
+  tags: [windows-shell]
+  script:
+    - C:\msys64\msys2_shell.cmd -mingw64 -defterm -here -full-path -no-start build.sh
+  artifacts:
+    paths:
+      - build/spicygoat.exe
 
 package_archlinux:
   stage: build
+  when: on_success
   image: archlinux:base-devel
   script:
     - cd packaging/archlinux
@@ -34,6 +41,7 @@ package_archlinux:
 
 deploy:
   stage: deploy
+  when: on_success
   script:
     - 'eval $(ssh-agent -s)'
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
