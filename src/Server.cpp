@@ -44,7 +44,7 @@ void Server::run() {
     std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
 
     long elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() - startupTime;
-    spdlog::info("Ready! Started in {} s", (double) elapsed / 1000);
+    logger->info("Ready! Started in {} s", (double) elapsed / 1000);
 
     while(TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();
