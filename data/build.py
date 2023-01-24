@@ -25,7 +25,9 @@ if not os.path.exists('out'):
 
 
 blocks = load_json('generated/reports/blocks.json')
-blocks = sorted(blocks.items(), key=lambda item: min(map(lambda state: state['id'], item[1]['states'])))
+for block in blocks.values():
+    block['min_id'] = min(map(lambda state: state['id'], block['states']))
+blocks = sorted(blocks.items(), key=lambda item: item[1]['min_id'])
 registries = load_json('generated/reports/registries.json')
 load_tags('blocks')
 load_tags('entity_types')
@@ -60,7 +62,7 @@ with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
         line = 'const ' + block_class + ' ' + short_name + ' = ' + block_class + '({"' + short_name + '"}' + block_traits + block_props
 
         for state in block['states']:
-            if 'default' in state and state['default'] and 'properties' in state:
+            if 'default' in state and state['default'] and 'properties' in state and state['id'] != block['min_id']:
                 state_properties = list(state['properties'].values())
                 reorder_properties(short_name, state_properties)
                 line += ', {' + ', '.join(map(lambda v: '"' + v + '"', state_properties)) + '}'
