@@ -15,8 +15,6 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
-static std::shared_ptr<spdlog::logger> chatLogger = spdlog::stdout_color_mt("Chat");
-
 PlayerConnection::PlayerConnection(TCPConnection &connection, EntityPlayer &player)
     : connection(connection), player(player) {}
 
@@ -112,9 +110,7 @@ void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
 }
 
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
-    chatLogger->info("{}: {}", player.getName(), packet.message);
-
-    Server::get().broadcastPacket(PacketChatMessageCB(player.getName() + ": " + packet.message));
+    Server::get().broadcastMessage(player.getName() + ": " + packet.message);
 }
 
 void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {

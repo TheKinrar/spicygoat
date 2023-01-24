@@ -23,8 +23,10 @@ Server& Server::get() {
 }
 
 Server::Server() {
-    logger = spdlog::stdout_color_mt("Server");
     spdlog::info("SpicyGoat dev build");
+
+    logger = spdlog::stdout_color_mt("Server");
+    chatLogger = spdlog::stdout_color_mt("Chat");
 }
 
 void Server::load() {
@@ -81,6 +83,8 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     auto players = getPlayers();
     conn->sendPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players));
 
+    broadcastMessage("§6" + player->getName() + " joined");
+
     return player;
 }
 
@@ -99,6 +103,8 @@ void Server::removePlayer(EntityPlayer& p) {
     std::forward_list<uuids::uuid> array;
     array.emplace_front(p.getUuid());
     broadcastPacket(PacketPlayerInfoRemove(array));
+
+    broadcastMessage("§6" + p.getName() + " left");
 }
 
 void Server::removeEntity(Entity& entity) {
@@ -122,6 +128,11 @@ World& Server::getWorld() {
 
 std::shared_ptr<ChunkPalette> Server::getPalette() const {
     return palette;
+}
+
+void Server::broadcastMessage(const std::string& message) {
+    chatLogger->info(message);
+    broadcastPacket(PacketChatMessageCB(message));
 }
 
 void Server::broadcastPacket(const Packet& packet) {

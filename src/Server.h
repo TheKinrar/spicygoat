@@ -76,12 +76,14 @@ class Server {
         return entityRegistry;
     }
 
+    void broadcastMessage(const std::string& message);
     void broadcastPacket(const Packet&);
 
    private:
     Server();
 
     std::shared_ptr<spdlog::logger> logger;
+    std::shared_ptr<spdlog::logger> chatLogger;
 
     CommandEngine commandEngine;
 
