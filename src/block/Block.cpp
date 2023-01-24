@@ -6,17 +6,15 @@
 
 #include <utility>
 
+#include "BlockTrait.h"
 #include "../../data/out/registries.h"
 #include "../Server.h"
 
-Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties)
-    : name(std::move(name)), properties(properties) {
-    Server::get().getBlockRegistry().add(*this);
-}
-
-Block::Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties,
+Block::Block(Identifier name,
+             const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
+             const std::vector<std::reference_wrapper<const Property>>& properties,
              const std::vector<std::string>& defaultValues)
-    : name(std::move(name)), properties(properties), defaultValues(defaultValues) {
+    : name(std::move(name)), traits(traits), properties(properties), defaultValues(defaultValues) {
     Server::get().getBlockRegistry().add(*this);
 }
 
@@ -61,4 +59,11 @@ nextState:
     for(int i = 0; i < defaultValues.size(); ++i) {
         defaultState = defaultState->with(properties.at(i), defaultValues.at(i));
     }
+}
+
+std::shared_ptr<BlockState> Block::getStateToPlace(const BlockPlaceContext& ctx) const {
+    auto state = getDefaultState();
+    for(const auto& trait : traits)
+        state = trait.get().transformStateToPlace(ctx, state);
+    return state;
 }

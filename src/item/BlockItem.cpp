@@ -4,6 +4,7 @@
 
 #include "BlockItem.h"
 
+#include "../util/BlockPlaceContext.h"
 #include "../Server.h"
 
 void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const {
@@ -21,11 +22,14 @@ void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) con
     }
 
     if(place) {
-        auto state = block.getStateToPlace(player.getLocation(), packet);
+        auto& world = Server::get().getWorld();
+        auto placedPos = packet.position.relative(packet.face);
 
-        Server::get().getWorld().setBlockState(packet.position.relative(packet.face), state);
+        auto state = block.getStateToPlace(
+            BlockPlaceContext(world, player.getLocation(), packet, world.getBlockState(placedPos)));
 
-        Server::get().broadcastPacket(PacketBlockUpdate(packet.position.relative(packet.face),
-                                                        Server::get().getPalette()->getBlockStateId(state)));
+        world.setBlockState(placedPos, state);
+
+        Server::get().broadcastPacket(PacketBlockUpdate(placedPos, Server::get().getPalette()->getBlockStateId(state)));
     }
 }

@@ -5,10 +5,12 @@
 #pragma once
 
 #include <cmath>
+#include <stdexcept>
 #include <utility>
 
 #include "../../util/Enum.h"
 #include "Axis.h"
+#include "Face.h"
 
 class Direction : public Enum {
     Axis axis;
@@ -19,6 +21,27 @@ class Direction : public Enum {
     static const Direction down, up, north, south, west, east;
     static const std::vector<Direction> values;
 
+    [[nodiscard]]
+    bool isVertical() const {
+        return name() == "down" || name() == "up";
+    }
+
+    [[nodiscard]]
+    bool isHorizontal() const {
+        return !isVertical();
+    }
+
+    [[nodiscard]]
+    const Direction& opposite() const {
+        if(name() == "down") return up;
+        if(name() == "up") return down;
+        if(name() == "north") return south;
+        if(name() == "south") return north;
+        if(name() == "west") return east;
+        if(name() == "east") return west;
+        throw std::runtime_error("Invalid Direction enum value");
+    }
+
     static const Direction& fromYaw(float yaw) {
         auto v = std::remainder(yaw, 360.0f);
         if(v < -135) return north;
@@ -26,6 +49,24 @@ class Direction : public Enum {
         if(v < 45) return south;
         if(v < 135) return west;
         return north;
+    }
+
+    static const Direction& fromFace(Face face) {
+        switch(face) {
+            case Face::Bottom:
+                return down;
+            case Face::Top:
+                return up;
+            case Face::North:
+                return north;
+            case Face::South:
+                return south;
+            case Face::West:
+                return west;
+            case Face::East:
+                return east;
+        }
+        throw std::runtime_error("Invalid Face enum value");
     }
 };
 

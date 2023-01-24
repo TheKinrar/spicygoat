@@ -8,16 +8,18 @@
 #include <utility>
 #include <vector>
 
+class BlockPlaceContext;
 class BlockState;
+class BlockTrait;
 
 #include "../protocol/packets/play/serverbound/PacketUseItemOn.h"
 #include "../util/Identifier.h"
 #include "../world/geo/Location.h"
-#include "BlockState.h"
 #include "property/Property.h"
 
 class Block {
     Identifier name;
+    std::vector<std::reference_wrapper<const BlockTrait>> traits;
     std::vector<std::reference_wrapper<const Property>> properties;
     std::vector<std::string> defaultValues;
     std::vector<std::shared_ptr<BlockState>> states;
@@ -25,8 +27,10 @@ class Block {
     std::shared_ptr<BlockState> defaultState;
 
    public:
-    Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties);
-    Block(Identifier name, const std::vector<std::reference_wrapper<const Property>>& properties, const std::vector<std::string>& defaultValues);
+    explicit Block(Identifier name,
+                   const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
+                   const std::vector<std::reference_wrapper<const Property>>& properties,
+                   const std::vector<std::string>& defaultValues = {});
     Block(const Block&) = delete;
 
     void load();
@@ -47,9 +51,7 @@ class Block {
     }
 
     [[nodiscard]]
-    virtual std::shared_ptr<BlockState> getStateToPlace(const Location& loc, const PacketUseItemOn& packet) const {
-        return getDefaultState();
-    }
+    virtual std::shared_ptr<BlockState> getStateToPlace(const BlockPlaceContext& ctx) const;
 
     [[nodiscard]]
     const std::vector<std::shared_ptr<BlockState>>& getStates() const {
