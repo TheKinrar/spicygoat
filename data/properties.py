@@ -27,6 +27,26 @@ overrides = {
     'west': {'_wall': 'west_wall_shape', 'redstone_wire': 'west_wire_connection'},
 }
 
+reorder = {
+    ('chest', 'trapped_chest'): {0: 1},
+    'moving_piston': {0: 1},
+    'piston_head': {0: 2},
+}
+
+
+def reorder_array(array, recipe):
+    for a, b in recipe.items():
+        array.insert(b, array.pop(a))
+
+
+def reorder_properties(block, props):
+    for pattern, result in reorder.items():
+        if type(pattern) is tuple:
+            if any(test_pattern(p, block) for p in pattern):
+                reorder_array(props, result)
+        elif test_pattern(pattern, block):
+            reorder_array(props, result)
+
 
 def test_pattern(pattern, block):
     return (pattern.startswith('_') and block.endswith(pattern)) or block == pattern

@@ -4,7 +4,7 @@ overrides = {
     '_fence_gate': 'BlockFenceGate',
     '_stairs': 'BlockStairs',
     '_trapdoor': 'BlockTrapdoor',
-    'chest': 'BlockChest',
+    ('chest', 'trapped_chest'): 'BlockChest',
     'ender_chest': 'BlockEnderChest',
     'furnace': 'BlockFurnace',
     'repeater': 'BlockRepeater',

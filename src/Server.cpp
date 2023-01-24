@@ -24,10 +24,10 @@ Server& Server::get() {
 
 Server::Server() {
     logger = spdlog::stdout_color_mt("Server");
-    logger->info("SpicyGoat dev build starting");
+    spdlog::info("SpicyGoat dev build");
 }
 
-void Server::run() {
+void Server::load() {
     for(Block& block : blockRegistry.getBlocks())
         block.load();
 
@@ -40,6 +40,12 @@ void Server::run() {
     getCommandEngine().registerCommand(std::make_unique<CommandGm>());
     getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
     getCommandEngine().registerCommand(std::make_unique<CommandTp>());
+}
+
+void Server::run() {
+    logger->info("Starting");
+
+    load();
 
     std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
 

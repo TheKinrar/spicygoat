@@ -7,7 +7,7 @@ import subprocess
 import urllib.request
 
 from blocks import block_to_class, block_to_traits
-from properties import translate_property
+from properties import reorder_properties, translate_property
 from util import *
 
 
@@ -52,14 +52,18 @@ with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
         short_name = block['short_name'] = block_name.replace('minecraft:', '')
         block_class = block_to_class(short_name)
         block_traits = ', {' + ', '.join(map(lambda t: 'Traits::' + t, block_to_traits(short_name))) + '}' if block_class == 'Block' else ''
-        block_props = ', {' + ', '.join(map(lambda p: 'Properties::' + translate_property(short_name, p), block.get('properties', {}).items())) + '}' if block_class == 'Block' else ''
+        properties = list(block.get('properties', {}).items())
+        reorder_properties(short_name, properties)
+        block_props = ', {' + ', '.join(map(lambda p: 'Properties::' + translate_property(short_name, p), properties)) + '}' if block_class == 'Block' else ''
 
         CppVariable(name=short_name, type='extern const ' + block_class).render_to_string(hpp)
         line = 'const ' + block_class + ' ' + short_name + ' = ' + block_class + '({"' + short_name + '"}' + block_traits + block_props
 
         for state in block['states']:
             if 'default' in state and state['default'] and 'properties' in state:
-                line += ', {' + ', '.join(map(lambda v: '"' + v + '"', state['properties'].values())) + '}'
+                state_properties = list(state['properties'].values())
+                reorder_properties(short_name, state_properties)
+                line += ', {' + ', '.join(map(lambda v: '"' + v + '"', state_properties)) + '}'
 
         line += ');'
 

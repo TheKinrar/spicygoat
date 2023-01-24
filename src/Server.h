@@ -25,6 +25,7 @@ class Server {
     static Server& get();
     Server(const Server&) = delete;
 
+    void load();
     void run();
 
     std::shared_ptr<EntityPlayer> createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);

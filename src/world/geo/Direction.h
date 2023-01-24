@@ -18,7 +18,7 @@ class Direction : public Enum {
     Direction(const std::string& name, Axis axis) : Enum(name), axis(std::move(axis)) {}
 
    public:
-    static const Direction down, up, north, south, west, east;
+    static const Direction north, east, south, west, up, down;
     static const std::vector<Direction> values;
 
     [[nodiscard]]
@@ -70,11 +70,11 @@ class Direction : public Enum {
     }
 };
 
-inline const Direction Direction::down = Direction("down", Axis::y);
-inline const Direction Direction::up = Direction("up", Axis::y);
 inline const Direction Direction::north = Direction("north", Axis::z);
+inline const Direction Direction::east = Direction("east", Axis::x);
 inline const Direction Direction::south = Direction("south", Axis::z);
 inline const Direction Direction::west = Direction("west", Axis::x);
-inline const Direction Direction::east = Direction("east", Axis::x);
+inline const Direction Direction::up = Direction("up", Axis::y);
+inline const Direction Direction::down = Direction("down", Axis::y);
 
-inline const std::vector<Direction> Direction::values = {down, up, north, south, west, east};
+inline const std::vector<Direction> Direction::values = {north, east, south, west, up, down};
