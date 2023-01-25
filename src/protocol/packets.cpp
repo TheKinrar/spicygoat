@@ -70,6 +70,8 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
                 return std::make_unique<PacketSetHeldItem>(data);
             case S_USE_ITEM:
                 return nullptr;
+            case S_CLICK_WINDOW:
+                return std::make_unique<PacketClickWindow>(data);
         }
     }
 

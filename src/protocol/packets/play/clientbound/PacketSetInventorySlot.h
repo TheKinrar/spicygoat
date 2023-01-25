@@ -10,12 +10,13 @@
 
 class PacketSetInventorySlot  : public ClientBoundPacket {
     int8_t windowId;
+    int version;
     int16_t slot;
     ItemStack stack;
 
    public:
-    PacketSetInventorySlot(int8_t windowId, int16_t slot, ItemStack stack)
-        : ClientBoundPacket(0x12), windowId(windowId), slot(slot), stack(std::move(stack)) {}
+    PacketSetInventorySlot(int8_t windowId, int version, int16_t slot, ItemStack stack)
+        : ClientBoundPacket(0x12), windowId(windowId), version(version), slot(slot), stack(std::move(stack)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
@@ -23,7 +24,7 @@ class PacketSetInventorySlot  : public ClientBoundPacket {
 
         PacketData::writeVarInt(0x12, array);
         PacketData::writeByte(windowId, array);
-        PacketData::writeVarInt(0, array);
+        PacketData::writeVarInt(version, array);
         PacketData::writeShort(slot, array);
         PacketData::writeItemStack(stack, array);
 

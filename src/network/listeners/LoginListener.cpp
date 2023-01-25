@@ -94,7 +94,7 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     player->sendAbilities();
     connection->sendPacket(PacketRenderCenter(loc.getChunkX(), loc.getChunkZ()));
 
-    connection->sendPacket(PacketSetInventoryContent(0, player->inventory->getSlots(), {}));
+    player->inventory->forceSync();
 
     std::map<std::string, std::vector<std::reference_wrapper<Tag>>> tags;
     tags.emplace("minecraft:block", Tags::blocks::All);

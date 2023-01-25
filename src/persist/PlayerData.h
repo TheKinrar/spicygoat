@@ -9,15 +9,17 @@
 #include <io/stream_reader.h>
 #include <io/stream_writer.h>
 #include <tag_compound.h>
+#include <tag_list.h>
 #include <tag_primitive.h>
 
 #include <filesystem>
 #include <fstream>
 #include <utility>
 
+class EntityPlayer;
 class PlayerInventory;
 
-#include "../inventory/PlayerInventory.h"
+#include "../util/GameMode.h"
 #include "../util/PlayerAbilities.h"
 #include "../world/geo/Location.h"
 #include "uuid.h"

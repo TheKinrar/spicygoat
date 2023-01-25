@@ -8,30 +8,41 @@
 
 #include "../entities/types/EntityPlayer.h"
 #include "../item/ItemStack.h"
-#include "../protocol/packets/play/clientbound/PacketSetInventorySlot.h"
+#include "../protocol/packets/play/serverbound/PacketClickWindow.h"
 
 #define PLAYER_INVENTORY_SIZE 46
 
 class PlayerInventory {
     EntityPlayer& player;
-    ItemStack slots[PLAYER_INVENTORY_SIZE];
+
+    std::vector<ItemStack> slots{PLAYER_INVENTORY_SIZE};
+    ItemStack inHand;
     int selectedSlot = 36;
+
+    int trackedVersion = 0;
+    std::vector<ItemStack> trackedSlots{PLAYER_INVENTORY_SIZE};
+    ItemStack trackedInHand;
+
+    bool enableSync = true;
 
    public:
     explicit PlayerInventory(EntityPlayer& player) : player(player) {}
 
     [[nodiscard]]
-    std::vector<ItemStack> getSlots() const {
-        return {std::begin(slots), std::end(slots)};
+    const std::vector<ItemStack>& getSlots() const {
+        return slots;
     }
 
     [[nodiscard]]
-    ItemStack getSlot(int slot) const {
+    const ItemStack& getSlot(int slot) const {
+        if(slot < 0 || slot >= PLAYER_INVENTORY_SIZE)
+            throw std::runtime_error("Invalid inventory slot");
+
         return slots[slot];
     }
 
     [[nodiscard]]
-    ItemStack getSelected() const {
+    const ItemStack& getSelected() const {
         return getSlot(selectedSlot);
     }
 
@@ -40,6 +51,9 @@ class PlayerInventory {
     }
 
     void setSelectedSlot(int selectedSlot) {
+        if(selectedSlot < 36 || selectedSlot > 45)
+            throw std::runtime_error("Invalid inventory selected slot");
+
         this->selectedSlot = selectedSlot;
     }
 
@@ -100,16 +114,28 @@ class PlayerInventory {
             auto invStack = stack;
             invStack.setCount(slots[slot].count + n);
             remaining.setCount(remaining.count - n);
-            set(slot, invStack);
+            setSlot(slot, invStack);
         }
 
         if(remaining.present && (slot = findEmptySlot()) != -1) {
-            set(slot, remaining);
+            setSlot(slot, remaining);
             remaining.setCount(0);
         }
 
         return remaining;
     }
 
-    void set(int slot, const ItemStack& stack, bool sendPacket = true);
+    void setSlot(int slot, const ItemStack& stack);
+    void setInHand(const ItemStack& stack);
+
+    void setTrackedSlot(int slot, const ItemStack& stack);
+    void setTrackedInHand(const ItemStack& stack);
+
+    void setSyncEnabled(bool v) {
+        enableSync = v;
+    }
+    void sync();
+    void forceSync();
+
+    void onClick(const PacketClickWindow &packet);
 };

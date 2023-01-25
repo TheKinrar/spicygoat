@@ -10,12 +10,13 @@
 
 class PacketSetInventoryContent : public ClientBoundPacket {
     uint8_t windowId;
+    int version;
     std::vector<ItemStack> stacks;
     ItemStack carried;
 
    public:
-    PacketSetInventoryContent(uint8_t windowId, const std::vector<ItemStack>& stacks, ItemStack carried)
-        : ClientBoundPacket(0x10), windowId(windowId), stacks(stacks), carried(std::move(carried)) {}
+    PacketSetInventoryContent(uint8_t windowId, int version, const std::vector<ItemStack>& stacks, ItemStack carried)
+        : ClientBoundPacket(0x10), windowId(windowId), version(version), stacks(stacks), carried(std::move(carried)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
@@ -23,7 +24,7 @@ class PacketSetInventoryContent : public ClientBoundPacket {
 
         PacketData::writeVarInt(0x10, array);
         PacketData::writeUnsignedByte(windowId, array);
-        PacketData::writeVarInt(0, array); // TODO "State ID"???
+        PacketData::writeVarInt(version, array);
         PacketData::writeVarInt(stacks.size(), array);
         for(const auto& item : stacks) {
             PacketData::writeItemStack(item, array);

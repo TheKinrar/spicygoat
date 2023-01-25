@@ -30,6 +30,7 @@ class PlayerConnection : public PacketListenerPlay {
     void onSetCreativeSlot(const PacketSetCreativeSlot &packet) override;
     void onUseItemOn(const PacketUseItemOn &packet) override;
     void onSetHeldItem(const PacketSetHeldItem &packet) override;
+    void onClickWindow(const PacketClickWindow &packet) override;
 
    private:
     TCPConnection &connection;

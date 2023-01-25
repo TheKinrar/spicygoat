@@ -25,6 +25,7 @@
 #include "packets/play/clientbound/PacketUnloadChunk.h"
 #include "packets/play/serverbound/PacketChatCommand.h"
 #include "packets/play/serverbound/PacketChatMessageSB.h"
+#include "packets/play/serverbound/PacketClickWindow.h"
 #include "packets/play/serverbound/PacketClientSettings.h"
 #include "packets/play/serverbound/PacketClientStatus.h"
 #include "packets/play/serverbound/PacketEntityAction.h"

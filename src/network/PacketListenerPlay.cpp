@@ -54,5 +54,8 @@ void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
         case Packets::S_SET_HELD_ITEM:
             onSetHeldItem(static_cast<const PacketSetHeldItem &>(packet));
             break;
+        case Packets::S_CLICK_WINDOW:
+            onClickWindow(static_cast<const PacketClickWindow &>(packet));
+            break;
     }
 }

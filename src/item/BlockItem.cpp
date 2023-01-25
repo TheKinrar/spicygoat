@@ -16,7 +16,7 @@ void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) con
         auto& inv = player.inventory;
         auto stack = inv->getSelected();
         stack.setCount(stack.count - 1);
-        inv->set(inv->getSelectedSlot(), stack);
+        inv->setSlot(inv->getSelectedSlot(), stack);
 
         place = true;
     }

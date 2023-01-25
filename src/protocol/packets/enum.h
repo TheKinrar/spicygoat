@@ -23,6 +23,7 @@ static const int S_CHAT_COMMAND = 0x04;
 static const int S_CHAT_MESSAGE = 0x05;
 static const int S_CLIENT_STATUS = 0x06;
 static const int S_CLIENT_SETTINGS = 0x07;
+static const int S_CLICK_WINDOW = 0x0A;
 static const int S_CLOSE_WINDOW = 0x0B;
 static const int S_PLUGIN_MESSAGE = 0x0C;
 static const int S_KEEP_ALIVE = 0x11;

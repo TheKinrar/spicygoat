@@ -33,6 +33,16 @@ struct ItemStack {
     bool compatibleWith(const ItemStack& o) const {
         return id == o.id && !hasNbt && !o.hasNbt;
     }
+
+    bool operator==(const ItemStack& rhs) const {
+        if(!present) return !rhs.present;
+        if(id != rhs.id || count != rhs.count || hasNbt != rhs.hasNbt) return false;
+        return !hasNbt || *nbt == *rhs.nbt;
+    }
+
+    bool operator!=(const ItemStack& rhs) const {
+        return !(rhs == *this);
+    }
 };
 
 #endif  // SPICYGOAT_ITEMSTACK_H

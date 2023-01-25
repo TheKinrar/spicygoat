@@ -12,6 +12,7 @@
 #include "../../entities/types/EntityItem.h"
 #include "../../protocol/packets/play/clientbound/PacketAckAction.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
+#include "../../util/except.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
@@ -120,7 +121,7 @@ void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
 }
 
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
-    player.inventory->set(packet.slot, packet.stack);
+    player.inventory->setSlot(packet.slot, packet.stack);
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
@@ -134,4 +135,12 @@ void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
 
 void PlayerConnection::onSetHeldItem(const PacketSetHeldItem &packet) {
     player.inventory->setSelectedSlot(36 + packet.getSlot());
+}
+
+void PlayerConnection::onClickWindow(const PacketClickWindow &packet) {
+    if(packet.windowId == 0) {
+        player.inventory->onClick(packet);
+    } else {
+        throw protocol_error("Unknown window ID");
+    }
 }
