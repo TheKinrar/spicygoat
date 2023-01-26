@@ -10,17 +10,28 @@
 #include "../item/ItemStack.h"
 #include "../protocol/packets/play/serverbound/PacketClickWindow.h"
 
-#define PLAYER_INVENTORY_SIZE 46
+#define PLAYER_INV_SIZE 46
+#define PLAYER_INV_CRAFT_OUT 0
+#define PLAYER_INV_CRAFT_BEGIN 1
+#define PLAYER_INV_CRAFT_END 4
+#define PLAYER_INV_HELMET 5
+#define PLAYER_INV_CHESTPLATE 6
+#define PLAYER_INV_LEGGINGS 7
+#define PLAYER_INV_BOOTS 8
+#define PLAYER_INV_MAIN_BEGIN 9
+#define PLAYER_INV_HOTBAR_BEGIN 36
+#define PLAYER_INV_MAIN_END 44
+#define PLAYER_INV_OFFHAND 45
 
 class PlayerInventory {
     EntityPlayer& player;
 
-    std::vector<ItemStack> slots{PLAYER_INVENTORY_SIZE};
+    std::vector<ItemStack> slots{PLAYER_INV_SIZE};
     ItemStack inHand;
     int selectedSlot = 36;
 
     int trackedVersion = 0;
-    std::vector<ItemStack> trackedSlots{PLAYER_INVENTORY_SIZE};
+    std::vector<ItemStack> trackedSlots{PLAYER_INV_SIZE};
     ItemStack trackedInHand;
 
     bool enableSync = true;
@@ -35,7 +46,7 @@ class PlayerInventory {
 
     [[nodiscard]]
     const ItemStack& getSlot(int slot) const {
-        if(slot < 0 || slot >= PLAYER_INVENTORY_SIZE)
+        if(slot < 0 || slot >= PLAYER_INV_SIZE)
             throw std::runtime_error("Invalid inventory slot");
 
         return slots[slot];

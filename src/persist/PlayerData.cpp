@@ -33,7 +33,7 @@ PlayerInventory PlayerData::getInventory(EntityPlayer& player) const {
 
 void PlayerData::setInventory(const PlayerInventory& source) {
     nbt::tag_list inv;
-    for(int8_t i = 0; i < PLAYER_INVENTORY_SIZE; ++i) {
+    for(int8_t i = 0; i < PLAYER_INV_SIZE; ++i) {
         auto sourceItem = source.getSlot(i);
 
         if(sourceItem.present) {
