@@ -25,8 +25,12 @@ struct ItemStack {
 
     void setCount(int8_t count) {
         ItemStack::count = count;
-        if(count == 0)
+        if(count == 0) {
             present = false;
+            id = 0;
+            hasNbt = false;
+            nbt = {};
+        }
     }
 
     [[nodiscard]]

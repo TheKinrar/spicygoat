@@ -44,12 +44,12 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                         if(currentStack.compatibleWith(inHand)) {
                             int newCount = currentStack.count + inHand.count;
                             if(newCount > 64) {
-                                inHand.count = newCount - 64;
+                                inHand.setCount(newCount - 64);
                                 newCount = 64;
                             } else {
                                 setInHand({});
                             }
-                            currentStack.count = newCount;
+                            currentStack.setCount(newCount);
                             setSlot(packet.slot, currentStack);
                         } else {
                             setSlot(packet.slot, inHand);
@@ -63,9 +63,9 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                             if(currentStack.present) {
                                 if(currentStack.compatibleWith(inHand)) {
                                     if(currentStack.count < 64) {
-                                        currentStack.count++;
+                                        currentStack.setCount(currentStack.count + 1);
                                         setSlot(packet.slot, currentStack);
-                                        inHand.count--;
+                                        inHand.setCount(inHand.count - 1);
                                     }
                                 } else {
                                     setSlot(packet.slot, inHand);
@@ -73,16 +73,16 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                                 }
                             } else {
                                 currentStack = inHand;
-                                currentStack.count = 1;
+                                currentStack.setCount(1);
                                 setSlot(packet.slot, currentStack);
-                                inHand.count--;
+                                inHand.setCount(inHand.count - 1);
                             }
                         } else if(currentStack.present) {
                             int slotCount = currentStack.count / 2;
                             int handCount = (currentStack.count + 1) / 2;
-                            currentStack.count = slotCount;
+                            currentStack.setCount(slotCount);
                             setSlot(packet.slot, currentStack);
-                            currentStack.count = handCount;
+                            currentStack.setCount(handCount);
                             setInHand(currentStack);
                         }
                         break;
@@ -91,8 +91,17 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                         throw protocol_error("Invalid click button");
                 }
                 break;
-                //        case PacketClickWindow::Mode::ShiftSwap:
-                //            break;
+            case PacketClickWindow::Mode::ShiftSwap: {
+                auto currentStack = getSlot(packet.slot);
+                if(packet.slot >= PLAYER_INV_MAIN_BEGIN && packet.slot < PLAYER_INV_HOTBAR_BEGIN) {
+                    setSlot(packet.slot, add(currentStack, PLAYER_INV_HOTBAR_BEGIN, PLAYER_INV_MAIN_END));
+                } else if(packet.slot >= PLAYER_INV_HOTBAR_BEGIN && packet.slot <= PLAYER_INV_MAIN_END) {
+                    setSlot(packet.slot, add(currentStack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1));
+                } else {
+                    setSlot(packet.slot, add(currentStack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_MAIN_END));
+                }
+            }
+                break;
                 //        case PacketClickWindow::Mode::KeySwap:
                 //            break;
                 //        case PacketClickWindow::Mode::Middle:

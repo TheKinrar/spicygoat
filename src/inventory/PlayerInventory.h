@@ -68,13 +68,15 @@ class PlayerInventory {
         this->selectedSlot = selectedSlot;
     }
 
-    int findCompatibleSlot(const ItemStack& stack) {
-        for(int i = 36; i <= 44; i++) {
-            auto& item = slots[i];
-            if(item.compatibleWith(stack) && item.count < 64)
-                return i;
-        }
-        for(int i = 9; i <= 35; i++) {
+    /**
+     * Looks for a compatible slot in this inventory.
+     * @param stack the stack to check compatibility with
+     * @param begin Lower bound, inclusive
+     * @param end Upper bound, inclusive
+     * @return slot number if found, else -1
+     */
+    int findCompatibleSlot(const ItemStack& stack, int begin = PLAYER_INV_MAIN_BEGIN, int end = PLAYER_INV_MAIN_END) {
+        for(int i = begin; i <= end; i++) {
             auto& item = slots[i];
             if(item.compatibleWith(stack) && item.count < 64)
                 return i;
@@ -82,18 +84,40 @@ class PlayerInventory {
         return -1;
     }
 
-    int findEmptySlot() {
-        for(int i = 36; i <= 44; i++) {
-            auto& item = slots[i];
-            if(!item.present)
-                return i;
-        }
-        for(int i = 9; i <= 35; i++) {
+    /**
+     * Looks for a compatible slot in the main section of this inventory, with a priority on the hotbar.
+     * @param stack the stack to check compatibility with
+     * @return slot number if found, else -1
+     */
+    int findCompatibleMainSlot(const ItemStack& stack) {
+        int r = findCompatibleSlot(stack, PLAYER_INV_HOTBAR_BEGIN);
+        if(r != -1) return r;
+        else return findCompatibleSlot(stack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
+    }
+
+    /**
+     * Looks for an empty slot in this inventory.
+     * @param begin Lower bound, inclusive
+     * @param end Upper bound, inclusive
+     * @return slot number if found, else -1
+     */
+    int findEmptySlot(int begin = PLAYER_INV_MAIN_BEGIN, int end = PLAYER_INV_MAIN_END) {
+        for(int i = begin; i <= end; i++) {
             auto& item = slots[i];
             if(!item.present)
                 return i;
         }
         return -1;
+    }
+
+    /**
+     * Looks for an empty slot in the main section of this inventory, with a priority on the hotbar.
+     * @return slot number if found, else -1
+     */
+    int findEmptyMainSlot() {
+        int r = findEmptySlot(PLAYER_INV_HOTBAR_BEGIN);
+        if(r != -1) return r;
+        else return findEmptySlot(PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
     }
 
     bool hasSpace(const ItemStack& stack) {
@@ -117,9 +141,9 @@ class PlayerInventory {
 
     ItemStack add(const ItemStack& stack) {
         int slot;
-        ItemStack remaining(stack);
+        auto remaining = stack;
 
-        while(remaining.present && (slot = findCompatibleSlot(stack)) != -1) {
+        while(remaining.present && (slot = findCompatibleMainSlot(stack)) != -1) {
             int n = std::min((int) 64 - slots[slot].count, (int) remaining.count);
 
             auto invStack = stack;
@@ -128,7 +152,28 @@ class PlayerInventory {
             setSlot(slot, invStack);
         }
 
-        if(remaining.present && (slot = findEmptySlot()) != -1) {
+        if(remaining.present && (slot = findEmptyMainSlot()) != -1) {
+            setSlot(slot, remaining);
+            remaining.setCount(0);
+        }
+
+        return remaining;
+    }
+
+    ItemStack add(const ItemStack& stack, int begin, int end) {
+        int slot;
+        auto remaining = stack;
+
+        while(remaining.present && (slot = findCompatibleSlot(stack, begin, end)) != -1) {
+            int n = std::min((int) 64 - slots[slot].count, (int) remaining.count);
+
+            auto invStack = stack;
+            invStack.setCount(slots[slot].count + n);
+            remaining.setCount(remaining.count - n);
+            setSlot(slot, invStack);
+        }
+
+        if(remaining.present && (slot = findEmptySlot(begin, end)) != -1) {
             setSlot(slot, remaining);
             remaining.setCount(0);
         }
