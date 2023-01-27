@@ -100,10 +100,16 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                 } else {
                     setSlot(packet.slot, add(currentStack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_MAIN_END));
                 }
-            }
                 break;
-                //        case PacketClickWindow::Mode::KeySwap:
-                //            break;
+            }
+            case PacketClickWindow::Mode::KeySwap: {
+                auto currentStack = getSlot(packet.slot);
+                int target = packet.button == PacketClickWindow::OffhandKey ? PLAYER_INV_OFFHAND
+                                                                            : packet.button + PLAYER_INV_HOTBAR_BEGIN;
+                setSlot(packet.slot, getSlot(target));
+                setSlot(target, currentStack);
+                break;
+            }
                 //        case PacketClickWindow::Mode::Middle:
                 //            break;
                 //        case PacketClickWindow::Mode::Drop:
