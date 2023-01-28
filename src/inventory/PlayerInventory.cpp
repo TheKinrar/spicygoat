@@ -110,14 +110,21 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                 setSlot(target, currentStack);
                 break;
             }
-                //        case PacketClickWindow::Mode::Middle:
-                //            break;
-                //        case PacketClickWindow::Mode::Drop:
-                //            break;
                 //        case PacketClickWindow::Mode::Drag:
                 //            break;
-                //        case PacketClickWindow::Mode::Double:
-                //            break;
+            case PacketClickWindow::Mode::Double:
+                if(inHand.present) {
+                    while(inHand.count < 64) {
+                        int slot = findCompatibleSlot(inHand);
+                        if(slot == -1) break;
+                        auto other = getSlot(slot);
+                        int n = std::min(64 - inHand.count, (int) other.count);
+                        other.setCount(other.count - n);
+                        setSlot(slot, other);
+                        inHand.setCount(inHand.count + n);
+                    }
+                }
+                break;
             default:
                 throw protocol_error("Invalid click mode");
         }
