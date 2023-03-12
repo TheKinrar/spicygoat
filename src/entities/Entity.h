@@ -18,6 +18,8 @@ class EntityTracker;
 #include "../protocol/packets/play/clientbound/PacketSpawnEntity.h"
 #include "../tracking/EntityTracker.h"
 #include "../world/geo/Location.h"
+#include "../world/geo/RayCast.h"
+#include "../world/geo/Vector3d.h"
 #include "EntityMetadata.h"
 
 class Entity {
@@ -57,12 +59,23 @@ class Entity {
     void setNextLook(float yaw, float pitch);
     void setNextOnGround(bool onGround);
 
+    [[nodiscard]]
+    const Vector3d& getVelocity() const {
+        return velocity;
+    }
+
+    void setVelocity(const Vector3d& velocity) {
+        Entity::velocity = velocity;
+    }
+
+    RayCast move(Vector3d movement, bool slippery = false);
+
     virtual EntityMetadata toMetadata() {
         return {};
     }
 
     virtual std::unique_ptr<ClientBoundPacket> createPacket() {
-        return std::make_unique<PacketSpawnEntity>(getEID(), getUuid(), getProtocolType(), getLocation(), 0, 0, 0, 0);
+        return std::make_unique<PacketSpawnEntity>(getEID(), getUuid(), getProtocolType(), getLocation(), 0, getVelocity());
     };
 
     std::optional<std::unique_ptr<ClientBoundPacket>> metadataPacket() {
@@ -98,6 +111,8 @@ class Entity {
 
     Location location;
     bool onGround = false;
+    Vector3d velocity;
+    bool noClip = false;
 
     Location nextLocation;
     bool nextOnGround = false;

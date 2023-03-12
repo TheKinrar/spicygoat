@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "../../../../util/math.h"
 #include "../../../../world/geo/Location.h"
 #include "../../ClientBoundPacket.h"
 
@@ -16,17 +17,16 @@ class PacketSpawnEntity : public ClientBoundPacket {
     int16_t velX, velY, velZ;
 
    public:
-    PacketSpawnEntity(int eid, const uuids::uuid& uuid, int type, const Location& loc, int data, short velX, short velY,
-                      short velZ)
+    PacketSpawnEntity(int eid, const uuids::uuid& uuid, int type, const Location& loc, int data, Vector3d vel)
         : ClientBoundPacket(0x00),
           eid(eid),
           uuid(uuid),
           type(type),
           loc(loc),
           data(data),
-          velX(velX),
-          velY(velY),
-          velZ(velZ) {}
+          velX((int16_t) (math::clamp(vel.getX(), -3.9, 3.9) * 8000)),
+          velY((int16_t) (math::clamp(vel.getY(), -3.9, 3.9) * 8000)),
+          velZ((int16_t) (math::clamp(vel.getZ(), -3.9, 3.9) * 8000)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {

@@ -5,9 +5,11 @@
 #ifndef SPICYGOAT_LOCATION_H
 #define SPICYGOAT_LOCATION_H
 
+#include <cmath>
 #include <string>
 
 #include "Position.h"
+#include "Vector3d.h"
 
 class Location {
    public:
@@ -33,11 +35,31 @@ class Location {
         return {this->x + x, this->y + y, this->z + z, yaw, pitch};
     }
 
+    [[nodiscard]]
+    Location add(Vector3d vec) const {
+        return add(vec.getX(), vec.getY(), vec.getZ());
+    }
+
     double getX() const;
+
+    [[nodiscard]]
+    int getBlockX() const {
+        return std::floor(x);
+    }
 
     double getY() const;
 
+    [[nodiscard]]
+    int getBlockY() const {
+        return std::floor(y);
+    }
+
     double getZ() const;
+
+    [[nodiscard]]
+    int getBlockZ() const {
+        return std::floor(z);
+    }
 
     float getYaw() const;
 

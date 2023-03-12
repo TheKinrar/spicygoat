@@ -13,6 +13,7 @@
 
 class Position {
    public:
+    Position() = default;
     Position(int32_t x, int32_t y, int32_t z);
 
     [[nodiscard]] int32_t getX() const;
@@ -79,9 +80,9 @@ class Position {
     [[nodiscard]] std::string toString() const;
 
    private:
-    int32_t x;
-    int32_t y;
-    int32_t z;
+    int32_t x{};
+    int32_t y{};
+    int32_t z{};
 };
 
 #endif  // SPICYGOAT_POSITION_H

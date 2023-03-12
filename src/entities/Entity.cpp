@@ -114,3 +114,21 @@ bool Entity::isOnGround() const {
 int Entity::getProtocolType() {
     return Server::get().getEntityRegistry().getId(getType());
 }
+
+RayCast Entity::move(Vector3d movement, bool slippery) {
+    if(noClip) {
+        auto nextLoc = getLocation().add(movement);
+        setNextLocation(nextLoc);
+        return {Server::get().getWorld(), nextLoc, {}};
+    } else {
+        if(movement.lengthSquared() > 1e-7) {
+            RayCast rayCast(Server::get().getWorld(), getLocation(), movement);
+            rayCast.setSlippery(slippery);
+            rayCast.cast();
+            setNextLocation(rayCast.getLoc());
+            return rayCast;
+        }
+    }
+
+    return {Server::get().getWorld(), getLocation(), {}};
+}
