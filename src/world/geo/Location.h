@@ -8,6 +8,7 @@
 #include <cmath>
 #include <string>
 
+#include "../../util/math.h"
 #include "Position.h"
 #include "Vector3d.h"
 
@@ -65,11 +66,37 @@ class Location {
 
     float getPitch() const;
 
-    int32_t getChunkX() const;
+    [[nodiscard]]
+    Position toPosition() const {
+        return {static_cast<int32_t>(std::floor(x)), static_cast<int32_t>(std::floor(y)), static_cast<int32_t>(std::floor(z))};
+    }
 
-    int32_t getChunkZ() const;
+    [[nodiscard]]
+    int32_t getChunkX() const {
+        return static_cast<int32_t>(std::floor(x)) >> 4;
+    }
+
+    [[nodiscard]]
+    int32_t getChunkY() const {
+        return static_cast<int32_t>(std::floor(y)) >> 4;
+    }
+
+    [[nodiscard]]
+    int32_t getChunkZ() const {
+        return static_cast<int32_t>(std::floor(z)) >> 4;
+    }
 
     [[nodiscard]] double distanceSquared(const Location &other) const;
+
+    [[nodiscard]]
+    Vector3d getDirection() const {
+        double xRads = math::degToRad(getYaw());
+        double yRads = math::degToRad(getPitch());
+
+        double xz = std::cos(yRads);
+
+        return {-xz * std::sin(xRads), -std::sin(yRads), xz * std::cos(xRads)};
+    }
 
     std::string toString() const;
 

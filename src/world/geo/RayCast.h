@@ -13,6 +13,7 @@ class RayCast {
     Vector3d vec;
     bool firstRound{};
     bool colX{}, colY{}, colZ{};
+    bool unloaded{};
 
     bool slippery{};
 
@@ -64,4 +65,5 @@ class RayCast {
 
    private:
     void advance(double time);
+    bool isAir(Position pos);
 };

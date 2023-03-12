@@ -54,7 +54,7 @@ void RayCast::cast() {
         int offX{}, offY{}, offZ{};
 
         if(tx == tMin) {
-            if(world.getBlockState(pos.relative(sx, 0, 0))->getBlock().isAir()) {
+            if(isAir(pos.relative(sx, 0, 0))) {
                 offX = sx;
             } else {
                 colX = true;
@@ -62,7 +62,7 @@ void RayCast::cast() {
         }
 
         if(ty == tMin) {
-            if(world.getBlockState(pos.relative(0, sy, 0))->getBlock().isAir()) {
+            if(isAir(pos.relative(0, sy, 0))) {
                 offY = sy;
             } else {
                 colY = true;
@@ -70,7 +70,7 @@ void RayCast::cast() {
         }
 
         if(tz == tMin) {
-            if(world.getBlockState(pos.relative(0, 0, sz))->getBlock().isAir()) {
+            if(isAir(pos.relative(0, 0, sz))) {
                 offZ = sz;
             } else {
                 colZ = true;
@@ -80,7 +80,7 @@ void RayCast::cast() {
         if(!collided()) {
             pos = pos.relative(offX, offY, offZ);
 
-            if(!world.getBlockState(pos)->getBlock().isAir()) {
+            if(!isAir(pos)) {
                 colX = tx == tMin;
                 colY = ty == tMin;
                 colZ = tz == tMin;
@@ -88,7 +88,10 @@ void RayCast::cast() {
         }
 
         if(collided()) {
-            if(slippery) {
+            if(unloaded) {
+                colX = colY = colZ = false;
+                break;
+            } else if(slippery) {
                 if(colX) vec.setX(0);
                 if(colY) vec.setY(0);
                 if(colZ) vec.setZ(0);
@@ -104,4 +107,13 @@ void RayCast::advance(double time) {
     loc = loc.add(inc);
     vec = vec.subtract(inc);
     firstRound = true;
+}
+
+bool RayCast::isAir(Position pos) {
+    if(!world.getChunkAt(pos).hasData()) {
+        unloaded = true;
+        return false;
+    }
+
+    return world.getBlockState(pos)->getBlock().isAir();
 }

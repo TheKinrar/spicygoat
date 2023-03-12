@@ -20,4 +20,8 @@ inline int negativeSignOf(double v) {
     return v < 0 ? -1 : 0;
 }
 
+inline double degToRad(float deg) {
+    return deg * (std::numbers::pi / 180);
+}
+
 }

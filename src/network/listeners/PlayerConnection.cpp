@@ -9,6 +9,7 @@
 #include "../../../data/out/blocks.h"
 #include "../../Server.h"
 #include "../../config/Config.h"
+#include "../../entities/types/EntityFireball.h"
 #include "../../entities/types/EntityItem.h"
 #include "../../protocol/packets/play/clientbound/PacketAckAction.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
@@ -107,7 +108,12 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
 }
 
 void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
-    // TODO
+    if(packet.action == 0) {
+        auto fireball = std::make_shared<EntityFireball>();
+        fireball->setLocation(player.getLocation());
+        fireball->setVelocity(player.getLocation().getDirection());
+        Server::get().spawnEntity(fireball);
+    }
 }
 
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {

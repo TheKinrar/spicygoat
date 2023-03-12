@@ -22,6 +22,12 @@ class World {
     ChunkColumn& getChunk(ChunkPosition pos) {
         return getChunk(pos.getX(), pos.getZ());
     }
+    Chunk& getChunkAt(Location loc) {
+        return getChunk(loc.getChunkX(), loc.getChunkZ()).getChunk(loc.getChunkY());
+    }
+    Chunk& getChunkAt(Position pos) {
+        return getChunk(pos.getChunkX(), pos.getChunkZ()).getChunk(pos.getChunkY());
+    }
 
     const Position& getSpawnPosition() const;
 

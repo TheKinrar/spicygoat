@@ -63,14 +63,6 @@ bool Location::operator!=(const Location &rhs) const {
     return !(rhs == *this);
 }
 
-int32_t Location::getChunkX() const {
-    return Position((int32_t) x, (int32_t) y, (int32_t) z).getChunkX();
-}
-
-int32_t Location::getChunkZ() const {
-    return Position((int32_t) x, (int32_t) y, (int32_t) z).getChunkZ();
-}
-
 double Location::distanceSquared(const Location &other) const {
     double dx = x - other.x;
     double dy = y - other.y;
