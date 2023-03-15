@@ -58,6 +58,9 @@ FetchContent_MakeAvailable(cli11)
 
 
 add_executable(spicygoat)
+target_include_directories(spicygoat PUBLIC include)
+set_property(TARGET spicygoat PROPERTY ENABLE_EXPORTS ON)
+
 add_subdirectory(data)
 add_subdirectory(src)
 add_embedded_binary_resources(
@@ -69,8 +72,20 @@ add_embedded_binary_resources(
         RESOURCES
         "${PROJECT_SOURCE_DIR}/resources/codec.dat"
 )
-target_link_libraries(spicygoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlibstatic stduuid absl::strings spdlog::spdlog CLI11::CLI11)
-target_link_libraries(spicygoat PRIVATE spicygoat_resources -static)
+target_link_libraries(spicygoat PUBLIC nlohmann_json::nlohmann_json pthread nbt++ toml11 zlib stduuid absl::strings spdlog::spdlog CLI11::CLI11)
+target_link_libraries(spicygoat PRIVATE spicygoat_resources)
 if(WIN32)
     target_link_libraries(spicygoat PRIVATE wsock32 ws2_32)
 endif()
+
+
+add_custom_target(spicygoat_plugins)
+add_custom_target(spicygoat_full)
+add_dependencies(spicygoat_full spicygoat_plugins)
+
+file(GLOB PLUGINS LIST_DIRECTORIES true "plugins/*")
+foreach(item ${PLUGINS})
+    cmake_path(GET item FILENAME item_name)
+    add_subdirectory(${item})
+    add_dependencies(spicygoat_plugins ${item_name})
+endforeach()

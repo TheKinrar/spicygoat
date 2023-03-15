@@ -42,6 +42,8 @@ void Server::load() {
     getCommandEngine().registerCommand(std::make_unique<CommandGm>());
     getCommandEngine().registerCommand(std::make_unique<CommandSpeed>());
     getCommandEngine().registerCommand(std::make_unique<CommandTp>());
+
+    pluginManager.loadPlugins();
 }
 
 void Server::run() {

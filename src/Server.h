@@ -14,6 +14,7 @@
 #include "commands/CommandEngine.h"
 #include "entities/types/EntityPlayer.h"
 #include "item/ItemRegistry.h"
+#include "plugins/PluginManager.h"
 #include "util/Registry.h"
 #include "world/World.h"
 
@@ -91,6 +92,8 @@ class Server {
     BlockRegistry blockRegistry = BlockRegistry();
     ItemRegistry itemRegistry = ItemRegistry();
     Registry entityRegistry = Registry("minecraft:entity_type");
+
+    PluginManager pluginManager;
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;
