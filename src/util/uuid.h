@@ -8,7 +8,7 @@
 
 namespace uuids {
 
-uuid generate() {
+inline uuid generate() {
     std::random_device rd;
     std::array<int, std::mt19937::state_size> seed_data{};
     std::generate(std::begin(seed_data), std::end(seed_data), std::ref(rd));

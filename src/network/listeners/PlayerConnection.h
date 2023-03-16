@@ -10,7 +10,7 @@
 
 class PlayerConnection : public PacketListenerPlay {
    public:
-    PlayerConnection(TCPConnection &connection, EntityPlayer &player);
+    PlayerConnection(TCPConnection &connection, const std::shared_ptr<EntityPlayer>& player);
 
     void tick() override;
 
@@ -34,7 +34,7 @@ class PlayerConnection : public PacketListenerPlay {
 
    private:
     TCPConnection &connection;
-    EntityPlayer &player;
+    std::shared_ptr<EntityPlayer> player;
     int sequence = -1;
 
     void updateSequence(int sequence);

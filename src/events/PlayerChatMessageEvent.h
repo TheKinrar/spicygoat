@@ -4,15 +4,16 @@
 
 #pragma once
 
-#include "Event.h"
-
 #include <utility>
 
-class PlayerChatMessageEvent : public Event<PlayerChatMessageEvent> {
+#include "PlayerEvent.h"
+
+class PlayerChatMessageEvent : public PlayerEvent<PlayerChatMessageEvent> {
     std::string message;
 
    public:
-    explicit PlayerChatMessageEvent(std::string  message) : message(std::move(message)) {}
+    explicit PlayerChatMessageEvent(const std::shared_ptr<EntityPlayer>& player, std::string message)
+        : PlayerEvent(player), message(std::move(message)) {}
 
     [[nodiscard]]
     const std::string& getMessage() const {

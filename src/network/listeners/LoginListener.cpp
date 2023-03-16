@@ -104,5 +104,5 @@ void LoginListener::onPluginResponse(const PacketPluginResponse &response) {
     tags.emplace("minecraft:item", Tags::items::All);
     connection->sendPacket(PacketUpdateTags(tags));
 
-    connection->setListener(std::make_unique<PlayerConnection>(*connection, *player));
+    connection->setListener(std::make_unique<PlayerConnection>(*connection, player));
 }
