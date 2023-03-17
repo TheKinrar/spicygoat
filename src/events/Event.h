@@ -29,10 +29,14 @@ class Event {
     }
 
     static void call(E& event) {
-        for(auto& listener : listeners) {
-            auto locked = listener.lock();
+        auto it = listeners.begin();
+        while(it != listeners.end()) {
+            auto locked = it->lock();
             if(locked) {
                 locked->handle(event);
+                ++it;
+            } else {
+                it = listeners.erase(it);
             }
         }
     }

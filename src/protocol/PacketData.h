@@ -23,6 +23,7 @@
 class PacketData {
    public:
     explicit PacketData(std::shared_ptr<char[]> data, int length = -1, int offset = 0);
+    static PacketData fromByteArray(const std::vector<std::byte>& array);
 
     int remaining();
 

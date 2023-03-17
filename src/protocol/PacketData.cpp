@@ -13,6 +13,14 @@
 PacketData::PacketData(std::shared_ptr<char[]> data, int length, int offset)
     : data(std::move(data)), length(length), offset(offset), pos(offset) {}
 
+PacketData PacketData::fromByteArray(const std::vector<std::byte>& array) {
+    auto data = std::make_shared<char[]>(array.size());
+    for(int i = 0; i < array.size(); ++i) {
+        data[i] = static_cast<char>(array.at(i));
+    }
+    return PacketData(data, array.size());
+}
+
 int PacketData::remaining() {
     if(length == -1) return -1;
 

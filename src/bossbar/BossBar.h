@@ -39,7 +39,7 @@ class BossBar {
     std::vector<std::weak_ptr<EntityPlayer>> players;
 
    public:
-    explicit BossBar();
+    BossBar(std::string title, Color color, Division division);
     virtual ~BossBar();
 
     [[nodiscard]]

@@ -11,10 +11,11 @@
 #include "commands/builtin/CommandGm.h"
 #include "commands/builtin/CommandSpeed.h"
 #include "commands/builtin/CommandTp.h"
+#include "events/PlayerJoinEvent.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
 #include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
-#include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/spdlog.h"
 #include "tracking/PlayerTracker.h"
 
 Server& Server::get() {
@@ -85,7 +86,12 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     auto players = getPlayers();
     conn->sendPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players));
 
-    broadcastMessage("§6" + player->getName() + " joined");
+    auto event = PlayerJoinEvent(player, "§6" + player->getName() + " joined");
+    PlayerJoinEvent::call(event);
+
+    if(!event.getJoinMessage().empty()) {
+        broadcastMessage(event.getJoinMessage());
+    }
 
     return player;
 }

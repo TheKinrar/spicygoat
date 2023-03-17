@@ -8,7 +8,8 @@
 
 #include "../protocol/packets/play/clientbound/PacketBossBar.h"
 
-BossBar::BossBar() : id(uuids::generate()) {}
+BossBar::BossBar(std::string title, Color color, Division division) :
+      id(uuids::generate()), title(std::move(title)), color(color), division(division) {}
 
 BossBar::~BossBar() {
     removeAllPlayers();

@@ -11,6 +11,7 @@
 #include "../../config/Config.h"
 #include "../../entities/types/EntityFireball.h"
 #include "../../entities/types/EntityItem.h"
+#include "../../events/PluginMessageEvent.h"
 #include "../../protocol/packets/play/clientbound/PacketAckAction.h"
 #include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
 #include "../../util/except.h"
@@ -47,7 +48,8 @@ void PlayerConnection::onClientSettings(const PacketClientSettings &packet) {
 }
 
 void PlayerConnection::onPluginMessage(const PacketPluginMessageSB &packet) {
-    // TODO
+    PluginMessageEvent event(player, packet.channel, packet.data);
+    PluginMessageEvent::call(event);
 }
 
 void PlayerConnection::onKeepAlive(const PacketKeepAliveSB &packet) {
