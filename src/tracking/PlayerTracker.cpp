@@ -24,7 +24,7 @@ void PlayerTracker::tick() {
         Location a = player->getLocation();
         Location b = self.getLocation();
 
-        int n = Server::ENTITY_VIEW_DISTANCE;
+        int n = Config::get().entityViewDistance;
         double dx = a.getX() - b.getX();
         double dy = a.getY() - b.getY();
         double dz = a.getZ() - b.getZ();

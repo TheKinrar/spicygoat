@@ -18,11 +18,15 @@ class Config {
 
     GameMode::GameMode gamemode;
     int64_t port;
+    int viewDistance;
+    int entityViewDistance;
 
    private:
     Config() : data(toml::parse<toml::preserve_comments>("config.toml")) {
-        gamemode = GameMode::parse(toml::find<toml::integer>(data, "gamemode"));
-        port = toml::find<toml::integer>(data, "port");
+        gamemode = GameMode::parse(toml::find_or<toml::integer>(data, "gamemode", 0));
+        port = toml::find_or<toml::integer>(data, "port", 25565);
+        viewDistance = (int) toml::find_or<toml::integer>(data, "view_distance", 10);
+        entityViewDistance = (int) toml::find_or<toml::integer>(data, "entity_view_distance", 50);
     }
 
     toml::value data;

@@ -36,7 +36,7 @@ void EntityPlayer::tick() {
 
     if(loadedChunks.empty()) chunkChanged();
 
-    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Server::VIEW_DISTANCE) : 1;
+    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Config::get().viewDistance) : 1;
     int32_t cx = getLocation().getChunkX();
     int32_t cz = getLocation().getChunkZ();
     int32_t min_x = cx - effectiveViewDistance;
@@ -81,7 +81,7 @@ void EntityPlayer::chunkChanged() {
 }
 
 void EntityPlayer::checkChunks() {
-    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Server::VIEW_DISTANCE) : 1;
+    int effectiveViewDistance = spawned ? std::min(getRenderDistance(), Config::get().viewDistance) : 1;
     int32_t cx = getLocation().getChunkX();
     int32_t cz = getLocation().getChunkZ();
     int32_t min_x = cx - effectiveViewDistance;

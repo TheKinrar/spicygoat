@@ -20,9 +20,6 @@
 
 class Server {
    public:
-    inline static const int VIEW_DISTANCE = 64;
-    inline static const int ENTITY_VIEW_DISTANCE = 50;
-
     static Server& get();
     Server(const Server&) = delete;
 

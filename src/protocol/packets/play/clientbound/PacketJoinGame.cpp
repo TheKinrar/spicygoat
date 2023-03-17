@@ -130,7 +130,7 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
 
     PacketData::writeLong(0, array);         // TODO first 8B of sha-256 hash of seed
     PacketData::writeVarInt(1, array);       // TODO max players
-    PacketData::writeVarInt(Server::VIEW_DISTANCE, array);      // TODO render distance
+    PacketData::writeVarInt(Config::get().viewDistance, array);
     PacketData::writeVarInt(10, array);      // TODO simulation distance
     PacketData::writeBoolean(false, array);  // TODO reduced debug info
     PacketData::writeBoolean(true, array);   // TODO enable respawn screen (false if doImmediateRespawn gamerule)
