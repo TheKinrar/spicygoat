@@ -24,7 +24,7 @@ Server& Server::get() {
 }
 
 Server::Server() {
-    spdlog::info("SpicyGoat dev build");
+    spdlog::info(std::string("SpicyGoat dev build - MC ") + Protocol::PROTOCOL_VERSION_NAME + " (protocol " + std::to_string(Protocol::PROTOCOL_VERSION_NUMBER) + ")");
 
     logger = spdlog::stdout_color_mt("Server");
     chatLogger = spdlog::stdout_color_mt("Chat");
