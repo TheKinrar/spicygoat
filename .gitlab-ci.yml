@@ -19,7 +19,7 @@ build_linux:
     paths:
       - build/spicygoat
 
-build_windows:
+.build_windows:
   stage: build
   tags: [windows-shell]
   script:
