@@ -14,7 +14,7 @@ from util import *
 if not os.path.exists('server.jar'):
     print('Downloading server jar')
     urllib.request.urlretrieve(
-        'https://piston-data.mojang.com/v1/objects/c9df48efed58511cdd0213c56b9013a7b5c9ac1f/server.jar', 'server.jar')
+        'https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar', 'server.jar')
 
 if not os.path.exists('generated'):
     print('Generating server data')

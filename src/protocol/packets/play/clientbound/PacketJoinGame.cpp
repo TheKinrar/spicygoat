@@ -13,7 +13,7 @@
 
 #include "resources_out/resources.h"
 
-PacketJoinGame::PacketJoinGame(std::shared_ptr<EntityPlayer> player) {
+PacketJoinGame::PacketJoinGame(std::shared_ptr<EntityPlayer> player) : ClientBoundPacket(Packets::C_JOIN_GAME) {
     this->player = player;
 }
 
@@ -109,7 +109,6 @@ nbt::tag_compound biomeRegistry() {
 
 std::vector<std::byte> PacketJoinGame::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x24, array);
     PacketData::writeInt(player->getEID(), array);
     PacketData::writeBoolean(false, array);  // TODO hardcore
     PacketData::writeUnsignedByte(static_cast<uint8_t>(player->getGamemode()), array);

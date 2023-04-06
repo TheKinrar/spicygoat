@@ -11,6 +11,7 @@
 
 class PacketResponse : public ClientBoundPacket {
    public:
+    explicit PacketResponse();
     std::vector<std::byte> bytes() const override;
 
     std::string toString() const override;

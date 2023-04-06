@@ -23,7 +23,7 @@ class PacketBossBar : public ClientBoundPacket {
     Action action;
 
    public:
-    PacketBossBar(BossBar& bar, Action action) : bar(bar), action(action) {}
+    PacketBossBar(BossBar& bar, Action action) : ClientBoundPacket(Packets::C_BOSS_BAR), bar(bar), action(action) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
@@ -31,7 +31,6 @@ class PacketBossBar : public ClientBoundPacket {
         j["text"] = bar.getTitle();
 
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x0A, array);
         PacketData::writeUuid(bar.getId(), array);
         PacketData::writeVarInt(static_cast<int>(action), array);
         switch(action) {

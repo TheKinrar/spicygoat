@@ -88,6 +88,15 @@ void PacketData::writeVarInt(int value, std::vector<std::byte> &bytes) {
     } while(value);
 }
 
+int PacketData::varIntLength(int value) {
+    int n = 0;
+    do {
+        n++;
+        value >>= 7;
+    } while(value);
+    return n;
+}
+
 uint16_t PacketData::readUnsignedShort() {
     uint8_t a = readByte();
     uint8_t b = readByte();

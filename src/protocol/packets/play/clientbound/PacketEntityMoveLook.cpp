@@ -6,11 +6,11 @@
 
 PacketEntityMoveLook::PacketEntityMoveLook(int32_t eid, double dx, double dy, double dz, float yaw, float pitch,
                                            bool onGround)
-    : ClientBoundPacket(0x28), eid(eid), dx(dx), dy(dy), dz(dz), yaw(yaw), pitch(pitch), onGround(onGround) {}
+    : ClientBoundPacket(Packets::C_ENTITY_MOVE_LOOK), eid(eid), dx(dx), dy(dy), dz(dz), yaw(yaw), pitch(pitch),
+      onGround(onGround) {}
 
 std::vector<std::byte> PacketEntityMoveLook::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x28, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeShort((int16_t) dx, array);
     PacketData::writeShort((int16_t) dy, array);

@@ -11,11 +11,11 @@
 
 class PacketPlayerInfoRemove : public ClientBoundPacket {
    public:
-    explicit PacketPlayerInfoRemove(const std::forward_list<uuids::uuid> &uuids) : uuids(uuids) {}
+    explicit PacketPlayerInfoRemove(const std::forward_list<uuids::uuid> &uuids) :
+          ClientBoundPacket(Packets::C_PLAYER_INFO_REMOVE), uuids(uuids) {}
 
     [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x35, array);
 
         PacketData::writeVarInt(std::distance(uuids.begin(), uuids.end()), array);
         for(auto uuid : uuids) {

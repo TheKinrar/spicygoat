@@ -10,12 +10,11 @@ class PacketAckAction : public ClientBoundPacket {
    public:
     const int sequenceId;
 
-    explicit PacketAckAction(int sequenceId) : sequenceId(sequenceId) {}
+    explicit PacketAckAction(int sequenceId) : ClientBoundPacket(Packets::C_ACK_ACTION), sequenceId(sequenceId) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x05, array);
         PacketData::writeVarInt(sequenceId, array);
         return array;
     }

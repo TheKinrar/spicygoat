@@ -5,11 +5,10 @@
 #include <spicygoat/protocol/packets/play/clientbound/PacketEntityLook.h>
 
 PacketEntityLook::PacketEntityLook(int32_t eid, Location &from, Location &to, bool onGround)
-    : ClientBoundPacket(0x29), eid(eid), from(from), to(to), onGround(onGround) {}
+    : ClientBoundPacket(Packets::C_ENTITY_LOOK), eid(eid), from(from), to(to), onGround(onGround) {}
 
 std::vector<std::byte> PacketEntityLook::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x29, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeAngle(to.getYaw(), array);
     PacketData::writeAngle(to.getPitch(), array);

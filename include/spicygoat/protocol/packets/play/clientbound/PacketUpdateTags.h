@@ -12,12 +12,11 @@ class PacketUpdateTags : public ClientBoundPacket {
 
    public:
     explicit PacketUpdateTags(const std::map<std::string, std::vector<std::reference_wrapper<Tag>>>& tags)
-        : ClientBoundPacket(0x6A), tags(tags) {}
+        : ClientBoundPacket(Packets::C_UPDATE_TAGS), tags(tags) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x6A, array);
         PacketData::writeVarInt(tags.size(), array);
         for(const auto& tagType : tags) {
             PacketData::writeString(tagType.first, array);

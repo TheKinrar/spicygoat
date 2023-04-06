@@ -15,12 +15,11 @@ class PacketSetEntityMetadata : public ClientBoundPacket {
 
    public:
     PacketSetEntityMetadata(int eid, EntityMetadata  metadata)
-        : ClientBoundPacket(0x4E), eid(eid), metadata(std::move(metadata)) {}
+        : ClientBoundPacket(Packets::C_SET_ENTITY_METADATA), eid(eid), metadata(std::move(metadata)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x4E, array);
         PacketData::writeVarInt(eid, array);
         metadata.write(array);
         return array;

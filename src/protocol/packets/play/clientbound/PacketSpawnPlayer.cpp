@@ -6,11 +6,10 @@
 
 PacketSpawnPlayer::PacketSpawnPlayer(const int32_t eid, uuids::uuid uuid, const double x, const double y,
                                      const double z, const float yaw, const float pitch)
-    : ClientBoundPacket(0x04), eid(eid), uuid(uuid), x(x), y(y), z(z), yaw(yaw), pitch(pitch) {}
+    : ClientBoundPacket(Packets::C_SPAWN_PLAYER), eid(eid), uuid(uuid), x(x), y(y), z(z), yaw(yaw), pitch(pitch) {}
 
 std::vector<std::byte> PacketSpawnPlayer::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x02, array);
     PacketData::writeVarInt(eid, array);
     PacketData::writeUuid(uuid, array);
     PacketData::writeDouble(x, array);

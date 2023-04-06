@@ -4,11 +4,11 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketUnloadChunk.h>
 
-PacketUnloadChunk::PacketUnloadChunk(ChunkColumn &chunkColumn) : column(chunkColumn) {}
+PacketUnloadChunk::PacketUnloadChunk(ChunkColumn &chunkColumn) : ClientBoundPacket(Packets::C_UNLOAD_CHUNK),
+      column(chunkColumn) {}
 
 std::vector<std::byte> PacketUnloadChunk::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x1B, array);
     PacketData::writeInt(column.getX(), array);
     PacketData::writeInt(column.getZ(), array);
     return array;

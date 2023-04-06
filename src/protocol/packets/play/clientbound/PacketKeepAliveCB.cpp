@@ -4,11 +4,10 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketKeepAliveCB.h>
 
-PacketKeepAliveCB::PacketKeepAliveCB(int64_t id) : id(id) {}
+PacketKeepAliveCB::PacketKeepAliveCB(int64_t id) : ClientBoundPacket(Packets::C_KEEP_ALIVE), id(id) {}
 
 std::vector<std::byte> PacketKeepAliveCB::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x1F, array);
     PacketData::writeLong(id, array);
     return array;
 }

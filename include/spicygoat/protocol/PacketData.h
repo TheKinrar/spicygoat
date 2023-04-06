@@ -72,6 +72,8 @@ class PacketData {
     int readVarInt();
     static void writeVarInt(int, std::vector<std::byte> &);
 
+    static int varIntLength(int);
+
     Face readFace() {
         return static_cast<Face>(readVarInt());
     }

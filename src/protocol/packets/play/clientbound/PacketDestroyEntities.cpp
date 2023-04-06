@@ -4,11 +4,10 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketDestroyEntities.h>
 
-PacketDestroyEntities::PacketDestroyEntities(int32_t eid) : ClientBoundPacket(0x36), eid(eid) {}
+PacketDestroyEntities::PacketDestroyEntities(int32_t eid) : ClientBoundPacket(Packets::C_DESTROY_ENTITIES), eid(eid) {}
 
 std::vector<std::byte> PacketDestroyEntities::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x3A, array);
     PacketData::writeVarInt(1, array);
     PacketData::writeVarInt(eid, array);
     return array;

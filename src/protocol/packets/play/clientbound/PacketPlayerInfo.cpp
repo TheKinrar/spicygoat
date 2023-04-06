@@ -7,11 +7,10 @@
 #include <iostream>
 
 PacketPlayerInfo::PacketPlayerInfo(PacketPlayerInfo::Action action, std::vector<std::shared_ptr<EntityPlayer>>& players)
-    : ClientBoundPacket(0x32), action(action), players(players) {}
+    : ClientBoundPacket(Packets::C_PLAYER_INFO), action(action), players(players) {}
 
 std::vector<std::byte> PacketPlayerInfo::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x36, array);
 
     if(action != Action::AddPlayer) throw std::runtime_error("Only AddPlayer is supported");
 

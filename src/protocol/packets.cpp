@@ -50,16 +50,16 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
                 return std::make_unique<PacketPlayerPositionLook>(data);
             case S_PLAYER_LOOK:
                 return std::make_unique<PacketPlayerLook>(data);
-            case 0x16:
-                return nullptr;  // TODO Player
+            case S_PLAYER_ON_GROUND:
+                return nullptr;
             case S_PLAYER_ABILITIES:
                 return std::make_unique<PacketPlayerAbilitiesSB>(data);
             case S_PLAYER_DIGGING:
                 return std::make_unique<PacketPlayerDigging>(data);
             case S_ENTITY_ACTION:
                 return std::make_unique<PacketEntityAction>(data);
-            case 0x2F:
-                return nullptr;  // TODO Animation
+            case S_SWING_ARM:
+                return nullptr;
             case S_CLOSE_WINDOW:
                 return nullptr;
             case S_SET_CREATIVE_SLOT:

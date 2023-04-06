@@ -17,12 +17,11 @@ class PacketGameEvent : public ClientBoundPacket {
     float value;
 
    public:
-    PacketGameEvent(Event event, float value) : ClientBoundPacket(0x1C), event(event), value(value) {}
+    PacketGameEvent(Event event, float value) : ClientBoundPacket(Packets::C_GAME_EVENT), event(event), value(value) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x1C, array);
         PacketData::writeVarInt(event, array);
         PacketData::writeFloat(value, array);
         return array;

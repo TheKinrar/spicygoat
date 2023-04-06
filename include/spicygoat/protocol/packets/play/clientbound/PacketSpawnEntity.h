@@ -18,7 +18,7 @@ class PacketSpawnEntity : public ClientBoundPacket {
 
    public:
     PacketSpawnEntity(int eid, const uuids::uuid& uuid, int type, const Location& loc, int data, Vector3d vel)
-        : ClientBoundPacket(0x00),
+        : ClientBoundPacket(Packets::C_SPAWN_ENTITY),
           eid(eid),
           uuid(uuid),
           type(type),
@@ -31,7 +31,6 @@ class PacketSpawnEntity : public ClientBoundPacket {
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x00, array);
         PacketData::writeVarInt(eid, array);
         PacketData::writeUuid(uuid, array);
         PacketData::writeVarInt(type, array);

@@ -4,13 +4,13 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketPlayerAbilities.h>
 
-PacketPlayerAbilities::PacketPlayerAbilities(PlayerAbilities value) : value(value) {}
+PacketPlayerAbilities::PacketPlayerAbilities(PlayerAbilities value) : ClientBoundPacket(Packets::C_PLAYER_ABILITIES),
+      value(value) {}
 
 std::vector<std::byte> PacketPlayerAbilities::bytes() const {
     int8_t field = value.invulnerable | (value.flying << 1) | (value.allowFlying << 2) | (value.creative << 3);
 
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x30, array);
     PacketData::writeByte(field, array);
     PacketData::writeFloat(value.flySpeed, array);
     PacketData::writeFloat(value.walkSpeed, array);

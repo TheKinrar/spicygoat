@@ -8,11 +8,11 @@
 
 #include <iostream>
 
-PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : chunkColumn(chunkColumn) {}
+PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : ClientBoundPacket(Packets::C_CHUNK_DATA),
+      chunkColumn(chunkColumn) {}
 
 std::vector<std::byte> PacketChunkData::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x20, array);
     PacketData::writeInt(chunkColumn.getX(), array);
     PacketData::writeInt(chunkColumn.getZ(), array);
 

@@ -12,11 +12,11 @@ class PacketBlockUpdate : public ClientBoundPacket {
     Position position;
     int id;
 
-    PacketBlockUpdate(const Position &position, int id) : position(position), id(id) {}
+    PacketBlockUpdate(const Position &position, int id) : ClientBoundPacket(Packets::C_BLOCK_UPDATE),
+          position(position), id(id) {}
 
     [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x09, array);
         PacketData::writePosition(position, array);
         PacketData::writeVarInt(id, array);
         return array;

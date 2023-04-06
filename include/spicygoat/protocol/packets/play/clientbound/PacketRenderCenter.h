@@ -9,11 +9,10 @@
 
 class PacketRenderCenter : public ClientBoundPacket {
    public:
-    explicit PacketRenderCenter(int x, int z) : x(x), z(z) {}
+    explicit PacketRenderCenter(int x, int z) : ClientBoundPacket(Packets::C_RENDER_CENTER), x(x), z(z) {}
 
     [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x4A, array);
         PacketData::writeVarInt(x, array);
         PacketData::writeVarInt(z, array);
         return array;

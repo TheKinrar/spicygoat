@@ -12,11 +12,10 @@
 class PacketPluginRequest : public ClientBoundPacket {
    public:
     PacketPluginRequest(const int id, std::string channel, const std::vector<std::byte> &data)
-        : id(id), channel(std::move(channel)), data(data) {}
+        : ClientBoundPacket(Packets::C_PLUGIN_REQUEST), id(id), channel(std::move(channel)), data(data) {}
 
     [[nodiscard]] std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;
-        PacketData::writeVarInt(0x04, array);
         PacketData::writeVarInt(id, array);
         PacketData::writeString(channel, array);
         PacketData::writeByteArray(data, array);

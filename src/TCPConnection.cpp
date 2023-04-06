@@ -31,7 +31,8 @@ void TCPConnection::sendPacket(const Packet &packet) {
     std::vector<std::byte> data = packet.bytes();
 
     std::vector<std::byte> bytes;
-    PacketData::writeVarInt(data.size(), bytes);
+    PacketData::writeVarInt(data.size() + PacketData::varIntLength(packet.getId()), bytes);
+    PacketData::writeVarInt(packet.getId(), bytes);
     bytes.insert(bytes.end(), data.begin(), data.end());
 
     send(sock, (char *)bytes.data(), bytes.size(), 0);

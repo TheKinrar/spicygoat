@@ -4,13 +4,12 @@
 
 #include <spicygoat/protocol/packets/status/PacketPong.h>
 
-PacketPong::PacketPong(int64_t payload) {
+PacketPong::PacketPong(int64_t payload) : ClientBoundPacket(Packets::S_PONG) {
     this->payload = payload;
 }
 
 std::vector<std::byte> PacketPong::bytes() const {
     std::vector<std::byte> array;
-    PacketData::writeVarInt(0x01, array);
     PacketData::writeLong(payload, array);
     return array;
 }
