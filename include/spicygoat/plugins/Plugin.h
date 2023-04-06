@@ -4,18 +4,20 @@
 
 #pragma once
 
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+#include <spicygoat/events/Event.h>
+#include <spicygoat/scheduler/Task.h>
+
 #include <string>
 #include <utility>
-
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spicygoat/events/Event.h>
 
 class Plugin {
     const std::string id;
     std::shared_ptr<spdlog::logger> logger;
 
     std::vector<std::shared_ptr<void>> listeners;
+    std::vector<std::shared_ptr<void>> tasks;
 
    public:
     explicit Plugin(std::string id) : id(std::move(id)) {
@@ -39,4 +41,7 @@ class Plugin {
         E::addListener(listener);
         listeners.push_back(listener);
     }
+
+    void runTask(const std::function<void()>& task);
+    void submitTask(const std::shared_ptr<Task>& task);
 };

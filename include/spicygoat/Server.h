@@ -10,6 +10,7 @@
 #include <spicygoat/entities/types/EntityPlayer.h>
 #include <spicygoat/item/ItemRegistry.h>
 #include <spicygoat/plugins/PluginManager.h>
+#include <spicygoat/scheduler/Scheduler.h>
 #include <spicygoat/util/Registry.h>
 #include <spicygoat/world/World.h>
 #include <uuid.h>
@@ -73,6 +74,16 @@ class Server {
         return entityRegistry;
     }
 
+    [[nodiscard]]
+    PluginManager& getPluginManager() {
+        return pluginManager;
+    }
+
+    [[nodiscard]]
+    Scheduler& getScheduler() {
+        return scheduler;
+    }
+
     void broadcastMessage(const std::string& message);
     void broadcastPacket(const Packet&);
 
@@ -90,6 +101,7 @@ class Server {
     Registry entityRegistry = Registry("minecraft:entity_type");
 
     PluginManager pluginManager;
+    Scheduler scheduler;
 
     std::map<uuids::uuid, std::shared_ptr<EntityPlayer>> players;
     int playerCount = 0;

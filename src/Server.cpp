@@ -125,6 +125,8 @@ int32_t Server::nextEID() {
 }
 
 void Server::tick() {
+    scheduler.tick();
+
     for(auto& e : getEntities()) {
         if(world.getChunkAt(e->getLocation()).hasData()) {
             e->tick();
