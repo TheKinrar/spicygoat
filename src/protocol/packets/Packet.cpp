@@ -2,7 +2,7 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include "Packet.h"
+#include <spicygoat/protocol/Packet.h>
 
 Packet::Packet(int id) : id(id) {}
 

@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PacketDestroyEntities.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketDestroyEntities.h>
 
 PacketDestroyEntities::PacketDestroyEntities(int32_t eid) : ClientBoundPacket(0x36), eid(eid) {}
 

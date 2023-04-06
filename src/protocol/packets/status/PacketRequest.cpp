@@ -2,9 +2,9 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include "PacketRequest.h"
+#include <spicygoat/protocol/packets/status/PacketRequest.h>
 
-#include "PacketResponse.h"
+#include <spicygoat/protocol/packets/status/PacketResponse.h>
 
 PacketRequest::PacketRequest(PacketData&) : ServerBoundPacket(Packets::S_REQUEST) {}
 

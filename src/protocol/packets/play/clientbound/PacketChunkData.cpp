@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketChunkData.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketChunkData.h>
 
 #include <tag_array.h>
 

@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PacketEntityTeleport.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketEntityTeleport.h>
 
 PacketEntityTeleport::PacketEntityTeleport(int32_t eid, const Location &loc, bool onGround)
     : ClientBoundPacket(0x56), eid(eid), loc(loc), onGround(onGround) {}

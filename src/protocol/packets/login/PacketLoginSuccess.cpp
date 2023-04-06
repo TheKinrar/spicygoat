@@ -2,7 +2,7 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include "PacketLoginSuccess.h"
+#include <spicygoat/protocol/packets/login/PacketLoginSuccess.h>
 
 PacketLoginSuccess::PacketLoginSuccess(uuids::uuid uuid, const std::string &username) {
     this->uuid = uuid;

@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketKeepAliveCB.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketKeepAliveCB.h>
 
 PacketKeepAliveCB::PacketKeepAliveCB(int64_t id) : id(id) {}
 

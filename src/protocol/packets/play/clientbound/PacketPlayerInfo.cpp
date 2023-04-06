@@ -2,7 +2,7 @@
 // Created by thekinrar on 07/05/19.
 //
 
-#include "PacketPlayerInfo.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketPlayerInfo.h>
 
 #include <iostream>
 

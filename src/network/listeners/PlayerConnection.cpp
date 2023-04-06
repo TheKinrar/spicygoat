@@ -6,18 +6,18 @@
 
 #include <iostream>
 
-#include "../../../data/out/blocks.h"
-#include "../../Server.h"
-#include "../../config/Config.h"
-#include "../../entities/types/EntityFireball.h"
-#include "../../entities/types/EntityItem.h"
-#include "../../events/PluginMessageEvent.h"
-#include "../../protocol/packets/play/clientbound/PacketAckAction.h"
-#include "../../protocol/packets/play/clientbound/PacketChatMessageCB.h"
-#include "../../util/except.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
-#include "spicygoat/events/PlayerChatMessageEvent.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/config/Config.h>
+#include <spicygoat/data/blocks.h>
+#include <spicygoat/entities/types/EntityFireball.h>
+#include <spicygoat/entities/types/EntityItem.h>
+#include <spicygoat/events/PlayerChatMessageEvent.h>
+#include <spicygoat/events/PluginMessageEvent.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketAckAction.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketChatMessageCB.h>
+#include <spicygoat/util/except.h>
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, const std::shared_ptr<EntityPlayer>& player)
     : connection(connection), player(player) {}

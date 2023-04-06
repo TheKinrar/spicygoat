@@ -2,7 +2,7 @@
 // Created by thekinrar on 31/03/19.
 //
 
-#include "ServerBoundPacket.h"
+#include <spicygoat/protocol/ServerBoundPacket.h>
 
 #include <stdexcept>
 

@@ -2,15 +2,15 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include "TCPServer.h"
-
 #include <iostream>
 #include <memory>
 #include <thread>
 
-#include "config/Config.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spicygoat/TCPServer.h>
+#include <spicygoat/config/Config.h>
+
 #include "network/listeners/HandshakeListener.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 
 TCPServer::TCPServer() {
     logger = spdlog::stdout_color_mt("TCPServer");

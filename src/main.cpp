@@ -1,8 +1,9 @@
 #include <CLI/CLI.hpp>
 #include <csignal>
 
-#include "Server.h"
-#include "TCPServer.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/TCPServer.h>
+
 #include "reports/blocks.h"
 
 static_assert(sizeof(float) == 4);

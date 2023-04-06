@@ -2,7 +2,7 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include "PacketPluginMessageCB.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketPluginMessageCB.h>
 
 PacketPluginMessageCB::PacketPluginMessageCB(std::string channel, std::vector<std::byte> data) {
     this->channel = channel;

@@ -2,20 +2,19 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include "EntityPlayer.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/entities/types/EntityPlayer.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketChatMessageCB.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketChunkData.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketGameEvent.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketRenderCenter.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketSpawnPlayer.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketUnloadChunk.h>
 
 #include <iostream>
 #include <utility>
-
-#include "../../Server.h"
-#include "../../protocol/packets/play/clientbound/PacketChunkData.h"
-#include "../../protocol/packets/play/clientbound/PacketDestroyEntities.h"
-#include "../../protocol/packets/play/clientbound/PacketGameEvent.h"
-#include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
-#include "../../protocol/packets/play/clientbound/PacketSpawnPlayer.h"
-#include "../../protocol/packets/play/clientbound/PacketUnloadChunk.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 
 EntityPlayer::EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn)
     : Entity(uuid), conn(std::move(conn)), inventory(std::make_unique<PlayerInventory>(*this)) {

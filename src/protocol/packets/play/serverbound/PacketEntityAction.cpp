@@ -2,7 +2,7 @@
 // Created by thekinrar on 04/04/19.
 //
 
-#include "PacketEntityAction.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketEntityAction.h>
 
 PacketEntityAction::PacketEntityAction(PacketData& data) : ServerBoundPacket(Packets::S_ENTITY_ACTION) {
     eid = data.readVarInt();

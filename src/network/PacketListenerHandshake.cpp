@@ -2,9 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "PacketListenerHandshake.h"
-
-#include <iostream>
+#include <spicygoat/protocol/listeners/PacketListenerHandshake.h>
 
 void PacketListenerHandshake::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {

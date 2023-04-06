@@ -2,9 +2,8 @@
 // Created by thekinrar on 12/03/23.
 //
 
-#include "EntityFireball.h"
-
-#include "../../Server.h"
+#include <spicygoat/entities/types/EntityFireball.h>
+#include <spicygoat/Server.h>
 
 void EntityFireball::tick() {
     Entity::tick();

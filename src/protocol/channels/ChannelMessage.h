@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "../../TCPConnection.h"
+#include <spicygoat/TCPConnection.h>
 
 class ChannelMessage {
    public:

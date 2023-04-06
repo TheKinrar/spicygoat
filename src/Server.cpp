@@ -2,21 +2,21 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include "Server.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/TCPServer.h>
+#include <spicygoat/commands/builtin/CommandGm.h>
+#include <spicygoat/commands/builtin/CommandSpeed.h>
+#include <spicygoat/commands/builtin/CommandTp.h>
+#include <spicygoat/data/blocks.h>
+#include <spicygoat/events/PlayerJoinEvent.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketChatMessageCB.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketPlayerInfo.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketPlayerInfoRemove.h>
+#include <spicygoat/tracking/PlayerTracker.h>
 
 #include <iostream>
-
-#include "../data/out/blocks.h"
-#include "TCPServer.h"
-#include "commands/builtin/CommandGm.h"
-#include "commands/builtin/CommandSpeed.h"
-#include "commands/builtin/CommandTp.h"
-#include "events/PlayerJoinEvent.h"
-#include "protocol/packets/play/clientbound/PacketPlayerInfo.h"
-#include "protocol/packets/play/clientbound/PacketPlayerInfoRemove.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
-#include "tracking/PlayerTracker.h"
 
 Server& Server::get() {
     static Server instance;

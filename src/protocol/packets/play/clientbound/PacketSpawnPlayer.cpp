@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PacketSpawnPlayer.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketSpawnPlayer.h>
 
 PacketSpawnPlayer::PacketSpawnPlayer(const int32_t eid, uuids::uuid uuid, const double x, const double y,
                                      const double z, const float yaw, const float pitch)

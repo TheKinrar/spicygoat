@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketTeleportConfirm.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketTeleportConfirm.h>
 
 PacketTeleportConfirm::PacketTeleportConfirm(PacketData& data) : ServerBoundPacket(Packets::S_TELEPORT_CONFIRM) {
     this->tpId = data.readVarInt();

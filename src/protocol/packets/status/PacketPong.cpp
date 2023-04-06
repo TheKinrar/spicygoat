@@ -2,7 +2,7 @@
 // Created by thekinrar on 31/03/19.
 //
 
-#include "PacketPong.h"
+#include <spicygoat/protocol/packets/status/PacketPong.h>
 
 PacketPong::PacketPong(int64_t payload) {
     this->payload = payload;

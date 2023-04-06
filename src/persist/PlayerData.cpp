@@ -2,9 +2,8 @@
 // Created by thekinrar on 06/01/23.
 //
 
-#include "PlayerData.h"
-
-#include "../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/persist/PlayerData.h>
 
 PlayerInventory PlayerData::getInventory(EntityPlayer& player) const {
     PlayerInventory ret(player);

@@ -2,13 +2,12 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include "PacketData.h"
+#include <spicygoat/protocol/PacketData.h>
+#include <spicygoat/util/endian.h>
 
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
-
-#include "../util/endian.h"
 
 PacketData::PacketData(std::shared_ptr<char[]> data, int length, int offset)
     : data(std::move(data)), length(length), offset(offset), pos(offset) {}

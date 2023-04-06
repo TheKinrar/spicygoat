@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPlayerLocationCB.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketPlayerLocationCB.h>
 
 PacketPlayerLocationCB::PacketPlayerLocationCB(Location location) : location(location) {}
 

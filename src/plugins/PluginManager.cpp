@@ -2,7 +2,7 @@
 // Created by thekinrar on 14/03/23.
 //
 
-#include "PluginManager.h"
+#include <spicygoat/plugins/PluginManager.h>
 
 #include <dlfcn.h>
 

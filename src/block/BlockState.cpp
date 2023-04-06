@@ -2,9 +2,9 @@
 // Created by thekinrar on 19/01/23.
 //
 
-#include "BlockState.h"
-
 #include <iostream>
+
+#include <spicygoat/block/BlockState.h>
 
 BlockState::BlockState(
     const Block& block,

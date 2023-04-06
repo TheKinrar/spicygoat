@@ -2,9 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "Location.h"
-
-#include "../World.h"
+#include <spicygoat/world/geo/Location.h>
 
 Location::Location() : Location(0, 0, 0, 0, 0) {}
 

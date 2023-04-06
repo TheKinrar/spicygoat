@@ -2,9 +2,8 @@
 // Created by thekinrar on 11/03/23.
 //
 
-#include "RayCast.h"
-
-#include "../../util/math.h"
+#include <spicygoat/world/geo/RayCast.h>
+#include <spicygoat/util/math.h>
 
 static double nextBorder(double pos, double diff, bool firstRound) {
     if(firstRound && std::ceil(pos) == pos) return pos;

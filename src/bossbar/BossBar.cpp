@@ -2,11 +2,9 @@
 // Created by thekinrar on 15/03/23.
 //
 
-#include "BossBar.h"
-
+#include <spicygoat/bossbar/BossBar.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketBossBar.h>
 #include <spicygoat/util/uuid.h>
-
-#include "../protocol/packets/play/clientbound/PacketBossBar.h"
 
 BossBar::BossBar(std::string title, Color color, Division division) :
       id(uuids::generate()), title(std::move(title)), color(color), division(division) {}

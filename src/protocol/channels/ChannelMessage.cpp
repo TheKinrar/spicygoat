@@ -4,7 +4,7 @@
 
 #include "ChannelMessage.h"
 
-#include "../packets/play/clientbound/PacketPluginMessageCB.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketPluginMessageCB.h>
 
 ChannelMessage::ChannelMessage(const char* channel) {
     this->channel = std::string(channel);

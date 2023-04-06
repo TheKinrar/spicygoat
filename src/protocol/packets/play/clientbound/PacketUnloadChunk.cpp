@@ -2,7 +2,7 @@
 // Created by thekinrar on 04/04/19.
 //
 
-#include "PacketUnloadChunk.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketUnloadChunk.h>
 
 PacketUnloadChunk::PacketUnloadChunk(ChunkColumn &chunkColumn) : column(chunkColumn) {}
 

@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PacketEntityLook.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketEntityLook.h>
 
 PacketEntityLook::PacketEntityLook(int32_t eid, Location &from, Location &to, bool onGround)
     : ClientBoundPacket(0x29), eid(eid), from(from), to(to), onGround(onGround) {}

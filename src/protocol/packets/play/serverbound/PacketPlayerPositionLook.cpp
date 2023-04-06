@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPlayerPositionLook.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketPlayerPositionLook.h>
 
 PacketPlayerPositionLook::PacketPlayerPositionLook(PacketData& data)
     : ServerBoundPacket(Packets::S_PLAYER_POSITION_LOOK) {

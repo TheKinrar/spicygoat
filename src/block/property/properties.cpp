@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/01/23.
 //
 
-#include "properties.h"
+#include <spicygoat/block/properties/properties.h>
 
 namespace Properties {
 

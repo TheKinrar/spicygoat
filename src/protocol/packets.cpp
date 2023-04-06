@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "packets.h"
+#include <spicygoat/protocol/packets.h>
 
 #include <sstream>
 #include <stdexcept>

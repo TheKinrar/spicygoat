@@ -2,11 +2,10 @@
 // Created by thekinrar on 15/03/23.
 //
 
-#include "Event.h"
-
-#include "PlayerChatMessageEvent.h"
-#include "PlayerJoinEvent.h"
-#include "PluginMessageEvent.h"
+#include <spicygoat/events/Event.h>
+#include <spicygoat/events/PlayerChatMessageEvent.h>
+#include <spicygoat/events/PlayerJoinEvent.h>
+#include <spicygoat/events/PluginMessageEvent.h>
 
 template <class E>
 std::vector<std::weak_ptr<Listener<E>>> Event<E>::listeners = {};

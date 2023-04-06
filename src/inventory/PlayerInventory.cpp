@@ -2,11 +2,11 @@
 // Created by nicolas on 1/9/23.
 //
 
-#include "PlayerInventory.h"
-
-#include "../protocol/packets/play/clientbound/PacketSetInventoryContent.h"
-#include "../protocol/packets/play/clientbound/PacketSetInventorySlot.h"
-#include "../util/except.h"
+#include <spicygoat/entities/types/EntityPlayer.h>
+#include <spicygoat/inventory/PlayerInventory.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketSetInventoryContent.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketSetInventorySlot.h>
+#include <spicygoat/util/except.h>
 
 void PlayerInventory::setSlot(int slot, const ItemStack& stack) {
     if(slot < 0 || slot >= PLAYER_INV_SIZE)

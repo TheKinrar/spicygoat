@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPluginMessageSB.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketPluginMessageSB.h>
 
 PacketPluginMessageSB::PacketPluginMessageSB(PacketData& data) : ServerBoundPacket(Packets::S_PLUGIN_MESSAGE) {
     this->channel = data.readString();

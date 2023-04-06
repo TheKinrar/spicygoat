@@ -2,13 +2,12 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "Chunk.h"
-
 #include <tag_array.h>
 
 #include <iostream>
 
-#include "../../protocol/PacketData.h"
+#include <spicygoat/world/chunks/Chunk.h>
+#include <spicygoat/protocol/PacketData.h>
 
 Chunk::Chunk(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 

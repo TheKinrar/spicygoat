@@ -2,7 +2,7 @@
 // Created by thekinrar on 03/04/19.
 //
 
-#include "Position2D.h"
+#include <spicygoat/world/geo/Position2D.h>
 
 Position2D::Position2D(int32_t x, int32_t z) : x(x), z(z) {}
 

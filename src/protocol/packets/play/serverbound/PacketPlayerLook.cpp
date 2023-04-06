@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPlayerLook.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketPlayerLook.h>
 
 PacketPlayerLook::PacketPlayerLook(PacketData& data) : ServerBoundPacket(Packets::S_PLAYER_LOOK) {
     yaw = data.readFloat();

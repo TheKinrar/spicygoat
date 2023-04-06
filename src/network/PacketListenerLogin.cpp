@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "PacketListenerLogin.h"
+#include <spicygoat/protocol/listeners/PacketListenerLogin.h>
 
 void PacketListenerLogin::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {

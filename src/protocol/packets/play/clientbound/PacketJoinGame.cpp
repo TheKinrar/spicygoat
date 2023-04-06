@@ -2,15 +2,15 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include "PacketJoinGame.h"
-
 #include <io/stream_writer.h>
 
 #include <sstream>
 
-#include "../../../../Server.h"
-#include "../../../../config/Config.h"
-#include "nbt_tags.h"
+#include <nbt_tags.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/config/Config.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketJoinGame.h>
+
 #include "resources_out/resources.h"
 
 PacketJoinGame::PacketJoinGame(std::shared_ptr<EntityPlayer> player) {

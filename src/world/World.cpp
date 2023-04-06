@@ -2,8 +2,6 @@
 // Created by thekinrar on 03/04/19.
 //
 
-#include "World.h"
-
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
 #include <tag_primitive.h>
@@ -12,7 +10,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "geo/ChunkPosition.h"
+#include <spicygoat/world/World.h>
+#include <spicygoat/world/geo/ChunkPosition.h>
 
 World::World() {
     std::ifstream ifs("world/level.dat", std::ios::binary);

@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_STATUSLISTENER_H
 #define SPICYGOAT_STATUSLISTENER_H
 
-#include "../PacketListenerStatus.h"
+#include <spicygoat/protocol/listeners/PacketListenerStatus.h>
 
 class StatusListener : public PacketListenerStatus {
    public:

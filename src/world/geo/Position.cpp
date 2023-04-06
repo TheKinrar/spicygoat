@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "Position.h"
+#include <spicygoat/world/geo/Position.h>
 
 Position::Position(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 

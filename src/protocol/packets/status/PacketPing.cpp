@@ -2,7 +2,7 @@
 // Created by thekinrar on 31/03/19.
 //
 
-#include "PacketPing.h"
+#include <spicygoat/protocol/packets/status/PacketPing.h>
 
 PacketPing::PacketPing(PacketData& data) : ServerBoundPacket(Packets::S_PING) {
     payload = data.readLong();

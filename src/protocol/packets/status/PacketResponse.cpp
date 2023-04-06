@@ -2,11 +2,10 @@
 // Created by thekinrar on 31/03/19.
 //
 
-#include "PacketResponse.h"
-
 #include <nlohmann/json.hpp>
 
-#include "../../../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/protocol/packets/status/PacketResponse.h>
 
 using json = nlohmann::json;
 

@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_LOGINLISTENER_H
 #define SPICYGOAT_LOGINLISTENER_H
 
-#include "../PacketListenerLogin.h"
+#include <spicygoat/protocol/listeners/PacketListenerLogin.h>
 
 class LoginListener : public PacketListenerLogin {
    public:

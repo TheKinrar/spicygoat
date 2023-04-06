@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketSpawnPosition.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketSpawnPosition.h>
 
 PacketSpawnPosition::PacketSpawnPosition(Position position) : position(position) {}
 

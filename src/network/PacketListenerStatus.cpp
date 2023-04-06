@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "PacketListenerStatus.h"
+#include <spicygoat/protocol/listeners/PacketListenerStatus.h>
 
 void PacketListenerStatus::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {

@@ -2,10 +2,9 @@
 // Created by thekinrar on 06/01/23.
 //
 
-#include "BlockItem.h"
-
-#include "../util/BlockPlaceContext.h"
-#include "../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/item/BlockItem.h>
+#include <spicygoat/util/BlockPlaceContext.h>
 
 void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const {
     bool place = false;

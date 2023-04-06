@@ -2,7 +2,7 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PacketEntityMove.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketEntityMove.h>
 
 PacketEntityMove::PacketEntityMove(int32_t eid, double dx, double dy, double dz, bool onGround)
     : ClientBoundPacket(0x27), eid(eid), dx(dx), dy(dy), dz(dz), onGround(onGround) {}

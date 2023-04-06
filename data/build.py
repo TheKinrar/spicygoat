@@ -20,8 +20,11 @@ if not os.path.exists('generated'):
     print('Generating server data')
     subprocess.call(['java', '-DbundlerMainClass=net.minecraft.data.Main', '-jar', 'server.jar', '--reports', '--server'])
 
-if not os.path.exists('out'):
-    os.makedirs('out')
+if not os.path.exists('out/include'):
+    os.makedirs('out/include')
+
+if not os.path.exists('out/src'):
+    os.makedirs('out/src')
 
 
 blocks = load_json('generated/reports/blocks.json')
@@ -37,16 +40,16 @@ load_tags('items')
 
 
 # Clean output directory
-for f in glob.glob('out/*'):
+for f in glob.glob('out/**.*'):
     os.remove(f)
 
 
-hpp = CppFile('out/blocks.h')
+hpp = CppFile('out/include/blocks.h')
 hpp('#pragma once')
 hpp('#include <vector>')
-hpp('#include "../../src/block/types.h"')
-cpp = CppFile('out/blocks.cpp')
-cpp('#include "blocks.h"')
+hpp('#include <spicygoat/block/types.h>')
+cpp = CppFile('out/src/blocks.cpp')
+cpp('#include <spicygoat/data/blocks.h>')
 
 with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
     lines = []
@@ -76,9 +79,9 @@ with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
 
     lines_chunked = list(chunks(lines, 100))
     for n, file_lines in enumerate(lines_chunked):
-        cppn = CppFile('out/blocks.' + str(n) + '.cpp')
-        cppn('#include "blocks.h"')
-        cppn('#include "../../src/block/property/properties.h"')
+        cppn = CppFile('out/src/blocks.' + str(n) + '.cpp')
+        cppn('#include <spicygoat/data/blocks.h>')
+        cppn('#include <spicygoat/block/properties/properties.h>')
         with cppn.block('namespace Blocks'):
             for line in file_lines:
                 cppn(line)
@@ -88,11 +91,11 @@ hpp.close()
 cpp.close()
 
 
-cpp = CppFile('out/tags.h')
+cpp = CppFile('out/include/tags.h')
 cpp('#pragma once')
 cpp('#include <functional>')
 cpp('#include <vector>')
-cpp('#include "../../src/tags/Tag.h"')
+cpp('#include <spicygoat/tags/Tag.h>')
 
 with cpp.block('namespace Tags'):
     for tag_type in tags:
@@ -112,12 +115,12 @@ cpp.close()
 
 registry_classes = {'block': 'BlockRegistry', 'item': 'ItemRegistry'}
 registry_names = ['block', 'entity_type', 'item']
-hpp = CppFile('out/registries.h')
+hpp = CppFile('out/include/registries.h')
 hpp('#pragma once')
-hpp('#include "../../src/block/BlockRegistry.h"')
-hpp('#include "../../src/item/ItemRegistry.h"')
-cpp = CppFile('out/registries.cpp')
-cpp('#include "registries.h"')
+hpp('#include <spicygoat/block/BlockRegistry.h>')
+hpp('#include <spicygoat/item/ItemRegistry.h>')
+cpp = CppFile('out/src/registries.cpp')
+cpp('#include <spicygoat/data/registries.h>')
 
 with hpp.block('namespace Registries'), cpp.block('namespace Registries'):
     def impl(self, cpp):

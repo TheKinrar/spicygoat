@@ -2,10 +2,9 @@
 // Created by thekinrar on 06/01/23.
 //
 
-#include "ItemRegistry.h"
-
-#include "../Server.h"
-#include "BlockItem.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/item/BlockItem.h>
+#include <spicygoat/item/ItemRegistry.h>
 
 void ItemRegistry::addMapping(const std::string& key, int32_t id) {
     Registry::addMapping(key, id);

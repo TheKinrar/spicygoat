@@ -2,11 +2,10 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include "PlayerTracker.h"
-
 #include <iostream>
 
-#include "../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/tracking/PlayerTracker.h>
 
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 

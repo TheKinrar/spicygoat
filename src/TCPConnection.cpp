@@ -2,17 +2,16 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include "TCPConnection.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/TCPConnection.h>
+#include <spicygoat/TCPServer.h>
+#include <spicygoat/entities/types/EntityPlayer.h>
+#include <spicygoat/protocol.h>
 
 #include <iostream>
 #include <sstream>
-
-#include "Server.h"
-#include "TCPServer.h"
-#include "entities/types/EntityPlayer.h"
-#include "protocol.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
     logger = spdlog::stdout_color_mt("Connection/" + getName());

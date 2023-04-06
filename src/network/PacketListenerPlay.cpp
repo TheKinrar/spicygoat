@@ -2,7 +2,7 @@
 // Created by thekinrar on 17/09/2020.
 //
 
-#include "PacketListenerPlay.h"
+#include <spicygoat/protocol/listeners/PacketListenerPlay.h>
 
 void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
     switch(packet.getId()) {

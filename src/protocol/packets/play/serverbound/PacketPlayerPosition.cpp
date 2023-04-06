@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPlayerPosition.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketPlayerPosition.h>
 
 PacketPlayerPosition::PacketPlayerPosition(PacketData& data) : ServerBoundPacket(Packets::S_PLAYER_POSITION) {
     x = data.readDouble();

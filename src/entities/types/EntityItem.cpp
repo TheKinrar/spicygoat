@@ -2,11 +2,10 @@
 // Created by thekinrar on 07/01/23.
 //
 
-#include "EntityItem.h"
-
-#include "../../Server.h"
-#include "../../protocol/packets/play/clientbound/PacketPickupItem.h"
-#include "../../tracking/PlayerTracker.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/entities/types/EntityItem.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketPickupItem.h>
+#include <spicygoat/tracking/PlayerTracker.h>
 
 void EntityItem::tick() {
     Entity::tick();

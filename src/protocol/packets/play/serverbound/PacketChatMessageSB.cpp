@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "PacketChatMessageSB.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketChatMessageSB.h>
 
 PacketChatMessageSB::PacketChatMessageSB(PacketData& data) : ServerBoundPacket(Packets::S_CHAT_MESSAGE) {
     this->message = data.readString();

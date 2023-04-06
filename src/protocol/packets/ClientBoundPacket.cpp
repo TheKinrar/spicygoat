@@ -2,7 +2,7 @@
 // Created by thekinrar on 31/03/19.
 //
 
-#include "ClientBoundPacket.h"
+#include <spicygoat/protocol/ClientBoundPacket.h>
 
 ClientBoundPacket::ClientBoundPacket(int id) : Packet(id) {}
 

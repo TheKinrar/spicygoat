@@ -4,10 +4,10 @@
 // see http://create.stephan-brumme.com/disclaimer.html
 //
 
-#include "md5.h"
+#include <spicygoat/util/md5.h>
 
 #ifndef _MSC_VER
-#include "endian.h"
+#include <endian.h>
 #endif
 
 

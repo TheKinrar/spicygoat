@@ -2,17 +2,16 @@
 // Created by thekinrar on 09/04/19.
 //
 
-#include "ChunkPalette.h"
-
 #include <tag_compound.h>
 #include <tag_string.h>
 
 #include <cmath>
 #include <iostream>
 
-#include "../../../data/out/blocks.h"
-#include "../../Server.h"
-#include "../../protocol/PacketData.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/data/blocks.h>
+#include <spicygoat/protocol/PacketData.h>
+#include <spicygoat/world/chunks/ChunkPalette.h>
 
 std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     if(list.size() > 256) return Server::get().getPalette();

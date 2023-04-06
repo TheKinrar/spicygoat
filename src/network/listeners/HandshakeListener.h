@@ -5,7 +5,7 @@
 #ifndef SPICYGOAT_HANDSHAKELISTENER_H
 #define SPICYGOAT_HANDSHAKELISTENER_H
 
-#include "../PacketListenerHandshake.h"
+#include <spicygoat/protocol/listeners/PacketListenerHandshake.h>
 
 class HandshakeListener : public PacketListenerHandshake {
    public:

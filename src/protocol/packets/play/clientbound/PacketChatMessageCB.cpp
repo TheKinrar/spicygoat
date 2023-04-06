@@ -2,7 +2,7 @@
 // Created by thekinrar on 18/09/2020.
 //
 
-#include "PacketChatMessageCB.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketChatMessageCB.h>
 
 #include <nlohmann/json.hpp>
 

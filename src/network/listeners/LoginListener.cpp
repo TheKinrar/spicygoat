@@ -9,15 +9,16 @@
 #include <iostream>
 #include <utility>
 
-#include "../../../data/out/tags.h"
-#include "../../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/data/tags.h>
+#include <spicygoat/protocol/packets/login/PacketPluginRequest.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketRenderCenter.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketSetInventoryContent.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketUpdateTags.h>
+#include <spicygoat/tags/Tag.h>
+#include <spicygoat/util/md5.h>
+
 #include "../../protocol/channels/minecraft/CMBrand.h"
-#include "../../protocol/packets/login/PacketPluginRequest.h"
-#include "../../protocol/packets/play/clientbound/PacketRenderCenter.h"
-#include "../../protocol/packets/play/clientbound/PacketSetInventoryContent.h"
-#include "../../protocol/packets/play/clientbound/PacketUpdateTags.h"
-#include "../../tags/Tag.h"
-#include "../../util/md5.h"
 #include "PlayerConnection.h"
 
 LoginListener::LoginListener(std::shared_ptr<TCPConnection> connection) : connection(std::move(connection)) {}

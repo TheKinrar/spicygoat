@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketClientSettings.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketClientSettings.h>
 
 PacketClientSettings::PacketClientSettings(PacketData& data) : ServerBoundPacket(Packets::S_CLIENT_SETTINGS) {
     locale = data.readString();

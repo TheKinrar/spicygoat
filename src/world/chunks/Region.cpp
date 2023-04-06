@@ -2,8 +2,6 @@
 // Created by thekinrar on 03/04/19.
 //
 
-#include "Region.h"
-
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
 #include <tag_compound.h>
@@ -12,7 +10,8 @@
 #include <iostream>
 #include <sstream>
 
-#include "../../Server.h"
+#include <spicygoat/Server.h>
+#include <spicygoat/world/chunks/Region.h>
 
 std::unique_ptr<Region> Region::load(int32_t x, int32_t z) {
     std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"),

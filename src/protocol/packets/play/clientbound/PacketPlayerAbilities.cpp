@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketPlayerAbilities.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketPlayerAbilities.h>
 
 PacketPlayerAbilities::PacketPlayerAbilities(PlayerAbilities value) : value(value) {}
 

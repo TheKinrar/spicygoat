@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketClientStatus.h"
+#include <spicygoat/protocol/packets/play/serverbound/PacketClientStatus.h>
 
 PacketClientStatus::PacketClientStatus(PacketData& data) : ServerBoundPacket(Packets::S_CLIENT_STATUS) {
     this->action = data.readVarInt();

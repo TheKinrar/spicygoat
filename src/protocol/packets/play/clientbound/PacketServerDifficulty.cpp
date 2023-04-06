@@ -2,7 +2,7 @@
 // Created by thekinrar on 02/04/19.
 //
 
-#include "PacketServerDifficulty.h"
+#include <spicygoat/protocol/packets/play/clientbound/PacketServerDifficulty.h>
 
 PacketServerDifficulty::PacketServerDifficulty(uint8_t difficulty) {
     this->difficulty = difficulty;

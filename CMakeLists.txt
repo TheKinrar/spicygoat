@@ -59,12 +59,18 @@ FetchContent_Declare(cli11
 FetchContent_MakeAvailable(cli11)
 
 
+file(GLOB_RECURSE source_files src/*.h src/*.cpp)
+
 add_executable(spicygoat)
 target_include_directories(spicygoat PUBLIC include)
+target_sources(spicygoat PRIVATE ${source_files})
 set_property(TARGET spicygoat PROPERTY ENABLE_EXPORTS ON)
 
+file(GLOB_RECURSE include_headers include/*.h)
+add_custom_target(spicygoat_include SOURCES ${include_headers})
+
+
 add_subdirectory(data)
-add_subdirectory(src)
 add_embedded_binary_resources(
         spicygoat_resources
         OUT_DIR resources_out
@@ -78,6 +84,8 @@ target_link_libraries(spicygoat PUBLIC nlohmann_json::nlohmann_json pthread nbt+
 target_link_libraries(spicygoat PRIVATE spicygoat_resources)
 if(WIN32)
     target_link_libraries(spicygoat PRIVATE wsock32 ws2_32)
+elseif(UNIX)
+    target_link_libraries(spicygoat PRIVATE dl)
 endif()
 
 

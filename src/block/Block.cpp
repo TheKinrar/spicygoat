@@ -2,13 +2,12 @@
 // Created by thekinrar on 19/01/23.
 //
 
-#include "Block.h"
-
 #include <utility>
 
-#include "BlockTrait.h"
-#include "../../data/out/registries.h"
-#include "../Server.h"
+#include <spicygoat/block/Block.h>
+#include <spicygoat/block/BlockTrait.h>
+#include <spicygoat/data/registries.h>
+#include <spicygoat/Server.h>
 
 Block::Block(Identifier name,
              const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
