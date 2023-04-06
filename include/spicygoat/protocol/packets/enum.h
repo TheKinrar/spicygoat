@@ -61,6 +61,7 @@ static const int C_UPDATE_TAGS = 0x6E;
 static const int S_TELEPORT_CONFIRM = 0x00;
 static const int S_CHAT_COMMAND = 0x04;
 static const int S_CHAT_MESSAGE = 0x05;
+static const int S_PLAYER_SESSION = 0x06;
 static const int S_CLIENT_STATUS = 0x07;
 static const int S_CLIENT_SETTINGS = 0x08;
 static const int S_CLICK_WINDOW = 0x0B;

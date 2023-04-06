@@ -50,28 +50,26 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
                 return std::make_unique<PacketPlayerPositionLook>(data);
             case S_PLAYER_LOOK:
                 return std::make_unique<PacketPlayerLook>(data);
-            case S_PLAYER_ON_GROUND:
-                return nullptr;
             case S_PLAYER_ABILITIES:
                 return std::make_unique<PacketPlayerAbilitiesSB>(data);
             case S_PLAYER_DIGGING:
                 return std::make_unique<PacketPlayerDigging>(data);
             case S_ENTITY_ACTION:
                 return std::make_unique<PacketEntityAction>(data);
-            case S_SWING_ARM:
-                return nullptr;
-            case S_CLOSE_WINDOW:
-                return nullptr;
             case S_SET_CREATIVE_SLOT:
                 return std::make_unique<PacketSetCreativeSlot>(data);
             case S_USE_ITEM_ON:
                 return std::make_unique<PacketUseItemOn>(data);
             case S_SET_HELD_ITEM:
                 return std::make_unique<PacketSetHeldItem>(data);
-            case S_USE_ITEM:
-                return nullptr;
             case S_CLICK_WINDOW:
                 return std::make_unique<PacketClickWindow>(data);
+            case S_CLOSE_WINDOW:
+            case S_PLAYER_ON_GROUND:
+            case S_PLAYER_SESSION:
+            case S_SWING_ARM:
+            case S_USE_ITEM:
+                return nullptr;
         }
     }
 
