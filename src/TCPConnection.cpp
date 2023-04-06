@@ -14,7 +14,9 @@
 #include <sstream>
 
 TCPConnection::TCPConnection(int sock, sockaddr_in addr) : sock(sock), addr(addr) {
-    logger = spdlog::stdout_color_mt("Connection/" + getName());
+    auto loggerName = "Connection/" + getName();
+    logger = spdlog::get(loggerName);
+    if(!logger) logger = spdlog::stdout_color_mt(loggerName);
     thread = std::make_unique<std::thread>(&TCPConnection::task, this);
 }
 
