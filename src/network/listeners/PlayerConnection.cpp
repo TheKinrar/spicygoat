@@ -134,25 +134,25 @@ void PlayerConnection::onChatCommand(const PacketChatCommand &packet) {
 }
 
 void PlayerConnection::onSetCreativeSlot(const PacketSetCreativeSlot &packet) {
-    player->inventory->setSlot(packet.slot, packet.stack);
+    player->getInventory().setSlot(packet.slot, packet.stack);
 }
 
 void PlayerConnection::onUseItemOn(const PacketUseItemOn &packet) {
     updateSequence(packet.sequence);
 
-    ItemStack stack = player->inventory->getSelected();
+    ItemStack stack = player->getInventory().getSelected();
     if(stack.present) {
         Server::get().getItemRegistry().get(stack.id).onUseOn(*player, packet);
     }
 }
 
 void PlayerConnection::onSetHeldItem(const PacketSetHeldItem &packet) {
-    player->inventory->setSelectedSlot(36 + packet.getSlot());
+    player->getInventory().setSelectedSlot(36 + packet.getSlot());
 }
 
 void PlayerConnection::onClickWindow(const PacketClickWindow &packet) {
     if(packet.windowId == 0) {
-        player->inventory->onClick(packet);
+        player->getInventory().onClick(packet);
     } else {
         throw protocol_error("Unknown window ID");
     }

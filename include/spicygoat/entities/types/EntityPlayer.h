@@ -37,6 +37,11 @@ class EntityPlayer : public Entity {
 
     const std::string &getName() const;
 
+    [[nodiscard]]
+    PlayerInventory& getInventory() {
+        return *inventory;
+    }
+
     PlayerData &getData() const {
         return *data;
     }
@@ -86,8 +91,6 @@ class EntityPlayer : public Entity {
 
     std::string toString() override;
 
-    std::unique_ptr<PlayerInventory> inventory;
-
    protected:
     void chunkChanged() override;
 
@@ -101,6 +104,8 @@ class EntityPlayer : public Entity {
     GameMode::GameMode gamemode = Config::get().gamemode;
 
     PlayerAbilities abilities{};
+
+    std::unique_ptr<PlayerInventory> inventory;
 
     std::unique_ptr<PlayerData> data;
 

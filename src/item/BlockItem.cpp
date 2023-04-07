@@ -12,10 +12,10 @@ void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) con
     if(player.getGamemode() == GameMode::GameMode::Creative) {
         place = true;
     } else if(player.getGamemode() == GameMode::GameMode::Survival) {
-        auto& inv = player.inventory;
-        auto stack = inv->getSelected();
+        auto& inv = player.getInventory();
+        auto stack = inv.getSelected();
         stack.setCount(stack.count - 1);
-        inv->setSlot(inv->getSelectedSlot(), stack);
+        inv.setSlot(inv.getSelectedSlot(), stack);
 
         place = true;
     }
