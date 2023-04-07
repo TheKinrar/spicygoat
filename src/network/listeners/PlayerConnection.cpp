@@ -4,20 +4,22 @@
 
 #include "PlayerConnection.h"
 
-#include <iostream>
-
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 #include <spicygoat/Server.h>
 #include <spicygoat/config/Config.h>
 #include <spicygoat/data/blocks.h>
 #include <spicygoat/entities/types/EntityFireball.h>
 #include <spicygoat/entities/types/EntityItem.h>
+#include <spicygoat/events/Event.h>
 #include <spicygoat/events/PlayerChatMessageEvent.h>
+#include <spicygoat/events/PlayerUseItemEvent.h>
 #include <spicygoat/events/PluginMessageEvent.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketAckAction.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketChatMessageCB.h>
 #include <spicygoat/util/except.h>
+
+#include <iostream>
 
 PlayerConnection::PlayerConnection(TCPConnection &connection, const std::shared_ptr<EntityPlayer>& player)
     : connection(connection), player(player) {}
@@ -154,4 +156,9 @@ void PlayerConnection::onClickWindow(const PacketClickWindow &packet) {
     } else {
         throw protocol_error("Unknown window ID");
     }
+}
+
+void PlayerConnection::onUseItem(const PacketUseItem &packet) {
+    PlayerUseItemEvent event(player);
+    PlayerUseItemEvent::call(event);
 }

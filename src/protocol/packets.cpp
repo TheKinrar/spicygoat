@@ -64,11 +64,12 @@ std::unique_ptr<Packet> Packets::parse(PacketData& data, ProtocolState state) {
                 return std::make_unique<PacketSetHeldItem>(data);
             case S_CLICK_WINDOW:
                 return std::make_unique<PacketClickWindow>(data);
+            case S_USE_ITEM:
+                return std::make_unique<PacketUseItem>(data);
             case S_CLOSE_WINDOW:
             case S_PLAYER_ON_GROUND:
             case S_PLAYER_SESSION:
             case S_SWING_ARM:
-            case S_USE_ITEM:
                 return nullptr;
         }
     }

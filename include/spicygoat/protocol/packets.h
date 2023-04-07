@@ -39,6 +39,7 @@
 #include <spicygoat/protocol/packets/play/serverbound/PacketSetCreativeSlot.h>
 #include <spicygoat/protocol/packets/play/serverbound/PacketSetHeldItem.h>
 #include <spicygoat/protocol/packets/play/serverbound/PacketTeleportConfirm.h>
+#include <spicygoat/protocol/packets/play/serverbound/PacketUseItem.h>
 #include <spicygoat/protocol/packets/play/serverbound/PacketUseItemOn.h>
 #include <spicygoat/protocol/packets/status/PacketPing.h>
 #include <spicygoat/protocol/packets/status/PacketPong.h>

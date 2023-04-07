@@ -57,5 +57,8 @@ void PacketListenerPlay::handle(const ServerBoundPacket &packet) {
         case Packets::S_CLICK_WINDOW:
             onClickWindow(static_cast<const PacketClickWindow &>(packet));
             break;
+        case Packets::S_USE_ITEM:
+            onUseItem(static_cast<const PacketUseItem &>(packet));
+            break;
     }
 }
