@@ -1,23 +1,26 @@
-image: gcc
-
 cache:
   paths:
-    - build/spicygoat
-    - build/spicygoat.exe
-    - packaging/archlinux/spicygoat-*.pkg.tar.zst
+    - build-appimage/*.AppImage
 
-build_linux:
+build_appimage:
   stage: build
+  image: debian:bookworm
   script:
     - apt-get update
-    - apt-get -y install openjdk-17-jre-headless python3-pip xxd
-    - wget -nv https://github.com/Kitware/CMake/releases/download/v3.25.2/cmake-3.25.2-linux-x86_64.sh
-    - chmod +x cmake-3.25.2-linux-x86_64.sh
-    - ./cmake-3.25.2-linux-x86_64.sh --skip-license --prefix=/
-    - sh build.sh
+    - apt-get -y install binutils cmake coreutils desktop-file-utils fakeroot fuse g++ git gtk-update-icon-cache
+      libgdk-pixbuf2.0-dev openjdk-17-jre-headless patchelf python3-pip python3-setuptools squashfs-tools strace
+      util-linux xxd zsync
+    - pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git --break-system-packages
+    - pip3 install -r requirements.txt --break-system-packages
+    - sh build.sh build-appimage
+    - cd build-appimage
+    - make install DESTDIR=AppDir -j$(nproc)
+    - install -D ../packaging/spicygoat.desktop AppDir/usr/share/applications/spicygoat.desktop
+    - install -D ../packaging/minecraft.png AppDir/usr/share/icons/hicolor/512x512/apps/minecraft.png
+    - appimage-builder --recipe ../packaging/AppImageBuilder.yml --skip-test
   artifacts:
     paths:
-      - build/spicygoat
+      - build-appimage/*.AppImage
 
 .build_windows:
   stage: build
@@ -28,7 +31,7 @@ build_linux:
     paths:
       - build/spicygoat.exe
 
-package_archlinux:
+.package_archlinux:
   stage: build
   when: on_success
   image: archlinux:base-devel
@@ -39,7 +42,7 @@ package_archlinux:
     - ln -s ../../build/spicygoat .
     - su -s /bin/sh -c 'makepkg -d -f' nobody
 
-deploy:
+.deploy:
   stage: deploy
   when: on_success
   script:

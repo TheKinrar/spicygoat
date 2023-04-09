@@ -1,0 +1,32 @@
+version: 1
+AppDir:
+  path: /mnt/cmake-build-release/AppDir
+  app_info:
+    id: spicygoat
+    name: SpicyGoat
+    icon: minecraft
+    version: latest
+    exec: usr/local/bin/spicygoat
+    exec_args: $@
+  apt:
+    arch:
+    - amd64
+    sources:
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ kinetic main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ kinetic-updates main restricted universe multiverse'
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ kinetic-backports main restricted universe multiverse'
+    include:
+      - libc6
+      - libstdc++6
+  files:
+    include: []
+    exclude:
+      - usr/share/man
+      - usr/share/doc/*/README.*
+      - usr/share/doc/*/changelog.*
+      - usr/share/doc/*/NEWS.*
+      - usr/share/doc/*/TODO.*
+AppImage:
+  arch: x86_64
+  update-information: none

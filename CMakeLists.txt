@@ -31,8 +31,8 @@ FetchContent_MakeAvailable(uuid)
 set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
 set(NBT_BUILD_TESTS OFF)
 FetchContent_Declare(nbt++
-        GIT_REPOSITORY https://github.com/ljfa-ag/libnbtplusplus
-        GIT_TAG c7cb857c2fe0a066011cf7d2a8f82eb025d86fec) # v2.5
+        GIT_REPOSITORY https://github.com/TheKinrar/libnbtplusplus
+        GIT_TAG cf5c738912b4ac5423c0e5ad6ef8666d35f2952d)
 FetchContent_MakeAvailable(nbt++)
 
 set(ABSL_PROPAGATE_CXX_STD ON)
@@ -87,6 +87,8 @@ if(WIN32)
 elseif(UNIX)
     target_link_libraries(spicygoat PRIVATE dl)
 endif()
+
+install(TARGETS spicygoat)
 
 
 add_custom_target(spicygoat_plugins)
