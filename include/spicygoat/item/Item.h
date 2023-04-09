@@ -14,7 +14,8 @@ class Item {
     std::string name;
 
    public:
-    explicit Item(std::string  name) : name(std::move(name)) {}
+    explicit Item(std::string name);
+    Item(const Item&) = delete;
 
     [[nodiscard]] const std::string& getName() const {
         return name;

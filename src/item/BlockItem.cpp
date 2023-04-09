@@ -6,6 +6,10 @@
 #include <spicygoat/item/BlockItem.h>
 #include <spicygoat/util/BlockPlaceContext.h>
 
+BlockItem::BlockItem(const std::string& name, const Block& block) : Item(name), block(block) {
+    Server::get().getItemRegistry().addBlockItem(*this);
+}
+
 void BlockItem::onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const {
     bool place = false;
 

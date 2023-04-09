@@ -24,6 +24,10 @@ struct Registry {
         idToKey.emplace(id, key);
     }
 
+    bool containsId(int32_t id) const {
+        return idToKey.contains(id);
+    }
+
     int32_t getId(const std::string& key) const {
         return keyToId.at(key);
     }

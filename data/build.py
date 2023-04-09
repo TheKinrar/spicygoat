@@ -7,6 +7,7 @@ import subprocess
 import urllib.request
 
 from blocks import block_to_class, block_to_traits
+from items import item_to_class
 from properties import reorder_properties, translate_property
 from util import *
 
@@ -28,6 +29,7 @@ if not os.path.exists('out/src'):
 
 
 blocks = load_json('generated/reports/blocks.json')
+block_names = blocks.keys()
 for block in blocks.values():
     block['min_id'] = min(map(lambda state: state['id'], block['states']))
 blocks = sorted(blocks.items(), key=lambda item: item[1]['min_id'])
@@ -83,6 +85,43 @@ with hpp.block('namespace Blocks'), cpp.block('namespace Blocks'):
         cppn('#include <spicygoat/data/blocks.h>')
         cppn('#include <spicygoat/block/properties/properties.h>')
         with cppn.block('namespace Blocks'):
+            for line in file_lines:
+                cppn(line)
+        cppn.close()
+
+hpp.close()
+cpp.close()
+
+
+hpp = CppFile('out/include/items.h')
+hpp('#pragma once')
+hpp('#include <vector>')
+hpp('#include <spicygoat/item/types.h>')
+cpp = CppFile('out/src/items.cpp')
+cpp('#include <spicygoat/data/items.h>')
+
+with hpp.block('namespace Items'), cpp.block('namespace Items'):
+    lines = []
+    items = registries['minecraft:item']['entries'].items()
+    for item_name, item in items:
+        short_name = item['short_name'] = item_name.replace('minecraft:', '')
+        item_class, ctr_args = item_to_class(short_name, block_names)
+
+        CppVariable(name=short_name, type='extern const ' + item_class).render_to_string(hpp)
+        line = 'const ' + item_class + ' ' + short_name + ' = ' + item_class + '("' + item_name + '"' \
+               + (', ' + ', '.join(ctr_args) if ctr_args else '') + ');'
+
+        lines.append(line)
+
+    CppVariable(name='All', type='extern const std::vector<std::reference_wrapper<const Item>>').render_to_string(hpp)
+    cpp('const std::vector<std::reference_wrapper<const Item>> All = {' + ', '.join(map(lambda e: e[1]['short_name'], items)) + '};')
+
+    lines_chunked = list(chunks(lines, 100))
+    for n, file_lines in enumerate(lines_chunked):
+        cppn = CppFile('out/src/items.' + str(n) + '.cpp')
+        cppn('#include <spicygoat/data/blocks.h>')
+        cppn('#include <spicygoat/data/items.h>')
+        with cppn.block('namespace Items'):
             for line in file_lines:
                 cppn(line)
         cppn.close()

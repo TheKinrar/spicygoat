@@ -12,29 +12,22 @@
 #include <spicygoat/util/Registry.h>
 
 class ItemRegistry : public Registry {
-    std::unordered_map<int32_t, std::unique_ptr<Item>> items;
-    std::unordered_map<std::string, int32_t> blockItems;
+    std::unordered_map<std::string, std::reference_wrapper<Item>> itemsByKey;
+    std::unordered_map<std::string, std::reference_wrapper<Item>> blockItems;
 
    public:
     explicit ItemRegistry() : Registry("minecraft:item") {}
 
-    void add(std::unique_ptr<Item> item) {
-        items.emplace(getId(item->getName()), std::move(item));
+    void add(Item& item) {
+        itemsByKey.emplace(item.getName(), item);
     }
 
-    void addBlockItem(std::unique_ptr<BlockItem> item) {
-        blockItems.emplace(item->getBlock().getName().toString(), getId(item->getName()));
-        add(std::move(item));
-    }
-
-    void addMapping(const std::string& key, int32_t id) override;
-
-    bool contains(int32_t id) const {
-        return items.contains(id);
+    void addBlockItem(BlockItem& item) {
+        blockItems.emplace(item.getBlock().getName().toString(), item);
     }
 
     const Item& get(int32_t id) const {
-        return *items.at(id);
+        return itemsByKey.at(getKey(id));
     }
 
     ItemStack getLoot(const std::shared_ptr<BlockState>& block) const;

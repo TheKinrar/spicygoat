@@ -15,7 +15,7 @@ class BlockItem : public Item {
     const Block& block;
 
    public:
-    BlockItem(const std::string& name, const Block& block) : Item(name), block(block) {}
+    BlockItem(const std::string& name, const Block& block);
 
     [[nodiscard]] const Block& getBlock() const {
         return block;
