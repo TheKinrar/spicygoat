@@ -90,7 +90,7 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
     conn->sendPacket(PacketPlayerInfo(PacketPlayerInfo::Action::AddPlayer, players));
 
     auto event = PlayerJoinEvent(player, "§6" + player->getName() + " joined");
-    PlayerJoinEvent::call(event);
+    event.call();
 
     if(!event.getJoinMessage().empty()) {
         broadcastMessage(event.getJoinMessage());
@@ -100,6 +100,8 @@ std::shared_ptr<EntityPlayer> Server::createPlayer(uuids::uuid uuid, std::string
 }
 
 void Server::spawnEntity(const std::shared_ptr<Entity>& entity) {
+    entity->setSelfPtr(entity);
+
     entities[entity->getEID()] = entity;
 }
 

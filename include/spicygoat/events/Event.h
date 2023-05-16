@@ -28,12 +28,12 @@ class Event {
         listeners.push_back(listener);
     }
 
-    static void call(E& event) {
+    void call() {
         auto it = listeners.begin();
         while(it != listeners.end()) {
             auto locked = it->lock();
             if(locked) {
-                locked->handle(event);
+                locked->handle(*static_cast<E*>(this));
                 ++it;
             } else {
                 it = listeners.erase(it);

@@ -20,6 +20,16 @@ Entity::Entity(const uuids::uuid& uuid) : eid(Server::get().nextEID()), uuid(uui
     tracker = Server::createTracker(*this);
 }
 
+std::shared_ptr<Entity> Entity::ptr() const {
+    auto ptr = selfPtr.lock();
+    if(!ptr) throw std::runtime_error("called ptr() on deleted Entity");
+    return ptr;
+}
+
+void Entity::setSelfPtr(const std::weak_ptr<Entity>& selfPtr) {
+    Entity::selfPtr = selfPtr;
+}
+
 int32_t Entity::getEID() {
     return eid;
 }

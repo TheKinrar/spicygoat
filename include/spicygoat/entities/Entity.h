@@ -28,6 +28,11 @@ class Entity {
     explicit Entity(const uuids::uuid& uuid);
     virtual ~Entity() = default;
 
+    [[nodiscard]]
+    std::shared_ptr<Entity> ptr() const;
+
+    void setSelfPtr(const std::weak_ptr<Entity>& selfPtr);
+
     int32_t getEID();
 
     [[nodiscard]]
@@ -107,6 +112,7 @@ class Entity {
     virtual void chunkChanged();
 
    private:
+    std::weak_ptr<Entity> selfPtr;
     int32_t eid;
     uuids::uuid uuid;
 

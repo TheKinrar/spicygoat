@@ -50,8 +50,7 @@ void PlayerConnection::onClientSettings(const PacketClientSettings &packet) {
 }
 
 void PlayerConnection::onPluginMessage(const PacketPluginMessageSB &packet) {
-    PluginMessageEvent event(player, packet.channel, packet.data);
-    PluginMessageEvent::call(event);
+    PluginMessageEvent(player, packet.channel, packet.data).call();
 }
 
 void PlayerConnection::onKeepAlive(const PacketKeepAliveSB &packet) {
@@ -123,7 +122,7 @@ void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
 
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
     PlayerChatMessageEvent event(player, packet.message);
-    PlayerChatMessageEvent::call(event);
+    event.call();
     Server::get().broadcastMessage(player->getName() + ": " + event.getMessage());
 }
 
@@ -159,6 +158,5 @@ void PlayerConnection::onClickWindow(const PacketClickWindow &packet) {
 }
 
 void PlayerConnection::onUseItem(const PacketUseItem &packet) {
-    PlayerUseItemEvent event(player);
-    PlayerUseItemEvent::call(event);
+    PlayerUseItemEvent(player).call();
 }
