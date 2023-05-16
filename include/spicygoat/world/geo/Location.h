@@ -5,18 +5,18 @@
 #ifndef SPICYGOAT_LOCATION_H
 #define SPICYGOAT_LOCATION_H
 
-#include <cmath>
-#include <string>
-
 #include <spicygoat/util/math.h>
 #include <spicygoat/world/geo/Position.h>
 #include <spicygoat/world/geo/Vector3d.h>
+
+#include <cmath>
+#include <string>
 
 class Location {
    public:
     Location();
     Location(double x, double y, double z, float yaw, float pitch);
-    explicit Location(Position pos) : x(pos.getX()), y(pos.getY()), z(pos.getZ()), yaw(0), pitch(0) {};
+    explicit Location(Position pos) : x(pos.getX()), y(pos.getY()), z(pos.getZ()), yaw(0), pitch(0){};
     static Location center(Position pos) {
         return {pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0};
     }
@@ -68,7 +68,8 @@ class Location {
 
     [[nodiscard]]
     Position toPosition() const {
-        return {static_cast<int32_t>(std::floor(x)), static_cast<int32_t>(std::floor(y)), static_cast<int32_t>(std::floor(z))};
+        return {static_cast<int32_t>(std::floor(x)), static_cast<int32_t>(std::floor(y)),
+                static_cast<int32_t>(std::floor(z))};
     }
 
     [[nodiscard]]
@@ -86,7 +87,8 @@ class Location {
         return static_cast<int32_t>(std::floor(z)) >> 4;
     }
 
-    [[nodiscard]] double distanceSquared(const Location &other) const;
+    [[nodiscard]]
+    double distanceSquared(const Location &other) const;
 
     [[nodiscard]]
     Vector3d getDirection() const {

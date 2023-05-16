@@ -4,8 +4,8 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketSpawnPosition.h>
 
-PacketSpawnPosition::PacketSpawnPosition(Position position) : ClientBoundPacket(Packets::C_SPAWN_POSITION),
-      position(position) {}
+PacketSpawnPosition::PacketSpawnPosition(Position position)
+    : ClientBoundPacket(Packets::C_SPAWN_POSITION), position(position) {}
 
 std::vector<std::byte> PacketSpawnPosition::bytes() const {
     std::vector<std::byte> array;

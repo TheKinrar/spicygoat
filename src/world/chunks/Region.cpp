@@ -4,14 +4,13 @@
 
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/world/chunks/Region.h>
 #include <tag_compound.h>
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include <spicygoat/Server.h>
-#include <spicygoat/world/chunks/Region.h>
 
 std::unique_ptr<Region> Region::load(int32_t x, int32_t z) {
     std::ifstream ifs(std::string("world/region/r." + std::to_string(x) + "." + std::to_string(z) + ".mca"),

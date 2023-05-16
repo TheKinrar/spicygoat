@@ -4,11 +4,6 @@
 
 #include "LoginListener.h"
 
-#include <uuid.h>
-
-#include <iostream>
-#include <utility>
-
 #include <spicygoat/Server.h>
 #include <spicygoat/data/tags.h>
 #include <spicygoat/protocol/packets/login/PacketPluginRequest.h>
@@ -17,6 +12,10 @@
 #include <spicygoat/protocol/packets/play/clientbound/PacketUpdateTags.h>
 #include <spicygoat/tags/Tag.h>
 #include <spicygoat/util/md5.h>
+#include <uuid.h>
+
+#include <iostream>
+#include <utility>
 
 #include "../../protocol/channels/minecraft/CMBrand.h"
 #include "PlayerConnection.h"
@@ -30,10 +29,10 @@ void LoginListener::onLoginStart(const PacketLoginStart &packet) {
     std::array<uuids::uuid::value_type, 16> bin{};
     hasher.getHash(bin.data());
 
-    bin[6]  &= 0x0f;  /* clear version        */
-    bin[6]  |= 0x30;  /* set to version 3     */
-    bin[8]  &= 0x3f;  /* clear variant        */
-    bin[8]  |= 0x80;  /* set to IETF variant  */
+    bin[6] &= 0x0f; /* clear version        */
+    bin[6] |= 0x30; /* set to version 3     */
+    bin[8] &= 0x3f; /* clear variant        */
+    bin[8] |= 0x80; /* set to IETF variant  */
 
     connection->username = packet.name;
     connection->uuid = {bin};

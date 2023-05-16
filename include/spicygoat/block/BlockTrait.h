@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <memory>
-
 #include <spicygoat/block/BlockState.h>
 #include <spicygoat/block/properties/Property.h>
 #include <spicygoat/util/BlockPlaceContext.h>
+
+#include <memory>
 
 class BlockTrait {
    public:

@@ -24,15 +24,15 @@ Server& Server::get() {
 }
 
 Server::Server() {
-    spdlog::info(std::string("SpicyGoat dev build - MC ") + Protocol::PROTOCOL_VERSION_NAME + " (protocol " + getProtocolVersionString() + ")");
+    spdlog::info(std::string("SpicyGoat dev build - MC ") + Protocol::PROTOCOL_VERSION_NAME + " (protocol " +
+                 getProtocolVersionString() + ")");
 
     logger = spdlog::stdout_color_mt("Server");
     chatLogger = spdlog::stdout_color_mt("Chat");
 }
 
 void Server::load() {
-    for(Block& block : blockRegistry.getBlocks())
-        block.load();
+    for(Block& block : blockRegistry.getBlocks()) block.load();
 
     palette = std::make_unique<ChunkPalette>();
     palette->loadGlobal();
@@ -54,8 +54,11 @@ void Server::run() {
 
     std::thread tcpThread(&TCPServer::accept, &TCPServer::get());
 
-    long elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() - startupTime;
-    logger->info("Ready! Started in {} s", (double) elapsed / 1000);
+    long elapsed =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch())
+            .count() -
+        startupTime;
+    logger->info("Ready! Started in {} s", (double)elapsed / 1000);
 
     while(TCPServer::get().isRunning()) {
         auto tickStart = std::chrono::system_clock::now();

@@ -18,4 +18,4 @@ inline uuid generate() {
     return gen();
 }
 
-}
+}  // namespace uuids

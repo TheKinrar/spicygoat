@@ -5,11 +5,11 @@
 #ifndef SPICYGOAT_REGION_H
 #define SPICYGOAT_REGION_H
 
-#include <unordered_map>
-
 #include <spicygoat/protocol/PacketData.h>
 #include <spicygoat/world/chunks/ChunkColumn.h>
 #include <spicygoat/world/geo/Position2D.h>
+
+#include <unordered_map>
 
 class Region {
    public:

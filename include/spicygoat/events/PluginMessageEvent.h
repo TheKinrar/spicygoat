@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/events/PlayerEvent.h>
+
+#include <utility>
 
 class PluginMessageEvent : public PlayerEvent<PluginMessageEvent> {
     std::string channel;

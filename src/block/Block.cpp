@@ -2,15 +2,14 @@
 // Created by thekinrar on 19/01/23.
 //
 
-#include <utility>
-
+#include <spicygoat/Server.h>
 #include <spicygoat/block/Block.h>
 #include <spicygoat/block/BlockTrait.h>
 #include <spicygoat/data/registries.h>
-#include <spicygoat/Server.h>
 
-Block::Block(Identifier name,
-             const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
+#include <utility>
+
+Block::Block(Identifier name, const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
              const std::vector<std::reference_wrapper<const Property>>& properties,
              const std::vector<std::string>& defaultValues)
     : name(std::move(name)), traits(traits), properties(properties), defaultValues(defaultValues) {
@@ -23,8 +22,7 @@ void Block::load() {
 
     for(const auto& item : properties) {
         auto& subTable = table[item.get().getId()] = {};
-        for(const auto& val : item.get().getValues())
-            subTable[val] = {};
+        for(const auto& val : item.get().getValues()) subTable[val] = {};
     }
 
 nextState:
@@ -36,8 +34,7 @@ nextState:
         }
     }
     auto state = std::make_shared<BlockState>(*this, values);
-    for(const auto& item : values)
-        table[item.first][item.second].push_back(state);
+    for(const auto& item : values) table[item.first][item.second].push_back(state);
     states.push_back(state);
 
     for(int j = properties.size() - 1; j >= 0; j--) {
@@ -51,8 +48,7 @@ nextState:
         }
     }
 
-    for(auto& state : states)
-        state->load();
+    for(auto& state : states) state->load();
 
     defaultState = states[0];
     for(int i = 0; i < defaultValues.size(); ++i) {
@@ -62,7 +58,6 @@ nextState:
 
 std::shared_ptr<BlockState> Block::getStateToPlace(const BlockPlaceContext& ctx) const {
     auto state = getDefaultState();
-    for(const auto& trait : traits)
-        state = trait.get().transformStateToPlace(ctx, state);
+    for(const auto& trait : traits) state = trait.get().transformStateToPlace(ctx, state);
     return state;
 }

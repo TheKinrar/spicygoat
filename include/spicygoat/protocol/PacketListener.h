@@ -11,7 +11,7 @@ class PacketListener {
    public:
     virtual ~PacketListener() = default;
     virtual void handle(const ServerBoundPacket&) = 0;
-    virtual void tick() {};
+    virtual void tick(){};
 };
 
 #endif  // SPICYGOAT_PACKETLISTENER_H

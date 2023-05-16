@@ -39,13 +39,12 @@ void EntityItem::tick() {
 
     // TODO push out of blocks if we're clipping
 
-    if(!isOnGround() || vel.horizontalLengthSquared() > 1.0/8000) {
+    if(!isOnGround() || vel.horizontalLengthSquared() > 1.0 / 8000) {
         RayCast cast = move(vel, true);
         if(cast.collidedX()) vel.setX(0);
         if(cast.collidedZ()) vel.setZ(0);
         if(cast.collidedY()) {
-            if(vel.getY() < 0)
-                setNextOnGround(true);
+            if(vel.getY() < 0) setNextOnGround(true);
 
             vel.setY(0);
         }

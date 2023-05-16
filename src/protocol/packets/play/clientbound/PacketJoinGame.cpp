@@ -3,13 +3,12 @@
 //
 
 #include <io/stream_writer.h>
-
-#include <sstream>
-
 #include <nbt_tags.h>
 #include <spicygoat/Server.h>
 #include <spicygoat/config/Config.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketJoinGame.h>
+
+#include <sstream>
 
 #include "resources_out/resources.h"
 
@@ -127,8 +126,8 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     PacketData::writeString("minecraft:overworld", array);  // current world type
     PacketData::writeString("minecraft:overworld", array);  // current world name
 
-    PacketData::writeLong(0, array);         // TODO first 8B of sha-256 hash of seed
-    PacketData::writeVarInt(1, array);       // TODO max players
+    PacketData::writeLong(0, array);    // TODO first 8B of sha-256 hash of seed
+    PacketData::writeVarInt(1, array);  // TODO max players
     PacketData::writeVarInt(Config::get().viewDistance, array);
     PacketData::writeVarInt(10, array);      // TODO simulation distance
     PacketData::writeBoolean(false, array);  // TODO reduced debug info
@@ -136,7 +135,7 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     PacketData::writeBoolean(false, array);  // TODO debug mode
     PacketData::writeBoolean(false, array);  // TODO superflat
     PacketData::writeBoolean(false, array);  // has death location
-    PacketData::writeVarInt(0, array);  // portal cooldown
+    PacketData::writeVarInt(0, array);       // portal cooldown
     return array;
 }
 

@@ -4,17 +4,17 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/entities/EntityMetadata.h>
 #include <spicygoat/protocol/ClientBoundPacket.h>
+
+#include <utility>
 
 class PacketSetEntityMetadata : public ClientBoundPacket {
     int eid;
     EntityMetadata metadata;
 
    public:
-    PacketSetEntityMetadata(int eid, EntityMetadata  metadata)
+    PacketSetEntityMetadata(int eid, EntityMetadata metadata)
         : ClientBoundPacket(Packets::C_SET_ENTITY_METADATA), eid(eid), metadata(std::move(metadata)) {}
 
     [[nodiscard]]

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <spicygoat/tags/Tag.h>
 #include <spicygoat/protocol/ClientBoundPacket.h>
+#include <spicygoat/tags/Tag.h>
 
 class PacketUpdateTags : public ClientBoundPacket {
     std::map<std::string, std::vector<std::reference_wrapper<Tag>>> tags;

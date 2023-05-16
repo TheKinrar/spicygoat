@@ -2,9 +2,8 @@
 // Created by thekinrar on 14/03/23.
 //
 
-#include <spicygoat/plugins/PluginManager.h>
-
 #include <dlfcn.h>
+#include <spicygoat/plugins/PluginManager.h>
 
 #include <filesystem>
 
@@ -20,7 +19,7 @@ void PluginManager::loadPlugins() {
             }
 
             std::unique_ptr<Plugin> (*sg_entry)();
-            sg_entry = (std::unique_ptr<Plugin> (*)()) dlsym(handle, "sg_entry");
+            sg_entry = (std::unique_ptr<Plugin>(*)())dlsym(handle, "sg_entry");
             if(!sg_entry) {
                 logger->error("dlsym failed: {}", dlerror());
                 std::exit(1);

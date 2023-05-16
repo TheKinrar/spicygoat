@@ -47,8 +47,7 @@ class PlayerInventory {
 
     [[nodiscard]]
     const ItemStack& getSlot(int slot) const {
-        if(slot < 0 || slot >= PLAYER_INV_SIZE)
-            throw std::runtime_error("Invalid inventory slot");
+        if(slot < 0 || slot >= PLAYER_INV_SIZE) throw std::runtime_error("Invalid inventory slot");
 
         return slots[slot];
     }
@@ -58,13 +57,13 @@ class PlayerInventory {
         return getSlot(selectedSlot);
     }
 
-    [[nodiscard]] int getSelectedSlot() const {
+    [[nodiscard]]
+    int getSelectedSlot() const {
         return selectedSlot;
     }
 
     void setSelectedSlot(int selectedSlot) {
-        if(selectedSlot < 36 || selectedSlot > 45)
-            throw std::runtime_error("Invalid inventory selected slot");
+        if(selectedSlot < 36 || selectedSlot > 45) throw std::runtime_error("Invalid inventory selected slot");
 
         this->selectedSlot = selectedSlot;
     }
@@ -79,8 +78,7 @@ class PlayerInventory {
     int findCompatibleSlot(const ItemStack& stack, int begin = PLAYER_INV_MAIN_BEGIN, int end = PLAYER_INV_MAIN_END) {
         for(int i = begin; i <= end; i++) {
             auto& item = slots[i];
-            if(item.compatibleWith(stack) && item.count < 64)
-                return i;
+            if(item.compatibleWith(stack) && item.count < 64) return i;
         }
         return -1;
     }
@@ -92,8 +90,10 @@ class PlayerInventory {
      */
     int findCompatibleMainSlot(const ItemStack& stack) {
         int r = findCompatibleSlot(stack, PLAYER_INV_HOTBAR_BEGIN);
-        if(r != -1) return r;
-        else return findCompatibleSlot(stack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
+        if(r != -1)
+            return r;
+        else
+            return findCompatibleSlot(stack, PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
     }
 
     /**
@@ -105,8 +105,7 @@ class PlayerInventory {
     int findEmptySlot(int begin = PLAYER_INV_MAIN_BEGIN, int end = PLAYER_INV_MAIN_END) {
         for(int i = begin; i <= end; i++) {
             auto& item = slots[i];
-            if(!item.present)
-                return i;
+            if(!item.present) return i;
         }
         return -1;
     }
@@ -117,8 +116,10 @@ class PlayerInventory {
      */
     int findEmptyMainSlot() {
         int r = findEmptySlot(PLAYER_INV_HOTBAR_BEGIN);
-        if(r != -1) return r;
-        else return findEmptySlot(PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
+        if(r != -1)
+            return r;
+        else
+            return findEmptySlot(PLAYER_INV_MAIN_BEGIN, PLAYER_INV_HOTBAR_BEGIN - 1);
     }
 
     bool hasSpace(const ItemStack& stack) {
@@ -145,7 +146,7 @@ class PlayerInventory {
         auto remaining = stack;
 
         while(remaining.present && (slot = findCompatibleMainSlot(stack)) != -1) {
-            int n = std::min((int) 64 - slots[slot].count, (int) remaining.count);
+            int n = std::min((int)64 - slots[slot].count, (int)remaining.count);
 
             auto invStack = stack;
             invStack.setCount(slots[slot].count + n);
@@ -166,7 +167,7 @@ class PlayerInventory {
         auto remaining = stack;
 
         while(remaining.present && (slot = findCompatibleSlot(stack, begin, end)) != -1) {
-            int n = std::min((int) 64 - slots[slot].count, (int) remaining.count);
+            int n = std::min((int)64 - slots[slot].count, (int)remaining.count);
 
             auto invStack = stack;
             invStack.setCount(slots[slot].count + n);
@@ -194,5 +195,5 @@ class PlayerInventory {
     void sync();
     void forceSync();
 
-    void onClick(const PacketClickWindow &packet);
+    void onClick(const PacketClickWindow& packet);
 };

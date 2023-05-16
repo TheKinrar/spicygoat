@@ -16,7 +16,8 @@ class PacketSetCreativeSlot : public ServerBoundPacket {
     explicit PacketSetCreativeSlot(PacketData& data)
         : ServerBoundPacket(Packets::S_SET_CREATIVE_SLOT), slot(data.readShort()), stack(data.readItemStack()) {}
 
-    [[nodiscard]] std::string toString() const override {
+    [[nodiscard]]
+    std::string toString() const override {
         return std::string("PacketSetCreativeSlot{slot=") + std::to_string(slot) + "}";
     }
 };

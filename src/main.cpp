@@ -1,8 +1,8 @@
-#include <CLI/CLI.hpp>
-#include <csignal>
-
 #include <spicygoat/Server.h>
 #include <spicygoat/TCPServer.h>
+
+#include <CLI/CLI.hpp>
+#include <csignal>
 
 #include "reports/blocks.h"
 

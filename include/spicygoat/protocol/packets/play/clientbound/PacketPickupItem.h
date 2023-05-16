@@ -15,7 +15,6 @@ class PacketPickupItem : public ClientBoundPacket {
     PacketPickupItem(int collected, int collector, int count)
         : ClientBoundPacket(Packets::C_PICKUP_ITEM), collected(collected), collector(collector), count(count) {}
 
-
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
         std::vector<std::byte> array;

@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <stdexcept>
-
 #include <spicygoat/block/properties/IntValue.h>
 #include <spicygoat/block/properties/Property.h>
 #include <spicygoat/util/stl_util.h>
+
+#include <stdexcept>
 
 class IntProperty : public PropertyTemplate<IntValue> {
     const int min, max;
@@ -26,12 +26,10 @@ class IntProperty : public PropertyTemplate<IntValue> {
         return PropertyValue::wrap<IntValue>(vec);
     }
 
-//    IntValue parse(const std::string& str) override {
-//        int v = std::stoi(str);
-//        if(v < min || v > max)
-//            throw std::out_of_range("Out of range value for IntProperty: " + std::to_string(v));
-//        return v;
-//    }
+    //    IntValue parse(const std::string& str) override {
+    //        int v = std::stoi(str);
+    //        if(v < min || v > max)
+    //            throw std::out_of_range("Out of range value for IntProperty: " + std::to_string(v));
+    //        return v;
+    //    }
 };
-
-

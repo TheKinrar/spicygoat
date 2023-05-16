@@ -12,4 +12,4 @@ static inline constexpr Orientable orientable;
 static inline constexpr OrientableOpposite orientableOpposite;
 static inline constexpr WallMountable wallMountable;
 
-}
+}  // namespace Traits

@@ -15,7 +15,8 @@ class PacketPluginResponse : public ServerBoundPacket {
           successful(data.readBoolean()),
           data(data.readPacketData(data.remaining())){};
 
-    [[nodiscard]] std::string toString() const override {
+    [[nodiscard]]
+    std::string toString() const override {
         return std::string("PacketPluginResponse{id=") + std::to_string(id) +
                ",successful=" + std::to_string(successful) + ",data=" + std::to_string(data.length) + "B}";
     }

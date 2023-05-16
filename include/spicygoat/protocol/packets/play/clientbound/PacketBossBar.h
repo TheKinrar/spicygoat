@@ -5,18 +5,11 @@
 #pragma once
 
 #include <spicygoat/bossbar/BossBar.h>
-
 #include <spicygoat/protocol/ClientBoundPacket.h>
 
 class PacketBossBar : public ClientBoundPacket {
    public:
-    enum class Action {
-        Add,
-        Remove,
-        UpdateHealth,
-        UpdateTitle,
-        UpdateStyle
-    };
+    enum class Action { Add, Remove, UpdateHealth, UpdateTitle, UpdateStyle };
 
    private:
     BossBar& bar;
@@ -39,7 +32,7 @@ class PacketBossBar : public ClientBoundPacket {
                 PacketData::writeFloat(bar.getHealth(), array);
                 PacketData::writeVarInt(static_cast<int>(bar.getColor()), array);
                 PacketData::writeVarInt(static_cast<int>(bar.getDivision()), array);
-                PacketData::writeUnsignedByte(0, array); // Flags
+                PacketData::writeUnsignedByte(0, array);  // Flags
                 break;
             case Action::Remove:
                 break;

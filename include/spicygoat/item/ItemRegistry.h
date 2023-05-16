@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include <memory>
-#include <utility>
-
 #include <spicygoat/item/BlockItem.h>
 #include <spicygoat/item/Item.h>
 #include <spicygoat/util/Registry.h>
+
+#include <memory>
+#include <utility>
 
 class ItemRegistry : public Registry {
     std::unordered_map<std::string, std::reference_wrapper<Item>> itemsByKey;

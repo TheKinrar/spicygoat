@@ -114,8 +114,7 @@ void EntityPlayer::checkChunks() {
 void EntityPlayer::loadChunk(int32_t x, int32_t z) {
     ChunkPosition pos(x, 0, z);
 
-    if(loadedChunks.find(pos) == loadedChunks.end()
-       && queuedChunks.find(pos) == queuedChunks.end()) {
+    if(loadedChunks.find(pos) == loadedChunks.end() && queuedChunks.find(pos) == queuedChunks.end()) {
         chunkSendQueue.emplace(pos);
         queuedChunks.emplace(pos);
     }

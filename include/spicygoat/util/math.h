@@ -24,4 +24,4 @@ inline double degToRad(float deg) {
     return deg * (std::numbers::pi / 180);
 }
 
-}
+}  // namespace math

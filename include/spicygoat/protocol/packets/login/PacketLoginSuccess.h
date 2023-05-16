@@ -13,7 +13,8 @@ class PacketLoginSuccess : public ClientBoundPacket {
 
     std::vector<std::byte> bytes() const override;
 
-    [[nodiscard]] std::string toString() const override;
+    [[nodiscard]]
+    std::string toString() const override;
 
    private:
     uuids::uuid uuid;

@@ -24,9 +24,9 @@ class PacketSpawnEntity : public ClientBoundPacket {
           type(type),
           loc(loc),
           data(data),
-          velX((int16_t) (math::clamp(vel.getX(), -3.9, 3.9) * 8000)),
-          velY((int16_t) (math::clamp(vel.getY(), -3.9, 3.9) * 8000)),
-          velZ((int16_t) (math::clamp(vel.getZ(), -3.9, 3.9) * 8000)) {}
+          velX((int16_t)(math::clamp(vel.getX(), -3.9, 3.9) * 8000)),
+          velY((int16_t)(math::clamp(vel.getY(), -3.9, 3.9) * 8000)),
+          velZ((int16_t)(math::clamp(vel.getZ(), -3.9, 3.9) * 8000)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {
@@ -39,7 +39,7 @@ class PacketSpawnEntity : public ClientBoundPacket {
         PacketData::writeDouble(loc.getZ(), array);
         PacketData::writeAngle(loc.getPitch(), array);
         PacketData::writeAngle(loc.getYaw(), array);
-        PacketData::writeAngle(loc.getYaw(), array); // head yaw
+        PacketData::writeAngle(loc.getYaw(), array);  // head yaw
         PacketData::writeVarInt(data, array);
         PacketData::writeShort(velX, array);
         PacketData::writeShort(velY, array);

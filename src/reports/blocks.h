@@ -10,22 +10,24 @@ nlohmann::ordered_json blocks() {
     nlohmann::ordered_json json;
 
     auto blocks = Server::get().getBlockRegistry().getBlocks();
-    std::sort(blocks.begin(), blocks.end(), [](const std::reference_wrapper<Block>& a, const std::reference_wrapper<Block>& b) {
-        return a.get().getName().getValue() < b.get().getName().getValue();
-    });
+    std::sort(blocks.begin(), blocks.end(),
+              [](const std::reference_wrapper<Block> &a, const std::reference_wrapper<Block> &b) {
+                  return a.get().getName().getValue() < b.get().getName().getValue();
+              });
 
     for(const auto &block : blocks) {
         nlohmann::ordered_json blockJson;
 
         auto properties = block.get().getProperties();
-        std::sort(properties.begin(), properties.end(), [](const std::reference_wrapper<const Property>& a, const std::reference_wrapper<const Property>& b) {
-            auto an = a.get().getName();
-            auto bn = b.get().getName();
+        std::sort(properties.begin(), properties.end(),
+                  [](const std::reference_wrapper<const Property> &a, const std::reference_wrapper<const Property> &b) {
+                      auto an = a.get().getName();
+                      auto bn = b.get().getName();
 
-            if(an == "type" && bn != "type") return true;
-            if(bn == "type" && an != "type") return false;
-            return an < bn;
-        });
+                      if(an == "type" && bn != "type") return true;
+                      if(bn == "type" && an != "type") return false;
+                      return an < bn;
+                  });
 
         if(!properties.empty()) {
             nlohmann::ordered_json propertiesJson;
@@ -68,4 +70,4 @@ nlohmann::ordered_json blocks() {
     return json;
 }
 
-}
+}  // namespace Reports

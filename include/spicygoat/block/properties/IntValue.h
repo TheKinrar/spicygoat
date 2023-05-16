@@ -10,7 +10,7 @@ class IntValue : public PropertyValue {
     int value;
 
    public:
-    IntValue(int value) : PropertyValue(2), value(value) {} // NOLINT(google-explicit-constructor)
+    IntValue(int value) : PropertyValue(2), value(value) {}  // NOLINT(google-explicit-constructor)
 
     [[nodiscard]]
     bool equals(const PropertyValue& other) const override {

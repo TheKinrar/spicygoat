@@ -5,10 +5,10 @@
 #ifndef SPICYGOAT_PACKETPLAYERINFO_H
 #define SPICYGOAT_PACKETPLAYERINFO_H
 
-#include <forward_list>
-
 #include <spicygoat/entities/types/EntityPlayer.h>
 #include <spicygoat/protocol/ClientBoundPacket.h>
+
+#include <forward_list>
 
 class PacketPlayerInfo : public ClientBoundPacket {
    public:

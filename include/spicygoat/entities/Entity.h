@@ -75,7 +75,8 @@ class Entity {
     }
 
     virtual std::unique_ptr<ClientBoundPacket> createPacket() {
-        return std::make_unique<PacketSpawnEntity>(getEID(), getUuid(), getProtocolType(), getLocation(), 0, getVelocity());
+        return std::make_unique<PacketSpawnEntity>(getEID(), getUuid(), getProtocolType(), getLocation(), 0,
+                                                   getVelocity());
     };
 
     std::optional<std::unique_ptr<ClientBoundPacket>> metadataPacket() {
@@ -94,11 +95,11 @@ class Entity {
 
     virtual std::string toString();
 
-    bool operator==(const Entity &rhs) const {
+    bool operator==(const Entity& rhs) const {
         return eid == rhs.eid;
     }
 
-    bool operator!=(const Entity &rhs) const {
+    bool operator!=(const Entity& rhs) const {
         return !(rhs == *this);
     }
 

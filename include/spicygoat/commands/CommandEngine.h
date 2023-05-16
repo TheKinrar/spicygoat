@@ -4,21 +4,20 @@
 
 #pragma once
 
-#include <memory>
-#include <string>
-#include <unordered_map>
-
 #include <absl/strings/str_split.h>
 #include <spicygoat/commands/Command.h>
 #include <spicygoat/entities/types/EntityPlayer.h>
+
+#include <memory>
+#include <string>
+#include <unordered_map>
 
 class CommandEngine {
     std::unordered_map<std::string, std::unique_ptr<Command>> commands;
 
    public:
     void registerCommand(std::unique_ptr<Command> command) {
-        if(commands.contains(command->getName()))
-            throw std::runtime_error("Command already exists");
+        if(commands.contains(command->getName())) throw std::runtime_error("Command already exists");
 
         commands[command->getName()] = std::move(command);
     }

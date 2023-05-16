@@ -8,26 +8,26 @@
 class PlayerData;
 class TCPConnection;
 
-#include <queue>
-#include <string>
-#include <unordered_map>
-#include <vector>
-
 #include <spdlog/spdlog.h>
+#include <spicygoat/TCPConnection.h>
 #include <spicygoat/config/Config.h>
 #include <spicygoat/entities/Entity.h>
 #include <spicygoat/inventory/PlayerInventory.h>
 #include <spicygoat/persist/PlayerData.h>
-#include <spicygoat/TCPConnection.h>
 #include <spicygoat/util/PlayerAbilities.h>
 #include <spicygoat/world/chunks/ChunkColumn.h>
 #include <spicygoat/world/geo/ChunkPosition.h>
 #include <spicygoat/world/geo/Location.h>
 #include <spicygoat/world/geo/Position2D.h>
 
+#include <queue>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 class EntityPlayer : public Entity {
    public:
-    EntityPlayer(uuids::uuid uuid, std::string &name, std::shared_ptr<TCPConnection> conn);
+    EntityPlayer(uuids::uuid uuid, std::string& name, std::shared_ptr<TCPConnection> conn);
 
     std::string getType() override {
         return "minecraft:player";
@@ -35,14 +35,14 @@ class EntityPlayer : public Entity {
 
     void tick() override;
 
-    const std::string &getName() const;
+    const std::string& getName() const;
 
     [[nodiscard]]
     PlayerInventory& getInventory() {
         return *inventory;
     }
 
-    PlayerData &getData() const {
+    PlayerData& getData() const {
         return *data;
     }
 
@@ -85,7 +85,7 @@ class EntityPlayer : public Entity {
         return *logger;
     }
 
-    TCPConnection &getConnection() const;
+    TCPConnection& getConnection() const;
 
     std::unique_ptr<ClientBoundPacket> createPacket() override;
 

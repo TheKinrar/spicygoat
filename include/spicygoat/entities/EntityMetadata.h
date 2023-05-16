@@ -4,11 +4,11 @@
 
 #pragma once
 
+#include <spicygoat/protocol/PacketData.h>
+
 #include <memory>
 #include <utility>
 #include <vector>
-
-#include <spicygoat/protocol/PacketData.h>
 
 struct EntityMetadata {
     struct Entry {

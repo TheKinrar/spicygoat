@@ -5,6 +5,10 @@
 #ifndef SPICYGOAT_PACKETDATA_H
 #define SPICYGOAT_PACKETDATA_H
 
+#include <spicygoat/item/ItemStack.h>
+#include <spicygoat/world/geo/Position.h>
+#include <uuid.h>
+
 #include <bitset>
 #include <cmath>
 #include <exception>
@@ -13,16 +17,12 @@
 #include <span>
 #include <stdexcept>
 #include <string>
-#include <uuid.h>
 #include <vector>
-
-#include <spicygoat/item/ItemStack.h>
-#include <spicygoat/world/geo/Position.h>
 
 class PacketData {
    public:
     explicit PacketData(std::shared_ptr<char[]> data, int length = -1, int offset = 0);
-    static PacketData fromByteArray(const std::vector<std::byte>& array);
+    static PacketData fromByteArray(const std::vector<std::byte> &array);
 
     int remaining();
 
@@ -147,7 +147,7 @@ class PacketData {
         }
     }
 
-    static void writeItemStack(const ItemStack& is, std::vector<std::byte> &bytes) {
+    static void writeItemStack(const ItemStack &is, std::vector<std::byte> &bytes) {
         PacketData::writeBoolean(is.present, bytes);
         if(is.present) {
             PacketData::writeVarInt(is.id, bytes);
@@ -160,15 +160,14 @@ class PacketData {
         }
     }
 
-    static void writeNbt(const nbt::tag& tag, std::vector<std::byte> &bytes) {
+    static void writeNbt(const nbt::tag &tag, std::vector<std::byte> &bytes) {
         std::ostringstream stream;
         nbt::io::write_tag("", tag, stream);
 
         auto string = stream.str();
         std::vector<std::byte> vec;
         vec.reserve(string.size());
-        for(const auto &item : string)
-            vec.push_back(std::byte(item));
+        for(const auto &item : string) vec.push_back(std::byte(item));
 
         writeByteArray(vec, bytes);
     }

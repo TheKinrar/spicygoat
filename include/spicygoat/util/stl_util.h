@@ -27,4 +27,4 @@ std::vector<T> iotaVector(T min, size_t count) {
     return vec;
 }
 
-}
+}  // namespace util

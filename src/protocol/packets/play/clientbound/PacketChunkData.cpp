@@ -3,13 +3,12 @@
 //
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketChunkData.h>
-
 #include <tag_array.h>
 
 #include <iostream>
 
-PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn) : ClientBoundPacket(Packets::C_CHUNK_DATA),
-      chunkColumn(chunkColumn) {}
+PacketChunkData::PacketChunkData(ChunkColumn &chunkColumn)
+    : ClientBoundPacket(Packets::C_CHUNK_DATA), chunkColumn(chunkColumn) {}
 
 std::vector<std::byte> PacketChunkData::bytes() const {
     std::vector<std::byte> array;

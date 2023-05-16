@@ -2,6 +2,7 @@
 BasedOnStyle: Google
 
 AllowShortFunctionsOnASingleLine: Empty
+BreakAfterAttributes: Always
 ColumnLimit: 120
 IndentWidth: 4
 SpaceBeforeParens: Never

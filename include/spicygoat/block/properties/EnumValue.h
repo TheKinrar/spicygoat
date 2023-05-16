@@ -4,17 +4,17 @@
 
 #pragma once
 
+#include <spicygoat/block/properties/PropertyValue.h>
+
 #include <memory>
 #include <vector>
-
-#include <spicygoat/block/properties/PropertyValue.h>
 
 template <class T>
 class EnumValue : public PropertyValue {
     T value;
 
    public:
-    EnumValue(T value) : PropertyValue(1), value(value) {} // NOLINT(google-explicit-constructor)
+    EnumValue(T value) : PropertyValue(1), value(value) {}  // NOLINT(google-explicit-constructor)
 
     [[nodiscard]]
     bool equals(const PropertyValue& other) const override {

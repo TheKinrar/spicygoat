@@ -5,10 +5,10 @@
 #ifndef SPICYGOAT_PACKETHANDSHAKE_H
 #define SPICYGOAT_PACKETHANDSHAKE_H
 
-#include <string>
-
 #include <spicygoat/protocol/ProtocolState.h>
 #include <spicygoat/protocol/ServerBoundPacket.h>
+
+#include <string>
 
 class PacketHandshake : public ServerBoundPacket {
    public:

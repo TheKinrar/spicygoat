@@ -2,8 +2,8 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include <spicygoat/protocol/packets/handshake/PacketHandshake.h>
 #include <spicygoat/Server.h>
+#include <spicygoat/protocol/packets/handshake/PacketHandshake.h>
 
 PacketHandshake::PacketHandshake(PacketData& data) : ServerBoundPacket(Packets::S_HANDSHAKE) {
     protocolVersion = data.readVarInt();

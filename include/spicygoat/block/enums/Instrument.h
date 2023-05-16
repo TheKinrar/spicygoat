@@ -6,7 +6,9 @@ class Instrument : public Enum {
     explicit Instrument(const std::string& name) : Enum(name) {}
 
    public:
-    static const Instrument harp, basedrum, snare, hat, bass, flute, bell, guitar, chime, xylophone, iron_xylophone, cow_bell, didgeridoo, bit, banjo, pling, zombie, skeleton, creeper, dragon, wither_skeleton, piglin, custom_head;
+    static const Instrument harp, basedrum, snare, hat, bass, flute, bell, guitar, chime, xylophone, iron_xylophone,
+        cow_bell, didgeridoo, bit, banjo, pling, zombie, skeleton, creeper, dragon, wither_skeleton, piglin,
+        custom_head;
 
     static const std::vector<Instrument> values;
 };
@@ -35,4 +37,7 @@ inline const Instrument Instrument::wither_skeleton = Instrument("wither_skeleto
 inline const Instrument Instrument::piglin = Instrument("piglin");
 inline const Instrument Instrument::custom_head = Instrument("custom_head");
 
-inline const std::vector<Instrument> Instrument::values = {harp, basedrum, snare, hat, bass, flute, bell, guitar, chime, xylophone, iron_xylophone, cow_bell, didgeridoo, bit, banjo, pling, zombie, skeleton, creeper, dragon, wither_skeleton, piglin, custom_head};
+inline const std::vector<Instrument> Instrument::values = {
+    harp,      basedrum,       snare,           hat,        bass,       flute, bell,  guitar, chime,
+    xylophone, iron_xylophone, cow_bell,        didgeridoo, bit,        banjo, pling, zombie, skeleton,
+    creeper,   dragon,         wither_skeleton, piglin,     custom_head};

@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <vector>
-
 #include <spicygoat/commands/Command.h>
 #include <spicygoat/entities/types/EntityPlayer.h>
+
+#include <vector>
 
 class CommandSpeed : public Command {
    public:
@@ -28,7 +28,7 @@ class CommandSpeed : public Command {
                 return;
             }
 
-            sender.setFlyingSpeed((float) val * 0.05f);
+            sender.setFlyingSpeed((float)val * 0.05f);
         }
     }
 };

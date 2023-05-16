@@ -4,8 +4,8 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketPluginMessageCB.h>
 
-PacketPluginMessageCB::PacketPluginMessageCB(std::string channel, std::vector<std::byte> data) :
-      ClientBoundPacket(Packets::C_PLUGIN_MESSAGE) {
+PacketPluginMessageCB::PacketPluginMessageCB(std::string channel, std::vector<std::byte> data)
+    : ClientBoundPacket(Packets::C_PLUGIN_MESSAGE) {
     this->channel = channel;
     this->data = data;
 }

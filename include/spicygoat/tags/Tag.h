@@ -14,7 +14,7 @@ class Tag {
     std::vector<int> targets;
 
    public:
-    explicit Tag(std::string  name, std::vector<int> targets) : name(std::move(name)), targets(std::move(targets)) {}
+    explicit Tag(std::string name, std::vector<int> targets) : name(std::move(name)), targets(std::move(targets)) {}
 
     [[nodiscard]]
     const std::string& getName() const {

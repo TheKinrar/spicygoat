@@ -22,12 +22,13 @@ class Block {
     std::vector<std::reference_wrapper<const Property>> properties;
     std::vector<std::string> defaultValues;
     std::vector<std::shared_ptr<BlockState>> states;
-    std::unordered_map<int, std::unordered_map<std::shared_ptr<PropertyValue>, std::vector<std::shared_ptr<BlockState>>>> table;
+    std::unordered_map<int,
+                       std::unordered_map<std::shared_ptr<PropertyValue>, std::vector<std::shared_ptr<BlockState>>>>
+        table;
     std::shared_ptr<BlockState> defaultState;
 
    public:
-    explicit Block(Identifier name,
-                   const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
+    explicit Block(Identifier name, const std::vector<std::reference_wrapper<const BlockTrait>>& traits,
                    const std::vector<std::reference_wrapper<const Property>>& properties,
                    const std::vector<std::string>& defaultValues = {});
     Block(const Block&) = delete;
@@ -58,9 +59,8 @@ class Block {
     }
 
     [[nodiscard]]
-    const std::unordered_map<int,
-                             std::unordered_map<std::shared_ptr<PropertyValue>,
-                                 std::vector<std::shared_ptr<BlockState>>>>& getTable() const {
+    const std::unordered_map<int, std::unordered_map<std::shared_ptr<PropertyValue>,
+                                                     std::vector<std::shared_ptr<BlockState>>>>& getTable() const {
         return table;
     }
 

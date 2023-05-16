@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/util/Identifier.h>
+
+#include <utility>
 
 class EntityType {
     const Identifier name;

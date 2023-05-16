@@ -12,31 +12,38 @@ class ChunkPosition {
    public:
     ChunkPosition(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 
-    [[nodiscard]] int32_t getX() const {
+    [[nodiscard]]
+    int32_t getX() const {
         return x;
     }
 
-    [[nodiscard]] int32_t getY() const {
+    [[nodiscard]]
+    int32_t getY() const {
         return y;
     }
 
-    [[nodiscard]] int32_t getZ() const {
+    [[nodiscard]]
+    int32_t getZ() const {
         return z;
     }
 
-    [[nodiscard]] int32_t getRegionX() const {
+    [[nodiscard]]
+    int32_t getRegionX() const {
         return x >> 5;
     }
 
-    [[nodiscard]] int32_t getRegionZ() const {
+    [[nodiscard]]
+    int32_t getRegionZ() const {
         return z >> 5;
     }
 
-    [[nodiscard]] int32_t getInRegionX() const {
+    [[nodiscard]]
+    int32_t getInRegionX() const {
         return x < 0 ? (32 - (-x % 32)) % 32 : x % 32;
     }
 
-    [[nodiscard]] int32_t getInRegionZ() const {
+    [[nodiscard]]
+    int32_t getInRegionZ() const {
         return z < 0 ? (32 - (-z % 32)) % 32 : z % 32;
     }
 

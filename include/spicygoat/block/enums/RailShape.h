@@ -10,9 +10,8 @@ class RailShape : public Enum {
     explicit RailShape(const std::string& name) : Enum(name) {}
 
    public:
-    static const RailShape north_south, east_west,
-                           ascending_east, ascending_west, ascending_north, ascending_south,
-                           south_east, south_west, north_west, north_east;
+    static const RailShape north_south, east_west, ascending_east, ascending_west, ascending_north, ascending_south,
+        south_east, south_west, north_west, north_east;
 
     static const std::vector<RailShape> values;
 };
@@ -28,6 +27,6 @@ inline const RailShape RailShape::south_west = RailShape("south_west");
 inline const RailShape RailShape::north_west = RailShape("north_west");
 inline const RailShape RailShape::north_east = RailShape("north_east");
 
-inline const std::vector<RailShape> RailShape::values = {north_south, east_west,
-                                                  ascending_east, ascending_west, ascending_north, ascending_south,
-                                                  south_east, south_west, north_west, north_east};
+inline const std::vector<RailShape> RailShape::values = {
+    north_south,     east_west,  ascending_east, ascending_west, ascending_north,
+    ascending_south, south_east, south_west,     north_west,     north_east};

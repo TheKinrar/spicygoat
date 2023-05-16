@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <vector>
-
 #include <spicygoat/commands/Command.h>
 #include <spicygoat/entities/types/EntityPlayer.h>
+
+#include <vector>
 
 class CommandGm : public Command {
    public:

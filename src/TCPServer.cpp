@@ -2,13 +2,13 @@
 // Created by thekinrar on 30/03/19.
 //
 
-#include <iostream>
-#include <memory>
-#include <thread>
-
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spicygoat/TCPServer.h>
 #include <spicygoat/config/Config.h>
+
+#include <iostream>
+#include <memory>
+#include <thread>
 
 #include "network/listeners/HandshakeListener.h"
 

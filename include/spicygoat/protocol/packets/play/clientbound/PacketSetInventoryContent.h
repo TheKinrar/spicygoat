@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/protocol/ClientBoundPacket.h>
+
+#include <utility>
 
 class PacketSetInventoryContent : public ClientBoundPacket {
     uint8_t windowId;
@@ -16,7 +16,11 @@ class PacketSetInventoryContent : public ClientBoundPacket {
 
    public:
     PacketSetInventoryContent(uint8_t windowId, int version, const std::vector<ItemStack>& stacks, ItemStack carried)
-        : ClientBoundPacket(Packets::C_SET_INVENTORY_CONTENT), windowId(windowId), version(version), stacks(stacks), carried(std::move(carried)) {}
+        : ClientBoundPacket(Packets::C_SET_INVENTORY_CONTENT),
+          windowId(windowId),
+          version(version),
+          stacks(stacks),
+          carried(std::move(carried)) {}
 
     [[nodiscard]]
     std::vector<std::byte> bytes() const override {

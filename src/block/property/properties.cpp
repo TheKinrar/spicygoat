@@ -63,8 +63,10 @@ const EnumProperty<BlockHalf> block_half("half", BlockHalf::values);
 const EnumProperty<ChestType> chest_type("type", ChestType::values);
 const EnumProperty<ComparatorMode> comparator_mode("mode", ComparatorMode::values);
 const EnumProperty<Direction> facing("facing", Direction::values);
-const EnumProperty<Direction> hopper_facing("facing", {Direction::down, Direction::north, Direction::south, Direction::west, Direction::east});
-const EnumProperty<Direction> horizontal_facing("facing", {Direction::north, Direction::south, Direction::west, Direction::east});
+const EnumProperty<Direction> hopper_facing("facing", {Direction::down, Direction::north, Direction::south,
+                                                       Direction::west, Direction::east});
+const EnumProperty<Direction> horizontal_facing("facing",
+                                                {Direction::north, Direction::south, Direction::west, Direction::east});
 const EnumProperty<Direction> vertical_direction("vertical_direction", {Direction::up, Direction::down});
 const EnumProperty<DoorHinge> door_hinge("hinge", DoorHinge::values);
 const EnumProperty<DoubleBlockHalf> double_block_half("half", DoubleBlockHalf::values);
@@ -72,7 +74,9 @@ const EnumProperty<Instrument> instrument("instrument", Instrument::values);
 const EnumProperty<JigsawOrientation> jigsaw_orientation("orientation", JigsawOrientation::values);
 const EnumProperty<PistonType> piston_type("type", PistonType::values);
 const EnumProperty<RailShape> rail_shape("shape", RailShape::values);
-const EnumProperty<RailShape> straight_rail_shape("shape", {RailShape::north_south, RailShape::east_west, RailShape::ascending_east, RailShape::ascending_west, RailShape::ascending_north, RailShape::ascending_south});
+const EnumProperty<RailShape> straight_rail_shape("shape", {RailShape::north_south, RailShape::east_west,
+                                                            RailShape::ascending_east, RailShape::ascending_west,
+                                                            RailShape::ascending_north, RailShape::ascending_south});
 const EnumProperty<SculkSensorPhase> sculk_sensor_phase("sculk_sensor_phase", SculkSensorPhase::values);
 const EnumProperty<SlabType> slab_type("type", SlabType::values);
 const EnumProperty<StairShape> stair_shape("shape", StairShape::values);
@@ -120,4 +124,4 @@ const IntProperty power = IntProperty("power", 0, 15);
 const IntProperty rotation = IntProperty("rotation", 0, 15);
 const IntProperty stage = IntProperty("stage", 0, 1);
 
-}
+}  // namespace Properties

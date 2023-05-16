@@ -11,7 +11,8 @@
 class BlockStairs : public Block {
    public:
     BlockStairs(const Identifier& name, const std::vector<std::string>& defaultValues)
-        : Block(name, {Traits::halfable, Traits::orientable},
-                {Properties::horizontal_facing, Properties::block_half, Properties::stair_shape, Properties::waterlogged},
-                defaultValues) {}
+        : Block(
+              name, {Traits::halfable, Traits::orientable},
+              {Properties::horizontal_facing, Properties::block_half, Properties::stair_shape, Properties::waterlogged},
+              defaultValues) {}
 };

@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/protocol/ClientBoundPacket.h>
 
-class PacketSetInventorySlot  : public ClientBoundPacket {
+#include <utility>
+
+class PacketSetInventorySlot : public ClientBoundPacket {
     int8_t windowId;
     int version;
     int16_t slot;
@@ -16,7 +16,10 @@ class PacketSetInventorySlot  : public ClientBoundPacket {
 
    public:
     PacketSetInventorySlot(int8_t windowId, int version, int16_t slot, ItemStack stack)
-        : ClientBoundPacket(Packets::C_SET_INVENTORY_SLOT), windowId(windowId), version(version), slot(slot),
+        : ClientBoundPacket(Packets::C_SET_INVENTORY_SLOT),
+          windowId(windowId),
+          version(version),
+          slot(slot),
           stack(std::move(stack)) {}
 
     [[nodiscard]]

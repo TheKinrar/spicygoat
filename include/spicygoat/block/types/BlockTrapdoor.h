@@ -12,7 +12,8 @@ class BlockTrapdoor : public Block {
    public:
     BlockTrapdoor(const Identifier& name, const std::vector<std::string>& defaultValues)
         : Block(name, {Traits::halfable},
-                {Properties::horizontal_facing, Properties::block_half, Properties::open, Properties::powered, Properties::waterlogged},
+                {Properties::horizontal_facing, Properties::block_half, Properties::open, Properties::powered,
+                 Properties::waterlogged},
                 defaultValues) {}
 
     std::shared_ptr<BlockState> getStateToPlace(const BlockPlaceContext& ctx) const override {

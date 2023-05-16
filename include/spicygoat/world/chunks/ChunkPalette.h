@@ -5,11 +5,11 @@
 #ifndef SPICYGOAT_CHUNKPALETTE_H
 #define SPICYGOAT_CHUNKPALETTE_H
 
-#include <map>
-
-#include <nlohmann/json.hpp>
 #include <spicygoat/block/BlockState.h>
 #include <tag_list.h>
+
+#include <map>
+#include <nlohmann/json.hpp>
 
 class ChunkPalette {
    public:
@@ -17,7 +17,8 @@ class ChunkPalette {
 
     uint8_t getBitsPerBlock() const;
 
-    [[nodiscard]] int getBlocksPerLong() const {
+    [[nodiscard]]
+    int getBlocksPerLong() const {
         return 64 / getBitsPerBlock();
     }
 
@@ -27,15 +28,18 @@ class ChunkPalette {
 
     std::string toString(bool withMapping = false);
 
-    [[nodiscard]] bool isSingle() const {
+    [[nodiscard]]
+    bool isSingle() const {
         return single;
     }
 
-    [[nodiscard]] const std::shared_ptr<BlockState>& getSingleBlockState() const {
+    [[nodiscard]]
+    const std::shared_ptr<BlockState>& getSingleBlockState() const {
         return idToState.at(0);
     }
 
-    [[nodiscard]] std::vector<std::shared_ptr<BlockState>> getBlockStatesByName(const std::string& name) const {
+    [[nodiscard]]
+    std::vector<std::shared_ptr<BlockState>> getBlockStatesByName(const std::string& name) const {
         std::vector<std::shared_ptr<BlockState>> vec;
         for(const auto& item : stateToId) {
             if(item.first->getBlock().getName().toString() == name) {
@@ -45,11 +49,13 @@ class ChunkPalette {
         return vec;
     }
 
-    [[nodiscard]] const std::shared_ptr<BlockState>& getBlockState(int16_t id) const {
+    [[nodiscard]]
+    const std::shared_ptr<BlockState>& getBlockState(int16_t id) const {
         return idToState.at(id);
     }
 
-    [[nodiscard]] std::shared_ptr<ChunkPalette> grow(const std::shared_ptr<BlockState>& newState) const {
+    [[nodiscard]]
+    std::shared_ptr<ChunkPalette> grow(const std::shared_ptr<BlockState>& newState) const {
         auto grown = std::make_shared<ChunkPalette>(*this);
         grown->addBlockState(newState, (int16_t)grown->stateToId.size());
         grown->finalize();

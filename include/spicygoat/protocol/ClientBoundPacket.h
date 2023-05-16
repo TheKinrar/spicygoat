@@ -9,7 +9,7 @@
 
 class ClientBoundPacket : public Packet {
    public:
-    explicit ClientBoundPacket(int id) : Packet(id) {};
+    explicit ClientBoundPacket(int id) : Packet(id){};
 };
 
 #endif  // SPICYGOAT_CLIENTBOUNDPACKET_H

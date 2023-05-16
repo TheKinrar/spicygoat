@@ -2,13 +2,11 @@
 // Created by thekinrar on 19/01/23.
 //
 
-#include <iostream>
-
 #include <spicygoat/block/BlockState.h>
 
-BlockState::BlockState(
-    const Block& block,
-    const std::unordered_map<int, std::shared_ptr<PropertyValue>>& values)
+#include <iostream>
+
+BlockState::BlockState(const Block& block, const std::unordered_map<int, std::shared_ptr<PropertyValue>>& values)
     : block(block), values(values) {}
 
 void BlockState::load() {
@@ -37,7 +35,8 @@ void BlockState::load() {
     }
 }
 
-std::shared_ptr<BlockState> BlockState::with(const Property& property, const std::shared_ptr<PropertyValue>& value) const {
+std::shared_ptr<BlockState> BlockState::with(const Property& property,
+                                             const std::shared_ptr<PropertyValue>& value) const {
     return table.at(property.getId()).at(value);
 }
 
@@ -72,8 +71,10 @@ std::string BlockState::toString() const {
         str += "[";
         bool first = true;
         for(const auto& property : block.getProperties()) {
-            if(first) first = false;
-            else str += ",";
+            if(first)
+                first = false;
+            else
+                str += ",";
             str += property.get().getName() + "=" + values.at(property.get().getId())->toString();
         }
         str += "]";

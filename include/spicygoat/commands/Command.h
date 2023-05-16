@@ -4,19 +4,20 @@
 
 #pragma once
 
+#include <spicygoat/entities/types/EntityPlayer.h>
+
 #include <string>
 #include <utility>
-
-#include <spicygoat/entities/types/EntityPlayer.h>
 
 class Command {
     std::string name;
 
    public:
-    explicit Command(std::string  name) : name(std::move(name)) {}
+    explicit Command(std::string name) : name(std::move(name)) {}
     virtual ~Command() = default;
 
-    [[nodiscard]] const std::string& getName() const {
+    [[nodiscard]]
+    const std::string& getName() const {
         return name;
     }
 

@@ -4,16 +4,16 @@
 
 #pragma once
 
+#include <spicygoat/block/properties/PropertyValue.h>
+
 #include <memory>
 #include <vector>
-
-#include <spicygoat/block/properties/PropertyValue.h>
 
 class BooleanValue : public PropertyValue {
     bool value;
 
    public:
-    BooleanValue(bool value) : PropertyValue(0), value(value) {} // NOLINT(google-explicit-constructor)
+    BooleanValue(bool value) : PropertyValue(0), value(value) {}  // NOLINT(google-explicit-constructor)
 
     [[nodiscard]]
     bool equals(const PropertyValue& other) const override {

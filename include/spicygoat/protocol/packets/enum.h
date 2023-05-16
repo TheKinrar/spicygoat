@@ -9,7 +9,7 @@ namespace Packets {
 // Handshake SB
 static const int S_HANDSHAKE = 0x00;
 
-//Status CB
+// Status CB
 static const int S_RESPONSE = 0x00;
 static const int S_PONG = 0x01;
 

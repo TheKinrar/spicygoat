@@ -11,7 +11,5 @@
 class BlockEnderChest : public Block {
    public:
     BlockEnderChest(const Identifier& name, const std::vector<std::string>& defaultValues)
-        : Block(name, {Traits::orientable},
-                {Properties::horizontal_facing, Properties::waterlogged},
-                defaultValues) {}
+        : Block(name, {Traits::orientable}, {Properties::horizontal_facing, Properties::waterlogged}, defaultValues) {}
 };

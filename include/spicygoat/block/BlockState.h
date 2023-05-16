@@ -20,8 +20,7 @@ class BlockState {
     std::unordered_map<int, std::unordered_map<std::shared_ptr<PropertyValue>, std::shared_ptr<BlockState>>> table;
 
    public:
-    BlockState(const Block& block,
-               const std::unordered_map<int, std::shared_ptr<PropertyValue>>& values);
+    BlockState(const Block& block, const std::unordered_map<int, std::shared_ptr<PropertyValue>>& values);
     BlockState(const std::shared_ptr<BlockState>&) = delete;
 
     const Block& getBlock() const {
@@ -37,7 +36,8 @@ class BlockState {
 
     std::shared_ptr<BlockState> with(const Property& property, const std::shared_ptr<PropertyValue>& value) const;
     std::shared_ptr<BlockState> with(const Property& property, const std::string& value) const;
-    std::shared_ptr<BlockState> with(const std::string& propertyName, const std::shared_ptr<PropertyValue>& value) const;
+    std::shared_ptr<BlockState> with(const std::string& propertyName,
+                                     const std::shared_ptr<PropertyValue>& value) const;
     std::shared_ptr<BlockState> with(const std::string& propertyName, const std::string& value) const;
 
     void load();

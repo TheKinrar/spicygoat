@@ -4,12 +4,12 @@
 
 #pragma once
 
+#include <spicygoat/block/properties/PropertyValue.h>
+
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include <vector>
-
-#include <spicygoat/block/properties/PropertyValue.h>
 
 class Property {
     inline static int nextId = 0;

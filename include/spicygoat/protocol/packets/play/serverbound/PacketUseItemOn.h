@@ -29,7 +29,8 @@ class PacketUseItemOn : public ServerBoundPacket {
           insideBlock(data.readBoolean()),
           sequence(data.readVarInt()) {}
 
-    [[nodiscard]] std::string toString() const override {
+    [[nodiscard]]
+    std::string toString() const override {
         return "PacketUseItemOn{...}";
     }
 };

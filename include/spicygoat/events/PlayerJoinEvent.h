@@ -4,15 +4,15 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/events/PlayerEvent.h>
+
+#include <utility>
 
 class PlayerJoinEvent : public PlayerEvent<PlayerJoinEvent> {
     std::string joinMessage;
 
    public:
-    PlayerJoinEvent(const std::shared_ptr<EntityPlayer>& player, std::string  joinMessage)
+    PlayerJoinEvent(const std::shared_ptr<EntityPlayer>& player, std::string joinMessage)
         : PlayerEvent(player), joinMessage(std::move(joinMessage)) {}
 
     [[nodiscard]]

@@ -6,8 +6,8 @@
 
 #include <nlohmann/json.hpp>
 
-PacketChatMessageCB::PacketChatMessageCB(const std::string &message) : ClientBoundPacket(Packets::C_CHAT_MESSAGE),
-      message(message) {}
+PacketChatMessageCB::PacketChatMessageCB(const std::string &message)
+    : ClientBoundPacket(Packets::C_CHAT_MESSAGE), message(message) {}
 
 std::vector<std::byte> PacketChatMessageCB::bytes() const {
     nlohmann::json j;

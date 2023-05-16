@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-PlayerConnection::PlayerConnection(TCPConnection &connection, const std::shared_ptr<EntityPlayer>& player)
+PlayerConnection::PlayerConnection(TCPConnection &connection, const std::shared_ptr<EntityPlayer> &player)
     : connection(connection), player(player) {}
 
 void PlayerConnection::tick() {
@@ -96,8 +96,8 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
         }
     } else if(packet.status == PacketPlayerDigging::Status::FINISHED_DIGGING) {
         if(player->getGamemode() == GameMode::GameMode::Survival) {
-            auto loot = Server::get().getItemRegistry().getLoot(
-                Server::get().getWorld().getBlockState(packet.position));
+            auto loot =
+                Server::get().getItemRegistry().getLoot(Server::get().getWorld().getBlockState(packet.position));
 
             Server::get().getWorld().setBlockState(packet.position, Blocks::air.getDefaultState());
             Server::get().broadcastPacket(PacketBlockUpdate(

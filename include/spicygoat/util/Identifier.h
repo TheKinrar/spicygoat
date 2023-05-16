@@ -12,7 +12,7 @@ class Identifier {
     std::string val;
 
    public:
-    Identifier(std::string val) : val(std::move(val)) {} // NOLINT(google-explicit-constructor)
+    Identifier(std::string val) : val(std::move(val)) {}  // NOLINT(google-explicit-constructor)
 
     [[nodiscard]]
     const std::string& getNamespace() const {

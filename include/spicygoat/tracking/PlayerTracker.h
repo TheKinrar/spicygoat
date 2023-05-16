@@ -5,10 +5,10 @@
 #ifndef SPICYGOAT_PLAYERTRACKER_H
 #define SPICYGOAT_PLAYERTRACKER_H
 
-#include <set>
-
 #include <spicygoat/entities/types/EntityPlayer.h>
 #include <spicygoat/tracking/EntityTracker.h>
+
+#include <set>
 
 class PlayerTracker : public EntityTracker {
    public:
@@ -18,7 +18,7 @@ class PlayerTracker : public EntityTracker {
     void tick() override;
 
     [[nodiscard]]
-    const std::set<std::shared_ptr<EntityPlayer>>& getPlayers() const {
+    const std::set<std::shared_ptr<EntityPlayer>> &getPlayers() const {
         return players;
     }
     void broadcast(const ClientBoundPacket &packet) override;

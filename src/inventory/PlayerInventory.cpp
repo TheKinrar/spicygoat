@@ -9,8 +9,7 @@
 #include <spicygoat/util/except.h>
 
 void PlayerInventory::setSlot(int slot, const ItemStack& stack) {
-    if(slot < 0 || slot >= PLAYER_INV_SIZE)
-        throw std::runtime_error("Invalid inventory slot");
+    if(slot < 0 || slot >= PLAYER_INV_SIZE) throw std::runtime_error("Invalid inventory slot");
 
     slots[slot] = stack;
     if(enableSync) sync();
@@ -22,8 +21,7 @@ void PlayerInventory::setInHand(const ItemStack& stack) {
 }
 
 void PlayerInventory::setTrackedSlot(int slot, const ItemStack& stack) {
-    if(slot < 0 || slot >= PLAYER_INV_SIZE)
-        throw std::runtime_error("Invalid inventory slot");
+    if(slot < 0 || slot >= PLAYER_INV_SIZE) throw std::runtime_error("Invalid inventory slot");
 
     trackedSlots[slot] = stack;
 }
@@ -118,7 +116,7 @@ void PlayerInventory::onClick(const PacketClickWindow& packet) {
                         int slot = findCompatibleSlot(inHand);
                         if(slot == -1) break;
                         auto other = getSlot(slot);
-                        int n = std::min(64 - inHand.count, (int) other.count);
+                        int n = std::min(64 - inHand.count, (int)other.count);
                         other.setCount(other.count - n);
                         setSlot(slot, other);
                         inHand.setCount(inHand.count + n);

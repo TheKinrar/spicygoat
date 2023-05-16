@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <string>
-#include <utility>
-
 #include <spicygoat/entities/types/EntityPlayer.h>
 #include <spicygoat/protocol/packets/play/serverbound/PacketUseItemOn.h>
+
+#include <string>
+#include <utility>
 
 class Item {
     std::string name;
@@ -17,9 +17,10 @@ class Item {
     explicit Item(std::string name);
     Item(const Item&) = delete;
 
-    [[nodiscard]] const std::string& getName() const {
+    [[nodiscard]]
+    const std::string& getName() const {
         return name;
     }
 
-    virtual void onUseOn(EntityPlayer& player, const PacketUseItemOn &packet) const {};
+    virtual void onUseOn(EntityPlayer& player, const PacketUseItemOn& packet) const {};
 };

@@ -2,6 +2,9 @@
 // Created by thekinrar on 02/04/19.
 //
 
+#include <spdlog/spdlog.h>
+#include <spicygoat/protocol/PacketData.h>
+#include <spicygoat/world/chunks/ChunkColumn.h>
 #include <tag_array.h>
 #include <tag_list.h>
 #include <tag_primitive.h>
@@ -9,10 +12,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include <spdlog/spdlog.h>
-#include <spicygoat/protocol/PacketData.h>
-#include <spicygoat/world/chunks/ChunkColumn.h>
 
 ChunkColumn::ChunkColumn(int32_t x, int32_t z) : x(x), z(z) {
     for(auto &chunk : chunks) chunk = nullptr;
@@ -50,8 +49,9 @@ void ChunkColumn::setNbt(std::unique_ptr<nbt::tag_compound> &nbt) {
                 int8_t y = section.at("Y").as<nbt::tag_byte>();
 
                 if(y < -5 || y > 20) {
-//                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" << (int)y << ";" << z
-//                              << std::endl;
+                    //                    std::cerr << "WARNING: chunk outside of boundaries! skipping " << x << ";" <<
+                    //                    (int)y << ";" << z
+                    //                              << std::endl;
                 } else {
                     //                    std::cerr << "Loading " << x << ";" << (int) y << ";" << z << std::endl;
 

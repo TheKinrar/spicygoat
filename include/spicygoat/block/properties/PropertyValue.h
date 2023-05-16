@@ -27,8 +27,7 @@ class PropertyValue {
     template <class T>
     static std::vector<std::shared_ptr<T>> wrap(const std::vector<T>& src) {
         std::vector<std::shared_ptr<T>> dst;
-        for(const auto &item : src)
-            dst.push_back(std::make_unique<T>(item));
+        for(const auto& item : src) dst.push_back(std::make_unique<T>(item));
         return dst;
     }
 };

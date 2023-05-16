@@ -5,9 +5,8 @@
 #ifndef SPICYGOAT_PACKETSPAWNPLAYER_H
 #define SPICYGOAT_PACKETSPAWNPLAYER_H
 
-#include <uuid.h>
-
 #include <spicygoat/protocol/ClientBoundPacket.h>
+#include <uuid.h>
 
 class PacketSpawnPlayer : public ClientBoundPacket {
    public:

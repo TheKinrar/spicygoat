@@ -11,11 +11,11 @@ class PacketUseItem : public ServerBoundPacket {
     const int hand;
     const int sequence;
 
-    explicit PacketUseItem(PacketData& data) : ServerBoundPacket(Packets::S_USE_ITEM),
-          hand(data.readVarInt()),
-          sequence(data.readVarInt()) {}
+    explicit PacketUseItem(PacketData& data)
+        : ServerBoundPacket(Packets::S_USE_ITEM), hand(data.readVarInt()), sequence(data.readVarInt()) {}
 
-    [[nodiscard]] std::string toString() const override {
+    [[nodiscard]]
+    std::string toString() const override {
         return "PacketUseItem{}";
     }
 };

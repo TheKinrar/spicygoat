@@ -6,6 +6,7 @@
 #define SPICYGOAT_CONFIG_H
 
 #include <spicygoat/util/GameMode.h>
+
 #include <toml.hpp>
 
 class Config {
@@ -24,8 +25,8 @@ class Config {
     Config() : data(toml::parse<toml::preserve_comments>("config.toml")) {
         gamemode = GameMode::parse(toml::find_or<toml::integer>(data, "gamemode", 0));
         port = toml::find_or<toml::integer>(data, "port", 25565);
-        viewDistance = (int) toml::find_or<toml::integer>(data, "view_distance", 10);
-        entityViewDistance = (int) toml::find_or<toml::integer>(data, "entity_view_distance", 50);
+        viewDistance = (int)toml::find_or<toml::integer>(data, "view_distance", 10);
+        entityViewDistance = (int)toml::find_or<toml::integer>(data, "entity_view_distance", 50);
     }
 
     toml::value data;

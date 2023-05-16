@@ -11,7 +11,6 @@
 class BlockBed : public Block {
    public:
     BlockBed(const Identifier& name, const std::vector<std::string>& defaultValues)
-        : Block(name, {Traits::orientable},
-                {Properties::horizontal_facing, Properties::occupied, Properties::bed_part},
+        : Block(name, {Traits::orientable}, {Properties::horizontal_facing, Properties::occupied, Properties::bed_part},
                 defaultValues) {}
 };

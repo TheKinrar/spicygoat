@@ -4,8 +4,8 @@
 
 #include <spicygoat/protocol/packets/play/clientbound/PacketPlayerLocationCB.h>
 
-PacketPlayerLocationCB::PacketPlayerLocationCB(Location location) : ClientBoundPacket(Packets::C_PLAYER_LOCATION),
-      location(location) {}
+PacketPlayerLocationCB::PacketPlayerLocationCB(Location location)
+    : ClientBoundPacket(Packets::C_PLAYER_LOCATION), location(location) {}
 
 std::vector<std::byte> PacketPlayerLocationCB::bytes() const {
     std::vector<std::byte> array;
@@ -14,8 +14,8 @@ std::vector<std::byte> PacketPlayerLocationCB::bytes() const {
     PacketData::writeDouble(location.getZ(), array);
     PacketData::writeFloat(location.getYaw(), array);
     PacketData::writeFloat(location.getPitch(), array);
-    PacketData::writeByte(0, array);         // TODO bitfield relative/absolute values (?)
-    PacketData::writeVarInt(-42, array);     // TODO teleport ID
+    PacketData::writeByte(0, array);      // TODO bitfield relative/absolute values (?)
+    PacketData::writeVarInt(-42, array);  // TODO teleport ID
     return array;
 }
 

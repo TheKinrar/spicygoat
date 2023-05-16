@@ -2,8 +2,6 @@
 // Created by thekinrar on 01/04/19.
 //
 
-#include <iostream>
-
 #include <spicygoat/Server.h>
 #include <spicygoat/entities/Entity.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketEntityHeadRotation.h>
@@ -11,6 +9,8 @@
 #include <spicygoat/protocol/packets/play/clientbound/PacketEntityMove.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketEntityTeleport.h>
 #include <spicygoat/util/uuid.h>
+
+#include <iostream>
 
 Entity::Entity() : eid(Server::get().nextEID()), uuid(uuids::generate()) {
     tracker = Server::createTracker(*this);

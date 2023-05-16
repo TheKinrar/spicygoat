@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include <cmath>
-#include <stdexcept>
-#include <utility>
-
 #include <spicygoat/util/Enum.h>
 #include <spicygoat/world/geo/Axis.h>
 #include <spicygoat/world/geo/Face.h>
+
+#include <cmath>
+#include <stdexcept>
+#include <utility>
 
 class Direction : public Enum {
     Axis axis;

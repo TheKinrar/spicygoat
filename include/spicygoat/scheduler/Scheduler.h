@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <spicygoat/scheduler/Task.h>
+
 #include <memory>
 #include <vector>
-
-#include <spicygoat/scheduler/Task.h>
 
 class Scheduler {
     std::vector<std::weak_ptr<Task>> tasks;

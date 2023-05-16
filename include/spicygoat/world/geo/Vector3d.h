@@ -65,12 +65,12 @@ class Vector3d {
 
     [[nodiscard]]
     double lengthSquared() const {
-        return x*x + y*y + z*z;
+        return x * x + y * y + z * z;
     }
 
     [[nodiscard]]
     double horizontalLengthSquared() const {
-        return x*x + z*z;
+        return x * x + z * z;
     }
 
     [[nodiscard]]

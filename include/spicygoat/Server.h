@@ -40,21 +40,23 @@ class Server {
     static std::unique_ptr<EntityTracker> createTracker(Entity&);
     unsigned long getPlayerCount() const;
 
-    [[nodiscard]] std::vector<std::shared_ptr<Entity>> getEntities() const {
+    [[nodiscard]]
+    std::vector<std::shared_ptr<Entity>> getEntities() const {
         std::vector<std::shared_ptr<Entity>> vec;
         for(auto& item : entities) vec.push_back(item.second);
         return vec;
     }
 
-    [[nodiscard]] std::vector<std::shared_ptr<EntityPlayer>> getPlayers() const {
+    [[nodiscard]]
+    std::vector<std::shared_ptr<EntityPlayer>> getPlayers() const {
         std::vector<std::shared_ptr<EntityPlayer>> vec;
         for(auto& item : players) vec.push_back(item.second);
         return vec;
     }
 
-    [[nodiscard]] std::optional<std::shared_ptr<EntityPlayer>> getPlayer(const std::string& name) const {
-        auto it = std::find_if(players.begin(), players.end(),
-                               [name](auto& e) { return e.second->getName() == name; });
+    [[nodiscard]]
+    std::optional<std::shared_ptr<EntityPlayer>> getPlayer(const std::string& name) const {
+        auto it = std::find_if(players.begin(), players.end(), [name](auto& e) { return e.second->getName() == name; });
         if(it == players.end())
             return {};
         else
@@ -69,14 +71,18 @@ class Server {
         return commandEngine;
     }
 
-    [[nodiscard]] std::shared_ptr<ChunkPalette> getPalette() const;
-    [[nodiscard]] BlockRegistry& getBlockRegistry() {
+    [[nodiscard]]
+    std::shared_ptr<ChunkPalette> getPalette() const;
+    [[nodiscard]]
+    BlockRegistry& getBlockRegistry() {
         return blockRegistry;
     }
-    [[nodiscard]] ItemRegistry& getItemRegistry() {
+    [[nodiscard]]
+    ItemRegistry& getItemRegistry() {
         return itemRegistry;
     }
-    [[nodiscard]] Registry& getEntityRegistry() {
+    [[nodiscard]]
+    Registry& getEntityRegistry() {
         return entityRegistry;
     }
 
@@ -117,7 +123,9 @@ class Server {
 
     World world;
 
-    long startupTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+    long startupTime =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch())
+            .count();
 };
 
 #endif  // SPICYGOAT_SERVER_H

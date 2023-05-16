@@ -4,11 +4,6 @@
 
 #pragma once
 
-#include <spicygoat/block/properties/BooleanProperty.h>
-#include <spicygoat/block/properties/EnumProperty.h>
-#include <spicygoat/block/properties/IntProperty.h>
-#include <spicygoat/world/geo/Axis.h>
-#include <spicygoat/world/geo/Direction.h>
 #include <spicygoat/block/enums/Attachment.h>
 #include <spicygoat/block/enums/BambooLeaves.h>
 #include <spicygoat/block/enums/BedPart.h>
@@ -30,6 +25,11 @@
 #include <spicygoat/block/enums/WallMountLocation.h>
 #include <spicygoat/block/enums/WallShape.h>
 #include <spicygoat/block/enums/WireConnection.h>
+#include <spicygoat/block/properties/BooleanProperty.h>
+#include <spicygoat/block/properties/EnumProperty.h>
+#include <spicygoat/block/properties/IntProperty.h>
+#include <spicygoat/world/geo/Axis.h>
+#include <spicygoat/world/geo/Direction.h>
 
 namespace Properties {
 
@@ -147,4 +147,4 @@ extern const IntProperty power;
 extern const IntProperty rotation;
 extern const IntProperty stage;
 
-}
+}  // namespace Properties

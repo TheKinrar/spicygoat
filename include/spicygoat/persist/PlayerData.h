@@ -4,10 +4,6 @@
 
 #pragma once
 
-#include <filesystem>
-#include <fstream>
-#include <utility>
-
 #include <io/izlibstream.h>
 #include <io/ozlibstream.h>
 #include <io/stream_reader.h>
@@ -16,11 +12,15 @@
 #include <tag_list.h>
 #include <tag_primitive.h>
 
+#include <filesystem>
+#include <fstream>
+#include <utility>
+
 class EntityPlayer;
 class PlayerInventory;
 
-#include <spicygoat/util/PlayerAbilities.h>
 #include <spicygoat/util/GameMode.h>
+#include <spicygoat/util/PlayerAbilities.h>
 #include <spicygoat/world/geo/Location.h>
 #include <uuid.h>
 
@@ -54,13 +54,8 @@ class PlayerData {
         if(nbt->has_key("Pos")) {
             auto pos = nbt->at("Pos").as<nbt::tag_list>();
             auto rot = nbt->at("Rotation").as<nbt::tag_list>();
-            return {
-                pos[0].as<nbt::tag_double>(),
-                pos[1].as<nbt::tag_double>(),
-                pos[2].as<nbt::tag_double>(),
-                rot[0].as<nbt::tag_float>(),
-                rot[1].as<nbt::tag_float>()
-            };
+            return {pos[0].as<nbt::tag_double>(), pos[1].as<nbt::tag_double>(), pos[2].as<nbt::tag_double>(),
+                    rot[0].as<nbt::tag_float>(), rot[1].as<nbt::tag_float>()};
         } else {
             return def;
         }
@@ -94,44 +89,40 @@ class PlayerData {
 
    private:
     static int dataSlotToNetwork(int slot) {
-        if(slot == -106) // Off-hand
+        if(slot == -106)  // Off-hand
             return 45;
-        if(slot == 100) // Boots
+        if(slot == 100)  // Boots
             return 8;
-        if(slot == 101) // Leggings
+        if(slot == 101)  // Leggings
             return 7;
-        if(slot == 102) // Chestplate
+        if(slot == 102)  // Chestplate
             return 6;
-        if(slot == 103) // Helmet
+        if(slot == 103)  // Helmet
             return 5;
 
         if(slot >= 0) {
-            if(slot <= 8)
-                return slot + 36;
-            if(slot <= 35)
-                return slot;
+            if(slot <= 8) return slot + 36;
+            if(slot <= 35) return slot;
         }
 
         throw std::runtime_error("Illegal data slot ID");
     }
 
     static int networkSlotToData(int slot) {
-        if(slot == 45) // Off-hand
+        if(slot == 45)  // Off-hand
             return -106;
-        if(slot == 8) // Boots
+        if(slot == 8)  // Boots
             return 100;
-        if(slot == 7) // Leggings
+        if(slot == 7)  // Leggings
             return 101;
-        if(slot == 6) // Chestplate
+        if(slot == 6)  // Chestplate
             return 102;
-        if(slot == 5) // Helmet
+        if(slot == 5)  // Helmet
             return 103;
 
         if(slot <= 44) {
-            if(slot >= 36)
-                return slot - 36;
-            if(slot >= 9)
-                return slot;
+            if(slot >= 36) return slot - 36;
+            if(slot >= 9) return slot;
         }
 
         throw std::runtime_error("Illegal network slot ID");

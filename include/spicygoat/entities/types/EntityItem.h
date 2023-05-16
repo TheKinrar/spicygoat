@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/entities/Entity.h>
 #include <spicygoat/util/Random.h>
+
+#include <utility>
 
 class EntityItem : public Entity {
     ItemStack stack;

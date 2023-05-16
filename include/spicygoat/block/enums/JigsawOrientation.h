@@ -10,9 +10,8 @@ class JigsawOrientation : public Enum {
     explicit JigsawOrientation(const std::string& name) : Enum(name) {}
 
    public:
-    static const JigsawOrientation down_east, down_north, down_south, down_west,
-                                   up_east, up_north, up_south, up_west,
-                                   west_up, east_up, north_up, south_up;
+    static const JigsawOrientation down_east, down_north, down_south, down_west, up_east, up_north, up_south, up_west,
+        west_up, east_up, north_up, south_up;
 
     static const std::vector<JigsawOrientation> values;
 };
@@ -31,5 +30,5 @@ inline const JigsawOrientation JigsawOrientation::north_up = JigsawOrientation("
 inline const JigsawOrientation JigsawOrientation::south_up = JigsawOrientation("south_up");
 
 inline const std::vector<JigsawOrientation> JigsawOrientation::values = {down_east, down_north, down_south, down_west,
-                                                                  up_east, up_north, up_south, up_west,
-                                                                  west_up, east_up, north_up, south_up};
+                                                                         up_east,   up_north,   up_south,   up_west,
+                                                                         west_up,   east_up,    north_up,   south_up};

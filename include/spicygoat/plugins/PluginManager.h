@@ -4,13 +4,13 @@
 
 #pragma once
 
+#include <spdlog/logger.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spicygoat/plugins/Plugin.h>
+
 #include <memory>
 #include <string>
 #include <unordered_map>
-
-#include <spicygoat/plugins/Plugin.h>
-#include <spdlog/logger.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 
 class PluginManager {
     std::shared_ptr<spdlog::logger> logger = spdlog::stdout_color_mt("PluginManager");

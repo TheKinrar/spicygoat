@@ -16,10 +16,9 @@ enum class GameMode {
 };
 
 inline GameMode parse(int64_t gamemode) {
-    if(gamemode < 0 || gamemode > 3)
-        throw std::runtime_error("Invalid GameMode");
+    if(gamemode < 0 || gamemode > 3) throw std::runtime_error("Invalid GameMode");
 
     return static_cast<GameMode>(gamemode);
 }
 
-}
+}  // namespace GameMode

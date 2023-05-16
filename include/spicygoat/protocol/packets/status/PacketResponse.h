@@ -5,9 +5,9 @@
 #ifndef SPICYGOAT_PACKETRESPONSE_H
 #define SPICYGOAT_PACKETRESPONSE_H
 
-#include <vector>
-
 #include <spicygoat/protocol/ClientBoundPacket.h>
+
+#include <vector>
 
 class PacketResponse : public ClientBoundPacket {
    public:

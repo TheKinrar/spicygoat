@@ -2,16 +2,15 @@
 // Created by thekinrar on 09/04/19.
 //
 
+#include <spicygoat/Server.h>
+#include <spicygoat/data/blocks.h>
+#include <spicygoat/protocol/PacketData.h>
+#include <spicygoat/world/chunks/ChunkPalette.h>
 #include <tag_compound.h>
 #include <tag_string.h>
 
 #include <cmath>
 #include <iostream>
-
-#include <spicygoat/Server.h>
-#include <spicygoat/data/blocks.h>
-#include <spicygoat/protocol/PacketData.h>
-#include <spicygoat/world/chunks/ChunkPalette.h>
 
 std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     if(list.size() > 256) return Server::get().getPalette();
@@ -21,7 +20,8 @@ std::shared_ptr<ChunkPalette> ChunkPalette::fromNBT(nbt::tag_list &list) {
     for(int i = 0; i < list.size(); ++i) {
         auto &item = list.at(i).as<nbt::tag_compound>();
 
-        auto state = Server::get().getBlockRegistry().get(item.at("Name").as<nbt::tag_string>().get()).getDefaultState();
+        auto state =
+            Server::get().getBlockRegistry().get(item.at("Name").as<nbt::tag_string>().get()).getDefaultState();
 
         if(item.has_key("Properties")) {
             auto props = item.at("Properties").as<nbt::tag_compound>();
@@ -49,7 +49,7 @@ void ChunkPalette::loadGlobal() {
     }
 }
 
-void ChunkPalette::addBlockState(const std::shared_ptr<BlockState>& state, int16_t id) {
+void ChunkPalette::addBlockState(const std::shared_ptr<BlockState> &state, int16_t id) {
     stateToId[state] = id;
     idToState[id] = state;
 }

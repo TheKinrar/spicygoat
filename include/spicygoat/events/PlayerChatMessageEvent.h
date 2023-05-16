@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/events/PlayerEvent.h>
+
+#include <utility>
 
 class PlayerChatMessageEvent : public PlayerEvent<PlayerChatMessageEvent> {
     std::string message;

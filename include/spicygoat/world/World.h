@@ -5,13 +5,13 @@
 #ifndef SPICYGOAT_WORLD_H
 #define SPICYGOAT_WORLD_H
 
-#include <map>
-#include <mutex>
-
 #include <spicygoat/world/chunks/Region.h>
 #include <spicygoat/world/geo/ChunkPosition.h>
 #include <spicygoat/world/geo/Position.h>
 #include <spicygoat/world/geo/Position2D.h>
+
+#include <map>
+#include <mutex>
 
 class World {
    public:

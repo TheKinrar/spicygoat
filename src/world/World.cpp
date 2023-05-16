@@ -4,14 +4,13 @@
 
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
+#include <spicygoat/world/World.h>
+#include <spicygoat/world/geo/ChunkPosition.h>
 #include <tag_primitive.h>
 
 #include <cmath>
 #include <fstream>
 #include <iostream>
-
-#include <spicygoat/world/World.h>
-#include <spicygoat/world/geo/ChunkPosition.h>
 
 World::World() {
     std::ifstream ifs("world/level.dat", std::ios::binary);
@@ -41,8 +40,7 @@ Region& World::getRegion(int32_t x, int32_t z) {
 
 ChunkColumn& World::getChunk(int32_t x, int32_t z) {
     ChunkPosition pos(x, 0, z);
-    return getRegion(pos.getRegionX(), pos.getRegionZ())
-        .getColumn(pos.getInRegionX(), pos.getInRegionZ());
+    return getRegion(pos.getRegionX(), pos.getRegionZ()).getColumn(pos.getInRegionX(), pos.getInRegionZ());
 }
 
 const Position& World::getSpawnPosition() const {

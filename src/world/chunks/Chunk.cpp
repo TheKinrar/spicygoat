@@ -2,12 +2,11 @@
 // Created by thekinrar on 02/04/19.
 //
 
+#include <spicygoat/protocol/PacketData.h>
+#include <spicygoat/world/chunks/Chunk.h>
 #include <tag_array.h>
 
 #include <iostream>
-
-#include <spicygoat/world/chunks/Chunk.h>
-#include <spicygoat/protocol/PacketData.h>
 
 Chunk::Chunk(int32_t x, int32_t y, int32_t z) : x(x), y(y), z(z) {}
 
@@ -45,7 +44,8 @@ void Chunk::loadNBT(nbt::tag_compound& nbt) {
     }
 }
 
-[[nodiscard]] const ChunkPalette& Chunk::getPalette() const {
+[[nodiscard]]
+const ChunkPalette& Chunk::getPalette() const {
     return *palette;
 }
 

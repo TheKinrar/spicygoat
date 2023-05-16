@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <utility>
-
 #include <spicygoat/item/Item.h>
+
+#include <utility>
 
 /**
  * An item that represents a placeable block.
@@ -17,7 +17,8 @@ class BlockItem : public Item {
    public:
     BlockItem(const std::string& name, const Block& block);
 
-    [[nodiscard]] const Block& getBlock() const {
+    [[nodiscard]]
+    const Block& getBlock() const {
         return block;
     }
 

@@ -5,10 +5,10 @@
 #ifndef SPICYGOAT_CHANNELMESSAGE_H
 #define SPICYGOAT_CHANNELMESSAGE_H
 
+#include <spicygoat/TCPConnection.h>
+
 #include <string>
 #include <vector>
-
-#include <spicygoat/TCPConnection.h>
 
 class ChannelMessage {
    public:

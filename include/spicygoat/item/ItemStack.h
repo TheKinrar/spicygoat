@@ -20,7 +20,7 @@ struct ItemStack {
 
     explicit ItemStack(int32_t id, int8_t count = 1) : present(true), id(id), count(count), hasNbt(false) {}
 
-    ItemStack(int32_t id, int8_t count, const std::shared_ptr<nbt::tag_compound> &nbt)
+    ItemStack(int32_t id, int8_t count, const std::shared_ptr<nbt::tag_compound>& nbt)
         : present(true), id(id), count(count), hasNbt(true), nbt(nbt) {}
 
     void setCount(int8_t count) {

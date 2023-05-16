@@ -10,9 +10,9 @@ PacketEntityMove::PacketEntityMove(int32_t eid, double dx, double dy, double dz,
 std::vector<std::byte> PacketEntityMove::bytes() const {
     std::vector<std::byte> array;
     PacketData::writeVarInt(eid, array);
-    PacketData::writeShort((int16_t) dx, array);
-    PacketData::writeShort((int16_t) dy, array);
-    PacketData::writeShort((int16_t) dz, array);
+    PacketData::writeShort((int16_t)dx, array);
+    PacketData::writeShort((int16_t)dy, array);
+    PacketData::writeShort((int16_t)dz, array);
     PacketData::writeBoolean(onGround, array);
     return array;
 }

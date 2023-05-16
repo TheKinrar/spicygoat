@@ -22,9 +22,9 @@
 class EntityPlayer;
 class PacketListener;
 
+#include <spdlog/logger.h>
 #include <spicygoat/entities/types/EntityPlayer.h>
 #include <spicygoat/protocol/PacketListener.h>
-#include <spdlog/logger.h>
 
 class TCPConnection {
    public:

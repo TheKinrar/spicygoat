@@ -2,10 +2,10 @@
 // Created by thekinrar on 19/09/2020.
 //
 
-#include <iostream>
-
 #include <spicygoat/Server.h>
 #include <spicygoat/tracking/PlayerTracker.h>
+
+#include <iostream>
 
 PlayerTracker::PlayerTracker(Entity &self) : EntityTracker(self) {}
 
@@ -14,8 +14,7 @@ PlayerTracker::~PlayerTracker() {
 }
 
 void PlayerTracker::tick() {
-    if(destroyed)
-        return;
+    if(destroyed) return;
 
     for(auto &player : Server::get().getPlayers()) {
         if(*player == self) continue;
@@ -49,8 +48,7 @@ void PlayerTracker::broadcast(const ClientBoundPacket &packet) {
 }
 
 void PlayerTracker::destroy() {
-    if(destroyed)
-        return;
+    if(destroyed) return;
 
     destroyed = true;
 

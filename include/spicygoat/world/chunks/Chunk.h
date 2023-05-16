@@ -5,12 +5,12 @@
 #ifndef SPICYGOAT_CHUNK_H
 #define SPICYGOAT_CHUNK_H
 
+#include <spicygoat/world/chunks/ChunkPalette.h>
+#include <tag_compound.h>
+
 #include <bitset>
 #include <cstdint>
 #include <iostream>
-
-#include <spicygoat/world/chunks/ChunkPalette.h>
-#include <tag_compound.h>
 
 class Chunk {
    private:
@@ -32,7 +32,8 @@ class Chunk {
 
     int32_t getZ() const;
 
-    [[nodiscard]] const ChunkPalette& getPalette() const;
+    [[nodiscard]]
+    const ChunkPalette& getPalette() const;
 
     bool hasData();
 
@@ -99,10 +100,9 @@ class Chunk {
 
    private:
     void rewriteData(const ChunkPalette& from, const ChunkPalette& to) {
-        if(to.isSingle())
-            return;
+        if(to.isSingle()) return;
 
-        std::vector<int64_t> newStates(std::ceil((double) 4096 / to.getBlocksPerLong()));
+        std::vector<int64_t> newStates(std::ceil((double)4096 / to.getBlocksPerLong()));
         for(int x = 0; x < 16; ++x) {
             for(int y = 0; y < 16; ++y) {
                 for(int z = 0; z < 16; ++z) {
@@ -113,10 +113,9 @@ class Chunk {
         blockStates = newStates;
     }
 
-    [[nodiscard]] static int64_t readBlockState(const std::vector<int64_t>& data, const ChunkPalette& palette, int x,
-                                                int y, int z) {
-        if(palette.isSingle())
-            return 0;
+    [[nodiscard]]
+    static int64_t readBlockState(const std::vector<int64_t>& data, const ChunkPalette& palette, int x, int y, int z) {
+        if(palette.isSingle()) return 0;
 
         int i = (((16 * y) + z) * 16) + x;                    // Block number
         int iLong = i / palette.getBlocksPerLong();           // Index of the long containing the block

@@ -5,12 +5,11 @@
 #ifndef SPICYGOAT_CHUNKCOLUMN_H
 #define SPICYGOAT_CHUNKCOLUMN_H
 
-#include <stdint.h>
-#include <tag_compound.h>
-
 #include <spicygoat/world/chunks/Chunk.h>
 #include <spicygoat/world/chunks/ChunkPalette.h>
 #include <spicygoat/world/geo/Position2D.h>
+#include <stdint.h>
+#include <tag_compound.h>
 
 class ChunkColumn {
    public:

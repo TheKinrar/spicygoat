@@ -10,23 +10,9 @@
 
 class BossBar {
    public:
-    enum class Color {
-        Pink,
-        Blue,
-        Red,
-        Green,
-        Yellow,
-        Purple,
-        White
-    };
+    enum class Color { Pink, Blue, Red, Green, Yellow, Purple, White };
 
-    enum class Division {
-        None,
-        Six,
-        Ten,
-        Twelve,
-        Twenty
-    };
+    enum class Division { None, Six, Ten, Twelve, Twenty };
 
    private:
     const uuids::uuid id;

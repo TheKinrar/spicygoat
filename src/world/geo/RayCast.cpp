@@ -2,13 +2,16 @@
 // Created by thekinrar on 11/03/23.
 //
 
-#include <spicygoat/world/geo/RayCast.h>
 #include <spicygoat/util/math.h>
+#include <spicygoat/world/geo/RayCast.h>
 
 static double nextBorder(double pos, double diff, bool firstRound) {
-    if(firstRound && std::ceil(pos) == pos) return pos;
-    else if(diff < 0) return std::ceil(pos - 1);
-    else return std::floor(pos + 1);
+    if(firstRound && std::ceil(pos) == pos)
+        return pos;
+    else if(diff < 0)
+        return std::ceil(pos - 1);
+    else
+        return std::floor(pos + 1);
 }
 
 void RayCast::cast() {

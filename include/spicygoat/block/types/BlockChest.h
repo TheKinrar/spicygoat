@@ -12,6 +12,5 @@ class BlockChest : public Block {
    public:
     BlockChest(const Identifier& name, const std::vector<std::string>& defaultValues)
         : Block(name, {Traits::orientable},
-                {Properties::horizontal_facing, Properties::chest_type, Properties::waterlogged},
-                defaultValues) {}
+                {Properties::horizontal_facing, Properties::chest_type, Properties::waterlogged}, defaultValues) {}
 };

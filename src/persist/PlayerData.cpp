@@ -87,5 +87,5 @@ GameMode::GameMode PlayerData::getGameMode(GameMode::GameMode def) const {
 }
 
 void PlayerData::setGameMode(const GameMode::GameMode& source) {
-    nbt->put("playerGameType", nbt::tag_int((int) source));
+    nbt->put("playerGameType", nbt::tag_int((int)source));
 }
