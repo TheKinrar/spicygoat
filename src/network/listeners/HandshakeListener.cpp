@@ -4,6 +4,8 @@
 
 #include "HandshakeListener.h"
 
+#include <spicygoat/Server.h>
+
 #include "LoginListener.h"
 #include "StatusListener.h"
 
@@ -12,7 +14,7 @@ void HandshakeListener::onHandshake(const PacketHandshake &packet) {
         connection->setState(ProtocolState::STATUS);
         connection->setListener(std::make_unique<StatusListener>(*connection));
     } else if(packet.getNextState() == ProtocolState::LOGIN) {
-        if(packet.getProtocolVersion() == Protocol::PROTOCOL_VERSION_NUMBER) {
+        if(packet.getProtocolVersion() == Server::get().getProtocolVersionNumber()) {
             connection->setState(ProtocolState::LOGIN);
             connection->setListener(std::make_unique<LoginListener>(connection));
         } else {

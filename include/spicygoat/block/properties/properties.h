@@ -39,6 +39,7 @@ extern const BooleanProperty bloom;
 extern const BooleanProperty bottom;
 extern const BooleanProperty can_summon;
 extern const BooleanProperty conditional;
+extern const BooleanProperty cracked;
 extern const BooleanProperty disarmed;
 extern const BooleanProperty down;
 extern const BooleanProperty drag;

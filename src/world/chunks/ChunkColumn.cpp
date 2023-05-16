@@ -99,8 +99,6 @@ void ChunkColumn::writeLightToByteArray(std::vector<std::byte> &array) {
     std::bitset<26> emptySkyMask = skyMask;
     emptySkyMask.flip();
 
-    PacketData::writeBoolean(true, array);  // Trust edges
-
     PacketData::writeBitSet(skyMask, array);
     PacketData::writeBitSet(blockMask, array);
     PacketData::writeBitSet(skyMask, array);

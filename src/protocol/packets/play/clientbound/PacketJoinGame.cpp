@@ -136,6 +136,7 @@ std::vector<std::byte> PacketJoinGame::bytes() const {
     PacketData::writeBoolean(false, array);  // TODO debug mode
     PacketData::writeBoolean(false, array);  // TODO superflat
     PacketData::writeBoolean(false, array);  // has death location
+    PacketData::writeVarInt(0, array);  // portal cooldown
     return array;
 }
 

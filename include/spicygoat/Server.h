@@ -26,6 +26,12 @@ class Server {
     void load();
     void run();
 
+    [[nodiscard]]
+    int getProtocolVersionNumber() const;
+
+    [[nodiscard]]
+    std::string getProtocolVersionString() const;
+
     std::shared_ptr<EntityPlayer> createPlayer(uuids::uuid uuid, std::string name, std::shared_ptr<TCPConnection> conn);
     void spawnEntity(const std::shared_ptr<Entity>& entity);
     void removePlayer(EntityPlayer&);

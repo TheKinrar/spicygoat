@@ -10,7 +10,7 @@ overrides = {
     'east': {'_wall': 'east_wall_shape', 'redstone_wire': 'east_wire_connection'},
     'face': {('_button', 'grindstone', 'lever'): 'wall_mount_location'},
     'facing': {'_bed': 'horizontal_facing', 'hopper': 'hopper_facing'},
-    'half': {('_door', 'large_fern', 'lilac', 'peony', 'rose_bush',
+    'half': {('_door', 'large_fern', 'lilac', 'peony', 'pitcher_crop', 'pitcher_plant', 'rose_bush',
               'small_dripleaf', 'sunflower', 'tall_grass', 'tall_seagrass'): 'double_block_half',
              ('_stairs', '_trapdoor'): 'block_half'},
     'hinge': {'_door': 'door_hinge'},

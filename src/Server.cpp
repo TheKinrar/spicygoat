@@ -24,7 +24,7 @@ Server& Server::get() {
 }
 
 Server::Server() {
-    spdlog::info(std::string("SpicyGoat dev build - MC ") + Protocol::PROTOCOL_VERSION_NAME + " (protocol " + std::to_string(Protocol::PROTOCOL_VERSION_NUMBER) + ")");
+    spdlog::info(std::string("SpicyGoat dev build - MC ") + Protocol::PROTOCOL_VERSION_NAME + " (protocol " + getProtocolVersionString() + ")");
 
     logger = spdlog::stdout_color_mt("Server");
     chatLogger = spdlog::stdout_color_mt("Chat");
@@ -159,4 +159,20 @@ unsigned long Server::getPlayerCount() const {
 
 std::unique_ptr<EntityTracker> Server::createTracker(Entity& e) {
     return std::make_unique<PlayerTracker>(e);
+}
+
+int Server::getProtocolVersionNumber() const {
+    if(Protocol::PROTOCOL_SNAPSHOT) {
+        return 0x40000000 + Protocol::PROTOCOL_VERSION_NUMBER;
+    } else {
+        return Protocol::PROTOCOL_VERSION_NUMBER;
+    }
+}
+
+std::string Server::getProtocolVersionString() const {
+    if(Protocol::PROTOCOL_SNAPSHOT) {
+        return "Snapshot " + std::to_string(Protocol::PROTOCOL_VERSION_NUMBER);
+    } else {
+        return std::to_string(Protocol::PROTOCOL_VERSION_NUMBER);
+    }
 }

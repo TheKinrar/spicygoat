@@ -14,7 +14,7 @@ PacketResponse::PacketResponse() : ClientBoundPacket(Packets::S_RESPONSE) {}
 std::vector<std::byte> PacketResponse::bytes() const {
     json j;
     j["version"]["name"] = Protocol::PROTOCOL_VERSION_NAME;
-    j["version"]["protocol"] = Protocol::PROTOCOL_VERSION_NUMBER;
+    j["version"]["protocol"] = Server::get().getProtocolVersionNumber();
     j["players"]["max"] = 20;
     j["players"]["online"] = Server::get().getPlayerCount();
     j["players"]["sample"] = json::array();

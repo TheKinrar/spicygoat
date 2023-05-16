@@ -12,6 +12,7 @@ const BooleanProperty bloom = BooleanProperty("bloom");
 const BooleanProperty bottom = BooleanProperty("bottom");
 const BooleanProperty can_summon = BooleanProperty("can_summon");
 const BooleanProperty conditional = BooleanProperty("conditional");
+const BooleanProperty cracked = BooleanProperty("cracked");
 const BooleanProperty disarmed = BooleanProperty("disarmed");
 const BooleanProperty down = BooleanProperty("down");
 const BooleanProperty drag = BooleanProperty("drag");
