@@ -111,14 +111,7 @@ void PlayerConnection::onPlayerDigging(const PacketPlayerDigging &packet) {
     }
 }
 
-void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {
-    if(packet.action == 0) {
-        auto fireball = std::make_shared<EntityFireball>();
-        fireball->setLocation(player->getLocation());
-        fireball->setVelocity(player->getLocation().getDirection());
-        Server::get().spawnEntity(fireball);
-    }
-}
+void PlayerConnection::onEntityAction(const PacketEntityAction &packet) {}
 
 void PlayerConnection::onChatMessage(const PacketChatMessageSB &packet) {
     PlayerChatMessageEvent event(player, packet.message);
