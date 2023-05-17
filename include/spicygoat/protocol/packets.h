@@ -14,6 +14,7 @@
 #include <spicygoat/protocol/packets/play/clientbound/PacketBlockUpdate.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketChunkData.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketEntityMoveLook.h>
+#include <spicygoat/protocol/packets/play/clientbound/PacketExplosion.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketJoinGame.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketKeepAliveCB.h>
 #include <spicygoat/protocol/packets/play/clientbound/PacketPlayerAbilities.h>

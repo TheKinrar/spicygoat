@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <string>
+
 class Vector3d {
     double x{}, y{}, z{};
 
@@ -34,6 +36,21 @@ class Vector3d {
     [[nodiscard]]
     Vector3d multiply(double x, double y, double z) const {
         return {this->x * x, this->y * y, this->z * z};
+    }
+
+    [[nodiscard]]
+    Vector3d multiply(double m) const {
+        return multiply(m, m, m);
+    }
+
+    [[nodiscard]]
+    Vector3d normalize() const {
+        double lengthVal = length();
+        if(lengthVal != 0) {
+            return multiply(1/lengthVal);
+        } else {
+            return *this;
+        }
     }
 
     [[nodiscard]]
@@ -69,9 +86,15 @@ class Vector3d {
     }
 
     [[nodiscard]]
+    double length() const;
+
+    [[nodiscard]]
     double horizontalLengthSquared() const {
         return x * x + z * z;
     }
+
+    [[nodiscard]]
+    double horizontalLength() const;
 
     [[nodiscard]]
     std::string toString() const {

@@ -43,6 +43,8 @@ class World {
         section.setBlockState(pos.getInChunkX(), pos.getInChunkY(), pos.getInChunkZ(), state);
     }
 
+    void createExplosion(Location loc, int radius);
+
    private:
     std::mutex m_chunkLoading;
 

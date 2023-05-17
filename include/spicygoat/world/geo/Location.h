@@ -73,6 +73,11 @@ class Location {
     }
 
     [[nodiscard]]
+    Vector3d toVector3d() const {
+        return {x, y, z};
+    }
+
+    [[nodiscard]]
     int32_t getChunkX() const {
         return static_cast<int32_t>(std::floor(x)) >> 4;
     }

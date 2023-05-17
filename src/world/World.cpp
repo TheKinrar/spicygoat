@@ -4,6 +4,8 @@
 
 #include <io/izlibstream.h>
 #include <io/stream_reader.h>
+#include <spicygoat/Server.h>
+#include <spicygoat/data/blocks.h>
 #include <spicygoat/world/World.h>
 #include <spicygoat/world/geo/ChunkPosition.h>
 #include <tag_primitive.h>
@@ -45,4 +47,29 @@ ChunkColumn& World::getChunk(int32_t x, int32_t z) {
 
 const Position& World::getSpawnPosition() const {
     return spawnPosition;
+}
+
+void World::createExplosion(Location loc, int radius) {
+    std::vector<Position> blocks;
+
+    for(int x = -radius; x <= radius; ++x) {
+        for(int y = -radius; y <= radius; ++y) {
+            for(int z = -radius; z <= radius; ++z) {
+                auto block = loc.add(x, y, z);
+                if(block.distanceSquared(loc) <= radius * radius) {
+                    auto pos = block.toPosition();
+                    blocks.push_back(pos);
+                    Server::get().getWorld().setBlockState(pos, Blocks::air.getDefaultState());
+                }
+            }
+        }
+    }
+
+    for(auto& player : Server::get().getPlayers()) {
+        auto diff = player->getLocation().toVector3d().subtract(loc.toVector3d());
+        double ratio = std::max((double) 0, 1 - diff.length() / (2 * radius));
+        diff = diff.normalize().multiply(ratio);
+        player->getConnection().sendPacket(PacketExplosion(loc.getX(), loc.getY(), loc.getZ(), radius, blocks,
+                                                           diff.getX(), diff.getY(), diff.getZ()));
+    }
 }

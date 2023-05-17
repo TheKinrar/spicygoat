@@ -35,6 +35,7 @@ static const int C_SERVER_DIFFICULTY = 0x0C;
 static const int C_SET_INVENTORY_CONTENT = 0x12;
 static const int C_SET_INVENTORY_SLOT = 0x14;
 static const int C_PLUGIN_MESSAGE = 0x17;
+static const int C_EXPLOSION = 0x1D;
 static const int C_UNLOAD_CHUNK = 0x1E;
 static const int C_GAME_EVENT = 0x1F;
 static const int C_KEEP_ALIVE = 0x23;
