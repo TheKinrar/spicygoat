@@ -4,7 +4,7 @@
 
 #include <spicygoat/protocol/packets/status/PacketPong.h>
 
-PacketPong::PacketPong(int64_t payload) : ClientBoundPacket(Packets::S_PONG) {
+PacketPong::PacketPong(int64_t payload) : ClientBoundPacket(Packets::C_PONG) {
     this->payload = payload;
 }
 

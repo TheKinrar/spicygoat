@@ -9,7 +9,7 @@
 
 using json = nlohmann::json;
 
-PacketResponse::PacketResponse() : ClientBoundPacket(Packets::S_RESPONSE) {}
+PacketResponse::PacketResponse() : ClientBoundPacket(Packets::C_RESPONSE) {}
 
 std::vector<std::byte> PacketResponse::bytes() const {
     json j;
